@@ -86,7 +86,7 @@ public class JDAEvents extends ListenerAdapter {
 	public void onStatusChange(StatusChangeEvent event) {
 		discordBot.getContainer().reportStatus(event.getJDA().getShardInfo() != null ? event.getJDA().getShardInfo().getShardId() : 0, event.getOldStatus(),
 				event.getNewStatus());
-		discordBot.pollHandler.checkPolls(discordBot);
+//		discordBot.pollHandler.checkPolls(discordBot);
 	}
 
 	@Override
@@ -122,7 +122,8 @@ public class JDAEvents extends ListenerAdapter {
 		GuildCheckResult guildCheck = discordBot.security.checkGuild(guild);
 		if (dbGuild.active != 1) {
 			String message = "Thanks for adding me to your guild!\n" + "To see what I can do you can type the command `" + cmdPre + "help`.\n"
-					+ "Most of my features are opt-in, which means that you'll have to enable them first. Admins can use `" + cmdPre + "config` to change my settings.\n"
+					+ "Most of my features are opt-in, which means that you'll have to enable them first. Admins can use `" + cmdPre
+					+ "config` to change my settings.\n"
 					+ "Most commands has a help portion which can be accessed by typing help after the command; For instance: `" + cmdPre + "skip help`\n\n"
 					+ "If you need help or would like to give feedback, feel free to let me know on either `" + cmdPre + "discord` or `" + cmdPre + "github`";
 			switch (guildCheck) {
@@ -214,12 +215,14 @@ public class JDAEvents extends ListenerAdapter {
 		}
 		TextChannel channel = (TextChannel) e.getChannel();
 		if (discordBot.commandReactionHandler.canHandle(channel.getGuild().getIdLong(), e.getMessageIdLong())) {
-			discordBot.commandReactionHandler.handle(channel, e.getMessageIdLong(), e.getUser().getIdLong(), e.getReaction());
+			discordBot.commandReactionHandler.handle(channel, e.getMessageIdLong(), e.getUser().getIdLong(), e.getReaction(), adding);
 			return;
 		}
 		if (!discordBot.gameHandler.executeReaction(e.getUser(), e.getChannel(), e.getReaction(), e.getMessageId())) {
 			if (!discordBot.musicReactionHandler.handle(e.getMessageIdLong(), channel, e.getUser(), e.getReactionEmote(), adding)) {
-				discordBot.roleReactionHandler.handle(e.getMessageId(), channel, e.getUser(), e.getReactionEmote(), adding);
+				if (!discordBot.roleReactionHandler.handle(e.getMessageId(), channel, e.getUser(), e.getReactionEmote(), adding)) {
+					discordBot.pollHandler.handleReaction(e.getGuild(), e.getMessageId(), channel, e.getUser(), e.getReactionEmote(), adding);
+				}
 			}
 		}
 	}
@@ -239,7 +242,8 @@ public class JDAEvents extends ListenerAdapter {
 
 	@Override
 	public void onGuildBan(GuildBanEvent event) {
-		discordBot.logGuildEvent(event.getGuild(), "\uD83D\uDED1", "**" + event.getUser().getName() + "#" + event.getUser().getDiscriminator() + "** has been banned");
+		discordBot.logGuildEvent(event.getGuild(), "\uD83D\uDED1",
+				"**" + event.getUser().getName() + "#" + event.getUser().getDiscriminator() + "** has been banned");
 	}
 
 	@Override
@@ -320,8 +324,8 @@ public class JDAEvents extends ListenerAdapter {
 				});
 			}
 		}
-		Launcher.log("user leaves guild", "guild", "member-leave", "guild-id", guild.getId(), "guild-name", guild.getName(), "user-id", user.getId(), "user-name",
-				user.getName());
+		Launcher.log("user leaves guild", "guild", "member-leave", "guild-id", guild.getId(), "guild-name", guild.getName(), "user-id", user.getId(),
+				"user-name", user.getName());
 		OGuildMember guildMember = CGuildMember.findBy(guild.getIdLong(), user.getIdLong());
 		guildMember.joinDate = new Timestamp(System.currentTimeMillis());
 		CGuildMember.insertOrUpdate(guildMember);

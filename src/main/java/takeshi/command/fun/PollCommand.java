@@ -40,7 +40,6 @@ import takeshi.guildsettings.GSetting;
 import takeshi.handler.GuildSettings;
 import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
-import takeshi.threads.PollTimerThread;
 import takeshi.util.Misc;
 
 public class PollCommand extends AbstractCommand {
@@ -67,7 +66,11 @@ public class PollCommand extends AbstractCommand {
 	@Override
 	public String[] getUsage() {
 		return new String[] { "poll create [channel] <question> ;<option1>;<option2>;<etc.>   (max 9)", "              //creates a poll",
-				"poll timed <m/h/d> <time> [channel] <question> ;<option1>;<option2>;<etc.>   (max 9)", "              //creates a timed poll" };
+				"poll timed <m/h/d> <time> [channel] <question> ;<option1>;<option2>;<etc.>   (max 9)", "              //creates a timed poll",
+				"poll single <m/h/d> <time> [channel] <question> ;<option1>;<option2>;<etc.>   (max 9)", "              //creates a single-choice timed poll",
+				"poll cancel [channel]", "              //instantly ends any timed polls in the current or specified channel",
+				"A specified channel must be #mentioned, otherwise the current channel will be used.",
+				"Failure to do so shall result in it being included in the question." };
 	}
 
 	@Override
@@ -100,6 +103,11 @@ public class PollCommand extends AbstractCommand {
 		EmbedBuilder emPoll = new EmbedBuilder();
 		OPoll poll = new OPoll();
 		switch (args[0].toLowerCase()) {
+		case "one":
+		case "single":
+			poll.single = true;
+		case "time":
+		case "timer":
 		case "timed": // If it is a timed poll, first set up the time handlers. Also can start timer
 						// thread later for times <= 10 min.
 			argStart += 2;
@@ -126,24 +134,42 @@ public class PollCommand extends AbstractCommand {
 				if (waitTime == 0) {
 					return "Must last at least 1 minute!";
 				}
-				long maxThreadTime = TimeUnit.MINUTES.toMillis(30);
-				// Start timer threads for polls that last <= 30 min
-				if (waitTime <= maxThreadTime) {
-					threadWaitTime = Math.min(waitTime, maxThreadTime);
+				if (waitTime >= TimeUnit.DAYS.toMillis(30)) {
+					return "May not be more than 30 days";
 				}
+//				long maxThreadTime = TimeUnit.MINUTES.toMillis(30);
+				// Start timer threads for polls that last <= 30 min
+//				if (waitTime <= maxThreadTime) {
+//					threadWaitTime = Math.min(waitTime, maxThreadTime);
+//				}
 				poll.guildId = CGuild.getCachedId(inputMessage.getGuild().getIdLong());
 				poll.message = inputMessage.getContentRaw();
 				long epochMilli = new Date().getTime() + waitTime;
 				poll.messageExpire = new Timestamp(epochMilli);
 				emPoll.setTimestamp(Instant.ofEpochMilli(epochMilli));
+
+				waitTime += 1000;
+				bot.schedule(new Runnable() {
+					@Override
+					public void run() {
+						bot.pollHandler.checkPolls(guild);
+					}
+				}, waitTime, TimeUnit.MILLISECONDS);
+//				bot.schedule(bot.pollHandler.checkPolls(guild), waitTime, TimeUnit.MILLISECONDS);
+
 				if (debug) {
 					channel.sendMessage(String.format("[DEBUG] Created poll in %s with time of %s millisec", channel.getName(), waitTime)).queue();
 				}
 			} catch (NumberFormatException e) {
 				Logger.warn(e.getMessage(), e.getStackTrace());
 			}
-
+		case "new":
 		case "create": // Create the poll
+			// Check if the poll must be single-choice
+//			if(args[argStart].equalsIgnoreCase("single")) {
+//				poll.single = true;
+//				argStart++;
+//			}
 			// Check for channel argument
 			List<TextChannel> channels = inputMessage.getMentionedChannels();
 			if (!channels.isEmpty() && channels.get(0).getAsMention().equalsIgnoreCase(args[argStart])) {
@@ -167,7 +193,11 @@ public class PollCommand extends AbstractCommand {
 			emPoll.setDescription("**" + split[0].trim() + "**");
 			emPoll.setColor(Misc.randomCol());
 			if (argStart >= 3) {
-				emPoll.setFooter("Poll ends", null);
+				String footer = "Poll ends";
+				if (poll.single) {
+					footer = "Single-choice poll | " + footer;
+				}
+				emPoll.setFooter(footer, null);
 			}
 			final int answers = Math.min(9, split.length);
 			for (int i = 1; i < answers; i++) {
@@ -183,13 +213,22 @@ public class PollCommand extends AbstractCommand {
 				}
 			});
 
-			if (threadWaitTime > 0L) {
-				PollTimerThread timer = new PollTimerThread(bot.pollHandler, inputMessage.getGuild(), threadWaitTime + 1000);
-				timer.start();
-				if (debug) {
-					channel.sendMessage(String.format("[DEBUG] Poll length less than 30 min, started wait thread")).queue();
-				}
+//			if (threadWaitTime > 0L) {
+//				PollTimerThread timer = new PollTimerThread(bot.pollHandler, inputMessage.getGuild(), threadWaitTime + 1000);
+//				timer.start();
+//				if (debug) {
+//					channel.sendMessage(String.format("[DEBUG] Poll length less than 30 min, started wait thread")).queue();
+//				}
+//			}
+			return "";
+		case "end":
+		case "stop":
+		case "cancel":
+			List<TextChannel> menChannels = inputMessage.getMentionedChannels();
+			if (!menChannels.isEmpty() && menChannels.get(0).getAsMention().equalsIgnoreCase(args[argStart])) {
+				channel = menChannels.get(0);
 			}
+			bot.pollHandler.checkPolls(guild, channel.getIdLong());
 			return "";
 		default:
 			return "Invalid usage! See help for more info";

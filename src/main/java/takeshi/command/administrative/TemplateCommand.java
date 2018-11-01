@@ -62,7 +62,7 @@ public class TemplateCommand extends AbstractCommand {
     public String[] getUsage() {
         return new String[]{
                 "template <keyphrase>                  //shows all templates for a keyphrase",
-                "template add <keyphrase> <text...>    //adds a template for keyphrase",
+                "template add <keyphrase> <text...>    //adds a template for keyphrase. Use %blank% in the place of text if you want no response for this event.",
                 "template search <contains>            //searches for keyphrases matching part of the <contains>",
                 "template list <page>                  //lists all keyphrases",
                 "template remove <keyphrase> <index>   //removes selected template for keyphrase",
@@ -149,6 +149,10 @@ public class TemplateCommand extends AbstractCommand {
             case "add":
                 if (args.length >= 3) {
                     String text = Misc.joinStrings(args, 2);
+                    //Allow the disabling of template responses
+                    if(text.equalsIgnoreCase("%blank%")) {
+                    	text = "";
+                    }
                     if (Templates.templateExists(args[1])) {
                         Template tmp = Templates.getByKey(args[1]);
                         if (tmp.isValidTemplate(text)) {

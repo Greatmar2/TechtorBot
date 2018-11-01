@@ -24,7 +24,8 @@ public class OPoll extends AbstractModel {
 	public int id = 0;
 	public long channelId = 0L;
 	public long messageId = 0L;
-	public Timestamp messageExpire = new Timestamp(0);
 	public String message = "";
+	public boolean single = false;
+	public Timestamp messageExpire = new Timestamp(0);
 	public int guildId = 0;
 }

@@ -28,13 +28,10 @@ import takeshi.main.DiscordBot;
  * pseudo randomly sets the now playing tag of the bot
  */
 public class BotStatusService extends AbstractService {
-	private final static String[] playingStatusList = { "with %s human pets", "Teaching %s Minions",
-			"Bot simulator 2%03d", "Planning for wold domination", "Talking to %s idiots", "Analyzing %s fellow humans",
-			"Predicting the future", "with your CPU" };
-	private final static String[] watchingStatusList = { "spoilers", "your every move", "your computer",
-			"my top %s most wanted" };
-	private final static String[] listeningStatusList = { "backchannel frequencies", "people scream", "Scope shouting",
-			"leaks" };
+	private final static String[] playingStatusList = { "with %s human pets", "Teaching %s Minions", "Bot simulator 2%03d", "Planning for wold domination",
+			"Talking to %s idiots", "Analyzing %s fellow humans", "Predicting the future", "with your CPU" };
+	private final static String[] watchingStatusList = { "spoilers", "your every move", "your computer", "my top %s most wanted" };
+	private final static String[] listeningStatusList = { "backchannel frequencies", "people scream", "Scope shouting", "leaks" };
 	private final static String[] streamingStatusList = {};
 	// private final Random rng;
 
@@ -83,8 +80,7 @@ public class BotStatusService extends AbstractService {
 		// setGameOnShards(bot, "@" + username + " help | @" + username + " invite |
 		// #%s");
 		// } else {
-		int roll = new Random().nextInt(playingStatusList.length + watchingStatusList.length
-				+ listeningStatusList.length + streamingStatusList.length);
+		int roll = new Random().nextInt(playingStatusList.length + watchingStatusList.length + listeningStatusList.length + streamingStatusList.length);
 		// int statusNum = bot.getShards()[0].getJda().getUsers().size();
 		String status;
 		Game.GameType gameType;
@@ -99,10 +95,8 @@ public class BotStatusService extends AbstractService {
 		} else if (roll < (playingStatusList.length + watchingStatusList.length + listeningStatusList.length)) {
 			status = listeningStatusList[roll - playingStatusList.length - watchingStatusList.length];
 			gameType = Game.GameType.LISTENING;
-		} else if (roll < (playingStatusList.length + watchingStatusList.length + listeningStatusList.length
-				+ streamingStatusList.length)) {
-			status = streamingStatusList[roll - playingStatusList.length - watchingStatusList.length
-					- listeningStatusList.length];
+		} else if (roll < (playingStatusList.length + watchingStatusList.length + listeningStatusList.length + streamingStatusList.length)) {
+			status = streamingStatusList[roll - playingStatusList.length - watchingStatusList.length - listeningStatusList.length];
 			gameType = Game.GameType.STREAMING;
 		} else { // This shouldn't happen
 			status = "broken code";
@@ -121,6 +115,9 @@ public class BotStatusService extends AbstractService {
 			} else {
 				jda.getPresence().setGame(Game.of(gameType, String.format(status, statusNum)));
 			}
+
+			// Check polls every 5 min, with status change.
+//			shard.pollHandler.checkPolls(shard);
 		}
 	}
 

@@ -42,8 +42,7 @@ public class CommandReactionHandler {
 			return;
 		}
 		if (message.getChannelType().equals(ChannelType.TEXT)) {
-			if (!PermissionUtil.checkPermission(message.getTextChannel(), message.getGuild().getSelfMember(),
-					Permission.MESSAGE_ADD_REACTION)) {
+			if (!PermissionUtil.checkPermission(message.getTextChannel(), message.getGuild().getSelfMember(), Permission.MESSAGE_ADD_REACTION)) {
 				return;
 			}
 		}
@@ -61,21 +60,19 @@ public class CommandReactionHandler {
 	/**
 	 * Handles the reaction
 	 *
-	 * @param channel
-	 *                      TextChannel of the message
-	 * @param messageId
-	 *                      id of the message
-	 * @param userId
-	 *                      id of the user reacting
-	 * @param reaction
-	 *                      the reaction
+	 * @param channel   TextChannel of the message
+	 * @param messageId id of the message
+	 * @param userId    id of the user reacting
+	 * @param reaction  the reaction
+	 * @param adding
 	 */
-	public void handle(TextChannel channel, long messageId, long userId, MessageReaction reaction) {
+	public void handle(TextChannel channel, long messageId, long userId, MessageReaction reaction, boolean adding) {
 		// long botId = channel.getJDA().getSelfUser().getIdLong();
 		// System.out.println("User " + userId + "\tBot" + botId);
 		// if (userId != botId) {
 		// if (reaction.getCount() == 2) {
-		if (!lock) {
+//		if (!lock) {
+		if (adding) {
 			CommandReactionListener<?> listener = reactions.get(channel.getGuild().getIdLong()).get(messageId);
 			if (!listener.isActive() || listener.getExpiresInTimestamp() < System.currentTimeMillis()) {
 				reactions.get(channel.getGuild().getIdLong()).remove(messageId);
@@ -85,10 +82,9 @@ public class CommandReactionHandler {
 				listener.react(reaction.getReactionEmote().getName(), message);
 			}
 			// reaction.removeReaction(channel.getJDA().getUserById(userId)).complete();
-			lock = true;
+//			lock = true;
 			// listener.setActive(false);
-			// reaction.removeReaction(channel.getJDA().getUserById(userId)).queueAfter(10L,
-			// TimeUnit.MILLISECONDS);
+			reaction.removeReaction(channel.getJDA().getUserById(userId)).queueAfter(10L, TimeUnit.MILLISECONDS);
 			// listener.setActive(true);
 			// try {
 			// wait(1000);
@@ -97,22 +93,20 @@ public class CommandReactionHandler {
 			// e.printStackTrace();
 			// }
 			// lock = false;
-		} else {
+//		} else {
 			// reaction.removeReaction();
 			// channel.getMessageById(messageId).complete().addReaction(reaction.getReactionEmote().getEmote());
 			// Misc.clearReactions(message, userId);
-			lock = false;
+//			lock = false;
 		}
-		reaction.removeReaction(channel.getJDA().getUserById(userId)).queueAfter(10L, TimeUnit.MILLISECONDS);
+//		reaction.removeReaction(channel.getJDA().getUserById(userId)).queueAfter(10L, TimeUnit.MILLISECONDS);
 	}
 
 	/**
 	 * Do we have an event for a message?
 	 *
-	 * @param guildId
-	 *                      discord guild-id of the message
-	 * @param messageId
-	 *                      id of the message
+	 * @param guildId   discord guild-id of the message
+	 * @param messageId id of the message
 	 * @return do we have an handler?
 	 */
 	public boolean canHandle(long guildId, long messageId) {
@@ -128,11 +122,9 @@ public class CommandReactionHandler {
 	 */
 	public synchronized void cleanCache() {
 		long now = System.currentTimeMillis();
-		for (Iterator<Map.Entry<Long, ConcurrentHashMap<Long, CommandReactionListener<?>>>> iterator = reactions
-				.entrySet().iterator(); iterator.hasNext();) {
+		for (Iterator<Map.Entry<Long, ConcurrentHashMap<Long, CommandReactionListener<?>>>> iterator = reactions.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry<Long, ConcurrentHashMap<Long, CommandReactionListener<?>>> mapEntry = iterator.next();
-			mapEntry.getValue().values()
-					.removeIf(listener -> !listener.isActive() || listener.getExpiresInTimestamp() < now);
+			mapEntry.getValue().values().removeIf(listener -> !listener.isActive() || listener.getExpiresInTimestamp() < now);
 			if (mapEntry.getValue().values().isEmpty()) {
 				reactions.remove(mapEntry.getKey());
 			}

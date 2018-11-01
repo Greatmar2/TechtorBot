@@ -384,6 +384,7 @@ public class DiscordBot {
 			return;
 		}
 		GuildSettings settings = GuildSettings.get(guild.getIdLong());
+//		pollHandler.checkPolls(guild);
 		if (gameHandler.isGameInput(channel, author, message.getContentRaw().toLowerCase())) {
 			gameHandler.execute(author, channel, message.getContentRaw(), null);
 			return;

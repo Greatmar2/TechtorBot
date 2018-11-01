@@ -22,6 +22,8 @@ import emoji4j.EmojiUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Emote;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -81,11 +83,12 @@ public class ReactionRoleCommand extends AbstractCommand {
 	@Override
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel t = (TextChannel) channel;
-		if (!PermissionUtil.checkPermission(t.getGuild().getSelfMember(), Permission.MANAGE_ROLES)) {
+		Guild guild = t.getGuild();
+		if (!PermissionUtil.checkPermission(guild.getSelfMember(), Permission.MANAGE_ROLES)) {
 			return Templates.permission_missing.formatGuild(channel, "manage_roles");
 		}
 		if (args.length == 0) {
-			List<OReactionRoleKey> list = CReactionRole.getKeysForGuild(t.getGuild().getIdLong());
+			List<OReactionRoleKey> list = CReactionRole.getKeysForGuild(guild.getIdLong());
 			String result = "";
 			if (list.isEmpty()) {
 				return "No keys are configured";
@@ -99,8 +102,43 @@ public class ReactionRoleCommand extends AbstractCommand {
 		case "add":// eg. !rr add <key> <emote> <role>
 			if (args.length >= 4) {
 //				System.out.println(args[2]);
-				Role role = DisUtil.findRole(t.getGuild(), args[3]);
-				OReactionRoleKey key = CReactionRole.findOrCreate(t.getGuild().getIdLong(), args[1]);
+				List<Role> mentionedRoles = inputMessage.getMentionedRoles();
+				Role role;
+				// Try to find the role for the rr command
+				if (mentionedRoles.isEmpty()) {
+					String roleName = "";
+					for (int i = 3; i < args.length; i++) {
+						roleName += args[i];
+					}
+					role = DisUtil.findRole(guild, roleName);
+				} else {
+					role = mentionedRoles.get(0);
+				}
+				if (role == null) {
+					return "Role not found. Make sure the role name contains the words you're using, or that you're @mentioning the role.";
+				}
+				// Try to get the bot's role
+				Role botRole = DisUtil.findRole(guild, bot.getUserName());
+				// If it can't find a role matching the name of the bot, then manually search
+				// the server for one
+				if (botRole == null) {
+					List<Role> serverRoles = guild.getRoles();
+					for (Role serverRole : serverRoles) {
+						List<Member> members = guild.getMembersWithRoles(serverRole);
+						if (members.size() != 1) {
+							continue;
+						}
+						if (members.get(0).getUser().getIdLong() == bot.getJda().getSelfUser().getIdLong()) {
+							role = serverRole;
+							break;
+						}
+					}
+				}
+				// Make sure the bot's role can interact with (manage) the target role
+				if (botRole != null && !botRole.canInteract(role)) {
+					return "I may not manage this role, make sure my role is higher-listed than it.";
+				}
+				OReactionRoleKey key = CReactionRole.findOrCreate(guild.getIdLong(), args[1]);
 				String emoteId = "";
 				boolean isNormalEmote = false;
 				if (!DisUtil.isEmote(bot, args[2])) {
@@ -116,9 +154,6 @@ public class ReactionRoleCommand extends AbstractCommand {
 						return "No emote found";
 					}
 				}
-				if (role == null) {
-					return "No role found containing `" + args[3] + "`";
-				}
 				if (!isNormalEmote) {
 					isNormalEmote = EmojiUtils.isEmoji(args[2]);
 					if (isNormalEmote) {
@@ -131,7 +166,8 @@ public class ReactionRoleCommand extends AbstractCommand {
 					}
 				}
 				try {
-					String ret = String.format("Adding to key `%s` the reaction %s with role `%s`", args[1], DisUtil.emoteToDisplay(bot, args[2]), role.getName());
+					String ret = String.format("Adding to key `%s` the reaction %s with role `%s`", args[1], DisUtil.emoteToDisplay(bot, args[2]),
+							role.getName());
 					CReactionRole.addReaction(key.id, emoteId, isNormalEmote, role.getIdLong());
 					return ret;
 				} catch (NullPointerException ex) {
@@ -142,7 +178,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 		case "remove":// eg. !rr remove key <emote>
 			if (args.length >= 3) {
 //				System.out.println(args[2]);
-				OReactionRoleKey key = CReactionRole.findOrCreate(t.getGuild().getIdLong(), args[1]);
+				OReactionRoleKey key = CReactionRole.findOrCreate(guild.getIdLong(), args[1]);
 				String emoteId = "";
 //				int emoteType = -1;
 				if (!DisUtil.isEmote(bot, args[2])) {
@@ -174,7 +210,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 			return "Invalid usage! See help for more info";
 		case "delete":
 			if (args.length >= 2) {
-				OReactionRoleKey key = CReactionRole.findBy(t.getGuild().getIdLong(), args[1]);
+				OReactionRoleKey key = CReactionRole.findBy(guild.getIdLong(), args[1]);
 				if (key.messageKey.length() > 0) {
 					if (key.channelId > 0 && key.messageId > 0) {
 						TextChannel tchan = ((TextChannel) channel).getGuild().getTextChannelById(key.channelId);
@@ -193,7 +229,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 		case "msg":
 		case "text":// eg. !rr message key <newtext>
 			if (args.length >= 2) {
-				OReactionRoleKey key = CReactionRole.findBy(t.getGuild().getIdLong(), args[1]);
+				OReactionRoleKey key = CReactionRole.findBy(guild.getIdLong(), args[1]);
 				if (key.id == 0) {
 					return String.format("Key `%s` doesn't exist", args[1]);
 				}
@@ -210,7 +246,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 			if (args.length < 2) {
 				return "Invalid usage! See help for more info";
 			}
-			OReactionRoleKey key = CReactionRole.findBy(t.getGuild().getIdLong(), args[1]);
+			OReactionRoleKey key = CReactionRole.findBy(guild.getIdLong(), args[1]);
 			if (key.id == 0) {
 				return String.format("Key `%s` not found!", args[1]);
 			}
@@ -263,8 +299,8 @@ public class ReactionRoleCommand extends AbstractCommand {
 			Role role = channel.getGuild().getRoleById(reaction.roleId);
 			if (role != null) {
 				try {
-					roles += "\n" + (reaction.isNormalEmote ? EmojiUtils.emojify(reaction.emoji) : channel.getJDA().getEmoteById(reaction.emoji).getAsMention()) + " -> "
-							+ role.getName();
+					roles += "\n" + (reaction.isNormalEmote ? EmojiUtils.emojify(reaction.emoji) : channel.getJDA().getEmoteById(reaction.emoji).getAsMention())
+							+ " -> " + role.getName();
 //					emReactRole.addField(role.getName(),
 //							reaction.isNormalEmote ? EmojiUtils.emojify(reaction.emoji) : channel.getJDA().getEmoteById(reaction.emoji).getAsMention(), true);
 				} catch (NullPointerException ex) {

@@ -62,8 +62,9 @@ public class MySQLAdapter {
 			return dataSource.getConnection();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			DiscordBot.LOGGER.error("Can't connect to the database! Make sure the database settings are corrent and the database server is running AND the database `"
-					+ DB_NAME + "` exists");
+			DiscordBot.LOGGER
+					.error("Can't connect to the database! Make sure the database settings are corrent and the database server is running AND the database `"
+							+ DB_NAME + "` exists");
 			Launcher.stop(ExitCode.BAD_CONFIG, e);
 		}
 		return null;
@@ -100,6 +101,8 @@ public class MySQLAdapter {
 				query.setLong(index, (Long) p);
 			} else if (p instanceof Double) {
 				query.setDouble(index, (double) p);
+			} else if (p instanceof Boolean) {
+				query.setBoolean(index, (boolean) p);
 			} else if (p instanceof java.sql.Date) {
 				java.sql.Date d = (java.sql.Date) p;
 				Timestamp ts = new Timestamp(d.getTime());

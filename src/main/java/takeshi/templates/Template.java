@@ -59,7 +59,7 @@ public class Template {
 	}
 
 	public boolean isValidTemplate(String template) {
-		if (template == null || template.isEmpty()) {
+		if (template == null) { //|| template.isEmpty()) {
 			return false;
 		}
 		if (templateArguments.length == 0) {

@@ -78,6 +78,7 @@ public class CPoll {
 		t.channelId = rs.getLong("channel_id");
 		t.message = rs.getString("message");
 		t.messageExpire = rs.getTimestamp("message_expire");
+		t.single = rs.getBoolean("single");
 		t.messageId = rs.getLong("message_id");
 		return t;
 	}
@@ -104,7 +105,7 @@ public class CPoll {
 
 	public static void update(OPoll record) {
 		try {
-			WebDb.get().query("UPDATE poll SET channel_id = ?, message = ?, message_id = ? WHERE id = ?", record.channelId, record.message, record.messageId, record.id);
+			WebDb.get().query("UPDATE poll SET channel_id = ?, message = ?, message_id = ?, single = ? WHERE id = ?", record.channelId, record.message, record.messageId, record.single, record.id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,8 +117,8 @@ public class CPoll {
 			return;
 		}
 		try {
-			record.id = WebDb.get().insert("INSERT INTO poll(guild_id, channel_id, message, message_id, message_expire) " + "VALUES (?,?,?,?,?)", record.guildId,
-					record.channelId, record.message, record.messageId, record.messageExpire);
+			record.id = WebDb.get().insert("INSERT INTO poll(guild_id, channel_id, message, message_id, message_expire, single) " + "VALUES (?,?,?,?,?,?)", record.guildId,
+					record.channelId, record.message, record.messageId, record.messageExpire, record.single);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

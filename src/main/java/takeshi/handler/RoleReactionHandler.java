@@ -25,6 +25,9 @@ import net.dv8tion.jda.core.entities.MessageReaction;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.exceptions.HierarchyException;
+import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
+import takeshi.core.Logger;
 import takeshi.db.controllers.CReactionRole;
 import takeshi.db.model.OReactionRoleKey;
 import takeshi.db.model.OReactionRoleMessage;
@@ -117,17 +120,22 @@ public class RoleReactionHandler {
 			}
 			Long roleId = listeners.get(guildId).get(msgId).get(theEmote);
 			Role role = channel.getGuild().getRoleById(roleId);
+			try {
 
-			if (isAdding) {
-				channel.getGuild().getController().addRolesToMember(channel.getGuild().getMember(invoker), role).queue();
-				if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
-					channel.sendMessage(String.format("[DEBUG] Giving the role '%s' to %s", role.getName(), invoker.getName())).queue();
+				if (isAdding) {
+					channel.getGuild().getController().addRolesToMember(channel.getGuild().getMember(invoker), role).queue();
+					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
+						channel.sendMessage(String.format("[DEBUG] Giving the role '%s' to %s", role.getName(), invoker.getName())).queue();
+					}
+				} else {
+					channel.getGuild().getController().removeRolesFromMember(channel.getGuild().getMember(invoker), role).queue();
+					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
+						channel.sendMessage(String.format("[DEBUG] Removing the role '%s' to %s", role.getName(), invoker.getName())).queue();
+					}
 				}
-			} else {
-				channel.getGuild().getController().removeRolesFromMember(channel.getGuild().getMember(invoker), role).queue();
-				if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
-					channel.sendMessage(String.format("[DEBUG] Removing the role '%s' to %s", role.getName(), invoker.getName())).queue();
-				}
+			} catch (HierarchyException | InsufficientPermissionException e) {
+				channel.sendMessage("I cannot manage the role " + role.getName());
+				Logger.warn(e.getMessage(), e.getStackTrace());
 			}
 			ret = true;
 		}
