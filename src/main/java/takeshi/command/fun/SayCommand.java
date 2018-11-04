@@ -16,11 +16,18 @@
 
 package takeshi.command.fun;
 
+import java.util.Arrays;
+
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
+import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Channel;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
@@ -28,52 +35,72 @@ import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
 /**
- * !say
- * make the bot say something
+ * !say make the bot say something
  */
 public class SayCommand extends AbstractCommand {
-    public SayCommand() {
-        super();
-    }
+	public SayCommand() {
+		super();
+	}
 
-    @Override
-    public String getDescription() {
-        return "repeats you";
-    }
+	@Override
+	public String getDescription() {
+		return "repeats you";
+	}
 
-    @Override
-    public String getCommand() {
-        return "say";
-    }
+	@Override
+	public String getCommand() {
+		return "say";
+	}
 
-    @Override
-    public boolean isListed() {
-        return false;
-    }
+	@Override
+	public boolean isListed() {
+		return false;
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{"say <anything>"};
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] { "say <anything>" };
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{};
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] {};
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        if (args.length > 0) {
-            String output = Joiner.on(" ").join(args);
-            if (DisUtil.isUserMention(output)) {
-                if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)) {
-                    return output;
-                }
-                return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
-            }
-            return output;
-        } else {
-            return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
-        }
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		if (args.length > 0) {
+			TextChannel targetChannel = null;
+			if (channel.getType() == ChannelType.TEXT) {
+				if (DisUtil.isChannelMention(args[0])) {
+					targetChannel = inputMessage.getMentionedChannels().get(0);
+//					channel.sendMessage(inputMessage).queue();
+					args = Arrays.copyOfRange(args, 1, args.length);
+				} else if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)
+						&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+					inputMessage.delete().queue();
+				}
+			}
+			String output = Joiner.on(" ").join(args);
+			if (DisUtil.isUserMention(output)) {
+				if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)) {
+					if (targetChannel == null) {
+						return output;
+					} else {
+						targetChannel.sendMessage(output).queue();
+						return "";
+					}
+				}
+				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
+			}
+			if (targetChannel == null) {
+				return output;
+			} else {
+				targetChannel.sendMessage(output).queue();
+				return "";
+			}
+		} else {
+			return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
+		}
+	}
 }

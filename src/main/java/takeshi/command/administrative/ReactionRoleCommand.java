@@ -107,7 +107,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 				if (mentionedRoles.isEmpty()) {
 					String roleName = "";
 					for (int i = 3; i < args.length; i++) {
-						roleName += args[i];
+						roleName += " " + args[i];
 					}
 					role = DisUtil.findRole(guild, roleName);
 				} else {

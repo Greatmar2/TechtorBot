@@ -41,7 +41,7 @@ public class Launcher {
 	public volatile static boolean isBeingKilled = false;
 	private static GrayLogThread GRAYLOG;
 	private static BotContainer botContainer = null;
-	private static ProgramVersion version = new ProgramVersion(1, 2, 0);
+	private static ProgramVersion version = new ProgramVersion(1);
 
 	/**
 	 * log all the things!

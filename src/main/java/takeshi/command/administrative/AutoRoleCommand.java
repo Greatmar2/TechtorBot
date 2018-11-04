@@ -67,8 +67,8 @@ public class AutoRoleCommand extends AbstractCommand {
 				CAutoRole.update(guildRole);
 			}
 			return "Users will be assigned the role named `" + role.getName() + "` when they join the guild.";
-		} else if (args.length == 1) {
-			switch (args[0]) {
+		} else if (args.length >= 1) {
+			switch (args[0].toLowerCase()) {
 			case "remove":
 				OAutoRole guildRole = CAutoRole.findBy(guild.getIdLong());
 				if (guildRole.id == 0 || guildRole.roleId == 0) {
@@ -82,7 +82,11 @@ public class AutoRoleCommand extends AbstractCommand {
 				Role role;
 				// Try to find the role for the command
 				if (mentionedRoles.isEmpty()) {
-					role = DisUtil.findRole(guild, args[0]);
+					String roleName = "";
+					for (int i = 0; i < args.length; i++) {
+						roleName += " " + args[i];
+					}
+					role = DisUtil.findRole(guild, roleName);
 				} else {
 					role = mentionedRoles.get(0);
 				}
