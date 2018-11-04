@@ -23,7 +23,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Emote;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -118,25 +117,26 @@ public class ReactionRoleCommand extends AbstractCommand {
 					return "Role not found. Make sure the role name contains the words you're using, or that you're @mentioning the role.";
 				}
 				// Try to get the bot's role
-				Role botRole = DisUtil.findRole(guild, bot.getUserName());
-				// If it can't find a role matching the name of the bot, then manually search
-				// the server for one
-				if (botRole == null) {
-					List<Role> serverRoles = guild.getRoles();
-					for (Role serverRole : serverRoles) {
-						List<Member> members = guild.getMembersWithRoles(serverRole);
-						if (members.size() != 1) {
-							continue;
-						}
-						if (members.get(0).getUser().getIdLong() == bot.getJda().getSelfUser().getIdLong()) {
-							role = serverRole;
-							break;
-						}
-					}
-				}
+//				Role botRole = DisUtil.findRole(guild, bot.getUserName());
+//				// If it can't find a role matching the name of the bot, then manually search
+//				// the server for one
+//				if (botRole == null) {
+//					List<Role> serverRoles = guild.getRoles();
+//					for (Role serverRole : serverRoles) {
+//						List<Member> members = guild.getMembersWithRoles(serverRole);
+//						if (members.size() != 1) {
+//							continue;
+//						}
+//						if (members.get(0).getUser().getIdLong() == bot.getJda().getSelfUser().getIdLong()) {
+//							role = serverRole;
+//							break;
+//						}
+//					}
+//				}
 				// Make sure the bot's role can interact with (manage) the target role
-				if (botRole != null && !botRole.canInteract(role)) {
-					return "I may not manage this role, make sure my role is higher-listed than it.";
+//				if (botRole != null && !botRole.canInteract(role)) {
+				if (!PermissionUtil.canInteract(guild.getSelfMember(), role)) {
+					return "I may not manage this role. Make sure my role is higher-listed than it.";
 				}
 				OReactionRoleKey key = CReactionRole.findOrCreate(guild.getIdLong(), args[1]);
 				String emoteId = "";

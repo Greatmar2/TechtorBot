@@ -270,12 +270,17 @@ public class JDAEvents extends ListenerAdapter {
 		guildMember.joinDate = new Timestamp(System.currentTimeMillis());
 		CGuildMember.insertOrUpdate(guildMember);
 
+		// PM owner if PM_USER_EVENTS is true
 		if (settings.getBoolValue(GSetting.PM_USER_EVENTS)) {
 			discordBot.out.sendPrivateMessage(guild.getOwner().getUser(),
 					String.format("[user-event] **%s#%s** joined the guild **%s**", user.getName(), user.getDiscriminator(), guild.getName()), null);
 		}
+		// Log the event in the guild log channel
 		discordBot.logGuildEvent(guild, "\uD83D\uDC64",
 				"**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator() + "** joined the guild");
+		// Add auto role if one is set
+		discordBot.autoRoleHandler.handle(guild, event.getMember());
+		// Welcome new users if enabled
 		if (settings.getBoolValue(GSetting.WELCOME_NEW_USERS)) {
 			TextChannel defaultChannel = discordBot.getDefaultChannel(guild);
 			if (defaultChannel != null && defaultChannel.canTalk() && !discordBot.security.isBotAdmin(user.getIdLong())) {

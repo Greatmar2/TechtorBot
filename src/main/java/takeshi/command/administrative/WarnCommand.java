@@ -24,33 +24,33 @@ import takeshi.db.model.OModerationCase;
 import takeshi.main.DiscordBot;
 
 public class WarnCommand extends AbstractModActionCommand {
-    @Override
-    public String getDescription() {
-        return "Give a user a warning";
-    }
+	@Override
+	public String getDescription() {
+		return "Give a user a warning";
+	}
 
-    @Override
-    public String getCommand() {
-        return "warn";
-    }
+	@Override
+	public String getCommand() {
+		return "warn";
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[0];
+	}
 
-    @Override
-    protected OModerationCase.PunishType getPunishType() {
-        return OModerationCase.PunishType.WARN;
-    }
+	@Override
+	protected OModerationCase.PunishType getPunishType() {
+		return OModerationCase.PunishType.WARN;
+	}
 
-    @Override
-    protected Permission getRequiredPermission() {
-        return Permission.KICK_MEMBERS;
-    }
+	@Override
+	protected Permission getRequiredPermission() {
+		return Permission.KICK_MEMBERS;
+	}
 
-    @Override
-    protected boolean punish(DiscordBot bot, Guild guild, Member member) {
-        return true;
-    }
+	@Override
+	protected boolean punish(DiscordBot bot, Guild guild, Member member) {
+		return true;
+	}
 }

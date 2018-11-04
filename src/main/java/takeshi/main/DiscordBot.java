@@ -50,6 +50,7 @@ import takeshi.event.JDAEventManager;
 import takeshi.event.JDAEvents;
 import takeshi.guildsettings.GSetting;
 import takeshi.handler.AutoReplyHandler;
+import takeshi.handler.AutoRoleHandler;
 import takeshi.handler.ChatBotHandler;
 import takeshi.handler.CommandHandler;
 import takeshi.handler.CommandReactionHandler;
@@ -83,6 +84,7 @@ public class DiscordBot {
 	public MusicReactionHandler musicReactionHandler = null;
 	public PollHandler pollHandler = null;
 	public RoleReactionHandler roleReactionHandler = null;
+	public AutoRoleHandler autoRoleHandler = null;
 	public CommandReactionHandler commandReactionHandler = null;
 	public GameHandler gameHandler = null;
 	private AutoReplyHandler autoReplyhandler;
@@ -341,6 +343,7 @@ public class DiscordBot {
 		out = new OutgoingContentHandler(this);
 		musicReactionHandler = new MusicReactionHandler(this);
 		roleReactionHandler = new RoleReactionHandler(this);
+		autoRoleHandler = new AutoRoleHandler(this);
 		pollHandler = new PollHandler(this);
 		commandReactionHandler = new CommandReactionHandler();
 		autoReplyhandler = new AutoReplyHandler(this);
@@ -425,8 +428,8 @@ public class DiscordBot {
 			data.put("shard_id", shardId);
 			data.put("shard_count", totShards);
 		}
-		Unirest.post("https://bots.discord.pw/api/bots/" + getJda().getSelfUser().getId() + "/stats").header("Authorization", BotConfig.BOT_TOKEN_BOTS_DISCORD_PW)
-				.header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
+		Unirest.post("https://bots.discord.pw/api/bots/" + getJda().getSelfUser().getId() + "/stats")
+				.header("Authorization", BotConfig.BOT_TOKEN_BOTS_DISCORD_PW).header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
 	}
 
 	public void sendStatsToDiscordbotsOrg() {
@@ -439,8 +442,8 @@ public class DiscordBot {
 			data.put("shard_id", shardId);
 			data.put("shard_count", totShards);
 		}
-		Unirest.post("https://discordbots.org/api/bots/" + getJda().getSelfUser().getId() + "/stats").header("Authorization", BotConfig.BOT_TOKEN_DISCORDBOTS_ORG)
-				.header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
+		Unirest.post("https://discordbots.org/api/bots/" + getJda().getSelfUser().getId() + "/stats")
+				.header("Authorization", BotConfig.BOT_TOKEN_DISCORDBOTS_ORG).header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
 	}
 
 	public void initOnce() {

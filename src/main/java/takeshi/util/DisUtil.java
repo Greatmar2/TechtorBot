@@ -287,12 +287,19 @@ public class DisUtil {
 	public static User findUser(TextChannel channel, String searchText) {
 		if (DisUtil.isUserMention(searchText)) {
 			return channel.getJDA().getUserById(DisUtil.mentionToId(searchText));
-		} else {
-			Member member = DisUtil.findUserIn(channel, searchText);
-			if (member != null) {
-				return member.getUser();
-			}
 		}
+
+		try {
+			return channel.getJDA().getUserById(searchText);
+		} catch (NumberFormatException e) {
+
+		}
+
+		Member member = DisUtil.findUserIn(channel, searchText);
+		if (member != null) {
+			return member.getUser();
+		}
+
 		return null;
 	}
 
@@ -407,7 +414,7 @@ public class DisUtil {
 			if (role.getName().equalsIgnoreCase(roleName)) {
 				return role;
 			}
-			if (containsRole == null && role.getName().contains(roleName)) {
+			if (containsRole == null && role.getName().toLowerCase().contains(roleName.toLowerCase())) {
 				containsRole = role;
 			}
 		}

@@ -19,7 +19,12 @@ package takeshi.command.administrative.modactions;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
@@ -29,65 +34,65 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
-
 abstract public class AbstractModActionCommand extends AbstractCommand {
-    public AbstractModActionCommand() {
-        super();
-    }
+	public AbstractModActionCommand() {
+		super();
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{
-                String.format("%s <user>     //%s user from guild", getCommand(), getPunishType().getDescription()),
-        };
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] { String.format("%s <user>     //%s user from guild", getCommand(), getPunishType().getDescription()), };
+	}
 
-    protected abstract OModerationCase.PunishType getPunishType();
+	protected abstract OModerationCase.PunishType getPunishType();
 
-    protected abstract Permission getRequiredPermission();
+	protected abstract Permission getRequiredPermission();
 
-    @Override
-    public CommandVisibility getVisibility() {
-        return CommandVisibility.PUBLIC;
-    }
+	@Override
+	public CommandVisibility getVisibility() {
+		return CommandVisibility.PUBLIC;
+	}
 
-    protected abstract boolean punish(DiscordBot bot, Guild guild, Member member);
+	protected abstract boolean punish(DiscordBot bot, Guild guild, Member member);
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        TextChannel chan = (TextChannel) channel;
-        Guild guild = chan.getGuild();
-        if (getRequiredPermission() != null) {
-            if (!PermissionUtil.checkPermission(guild.getMember(author), getRequiredPermission())) {
-                return Templates.no_permission.formatGuild(channel);
-            }
-            if (!PermissionUtil.checkPermission(guild.getSelfMember(), getRequiredPermission())) {
-                return Templates.permission_missing.formatGuild(channel, getRequiredPermission().name());
-            }
-        }
-        if (args.length == 0) {
-            return Templates.command.modaction_empty.formatGuild(channel, getPunishType().getKeyword().toLowerCase());
-        }
-        User targetUser = DisUtil.findUser(chan, Joiner.on(" ").join(args));
-        if (targetUser == null) {
-            return Templates.config.cant_find_user.formatGuild(channel, Joiner.on(" ").join(args));
-        }
-        if (targetUser.getId().equals(guild.getSelfMember().getUser().getId())) {
-            return Templates.command.modaction_not_self.formatGuild(channel, getPunishType().getKeyword().toLowerCase());
-        }
-        if (!PermissionUtil.canInteract(guild.getSelfMember(), guild.getMember(targetUser)) || !punish(bot, guild, guild.getMember(targetUser))) {
-            return Templates.command.modaction_failed.formatGuild(channel, getPunishType().getKeyword().toLowerCase(), targetUser);
-        }
-        int caseId = CModerationCase.insert(guild, targetUser, author, getPunishType(), null);
-        TextChannel modlogChannel = bot.getModlogChannel(guild.getIdLong());
-        if (modlogChannel != null) {
-            bot.queue.add(modlogChannel.sendMessage(CModerationCase.buildCase(guild, caseId)),
-                    message -> {
-                        OModerationCase modCase = CModerationCase.findById(caseId);
-                        modCase.messageId = message.getId();
-                        CModerationCase.update(modCase);
-                    });
-        }
-        return Templates.command.modaction_success.formatGuild(channel, targetUser, getPunishType().getVerb().toLowerCase());
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		TextChannel chan = (TextChannel) channel;
+		Guild guild = chan.getGuild();
+		if (getRequiredPermission() != null) {
+			if (!PermissionUtil.checkPermission(guild.getMember(author), getRequiredPermission())) {
+				return Templates.no_permission.formatGuild(channel);
+			}
+			if (!PermissionUtil.checkPermission(guild.getSelfMember(), getRequiredPermission())) {
+				return Templates.permission_missing.formatGuild(channel, getRequiredPermission().name());
+			}
+		}
+		if (args.length == 0) {
+			return Templates.command.modaction_empty.formatGuild(channel, getPunishType().getKeyword().toLowerCase());
+		}
+		User targetUser = DisUtil.findUser(chan, Joiner.on(" ").join(args));
+		if (targetUser == null) {
+			return Templates.config.cant_find_user.formatGuild(channel, Joiner.on(" ").join(args));
+		}
+		if (targetUser.getId().equals(guild.getSelfMember().getUser().getId())) {
+			return Templates.command.modaction_not_self.formatGuild(channel, getPunishType().getKeyword().toLowerCase());
+		}
+		if (!PermissionUtil.canInteract(guild.getSelfMember(), guild.getMember(targetUser))) {
+			return "I can't act on that user. Make sure I am higher-ranked than all their roles.";
+//			return Templates.permission_missing.formatGuild(channel, targetUser);
+		}
+		if (!punish(bot, guild, guild.getMember(targetUser))) {
+			return Templates.command.modaction_failed.formatGuild(channel, getPunishType().getKeyword().toLowerCase(), targetUser);
+		}
+		int caseId = CModerationCase.insert(guild, targetUser, author, getPunishType(), null);
+		TextChannel modlogChannel = bot.getModlogChannel(guild.getIdLong());
+		if (modlogChannel != null) {
+			bot.queue.add(modlogChannel.sendMessage(CModerationCase.buildCase(guild, caseId)), message -> {
+				OModerationCase modCase = CModerationCase.findById(caseId);
+				modCase.messageId = message.getId();
+				CModerationCase.update(modCase);
+			});
+		}
+		return Templates.command.modaction_success.formatGuild(channel, targetUser, getPunishType().getVerb().toLowerCase());
+	}
 }
