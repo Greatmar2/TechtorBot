@@ -16,15 +16,19 @@
 
 package takeshi.command.fun;
 
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Channel;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.Message.Attachment;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -70,36 +74,62 @@ public class SayCommand extends AbstractCommand {
 
 	@Override
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		boolean atLeastAdmin = bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN);
+		TextChannel targetChannel = null;
+		List<Attachment> attachs = inputMessage.getAttachments();
 		if (args.length > 0) {
-			TextChannel targetChannel = null;
 			if (channel.getType() == ChannelType.TEXT) {
 				if (DisUtil.isChannelMention(args[0])) {
 					targetChannel = inputMessage.getMentionedChannels().get(0);
 //					channel.sendMessage(inputMessage).queue();
 					args = Arrays.copyOfRange(args, 1, args.length);
-				} else if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)
-						&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
-					inputMessage.delete().queue();
 				}
 			}
 			String output = Joiner.on(" ").join(args);
+			if (DisUtil.isUserMention(output) && !atLeastAdmin) {
+				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
+			}
 			// Calculate queue delay based on message length
 			long queueDelay = 0L;
 			if (targetChannel != null) {
-				queueDelay = (output.length() * 1000) / 6;
+				channel = targetChannel;
+				channel.sendTyping().queue();
+				queueDelay = (output.length() * 1000) / 8;
 			}
-			if (DisUtil.isUserMention(output) && !bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)) {
-				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
-			}
-			if (targetChannel == null) {
-				return output;
-			} else {
-				targetChannel.sendTyping().queue();
-				targetChannel.sendMessage(output).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
+
+			if (!output.trim().isEmpty()) {
+				MessageBuilder outMessage = new MessageBuilder(output);
+
+				// If the user is at least a guild admin, they can make the bot send an image.
+				if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
+					File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
+					if (attachs.get(0).download(temp)) {
+						if (targetChannel == null && PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(),
+								Permission.MESSAGE_MANAGE)) {
+							inputMessage.delete().queue();
+						}
+						bot.queue.add(channel.sendFile(temp, outMessage.build()), message -> temp.delete());
+					}
+
+				} else {
+					channel.sendMessage(outMessage.build()).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
+				}
 				return "";
 			}
-		} else {
-			return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
+
 		}
+		// If message is blank but there's still an image
+		if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
+			File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
+			if (attachs.get(0).download(temp)) {
+				if (targetChannel == null
+						&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+					inputMessage.delete().queue();
+				}
+				bot.queue.add(channel.sendFile(temp), message -> temp.delete());
+			}
+			return "";
+		}
+		return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
 	}
 }
