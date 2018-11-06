@@ -23,45 +23,41 @@ import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 
 /**
- * !invite
- * Instructions on how to invite the bot to a discord server
+ * !invite Instructions on how to invite the bot to a discord server
  */
 public class InviteCommand extends AbstractCommand {
-    public InviteCommand() {
-        super();
-    }
+	public InviteCommand() {
+		super();
+	}
 
-    @Override
-    public String getDescription() {
-        return "Provides an invite link to add the bot to your server.";
-    }
+	@Override
+	public String getDescription() {
+		return "Provides an invite link to add the bot to your server.";
+	}
 
-    @Override
-    public String getCommand() {
-        return "invite";
-    }
+	@Override
+	public String getCommand() {
+		return "invite";
+	}
 
-    @Override
-    public boolean canBeDisabled() {
-        return false;
-    }
+	@Override
+	public boolean canBeDisabled() {
+		return false;
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{};
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] {};
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{
-                "inv"
-        };
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] { "inv" };
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        return "I am honored you'd want to invite me! :hugging:\n" +
-                "You can add me to your guild/server with the following link:\n" +
-                "https://discordapp.com/oauth2/authorize?client_id=" + channel.getJDA().getSelfUser().getId() + "&scope=bot&permissions=339209287";
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		return "You can add me to your guild (server) with the following link:\n" + "https://discordapp.com/oauth2/authorize?client_id="
+				+ channel.getJDA().getSelfUser().getId() + "&scope=bot&permissions=339209287";
+	}
 }

@@ -17,6 +17,7 @@
 package takeshi.command.fun;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
@@ -82,21 +83,19 @@ public class SayCommand extends AbstractCommand {
 				}
 			}
 			String output = Joiner.on(" ").join(args);
-			if (DisUtil.isUserMention(output)) {
-				if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)) {
-					if (targetChannel == null) {
-						return output;
-					} else {
-						targetChannel.sendMessage(output).queue();
-						return "";
-					}
-				}
+			// Calculate queue delay based on message length
+			long queueDelay = 0L;
+			if (targetChannel != null) {
+				queueDelay = (output.length() * 1000) / 6;
+			}
+			if (DisUtil.isUserMention(output) && !bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN)) {
 				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
 			}
 			if (targetChannel == null) {
 				return output;
 			} else {
-				targetChannel.sendMessage(output).queue();
+				targetChannel.sendTyping().queue();
+				targetChannel.sendMessage(output).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
 				return "";
 			}
 		} else {
