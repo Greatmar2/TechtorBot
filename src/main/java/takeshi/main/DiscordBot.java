@@ -63,6 +63,7 @@ import takeshi.handler.PollHandler;
 import takeshi.handler.RoleReactionHandler;
 import takeshi.handler.SecurityHandler;
 import takeshi.handler.discord.RestQueue;
+import takeshi.permission.SimpleRank;
 import takeshi.role.RoleRankings;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
@@ -383,7 +384,7 @@ public class DiscordBot {
 		if (author == null || (author.isBot() && !security.isInteractionBot(author.getIdLong()))) {
 			return;
 		}
-		if (security.isBanned(author)) {
+		if (security.isBanned(author) || !security.getSimpleRank(author, channel).isAtLeast(SimpleRank.USER)) {
 			return;
 		}
 		GuildSettings settings = GuildSettings.get(guild.getIdLong());

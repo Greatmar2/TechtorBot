@@ -39,12 +39,9 @@ public class MusicUtil {
 	/**
 	 * Returns a fancy now playing message
 	 *
-	 * @param player
-	 *                   the musicplayer
-	 * @param record
-	 *                   the record playing
-	 * @param member
-	 *                   the song requester
+	 * @param player the musicplayer
+	 * @param record the record playing
+	 * @param member the song requester
 	 * @return an embedded message
 	 */
 	public static MessageEmbed nowPlayingMessage(MusicPlayerHandler player, OMusic record, Member member) {
@@ -52,11 +49,13 @@ public class MusicUtil {
 		Guild guild = player.getJDA().getGuildById(player.getGuild());
 
 		embed.setThumbnail("https://i.ytimg.com/vi/" + record.youtubecode + "/0.jpg");
+		embed.setAuthor(record.artist, "https://www.youtube.com/results?search_query=" + record.artist);
 		embed.setTitle("\uD83C\uDFB6 " + record.youtubeTitle, null);
-		embed.setDescription("[source](https://www.youtube.com/watch?v=" + record.youtubecode + ") | `"
-				+ DisUtil.getCommandPrefix(player.getGuild()) + "pl` - " + player.getPlaylist().title);
-		embed.addField("duration", Misc.getDurationString(player.player.getPlayingTrack().getPosition() / 1000) + " / "
-				+ Misc.getDurationString(record.duration), true);
+		embed.setDescription("[Source](https://www.youtube.com/watch?v=" + record.youtubecode + ") | `" + DisUtil.getCommandPrefix(player.getGuild()) + "pl` - "
+				+ player.getPlaylist().title);
+		embed.addField("Duration",
+//				Misc.getDurationString(player.player.getPlayingTrack().getPosition() / 1000) + " / " + 
+				Misc.getDurationString(record.duration), true);
 		String optionsField = "";
 		if (player.getRequiredVotes() != 1) {
 			optionsField += "Skips req.: " + player.getRequiredVotes() + "\n";
@@ -82,31 +81,27 @@ public class MusicUtil {
 				x.append(queue.get(i).youtubeTitle).append("\n");
 			}
 			if (queue.size() > show) {
-				x.append(".. and **").append(queue.size() - 3).append("** more");
+				x.append("... and **").append(queue.size() - 3).append("** more");
 			}
 			embed.addField("Next up", x.toString(), true);
 		}
 		if (member != null) {
-			embed.setFooter("requested by " + member.getEffectiveName(), member.getUser().getAvatarUrl());
+			embed.setFooter("Requested by " + member.getEffectiveName(), member.getUser().getAvatarUrl());
 		} else {
-			embed.setFooter("You add to your playlist and vote to skip with reactions", null);
+			embed.setFooter("Add to your playlist or vote to skip with reactions", null);
 		}
 		return embed.build();
 	}
 
 	public static String nowPlayingMessageNoEmbed(MusicPlayerHandler player, OMusic record) {
-		return "[`" + DisUtil.getCommandPrefix(player.getGuild()) + "pl` " + player.getPlaylist().title
-				+ "] \uD83C\uDFB6 " + record.youtubeTitle;
+		return "[`" + DisUtil.getCommandPrefix(player.getGuild()) + "pl` " + player.getPlaylist().title + "] \uD83C\uDFB6 " + record.youtubeTitle;
 	}
 
 	/**
-	 * @param startTime
-	 *                      timestamp (in seconds) of the moment the song started
-	 *                      playing
-	 * @param duration
-	 *                      current song length in seconds
-	 * @param volume
-	 *                      volume of the player
+	 * @param startTime timestamp (in seconds) of the moment the song started
+	 *                  playing
+	 * @param duration  current song length in seconds
+	 * @param volume    volume of the player
 	 * @return a formatted mediaplayer
 	 */
 	public static String getMediaplayerProgressbar(long startTime, long duration, float volume, boolean isPaused) {
@@ -120,8 +115,7 @@ public class MusicUtil {
 				bar.append(BLOCK_INACTIVE);
 			}
 		}
-		bar.append(" [").append(Misc.getDurationString(current)).append("/").append(Misc.getDurationString(duration))
-				.append("] ");
+		bar.append(" [").append(Misc.getDurationString(current)).append("/").append(Misc.getDurationString(duration)).append("] ");
 		if (volume >= SOUND_TRESHHOLD) {
 			bar.append(SOUND_LOUD);
 		} else {

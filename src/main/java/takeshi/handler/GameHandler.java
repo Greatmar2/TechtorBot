@@ -77,8 +77,7 @@ public class GameHandler {
 				}
 				gameClassMap.put(abstractGame.getCodeName(), gameClass);
 				gameInfoMap.put(abstractGame.getCodeName(), abstractGame);
-			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
-					| InvocationTargetException e) {
+			} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
 		}
@@ -105,8 +104,7 @@ public class GameHandler {
 		}
 	}
 
-	public final boolean executeReaction(User player, MessageChannel channel, MessageReaction reaction,
-			String messageId) {
+	public final boolean executeReaction(User player, MessageChannel channel, MessageReaction reaction, String messageId) {
 		if (!channel.getType().equals(ChannelType.TEXT) || !reactionMessages.containsKey(messageId)) {
 			return false;
 		}
@@ -126,8 +124,7 @@ public class GameHandler {
 	}
 
 	private boolean isInPlayMode(User user, TextChannel channel) {
-		return usersInPlayMode.containsKey(user.getIdLong())
-				&& usersInPlayMode.get(user.getIdLong()).getChannelId().equals(channel.getId());
+		return usersInPlayMode.containsKey(user.getIdLong()) && usersInPlayMode.get(user.getIdLong()).getChannelId().equals(channel.getId());
 	}
 
 	private void enterPlayMode(TextChannel channel, User player) {
@@ -144,8 +141,7 @@ public class GameHandler {
 
 	public boolean isGameInput(TextChannel channel, User player, String message) {
 		if (GuildSettings.getBoolFor(channel, GSetting.MODULE_GAMES)) {
-			return isInPlayMode(player, channel)
-					|| message.startsWith(DisUtil.getCommandPrefix(channel) + COMMAND_NAME);
+			return isInPlayMode(player, channel) || message.startsWith(DisUtil.getCommandPrefix(channel) + COMMAND_NAME);
 		}
 		return false;
 	}
@@ -175,7 +171,7 @@ public class GameHandler {
 		String[] args = message.split(" ");
 		String gameMessage = executeGameMove(args, player, channel);
 		if (isInPlayMode(player, channel)) {
-			gameMessage = "*note: " + Templates.playmode_in_mode_warning.formatGuild(channel) + "*\n" + gameMessage;
+			gameMessage = "*Note: " + Templates.playmode_in_mode_warning.formatGuild(channel) + "*\n" + gameMessage;
 		} else if ("".equals(message) || "help".equals(message)) {
 			gameMessage = showList(channel);
 		}
@@ -217,8 +213,7 @@ public class GameHandler {
 	private AbstractGame<?> createGameInstance(String gameCode) {
 		try {
 			return gameClassMap.get(gameCode).getConstructor().newInstance();
-		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException
-				| InvocationTargetException e) {
+		} catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -297,10 +292,9 @@ public class GameHandler {
 
 	private String showList(TextChannel channel) {
 		String prefix = DisUtil.getCommandPrefix(channel);
-		return "A list of all available games\n" + getFormattedGameList() + "\n" + "To start a game you can type `"
-				+ prefix + COMMAND_NAME + " <@user> <gamecode>`\n\n" + "To stop a game type `" + prefix + COMMAND_NAME
-				+ " cancel`\n\n" + "You can enter *gamemode* by typing `" + prefix + COMMAND_NAME + " enter` \n"
-				+ "This makes it so that you don't have to prefix your messages with `" + prefix + COMMAND_NAME + "`";
+		return "A list of all available games\n" + getFormattedGameList() + "\n" + "To start a game you can type `" + prefix + COMMAND_NAME
+				+ " <@user> <gamecode>`\n\n" + "To stop a game type `" + prefix + COMMAND_NAME + " cancel`\n\n" + "You can enter *gamemode* by typing `"
+				+ prefix + COMMAND_NAME + " enter` \n" + "This makes it so that you don't have to prefix your messages with `" + prefix + COMMAND_NAME + "`";
 	}
 
 	public String executeGameMove(String[] args, User player, TextChannel channel) {

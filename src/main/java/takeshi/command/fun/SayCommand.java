@@ -103,6 +103,7 @@ public class SayCommand extends AbstractCommand {
 				// If the user is at least a guild admin, they can make the bot send an image.
 				if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
 					File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
+					temp.mkdir();
 					if (attachs.get(0).download(temp)) {
 						if (targetChannel == null && PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(),
 								Permission.MESSAGE_MANAGE)) {
@@ -121,6 +122,7 @@ public class SayCommand extends AbstractCommand {
 		// If message is blank but there's still an image
 		if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
 			File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
+			temp.mkdir();
 			if (attachs.get(0).download(temp)) {
 				if (targetChannel == null
 						&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {

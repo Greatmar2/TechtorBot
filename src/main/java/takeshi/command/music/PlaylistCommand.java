@@ -74,29 +74,21 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "-- using playlists ", "playlist mine          //use your default playlist",
-				"playlist mine <code>   //use your playlist with code",
-				"playlist lists         //see what playlists you have ",
-				"playlist guildlists    //see what playlists the guild has",
-				"playlist guild         //use the guild's default playlist",
-				"playlist guild <code>  //use the guild's playlist with code",
-				"playlist global        //use the global playlist",
-				"playlist settings      //check the settings for the active playlist",
-				"playlist               //info about the current playlist",
-				"playlist list <page>   //Shows the music in the playlist", "",
-				"-- Adding and removing music from the playlist",
+		return new String[] { // "-- using playlists ",
+				"playlist mine          //use your default", "playlist mine <code>   //use your playlist with code",
+				"playlist lists         //see what you have ", "playlist guildlists    //see what the guild has",
+				"playlist guild         //use the guild's default", "playlist guild <code>  //use the guild's playlist with code",
+				"playlist global        //use the global playlist", "playlist settings      //check the settings",
+				"playlist               //info about current playlist", "playlist list <page>   //Shows the music", "",
+//				"-- Adding and removing music from the playlist",
 				// "playlist show <pagenumber> //shows music in the playlist",
-				"playlist add                         //adds the currently playing music",
-				"playlist add guild                   //adds the currently playing to the guild list",
+				"playlist add                  //adds the current music", "playlist add guild           //adds the current to the guild list",
 				// "playlist add <youtubelink> //adds the link to the playlist",
-				"playlist remove                      //removes the currently playing music",
+				"playlist remove               //removes the current music",
 				// "playlist remove <youtubelink> //removes song from playlist",
-				"playlist removeall                   //removes ALL songs from playlist", "",
-				"-- Changing the settings of the playlist",
-				"playlist title <new title>           //edit the playlist title",
-				"playlist edit <new type>             //change the edit-type of a playlist",
-				"playlist play <id>                   //plays a track from the playlist",
-				"playlist playtype <new type>         //change the play-type of a playlist",
+				"playlist removeall            //removes ALL songs", "", // "-- Changing the settings of the playlist",
+				"playlist title <new title>    //edit the title", "playlist edit <new type>     //change the edit-type",
+				"playlist play <id>            //plays a track", "playlist playtype <new type> //change the play-type",
 				// "playlist visibility <new visibility> //change who can see the playlist",
 				// "playlist reset //reset settings to default",
 		};
@@ -130,14 +122,12 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 		String cp = DisUtil.getCommandPrefix(channel);
 		if (args.length == 0) {
 			if (playlist.isGlobalList()) {
-				return Templates.music.playlist_using.formatGuild(channel, playlist.title) + " See `" + cp
-						+ "pl help` for more info\n" + "You can switch to a different playlist with `" + cp
-						+ "pl guild` to the guild's list or `" + cp + "pl mine` to your own one";
+				return Templates.music.playlist_using.formatGuild(channel, playlist.title) + " See `" + cp + "pl help` for more info\n"
+						+ "You can switch to a different playlist with `" + cp + "pl guild` to the guild's list or `" + cp + "pl mine` to your own one";
 			}
-			return Templates.music.playlist_using.formatGuild(channel, playlist.title) + "Settings "
-					+ makeSettingsTable(playlist) + "To add the currently playing music to the playlist use `"
-					+ DisUtil.getCommandPrefix(channel) + "pl add`, check out `" + DisUtil.getCommandPrefix(channel)
-					+ "help pl` for more info";
+			return Templates.music.playlist_using.formatGuild(channel, playlist.title) + "Settings " + makeSettingsTable(playlist)
+					+ "To add the currently playing music to the playlist use `" + DisUtil.getCommandPrefix(channel) + "pl add`, check out `"
+					+ DisUtil.getCommandPrefix(channel) + "help pl` for more info";
 		}
 		OPlaylist newlist = null;
 		ArrayList<OPlaylist> playlists = null;
@@ -204,8 +194,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 			}
 			if (canAddTracks(playlist, (TextChannel) channel, author, userRank)) {
 				if (CPlaylist.isInPlaylist(playlist.id, nowPlayingId)) {
-					return Templates.playlist.music_already_added.formatGuild(channel, musicRec.youtubeTitle,
-							playlist.title);
+					return Templates.playlist.music_already_added.formatGuild(channel, musicRec.youtubeTitle, playlist.title);
 				}
 				CPlaylist.addToPlayList(playlist.id, nowPlayingId);
 				return Templates.playlist.music_added.formatGuild(channel, musicRec.youtubeTitle, playlist.title);
@@ -246,8 +235,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 			bot.queue.add(channel.sendMessage(makePage(guild, playlist, currentPage, maxPage)), msg -> {
 				if (maxPage > 1) {
 					bot.commandReactionHandler.addReactionListener(((TextChannel) channel).getGuild().getIdLong(), msg,
-							getReactionListener(author.getIdLong(),
-									new PaginationInfo<>(currentPage, maxPage, guild, finalPlaylist)));
+							getReactionListener(author.getIdLong(), new PaginationInfo<>(currentPage, maxPage, guild, finalPlaylist)));
 				}
 			});
 			return "";
@@ -279,13 +267,11 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 				for (OPlaylist.EditType editType : OPlaylist.EditType.values()) {
 					if (editType.getId() < 1)
 						continue;
-					tbl.add(Arrays.asList((editType == playlist.getEditType() ? "*" : " ") + editType.getId(),
-							editType.toString(), editType.getDescription()));
+					tbl.add(Arrays.asList((editType == playlist.getEditType() ? "*" : " ") + editType.getId(), editType.toString(), editType.getDescription()));
 				}
 				return "the edit-type of the playlist. A `*` indicates the selected option\n"
-						+ Misc.makeAsciiTable(Arrays.asList("#", "Code", "Description"), tbl, null) + "\n"
-						+ "To change the type use the \\#, for instance `" + DisUtil.getCommandPrefix(channel)
-						+ "pl edit 3` sets it to PUBLIC_ADD \n\n"
+						+ Misc.makeAsciiTable(Arrays.asList("#", "Code", "Description"), tbl, null) + "\n" + "To change the type use the \\#, for instance `"
+						+ DisUtil.getCommandPrefix(channel) + "pl edit 3` sets it to PUBLIC_ADD \n\n"
 						+ "Private in a guild context refers to users with admin privileges";
 			}
 			if (args[1].matches("^\\d+$")) {
@@ -306,13 +292,12 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 				for (OPlaylist.Visibility visibility : OPlaylist.Visibility.values()) {
 					if (visibility.getId() < 1)
 						continue;
-					tbl.add(Arrays.asList((visibility == playlist.getVisibility() ? "*" : " ") + visibility.getId(),
-							visibility.toString(), visibility.getDescription()));
+					tbl.add(Arrays.asList((visibility == playlist.getVisibility() ? "*" : " ") + visibility.getId(), visibility.toString(),
+							visibility.getDescription()));
 				}
 				return "the visibility-type of the playlist. A `*` indicates the selected option\n"
-						+ Misc.makeAsciiTable(Arrays.asList("#", "Code", "Description"), tbl, null) + "\n"
-						+ "To change the type use the \\#, for instance `" + DisUtil.getCommandPrefix(channel)
-						+ "pl vis 3` sets it to guild \n\n"
+						+ Misc.makeAsciiTable(Arrays.asList("#", "Code", "Description"), tbl, null) + "\n" + "To change the type use the \\#, for instance `"
+						+ DisUtil.getCommandPrefix(channel) + "pl vis 3` sets it to guild \n\n"
 						+ "Private in a guild-setting refers to users with admin privileges, use the number in the first column to set it";
 			}
 			if (args.length > 1 && args[1].matches("^\\d+$")) {
@@ -351,8 +336,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 				for (OPlaylist.PlayType playType : OPlaylist.PlayType.values()) {
 					if (playType.getId() < 1)
 						continue;
-					tbl.add(Arrays.asList((playType == playlist.getPlayType() ? "*" : " ") + playType.getId(),
-							playType.toString(), playType.getDescription()));
+					tbl.add(Arrays.asList((playType == playlist.getPlayType() ? "*" : " ") + playType.getId(), playType.toString(), playType.getDescription()));
 				}
 				return "the play-type of the playlist. A `*` indicates the selected option\n"
 						+ Misc.makeAsciiTable(Arrays.asList("#", "Code", "Description"), tbl, null) + "\n"
@@ -389,14 +373,10 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 	/**
 	 * Check if a user has admin privilege on a playlist
 	 *
-	 * @param playlist
-	 *                     the playlist to check
-	 * @param channel
-	 *                     the channel where its invoked
-	 * @param invoker
-	 *                     the user who invoked
-	 * @param userRank
-	 *                     rank of the user
+	 * @param playlist the playlist to check
+	 * @param channel  the channel where its invoked
+	 * @param invoker  the user who invoked
+	 * @param userRank rank of the user
 	 * @return true if the user is at least a guild admin
 	 */
 	private boolean isPlaylistAdmin(OPlaylist playlist, TextChannel channel, User invoker, SimpleRank userRank) {
@@ -415,20 +395,14 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 	/**
 	 * can an invoker add/remove tracks?
 	 *
-	 * @param playlist
-	 *                     the playlist to check
-	 * @param channel
-	 *                     the channel where its invoked
-	 * @param invoker
-	 *                     the user who invoked
-	 * @param userRank
-	 *                     rank of the user
-	 * @param isAdding
-	 *                     adding or removing? false for removing
+	 * @param playlist the playlist to check
+	 * @param channel  the channel where its invoked
+	 * @param invoker  the user who invoked
+	 * @param userRank rank of the user
+	 * @param isAdding adding or removing? false for removing
 	 * @return can the user add/remove tracks?
 	 */
-	private boolean canEditPlaylist(OPlaylist playlist, TextChannel channel, User invoker, SimpleRank userRank,
-			boolean isAdding) {
+	private boolean canEditPlaylist(OPlaylist playlist, TextChannel channel, User invoker, SimpleRank userRank, boolean isAdding) {
 		switch (playlist.getEditType()) {
 		case PUBLIC_AUTO:
 		case PUBLIC_FULL:
@@ -498,8 +472,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 	private String makeSettingsTable(OPlaylist playlist) {
 		List<List<String>> body = new ArrayList<>();
 		String owner = playlist.isGlobalList() ? "Techtor"
-				: playlist.isGuildList() ? CGuild.findById(playlist.guildId).name
-						: CUser.findById(playlist.ownerId).name;
+				: playlist.isGuildList() ? CGuild.findById(playlist.guildId).name : CUser.findById(playlist.ownerId).name;
 		body.add(Arrays.asList("Title", playlist.title));
 		if (!playlist.isGlobalList()) {
 			body.add(Arrays.asList("code", playlist.code));
@@ -519,22 +492,18 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 		for (OMusic item : items) {
 			playlistTable.append(String.format("`%11s` | %s\n", item.youtubecode, item.youtubeTitle));
 		}
-		return String.format("Music in the playlist: %s\n", playlist.title) + playlistTable + "\n"
-				+ String.format("Showing [page %s/%s]", currentPage, maxPage) + "\n\n"
-				+ "_You can use the `#` to remove an item from the playlist._" + "\n\n" + "_Example:_ `"
-				+ DisUtil.getCommandPrefix(guild) + "pl del QnTYIBU7Ueg`";
+		return String.format("Music in the playlist: %s\n", playlist.title) + playlistTable + "\n" + String.format("Showing [page %s/%s]", currentPage, maxPage)
+				+ "\n\n" + "_You can use the `#` to remove an item from the playlist._" + "\n\n" + "_Example:_ `" + DisUtil.getCommandPrefix(guild)
+				+ "pl del QnTYIBU7Ueg`";
 	}
 
 	@Override
-	public CommandReactionListener<PaginationInfo<OPlaylist>> getReactionListener(long userId,
-			PaginationInfo<OPlaylist> initialData) {
-		CommandReactionListener<PaginationInfo<OPlaylist>> listener = new CommandReactionListener<>(userId,
-				initialData);
+	public CommandReactionListener<PaginationInfo<OPlaylist>> getReactionListener(long userId, PaginationInfo<OPlaylist> initialData) {
+		CommandReactionListener<PaginationInfo<OPlaylist>> listener = new CommandReactionListener<>(userId, initialData);
 		listener.setExpiresIn(TimeUnit.MINUTES, 2);
 		listener.registerReaction(Emojibet.PREV_TRACK, o -> {
 			if (listener.getData().previousPage()) {
-				String txt = makePage(initialData.getGuild(), initialData.getExtra(),
-						listener.getData().getCurrentPage(), listener.getData().getMaxPage());
+				String txt = makePage(initialData.getGuild(), initialData.getExtra(), listener.getData().getCurrentPage(), listener.getData().getMaxPage());
 				if (txt.length() > 2000) {
 					txt = txt.substring(0, 1999);
 				}
@@ -543,8 +512,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 		});
 		listener.registerReaction(Emojibet.NEXT_TRACK, o -> {
 			if (listener.getData().nextPage()) {
-				String txt = makePage(initialData.getGuild(), initialData.getExtra(),
-						listener.getData().getCurrentPage(), listener.getData().getMaxPage());
+				String txt = makePage(initialData.getGuild(), initialData.getExtra(), listener.getData().getCurrentPage(), listener.getData().getMaxPage());
 				if (txt.length() > 2000) {
 					txt = txt.substring(0, 1999);
 				}

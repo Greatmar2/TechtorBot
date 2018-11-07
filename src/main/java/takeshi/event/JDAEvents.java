@@ -124,8 +124,9 @@ public class JDAEvents extends ListenerAdapter {
 			String message = "Thanks for adding me to your guild!\n" + "To see what I can do you can type the command `" + cmdPre + "help`.\n"
 					+ "Most of my features are opt-in, which means that you'll have to enable them first. Admins can use `" + cmdPre
 					+ "config` to change my settings.\n"
-					+ "Most commands has a help portion which can be accessed by typing help after the command; For instance: `" + cmdPre + "skip help`\n\n"
-					+ "If you need help or would like to give feedback, feel free to let me know on either `" + cmdPre + "discord` or `" + cmdPre + "github`";
+					+ "Most commands have a help portion which can be accessed by typing help after the command; For instance: `" + cmdPre + "skip help`\n\n"
+					+ "If you need help or would like to give feedback, feel free to let me know on `" + cmdPre + "discord`";
+//					+ "If you need help or would like to give feedback, feel free to let me know on either `" + cmdPre + "discord` or `" + cmdPre + "github`";
 			switch (guildCheck) {
 			case TEST_GUILD:
 				message += "\n\n:warning: The guild has been categorized as a test guild. This means that I might leave this guild when the next cleanup happens.\n"

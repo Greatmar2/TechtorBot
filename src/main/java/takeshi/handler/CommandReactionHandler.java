@@ -51,7 +51,8 @@ public class CommandReactionHandler {
 		}
 		if (!reactions.get(guildId).containsKey(message.getIdLong())) {
 			for (String emote : handler.getEmotes()) {
-				message.addReaction(emote).complete();
+//				message.addReaction(emote).complete();
+				message.addReaction(emote).queue();
 			}
 			reactions.get(guildId).put(message.getIdLong(), handler);
 		}
