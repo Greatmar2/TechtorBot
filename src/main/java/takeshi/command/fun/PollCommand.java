@@ -99,7 +99,7 @@ public class PollCommand extends AbstractCommand {
 		}
 
 		int argStart = 1;
-		long threadWaitTime = 0L;
+//		long threadWaitTime = 0L;
 		EmbedBuilder emPoll = new EmbedBuilder();
 		OPoll poll = new OPoll();
 		switch (args[0].toLowerCase()) {
@@ -111,7 +111,7 @@ public class PollCommand extends AbstractCommand {
 		case "timed": // If it is a timed poll, first set up the time handlers. Also can start timer
 						// thread later for times <= 10 min.
 			argStart += 2;
-			Date now = new Date();
+//			Date now = new Date();
 			TimeUnit unit;
 			switch (args[1].toLowerCase()) {
 //			case "s":

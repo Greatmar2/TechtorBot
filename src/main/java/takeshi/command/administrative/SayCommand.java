@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package takeshi.command.fun;
+package takeshi.command.administrative;
 
 import java.io.File;
 import java.util.Arrays;
@@ -34,6 +34,7 @@ import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
+import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
@@ -64,7 +65,8 @@ public class SayCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "say <anything>" };
+		return new String[] {
+				"say [channel] <anything>\t//Repeats what you said, either in the current channel or in the channel mentioned just before the message" };
 	}
 
 	@Override
@@ -73,65 +75,68 @@ public class SayCommand extends AbstractCommand {
 	}
 
 	@Override
+	public CommandVisibility getVisibility() {
+		return CommandVisibility.PUBLIC;
+	}
+
+	@Override
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-		boolean atLeastAdmin = bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_ADMIN);
-		TextChannel targetChannel = null;
-		List<Attachment> attachs = inputMessage.getAttachments();
-		if (args.length > 0) {
-			if (channel.getType() == ChannelType.TEXT) {
-				if (DisUtil.isChannelMention(args[0])) {
-					targetChannel = inputMessage.getMentionedChannels().get(0);
+		// boolean atLeastAdmin = bot.security.getSimpleRank(author,
+		// channel).isAtLeast(SimpleRank.BOT_ADMIN);
+		if (bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.BOT_ADMIN)) {
+			TextChannel targetChannel = null;
+			List<Attachment> attachs = inputMessage.getAttachments();
+
+			String output = " ";
+			if (args.length > 0) {
+				if (channel.getType() == ChannelType.TEXT) {
+					if (DisUtil.isChannelMention(args[0])) {
+						targetChannel = inputMessage.getMentionedChannels().get(0);
 //					channel.sendMessage(inputMessage).queue();
-					args = Arrays.copyOfRange(args, 1, args.length);
+						args = Arrays.copyOfRange(args, 1, args.length - 1);
+					}
 				}
+				output = Joiner.on(" ").join(args);
 			}
-			String output = Joiner.on(" ").join(args);
-			if (DisUtil.isUserMention(output) && !atLeastAdmin) {
-				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
-			}
+//			if (DisUtil.isUserMention(output) && !atLeastAdmin) {
+//				return Templates.command.SAY_CONTAINS_MENTION.formatGuild(channel);
+//			}
 			// Calculate queue delay based on message length
 			long queueDelay = 0L;
 			if (targetChannel != null) {
 				channel = targetChannel;
 				channel.sendTyping().queue();
-				queueDelay = (output.length() * 1000) / 8;
+				queueDelay = (output.length() * 1000) / 6;
 			}
 
-			if (!output.trim().isEmpty()) {
-				MessageBuilder outMessage = new MessageBuilder(output);
+			MessageBuilder outMessage = new MessageBuilder(output);
 
-				// If the user is at least a guild admin, they can make the bot send an image.
-				if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
-					File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
-					temp.mkdir();
-					if (attachs.get(0).download(temp)) {
-						if (targetChannel == null && PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(),
-								Permission.MESSAGE_MANAGE)) {
-							inputMessage.delete().queue();
-						}
-						bot.queue.add(channel.sendFile(temp, outMessage.build()), message -> temp.delete());
-					}
-
-				} else {
-					channel.sendMessage(outMessage.build()).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
+			// If the user is at least a guild admin, they can make the bot send an image.
+			if (attachs.size() > 0 && attachs.get(0).isImage()) { // atLeastAdmin &&
+				File tempFolder = new File("tmp");
+				if (!tempFolder.isDirectory()) { // Make tmp folder if none exists
+					tempFolder.mkdir();
 				}
-				return "";
+				File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
+				if (attachs.get(0).download(temp)) {
+
+					bot.queue.add(channel.sendFile(temp, outMessage.build()), message -> temp.delete());
+				}
+
+			} else if (!output.trim().isEmpty()) {
+				channel.sendMessage(outMessage.build()).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
+			} else {
+
+				return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
 			}
 
-		}
-		// If message is blank but there's still an image
-		if (atLeastAdmin && attachs.size() > 0 && attachs.get(0).isImage()) {
-			File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
-			temp.mkdir();
-			if (attachs.get(0).download(temp)) {
-				if (targetChannel == null
-						&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
-					inputMessage.delete().queue();
-				}
-				bot.queue.add(channel.sendFile(temp), message -> temp.delete());
+			if (targetChannel == null
+					&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+				inputMessage.delete().queue();
 			}
 			return "";
+		} else {
+			return Templates.no_permission.formatGuild(channel);
 		}
-		return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
 	}
 }

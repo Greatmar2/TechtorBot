@@ -73,8 +73,7 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 	@Override
 	public String[] getUsage() {
 		return new String[] { "help            //shows commands grouped by categories, navigable by reactions ",
-				"help full       //index of all commands, in case you don't have reactions",
-				"help <command>  //usage for that command" };
+				"help full       //index of all commands, in case you don't have reactions", "help <command>  //usage for that command" };
 	}
 
 	@Override
@@ -83,14 +82,12 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "Use full execution";
 	}
 
 	@Override
-	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		String commandPrefix = GuildSettings.getFor(channel, GSetting.COMMAND_PREFIX);
 		boolean showHelpInPM = GuildSettings.getBoolFor(channel, GSetting.HELP_IN_PM);
 		if (args.length > 0 && !args[0].equals("full")) {
@@ -98,14 +95,14 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 			if (c != null) {
 				EmbedBuilder ret = new EmbedBuilder();
 				ret.setColor(QuickEmbedBuilder.DEFAULT_COL);
-				ret.setTitle(" :information_source: Help > " + c.getCommand() + "\n");
+				ret.setTitle(" :information_source: " + c.getCommand());
 				ArrayList<String> aliases = new ArrayList<>();
 				aliases.add(commandPrefix + c.getCommand());
 				for (String alias : c.getAliases()) {
 					aliases.add(commandPrefix + alias);
 				}
 				ret.setDescription(Misc.makeTable(c.getDescription()));
-				ret.addField("Accessible through\n", Misc.makeTable(aliases, 16, 3), false);
+				ret.addField("Accessible through", Misc.makeTable(aliases, 16, 3), false);
 				// ret.addField(Emojibet.NOTEPAD + " **Description**\n",
 				// Misc.makeTable(c.getDescription()), false);
 				if (c.getUsage().length > 0) {
@@ -118,8 +115,7 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 				}
 				return new MessageBuilder(ret);
 			}
-			return QuickEmbedBuilder.embedStringColor(Templates.command.help.donno.formatGuild(channel),
-					QuickEmbedBuilder.ERROR_COL);
+			return QuickEmbedBuilder.embedStringColor(Templates.command.help.donno.formatGuild(channel), QuickEmbedBuilder.ERROR_COL);
 		}
 		SimpleRank userRank = bot.security.getSimpleRank(author, channel);
 		EmbedBuilder ret = new EmbedBuilder();
@@ -127,15 +123,14 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 		ret.setTitle("I know the following commands: \n\n");
 		if ((args.length == 0 || !args[0].equals("full")) && channel instanceof TextChannel) {
 			TextChannel textChannel = (TextChannel) channel;
-			if (PermissionUtil.checkPermission(textChannel, textChannel.getGuild().getSelfMember(),
-					Permission.MESSAGE_EMBED_LINKS, Permission.MESSAGE_ADD_REACTION)) {
+			if (PermissionUtil.checkPermission(textChannel, textChannel.getGuild().getSelfMember(), Permission.MESSAGE_EMBED_LINKS,
+					Permission.MESSAGE_ADD_REACTION)) {
 				HashMap<CommandCategory, ArrayList<String>> map = getCommandMap(userRank);
 				CommandCategory cat = CommandCategory.getFirstWithPermission(userRank);
 				bot.queue.add(
-						channel.sendMessage(writeFancyEmbed(writeFancyDescription(channel, cat, map.keySet()),
-								cat.getDisplayName(), Misc.makeTable(map.get(cat)), writeFancyFooter(channel)).build()),
-						msg -> bot.commandReactionHandler.addReactionListener(
-								((TextChannel) channel).getGuild().getIdLong(), msg,
+						channel.sendMessage(writeFancyEmbed(writeFancyDescription(channel, cat, map.keySet()), cat.getDisplayName(),
+								Misc.makeTable(map.get(cat)), writeFancyFooter(channel)).build()),
+						msg -> bot.commandReactionHandler.addReactionListener(((TextChannel) channel).getGuild().getIdLong(), msg,
 								getReactionListener(author.getIdLong(), new ReactionData(userRank, cat))));
 
 				return new MessageBuilder();
@@ -147,15 +142,11 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 		}
 		// ret += styleTablePerCategory(getCommandMap(userRank));
 		if (showHelpInPM) {
-			bot.out.sendPrivateMessage(author,
-					ret + "for more details about a command use **" + commandPrefix + "help <command>**\n"
-							+ ":exclamation: In private messages the prefix for commands is **"
-							+ BotConfig.BOT_COMMAND_PREFIX + "**");
-			return QuickEmbedBuilder.embedStringColor(Templates.command.help.send_private.formatGuild(channel),
-					QuickEmbedBuilder.WARN_COL);
+			bot.out.sendPrivateMessage(author, ret + "for more details about a command use **" + commandPrefix + "help <command>**\n"
+					+ ":exclamation: In private messages the prefix for commands is **" + BotConfig.BOT_COMMAND_PREFIX + "**");
+			return QuickEmbedBuilder.embedStringColor(Templates.command.help.send_private.formatGuild(channel), QuickEmbedBuilder.WARN_COL);
 		} else {
-			ret.addField("Details", "for more details about a command use **" + commandPrefix + "help <command>**",
-					false);
+			ret.addField("Details", "for more details about a command use **" + commandPrefix + "help <command>**", false);
 			return new MessageBuilder(ret);
 		}
 
@@ -168,8 +159,7 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 		}
 		AbstractCommand[] commandObjects = CommandHandler.getCommandObjects();
 		for (AbstractCommand command : commandObjects) {
-			if (!command.isListed() || !command.isEnabled()
-					|| !userRank.isAtLeast(command.getCommandCategory().getRankRequired())) {
+			if (!command.isListed() || !command.isEnabled() || !userRank.isAtLeast(command.getCommandCategory().getRankRequired())) {
 				continue;
 			}
 			if (!commandList.containsKey(command.getCommandCategory())) {
@@ -182,12 +172,10 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 	}
 
 	private Field[] fieldPerCategory(HashMap<CommandCategory, ArrayList<String>> map) {
-		CommandCategory[] keys = Arrays.stream(CommandCategory.values()).filter(category -> map.containsKey(category))
-				.toArray(CommandCategory[]::new);
+		CommandCategory[] keys = Arrays.stream(CommandCategory.values()).filter(category -> map.containsKey(category)).toArray(CommandCategory[]::new);
 		Field[] fields = new Field[keys.length];
 		for (int i = 0; i < keys.length; i++) {
-			fields[i] = new Field(keys[i].getEmoticon() + " " + keys[i].getDisplayName(),
-					Misc.makeTable(map.get(keys[i])), false);
+			fields[i] = new Field(keys[i].getEmoticon() + " " + keys[i].getDisplayName(), Misc.makeTable(map.get(keys[i])), false);
 		}
 		return fields;
 	}
@@ -216,8 +204,7 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 		return ret;
 	}
 
-	private String writeFancyDescription(MessageChannel channel, CommandCategory active,
-			Set<CommandCategory> categories) {
+	private String writeFancyDescription(MessageChannel channel, CommandCategory active, Set<CommandCategory> categories) {
 		StringBuilder header = new StringBuilder();
 
 		for (CommandCategory cat : CommandCategory.values()) {
@@ -236,9 +223,8 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 	}
 
 	private String writeFancyFooter(MessageChannel channel) {
-		return "To see without reactions use `" + DisUtil.getCommandPrefix(channel) + "help full`\n"
-				+ "For more details about a command use `" + DisUtil.getCommandPrefix(channel)
-				+ "help <command>`\nUse the reactions below to switch between the pages";
+		return "To see without reactions use `" + DisUtil.getCommandPrefix(channel) + "help full`\n" + "For more details about a command use `"
+				+ DisUtil.getCommandPrefix(channel) + "help <command>`\nUse the reactions below to switch between the pages";
 	}
 
 	@Override
@@ -253,10 +239,8 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 					}
 					listener.getData().setActiveCategory(category);
 					MessageChannel channel = message.getChannel();
-					message.editMessage(writeFancyEmbed(writeFancyDescription(channel, category, map.keySet()),
-							category.getDisplayName(), Misc.makeTable(map.get(category)), writeFancyFooter(channel))
-									.build())
-							.complete();
+					message.editMessage(writeFancyEmbed(writeFancyDescription(channel, category, map.keySet()), category.getDisplayName(),
+							Misc.makeTable(map.get(category)), writeFancyFooter(channel)).build()).complete();
 					// Misc.clearReactions(message, userId);
 					// message.editMessage(
 					// writeFancyHeader(message.getChannel(), category, map.keySet()) +

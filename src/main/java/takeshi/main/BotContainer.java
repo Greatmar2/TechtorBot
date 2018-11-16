@@ -393,7 +393,8 @@ public class BotContainer {
 		}
 		for (DiscordBot shard : shards) {
 			setLastAction(shard.getShardId(), System.currentTimeMillis());
-			shard.pollHandler.initGuilds(shard);
+			shard.pollHandler.initGuilds();
+			shard.raffleHandler.initGuilds();
 		}
 	}
 

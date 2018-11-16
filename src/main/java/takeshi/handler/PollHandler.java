@@ -41,13 +41,13 @@ import takeshi.main.DiscordBot;
 import takeshi.util.Misc;
 
 public class PollHandler {
-	// {guild-id, {message-id, {emoji, role-id}}
+	// {guild-id, {message-id, end}}
 	private final Map<Long, Map<Long, Timestamp>> listeners;
-//	private final DiscordBot discordBot;
+	private final DiscordBot bot;
 //	private boolean lock = false;
 
-	public PollHandler(DiscordBot discordBot) {
-//		this.discordBot = discordBot;
+	public PollHandler(DiscordBot bot) {
+		this.bot = bot;
 		listeners = new ConcurrentHashMap<>();
 	}
 
@@ -78,7 +78,7 @@ public class PollHandler {
 		return false;
 	}
 
-	public void initGuilds(DiscordBot bot) {
+	public void initGuilds() {
 		List<Guild> guilds = bot.getJda().getGuilds();
 
 		for (Guild guild : guilds) {
@@ -225,29 +225,27 @@ public class PollHandler {
 		}
 	}
 
-	public boolean handleReaction(Guild guild, String message, TextChannel channel, User user, ReactionEmote reaction, boolean adding) {
+	public boolean handleReaction(Guild guild, long message, TextChannel channel, User user, ReactionEmote reaction, boolean adding) {
 		boolean ret = false;
 		if (adding) {
 			long guildId = guild.getIdLong();
 			initGuild(guildId, false);
-			if (listeners.containsKey(guildId)) {
-				List<OPoll> polls = CPoll.getMessagesForGuild(guildId);
-				for (OPoll poll : polls) {
-					if (!poll.single || poll.id <= 0) {
-						continue;
-					}
-					ret = true;
-					Message mess = channel.getMessageById(message).complete();
-					List<MessageReaction> reactions = mess.getReactions();
-					for (MessageReaction messageReaction : reactions) {
+			if (listeners.containsKey(guildId) && listeners.get(guildId).containsKey(message)) {
+				OPoll poll = CPoll.findBy(guildId, message);
+				ret = true;
+				if (!poll.single || poll.id <= 0) {
+					return ret;
+				}
+				Message mess = channel.getMessageById(message).complete();
+				List<MessageReaction> reactions = mess.getReactions();
+				for (MessageReaction messageReaction : reactions) {
 //						boolean debug = GuildSettings.getBoolFor(channel, GSetting.DEBUG);
 //						if (debug) {
 //							channel.sendMessage(String.format("[DEBUG] Single responses: checking `%s` vs `%s`", messageReaction.getReactionEmote(), reaction))
 //									.queue();
 //						}
-						if (!messageReaction.getReactionEmote().equals(reaction)) {
-							messageReaction.removeReaction(user).queue();
-						}
+					if (!messageReaction.getReactionEmote().equals(reaction)) {
+						messageReaction.removeReaction(user).queue();
 					}
 				}
 			}

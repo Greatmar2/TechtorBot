@@ -60,6 +60,7 @@ import takeshi.handler.MusicPlayerHandler;
 import takeshi.handler.MusicReactionHandler;
 import takeshi.handler.OutgoingContentHandler;
 import takeshi.handler.PollHandler;
+import takeshi.handler.RaffleHandler;
 import takeshi.handler.RoleReactionHandler;
 import takeshi.handler.SecurityHandler;
 import takeshi.handler.discord.RestQueue;
@@ -83,6 +84,7 @@ public class DiscordBot {
 	public SecurityHandler security = null;
 	public OutgoingContentHandler out = null;
 	public MusicReactionHandler musicReactionHandler = null;
+	public RaffleHandler raffleHandler = null;
 	public PollHandler pollHandler = null;
 	public RoleReactionHandler roleReactionHandler = null;
 	public AutoRoleHandler autoRoleHandler = null;
@@ -345,6 +347,7 @@ public class DiscordBot {
 		musicReactionHandler = new MusicReactionHandler(this);
 		roleReactionHandler = new RoleReactionHandler(this);
 		autoRoleHandler = new AutoRoleHandler(this);
+		raffleHandler = new RaffleHandler(this);
 		pollHandler = new PollHandler(this);
 		commandReactionHandler = new CommandReactionHandler();
 		autoReplyhandler = new AutoReplyHandler(this);

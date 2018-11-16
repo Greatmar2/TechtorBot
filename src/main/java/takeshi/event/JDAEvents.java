@@ -222,7 +222,9 @@ public class JDAEvents extends ListenerAdapter {
 		if (!discordBot.gameHandler.executeReaction(e.getUser(), e.getChannel(), e.getReaction(), e.getMessageId())) {
 			if (!discordBot.musicReactionHandler.handle(e.getMessageIdLong(), channel, e.getUser(), e.getReactionEmote(), adding)) {
 				if (!discordBot.roleReactionHandler.handle(e.getMessageId(), channel, e.getUser(), e.getReactionEmote(), adding)) {
-					discordBot.pollHandler.handleReaction(e.getGuild(), e.getMessageId(), channel, e.getUser(), e.getReactionEmote(), adding);
+					if (!discordBot.pollHandler.handleReaction(e.getGuild(), e.getMessageIdLong(), channel, e.getUser(), e.getReactionEmote(), adding)) {
+						discordBot.raffleHandler.handleReaction(e.getGuild(), e.getMessageIdLong(), channel, e.getUser(), e.getReactionEmote(), adding);
+					}
 				}
 			}
 		}
