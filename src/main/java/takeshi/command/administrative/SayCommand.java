@@ -106,7 +106,10 @@ public class SayCommand extends AbstractCommand {
 			if (targetChannel != null) {
 				channel = targetChannel;
 				channel.sendTyping().queue();
-				queueDelay = (output.length() * 1000) / 6;
+				queueDelay = Math.min((output.length() * 1000) / 7, 30000); // Cap at 30 seconds
+				for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make sure it doesn't.
+					channel.sendTyping().queueAfter(i, TimeUnit.MILLISECONDS);
+				}
 			}
 
 			MessageBuilder outMessage = new MessageBuilder(output);

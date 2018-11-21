@@ -25,7 +25,6 @@ import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Message.Attachment;
 import net.dv8tion.jda.core.entities.MessageChannel;
@@ -38,8 +37,6 @@ import takeshi.db.controllers.CRaffle;
 import takeshi.db.controllers.CRaffleBlacklist;
 import takeshi.db.model.ORaffle;
 import takeshi.db.model.ORaffleBlacklist;
-import takeshi.guildsettings.GSetting;
-import takeshi.handler.GuildSettings;
 import takeshi.handler.RaffleHandler;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
@@ -71,7 +68,7 @@ public class RaffleCommand extends AbstractCommand {
 	@Override
 	public String[] getUsage() {
 		return new String[] { "raf list",
-				"raf new [#chan] [@owner] [prize]    //Creates a new raffle. If a channel is mentioned, the raffle will immediately be started.",
+				"raf new [#chan] [owner] [prize]    //Creates a new raffle. If a channel is mentioned, the raffle will immediately be started.",
 				"raf start <id> [chan] [del]    //Optionally auto-deletes raffle at end. Default: Current channel", "raf end <id>", "raf cancel <id>",
 				"raf delete <id>", "raf preview <id>    //Displays a preview of the raffle",
 				"raf owner <id> [owner]    //Raffle owner is shown and mentioned at end. Default: Command issuer",
@@ -80,7 +77,7 @@ public class RaffleCommand extends AbstractCommand {
 				"raf entrants <id> [entrants]    //Max entrants before the raffle auto-ends. Default: " + RaffleHandler.MAX_ENTRIES + " (current cap)",
 				"raf winners <id> [winners]    //Number of winners selected. Default: 1",
 				"raf thumb <id>    //Attatched image displays in the top right. Default: None",
-				"raf image <id>    //Attatched image displays at the bottom. Default: None", "raf blacklist [<@user> [id] [y/n]]" };
+				"raf image <id>    //Attatched image displays at the bottom. Default: None", "raf blacklist [<user> [id] [y/n]]" };
 	}
 
 	@Override
@@ -95,16 +92,18 @@ public class RaffleCommand extends AbstractCommand {
 
 	@Override
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-		Guild guild = ((TextChannel) channel).getGuild();
-		boolean debug = GuildSettings.getBoolFor(channel, GSetting.DEBUG);
-		if (!(bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.BOT_ADMIN))) {
+		TextChannel chan = (TextChannel) channel;
+		Guild guild = (chan).getGuild();
+//		boolean debug = GuildSettings.getBoolFor(chan, GSetting.DEBUG);
+		if (!(bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, chan).isAtLeast(SimpleRank.BOT_ADMIN))) {
 			return Templates.no_permission.formatGuild(guild.getIdLong());
 		}
-		if (!PermissionUtil.checkPermission((TextChannel) channel, guild.getSelfMember(), Permission.MESSAGE_ADD_REACTION)) {
+		if (!PermissionUtil.checkPermission(chan, guild.getSelfMember(), Permission.MESSAGE_ADD_REACTION)) {
 			return Templates.permission_missing.formatGuild(guild.getIdLong(), Permission.MESSAGE_ADD_REACTION);
 		}
 		if (args.length == 0) {
-			StringBuilder usage = new StringBuilder(":gear: **Options**:```php\n");
+			StringBuilder usage = new StringBuilder(
+					":gear: **Usage**:\nYou can make a quick-raffle that will instantly start by mentioning a channel with the `new` command. This raffle will be deleted after it completes.\nIf you wish to set up any fields beside the owner and prize (or to keep a raffle after it has ended), you must create a raffle (and copy the new raffle ID) and then set each field individually (using the raffle's ID as a key).\nYou may want to set up a raffle in a hidden bot admin channel, then start the completed raffle in your desired public channel.\nWhen specifying a user, either @mention them, provide their user ID, or provide one word that will be searched.\n```php\n");
 			for (String line : getUsage()) {
 				usage.append(line).append("\n");
 			}
@@ -141,10 +140,15 @@ public class RaffleCommand extends AbstractCommand {
 					r.duration = 1;
 					argStart++;
 				}
-				if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
-					Member owner = inputMessage.getMentionedMembers().get(0);
-					r.ownerId = owner.getUser().getIdLong();
-					argStart++;
+				if (args.length > argStart) { // && DisUtil.isUserMention(args[argStart])) {
+//					Member owner = inputMessage.getMentionedMembers().get(0);
+//					r.ownerId = owner.getUser().getIdLong();
+//					argStart++;
+					User owner = DisUtil.findUser(chan, args[argStart]);
+					if (owner != null) {
+						r.ownerId = owner.getIdLong();
+						argStart++;
+					}
 				} else {
 					r.ownerId = author.getIdLong();
 				}
@@ -180,8 +184,16 @@ public class RaffleCommand extends AbstractCommand {
 			} else if (args[0].equalsIgnoreCase("blacklist") || args[0].equalsIgnoreCase("bl")) { // Blacklist user from all or particular raffles
 				if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
 					ORaffleBlacklist bl = new ORaffleBlacklist();
-					User user = inputMessage.getMentionedUsers().get(0);
-					argStart++;
+					// Only looking for mentions of users to prevent accidental banning
+//					User user = inputMessage.getMentionedUsers().get(0);
+//					argStart++;
+
+					User user = DisUtil.findUser(chan, args[argStart]);
+					if (user == null) {
+						return "Can't find user `" + args[argStart] + "`. Only one word is searched, the rest is assumed to be subsequent arguments.";
+					} else {
+						argStart++;
+					}
 
 					bl.guildId = guild.getIdLong();
 					bl.userId = user.getIdLong();
@@ -244,7 +256,7 @@ public class RaffleCommand extends AbstractCommand {
 						startChan = inputMessage.getMentionedChannels().get(0);
 						argStart++;
 					} else {
-						startChan = (TextChannel) channel;
+						startChan = chan;
 					}
 					r.channelId = startChan.getIdLong();
 					// Delete on end
@@ -284,15 +296,19 @@ public class RaffleCommand extends AbstractCommand {
 				case "p":
 				case "pre":
 				case "preview": // raf preview <id>
-					r.channelId = channel.getIdLong();
+					r.channelId = chan.getIdLong();
 					bot.raffleHandler.displayRaffle(r, guild);
 					return "";
 				case "o":
 				case "own":
 				case "owner": // raf owner <id> [owner]
-					User owner = author;
-					if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
-						owner = inputMessage.getMentionedUsers().get(0);
+//					User owner = author;
+//					if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
+//						owner = inputMessage.getMentionedUsers().get(0);
+//					}
+					User owner = DisUtil.findUser(chan, Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length)));
+					if (owner == null) {
+						owner = author;
 					}
 					r.ownerId = owner.getIdLong();
 					CRaffle.update(r);
