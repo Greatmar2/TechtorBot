@@ -154,8 +154,10 @@ public class RaffleHandler {
 			List<MessageReaction> reactions = message.getReactions();
 			for (MessageReaction reaction : reactions) {
 				if (reaction.getReactionEmote().getName().equals(ENTRY_EMOJI)) {
-					if (reaction.getCount() > raffle.entrants)
+					if (reaction.getCount() > raffle.entrants) {
+						endRaffle(raffle, guild);
 						break;
+					}
 				}
 			}
 		}
