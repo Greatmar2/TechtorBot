@@ -29,7 +29,7 @@ import takeshi.db.model.ORaffle;
 
 public class CRaffle {
 	public static final int PRIZE_LENGTH = 100;
-	public static final int DESC_LENGTH = 250;
+	public static final int DESC_LENGTH = 500;
 	public static final int IMAGE_LENGTH = 150;
 
 	public static ORaffle findBy(long discordGuildId, int raffleId) {

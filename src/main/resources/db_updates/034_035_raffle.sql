@@ -4,7 +4,7 @@ CREATE TABLE raffle
   guild_id INT(11) NOT NULL,
   owner_id BIGINT(20) NOT NULL,
   prize VARCHAR(100) NOT NULL,
-  description VARCHAR(250),
+  description VARCHAR(500),
   duration SMALLINT(4),
   duration_unit VARCHAR(20),
   entrants SMALLINT(4),
