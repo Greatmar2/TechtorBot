@@ -192,6 +192,7 @@ public class RaffleHandler {
 					}
 //					reaction.removeReaction(guild.getSelfMember().getUser()).complete();
 					List<User> entrants = reaction.getUsers().complete();
+					numEntrants = entrants.size();
 					entrants.remove(guild.getSelfMember().getUser());
 					numEntrants = entrants.size();
 					List<ORaffleBlacklist> bls = CRaffleBlacklist.getForRaffle(guild.getIdLong(), raffle.id);
