@@ -48,6 +48,7 @@ public class RaffleHandler {
 	private final DiscordBot bot;
 	public static final String ENTRY_EMOJI = EmojiUtils.emojify(":inbox_tray:");
 	public static final int MAX_ENTRIES = 99;
+	public static final SimpleDateFormat TIMESTAMP_FORMATTER = new SimpleDateFormat("HH:mm dd/MMM/yyyy");
 //	private boolean lock = false;
 
 	public RaffleHandler(DiscordBot bot) {
@@ -183,13 +184,15 @@ public class RaffleHandler {
 				}
 				// Find the entry reaction, get entrants, remove self, select winners
 				List<MessageReaction> reactions = message.getReactions();
-				List<User> winners = new ArrayList<>();
+				List<Member> winners = new ArrayList<>();
+				int numEntrants = 0;
 				for (MessageReaction reaction : reactions) {
 					if (!reaction.getReactionEmote().getName().equals(ENTRY_EMOJI)) {
 						continue;
 					}
 //					reaction.removeReaction(guild.getSelfMember().getUser()).complete();
 					List<User> entrants = reaction.getUsers().complete();
+					numEntrants = entrants.size();
 					entrants.remove(guild.getSelfMember().getUser());
 					List<ORaffleBlacklist> bls = CRaffleBlacklist.getForRaffle(guild.getIdLong(), raffle.id);
 					for (int i = 0; i < bls.size(); i++) {
@@ -203,7 +206,7 @@ public class RaffleHandler {
 					}
 					for (int i = 0; i < raffle.winners && entrants.size() > 0; i++) {
 						int winner = (int) (Math.random() * entrants.size());
-						winners.add(entrants.get(winner));
+						winners.add(guild.getMember(entrants.get(winner)));
 						entrants.remove(winner);
 					}
 					break;
@@ -225,6 +228,7 @@ public class RaffleHandler {
 					output.setContent("No winners found for " + guild.getMemberById(raffle.ownerId).getAsMention() + "'s raffle.");
 				}
 				// Send raffle-end declaration
+				updateRaffle(raffle, guild, message, numEntrants, winners);
 				tchan.sendMessage(output.build()).queue();
 
 				// Update database
@@ -323,7 +327,7 @@ public class RaffleHandler {
 		rafEm.setDescription(raffle.description);
 		if (raffle.duration > 0) {
 			raffle.raffleEnd = new Timestamp(new Date().getTime() + raffle.durationUnit.toMillis(raffle.duration));
-			rafEm.addField("Raffle ends", new SimpleDateFormat("HH:mm dd/MMM/yyyy").format(raffle.raffleEnd), true);
+			rafEm.addField("Raffle ends", TIMESTAMP_FORMATTER.format(raffle.raffleEnd), true);
 		}
 		if (raffle.entrants != 99) {
 			rafEm.addField("Max entrants", raffle.entrants + "", true);
@@ -349,5 +353,49 @@ public class RaffleHandler {
 		mess.addReaction(ENTRY_EMOJI).queue();
 
 		return raffle;
+	}
+
+	public void updateRaffle(ORaffle raffle, Guild guild, Message message, int numEntrants, List<Member> winners) {
+		if (message.getEmbeds().size() == 0) { // Check that there is an embed in the message
+			return;
+		}
+		EmbedBuilder rafEm = new EmbedBuilder(message.getEmbeds().get(0)); // Get the raffle embed
+		rafEm.clearFields();
+//		List<Field> fields = rafEm.getFields(); // Get all fields
+//
+//		// Modify each field
+//		for (int i = 0; i < fields.size(); i++) {
+//			Field f = fields.get(i);
+//			switch (f.getName()) {
+//			case "Raffle ends":
+//				fields.set(i, new Field("Raffle ended", f.getValue(), f.isInline()));
+//				System.out.println(f.getValue());
+//				break;
+//			case "Max entrants":
+//				fields.set(i, new Field("Entrants", numEntrants + "", f.isInline()));
+//				break;
+//			case "Winners":
+//				String w = "";
+//				for (Member winner : winners) {
+//					w += winner.getEffectiveName() + "\n";
+//				}
+//				fields.set(i, new Field(f.getName(), w, f.isInline()));
+//				break;
+//			case "React to enter":
+//				fields.remove(i);
+//			}
+//		}
+
+		// Display all fields, not just the non-default ones.
+		rafEm.addField("Raffle ended", TIMESTAMP_FORMATTER.format(new Date()), true);
+		rafEm.addField("Entrants", numEntrants + "", true);
+		String w = "";
+		for (Member winner : winners) {
+			w += winner.getEffectiveName() + "\n";
+		}
+		rafEm.addField("Winners", w, true);
+
+		// Update message with modified embed
+		message.editMessage(rafEm.build()).queue();
 	}
 }
