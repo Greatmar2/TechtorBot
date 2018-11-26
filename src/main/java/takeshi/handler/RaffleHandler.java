@@ -18,6 +18,7 @@ package takeshi.handler;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,7 @@ public class RaffleHandler {
 	// {guild-id, {message-id, end}}
 	private final Map<Long, Map<Long, Timestamp>> listeners;
 	private final DiscordBot bot;
+	private final List<Long> runningRepeater = new ArrayList<>();
 	public static final String ENTRY_EMOJI = EmojiUtils.emojify(":inbox_tray:");
 	public static final int MAX_ENTRIES = 99;
 	public static final SimpleDateFormat TIMESTAMP_FORMATTER = new SimpleDateFormat("HH:mm dd/MMM/yyyy");
@@ -96,8 +98,12 @@ public class RaffleHandler {
 				}
 				addRaffle(guild.getIdLong(), raffle.messageId, raffle.raffleEnd);
 
+//				bot.getJda().getGuildById(396985657655951360L).getTextChannelById(505406509404913687L)
+//						.sendMessage("Startup: adding raffle listener for raffle " + raffle.id).queue();
+
 				// When initializing for the first time, start all the timers
-				if (bot != null) {
+				if (bot != null && raffle.duration > 0) {
+					// Schedule normal check
 					long waitTime = raffle.raffleEnd.getTime() - (new Date()).getTime() + 1000;
 					if (waitTime >= 0) {
 						bot.schedule(new Runnable() {
@@ -108,6 +114,11 @@ public class RaffleHandler {
 						}, waitTime, TimeUnit.MILLISECONDS);
 					} else {
 						bot.raffleHandler.checkRaffle(raffle, guild);
+					}
+					// Schedule hourly end-check
+					if (!runningRepeater.contains(guild.getIdLong())) {
+						runningRepeater.add(guild.getIdLong());
+						makeRepeatingRunner(guild, raffle);
 					}
 				}
 			}
@@ -127,7 +138,8 @@ public class RaffleHandler {
 		}
 	}
 
-	public void checkRaffles(Guild guild) {
+	public boolean checkRaffles(Guild guild) {
+		boolean allCleared = false;
 //		System.out.println("[DEBUG] Checking raffles for guild " + guild.getName());
 		long guildId = guild.getIdLong();
 		initGuild(guildId, false);
@@ -139,16 +151,25 @@ public class RaffleHandler {
 				if (raffle.id <= 0) {
 					continue;
 				}
-				checkRaffle(raffle, guild);
+				if (checkRaffle(raffle, guild))
+					raffles.remove(raffle);
 			}
+			if (raffles.size() == 0) {
+				allCleared = true;
+			}
+		} else {
+			allCleared = true;
 		}
 
+		return allCleared;
 	}
 
-	public void checkRaffle(ORaffle raffle, Guild guild) {
+	public boolean checkRaffle(ORaffle raffle, Guild guild) {
+		boolean ended = false;
 		// If the message has expired or the max entrants have been reached
 		if (raffle.raffleEnd != null && raffle.raffleEnd.getTime() != 0 && raffle.raffleEnd.before(new Date())) {
 			endRaffle(raffle, guild);
+			ended = true;
 		} else {
 			Message message = guild.getTextChannelById(raffle.channelId).getMessageById(raffle.messageId).complete();
 			List<MessageReaction> reactions = message.getReactions();
@@ -156,11 +177,13 @@ public class RaffleHandler {
 				if (reaction.getReactionEmote().getName().equals(ENTRY_EMOJI)) {
 					if (reaction.getCount() > raffle.entrants) {
 						endRaffle(raffle, guild);
+						ended = true;
 						break;
 					}
 				}
 			}
 		}
+		return ended;
 	}
 
 	public void checkRaffle(ORaffle raffle, Guild guild, MessageReaction reaction) {
@@ -302,14 +325,22 @@ public class RaffleHandler {
 		if (raf.messageId != 0L) {
 			addRaffle(raf.guildId, raf.messageId, raf.raffleEnd);
 			CRaffle.update(raf);
-			bot.schedule(new Runnable() {
+			if (raf.duration > 0) {
+				// Schedule standard end-check
+				bot.schedule(new Runnable() {
 
-				@Override
-				public void run() {
-					bot.raffleHandler.checkRaffle(raf, guild);
+					@Override
+					public void run() {
+						bot.raffleHandler.checkRaffle(raf, guild);
 
+					}
+				}, raf.durationUnit.toMillis(raf.duration) + 1000, TimeUnit.MILLISECONDS);
+				// Schedule hourly end-check
+				if (!runningRepeater.contains(guild.getIdLong())) {
+					runningRepeater.add(guild.getIdLong());
+					makeRepeatingRunner(guild, raf);
 				}
-			}, raf.durationUnit.toMillis(raf.duration) + 1000, TimeUnit.MILLISECONDS);
+			}
 		}
 	}
 
@@ -327,9 +358,19 @@ public class RaffleHandler {
 		rafEm.setColor(owner.getColor());
 		rafEm.setTitle(raffle.prize);
 		rafEm.setDescription(raffle.description);
+		String footer = "";
+		if (raffle.id != 0) {
+			footer += "[" + raffle.id + "] ";
+//			rafEm.setFooter("Raffle ID " + raffle.id, null);
+		}
 		if (raffle.duration > 0) {
 			raffle.raffleEnd = new Timestamp(new Date().getTime() + raffle.durationUnit.toMillis(raffle.duration));
-			rafEm.addField("Raffle ends", TIMESTAMP_FORMATTER.format(raffle.raffleEnd), true);
+			footer += "Raffle ends";
+//			rafEm.addField("Raffle ends", TIMESTAMP_FORMATTER.format(raffle.raffleEnd), true);
+			rafEm.setTimestamp(Instant.ofEpochMilli(raffle.raffleEnd.getTime()));
+		}
+		if (footer.length() > 0) {
+			rafEm.setFooter(footer, null);
 		}
 		if (raffle.entrants != 99) {
 			rafEm.addField("Max entrants", raffle.entrants + "", true);
@@ -343,9 +384,6 @@ public class RaffleHandler {
 		}
 		if (raffle.image.length() > 0) {
 			rafEm.setImage(raffle.image);
-		}
-		if (raffle.id != 0) {
-			rafEm.setFooter("Raffle ID " + raffle.id, null);
 		}
 
 		// Display the raffle and get the message ID.
@@ -389,7 +427,9 @@ public class RaffleHandler {
 //		}
 
 		// Display all fields, not just the non-default ones.
-		rafEm.addField("Raffle ended", TIMESTAMP_FORMATTER.format(new Date()), true);
+//		rafEm.addField("Raffle ended", TIMESTAMP_FORMATTER.format(new Date()), true);
+		rafEm.setFooter("[" + raffle.id + "] Raffle ended", null);
+		rafEm.setTimestamp(Instant.now());
 		rafEm.addField("Entrants", numEntrants + "", true);
 		String w = "";
 		for (Member winner : winners) {
@@ -399,5 +439,20 @@ public class RaffleHandler {
 
 		// Update message with modified embed
 		message.editMessage(rafEm.build()).queue();
+	}
+
+	private void makeRepeatingRunner(Guild guild, ORaffle raf) {
+		if (runningRepeater.contains(guild.getIdLong())) {
+			bot.schedule(new Runnable() {
+				@Override
+				public void run() {
+					if (bot.raffleHandler.checkRaffles(guild)) {
+						runningRepeater.remove(guild.getIdLong());
+					} else {
+						makeRepeatingRunner(guild, raf);
+					}
+				}
+			}, 1L, TimeUnit.HOURS);
+		}
 	}
 }

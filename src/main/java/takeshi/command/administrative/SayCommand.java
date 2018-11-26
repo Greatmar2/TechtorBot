@@ -115,7 +115,9 @@ public class SayCommand extends AbstractCommand {
 			MessageBuilder outMessage = new MessageBuilder(output);
 
 			// If the user is at least a guild admin, they can make the bot send an image.
-			if (attachs.size() > 0 && attachs.get(0).isImage()) { // atLeastAdmin &&
+			// Guild owner or above can send other files.
+			if (attachs.size() > 0 && (attachs.get(0).isImage() || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_OWNER))) { // atLeastAdmin
+																																						// &&
 				File tempFolder = new File("tmp");
 				if (!tempFolder.isDirectory()) { // Make tmp folder if none exists
 					tempFolder.mkdir();
