@@ -38,7 +38,6 @@ import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
-import takeshi.util.DisUtil;
 
 /**
  * !say make the bot say something
@@ -83,17 +82,18 @@ public class SayCommand extends AbstractCommand {
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		// boolean atLeastAdmin = bot.security.getSimpleRank(author,
 		// channel).isAtLeast(SimpleRank.BOT_ADMIN);
-		if (bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.BOT_ADMIN)) {
+		if (bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_BOT_ADMIN)) {
 			TextChannel targetChannel = null;
 			List<Attachment> attachs = inputMessage.getAttachments();
 
 			String output = " ";
 			if (args.length > 0) {
 				if (channel.getType() == ChannelType.TEXT) {
-					if (DisUtil.isChannelMention(args[0])) {
-						targetChannel = inputMessage.getMentionedChannels().get(0);
+					List<TextChannel> channels = inputMessage.getMentionedChannels();
+					if (channels.size() > 0) {
+						targetChannel = channels.get(0);
 //					channel.sendMessage(inputMessage).queue();
-						args = Arrays.copyOfRange(args, 1, args.length - 1);
+						args = Arrays.copyOfRange(args, 1, args.length);
 					}
 				}
 				output = Joiner.on(" ").join(args);
@@ -110,6 +110,8 @@ public class SayCommand extends AbstractCommand {
 				for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make sure it doesn't.
 					channel.sendTyping().queueAfter(i, TimeUnit.MILLISECONDS);
 				}
+			} else if (PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+				inputMessage.delete().queue();
 			}
 
 			MessageBuilder outMessage = new MessageBuilder(output);
@@ -131,13 +133,7 @@ public class SayCommand extends AbstractCommand {
 			} else if (!output.trim().isEmpty()) {
 				channel.sendMessage(outMessage.build()).queueAfter(queueDelay, TimeUnit.MILLISECONDS);
 			} else {
-
 				return Templates.command.SAY_WHATEXACTLY.formatGuild(channel);
-			}
-
-			if (targetChannel == null
-					&& PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
-				inputMessage.delete().queue();
 			}
 			return "";
 		} else {
