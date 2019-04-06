@@ -16,210 +16,215 @@
 
 package takeshi.games.meta;
 
-import net.dv8tion.jda.core.entities.User;
-import takeshi.main.BotConfig;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Random;
 
+import net.dv8tion.jda.core.entities.User;
+import takeshi.main.BotConfig;
+
 public abstract class AbstractGame<turnType extends GameTurn> {
-    private GameState gameState = GameState.OVER;
-    private User[] players;
-    private volatile int activePlayerIndex = 0;
-    private volatile int winnerIndex = -1;
-    private String lastPrefix = BotConfig.BOT_COMMAND_PREFIX;
-    private volatile long lastTurnTimestamp = System.currentTimeMillis();
+	private GameState gameState = GameState.OVER;
+	private User[] players;
+	private volatile int activePlayerIndex = 0;
+	private volatile int winnerIndex = -1;
+	private String lastPrefix = BotConfig.BOT_COMMAND_PREFIX;
+	private volatile long lastTurnTimestamp = System.currentTimeMillis();
 
-    public boolean isListed() {
-        return true;
-    }
+	public boolean isListed() {
+		return true;
+	}
 
-    public long getLastTurnTimestamp() {
-        return lastTurnTimestamp;
-    }
+	public long getLastTurnTimestamp() {
+		return lastTurnTimestamp;
+	}
 
-    public String getLastPrefix() {
-        return lastPrefix;
-    }
+	public String getLastPrefix() {
+		return lastPrefix;
+	}
 
-    public void setLastPrefix(String prefix) {
-        this.lastPrefix = prefix;
-    }
+	public void setLastPrefix(String prefix) {
+		this.lastPrefix = prefix;
+	}
 
-    /**
-     * gets a short name of the game, this name is used as input to create a new game and as an identifier in the database
-     *
-     * @return codeName of the game
-     */
-    public abstract String getCodeName();
+	/**
+	 * gets a short name of the game, this name is used as input to create a new
+	 * game and as an identifier in the database
+	 *
+	 * @return codeName of the game
+	 */
+	public abstract String getCodeName();
 
-    public boolean couldAddReactions() {
-        return GameState.READY.equals(gameState) && getReactions().length > 0;
-    }
+	public boolean couldAddReactions() {
+		return GameState.READY.equals(gameState) && getReactions().length > 0;
+	}
 
-    public abstract String[] getReactions();
+	public abstract String[] getReactions();
 
-    /**
-     * a full version of the name, this is used to display
-     *
-     * @return full game name
-     */
-    public abstract String getFullname();
+	public String[] getReactions(User player) {
+		return getReactions();
+	};
 
-    /**
-     * receives a new instance of turnType
-     *
-     * @return new instance of turnType
-     */
-    public final turnType getGameTurnInstance() {
-        Class<?> turnTypeClass = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-        try {
-            return (turnType) turnTypeClass.getConstructor().newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	public abstract boolean shouldClearReactionsEachTurn();
 
-    protected User getPlayer(int index) {
-        return players[index];
-    }
+	/**
+	 * a full version of the name, this is used to display
+	 *
+	 * @return full game name
+	 */
+	public abstract String getFullname();
 
-    protected int getActivePlayerIndex() {
-        return activePlayerIndex;
-    }
+	/**
+	 * receives a new instance of turnType
+	 *
+	 * @return new instance of turnType
+	 */
+	public final turnType getGameTurnInstance() {
+		Class<?> turnTypeClass = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		try {
+			return (turnType) turnTypeClass.getConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    protected User getActivePlayer() {
-        return players[activePlayerIndex];
-    }
+	protected User getPlayer(int index) {
+		return players[index];
+	}
 
-    protected void setWinner(int playerIndex) {
-        winnerIndex = playerIndex;
-    }
+	protected int getActivePlayerIndex() {
+		return activePlayerIndex;
+	}
 
-    protected int getWinnerIndex() {
-        return winnerIndex;
-    }
+	protected User getActivePlayer() {
+		return players[activePlayerIndex];
+	}
 
-    /**
-     * the total amount of players in a game
-     *
-     * @return total players
-     */
-    public abstract int getTotalPlayers();
+	protected void setWinner(int playerIndex) {
+		winnerIndex = playerIndex;
+	}
 
-    /**
-     * Resets the game
-     */
-    public void reset() {
-        winnerIndex = getTotalPlayers();
-        players = new User[getTotalPlayers()];
-        for (int i = 0; i < getTotalPlayers(); i++) {
-            players[i] = null;
-        }
-        gameState = GameState.INITIALIZING;
-    }
+	protected int getWinnerIndex() {
+		return winnerIndex;
+	}
 
+	/**
+	 * the total amount of players in a game
+	 *
+	 * @return total players
+	 */
+	public abstract int getTotalPlayers();
 
-    public GameState getGameState() {
-        return gameState;
-    }
+	/**
+	 * Resets the game
+	 */
+	public void reset() {
+		winnerIndex = getTotalPlayers();
+		players = new User[getTotalPlayers()];
+		for (int i = 0; i < getTotalPlayers(); i++) {
+			players[i] = null;
+		}
+		gameState = GameState.INITIALIZING;
+	}
 
-    /**
-     * attempts to play a turn
-     *
-     * @param player   the player
-     * @param turnInfo the details about the move
-     * @return turn successfully played?
-     */
-    public final boolean playTurn(User player, turnType turnInfo) {
-        if (!(gameState.equals(GameState.IN_PROGRESS) || gameState.equals(GameState.READY))) {
-            return false;
-        }
-        if (!isTurnOf(player) || !isValidMove(player, turnInfo)) {
-            return false;
-        }
-        doPlayerMove(player, turnInfo);
-        if (isTheGameOver()) {
-            gameState = GameState.OVER;
-        }
-        lastPrefix = turnInfo.getCommandPrefix();
-        endTurn();
-        lastTurnTimestamp = System.currentTimeMillis();
-        return true;
-    }
+	public GameState getGameState() {
+		return gameState;
+	}
 
-    /**
-     * adds a player to the game
-     *
-     * @param player the player
-     * @return if it added the player to the game or not
-     */
-    public final boolean addPlayer(User player) {
-        if (!gameState.equals(GameState.INITIALIZING)) {
-            return false;
-        }
-        for (int i = 0; i < getTotalPlayers(); i++) {
-            if (players[i] == null) {
-                players[i] = player;
-                if (i == (getTotalPlayers() - 1)) {
-                    activePlayerIndex = new Random().nextInt(getTotalPlayers());
-                    gameState = GameState.READY;
-                }
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * attempts to play a turn
+	 *
+	 * @param player   the player
+	 * @param turnInfo the details about the move
+	 * @return turn successfully played?
+	 */
+	public final boolean playTurn(User player, turnType turnInfo) {
+		if (!(gameState.equals(GameState.IN_PROGRESS) || gameState.equals(GameState.READY))) {
+			return false;
+		}
+		if (!isTurnOf(player) || !isValidMove(player, turnInfo)) {
+			return false;
+		}
+		doPlayerMove(player, turnInfo);
+		if (isTheGameOver()) {
+			gameState = GameState.OVER;
+		}
+		lastPrefix = turnInfo.getCommandPrefix();
+		endTurn();
+		lastTurnTimestamp = System.currentTimeMillis();
+		return true;
+	}
 
-    /**
-     * shifts the active player index over to the next one
-     */
-    private void endTurn() {
-        activePlayerIndex = (activePlayerIndex + 1) % getTotalPlayers();
-    }
+	/**
+	 * adds a player to the game
+	 *
+	 * @param player the player
+	 * @return if it added the player to the game or not
+	 */
+	public final boolean addPlayer(User player) {
+		if (!gameState.equals(GameState.INITIALIZING)) {
+			return false;
+		}
+		for (int i = 0; i < getTotalPlayers(); i++) {
+			if (players[i] == null) {
+				players[i] = player;
+				if (i == (getTotalPlayers() - 1)) {
+					activePlayerIndex = new Random().nextInt(getTotalPlayers());
+					gameState = GameState.READY;
+				}
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * checks if the game is still in progress
-     *
-     * @return true if the game is over, false if its still in progress
-     */
-    protected abstract boolean isTheGameOver();
+	/**
+	 * shifts the active player index over to the next one
+	 */
+	private void endTurn() {
+		activePlayerIndex = (activePlayerIndex + 1) % getTotalPlayers();
+	}
 
-    /**
-     * @param player to check
-     * @return is it players turn?
-     */
-    public boolean isTurnOf(User player) {
-        return players[activePlayerIndex].getId().equals(player.getId());
-    }
+	/**
+	 * checks if the game is still in progress
+	 *
+	 * @return true if the game is over, false if its still in progress
+	 */
+	protected abstract boolean isTheGameOver();
 
-    /**
-     * checks if the attempted move is a valid one
-     *
-     * @param player   the player
-     * @param turnInfo the details about the move
-     * @return is a valid move?
-     */
-    public abstract boolean isValidMove(User player, turnType turnInfo);
+	/**
+	 * @param player to check
+	 * @return is it players turn?
+	 */
+	public boolean isTurnOf(User player) {
+		return players[activePlayerIndex].getId().equals(player.getId());
+	}
 
-    /**
-     * play the turn
-     *
-     * @param player   the player
-     * @param turnInfo the details about the move
-     */
-    protected abstract void doPlayerMove(User player, turnType turnInfo);
+	/**
+	 * checks if the attempted move is a valid one
+	 *
+	 * @param player   the player
+	 * @param turnInfo the details about the move
+	 * @return is a valid move?
+	 */
+	public abstract boolean isValidMove(User player, turnType turnInfo);
 
+	/**
+	 * play the turn
+	 *
+	 * @param player   the player
+	 * @param turnInfo the details about the move
+	 */
+	protected abstract void doPlayerMove(User player, turnType turnInfo);
 
-    /**
-     * are we still waiting for more players?
-     *
-     * @return well?
-     */
-    public boolean waitingForPlayer() {
-        return gameState.equals(GameState.INITIALIZING);
-    }
+	/**
+	 * are we still waiting for more players?
+	 *
+	 * @return well?
+	 */
+	public boolean waitingForPlayer() {
+		return gameState.equals(GameState.INITIALIZING);
+	}
 
 }

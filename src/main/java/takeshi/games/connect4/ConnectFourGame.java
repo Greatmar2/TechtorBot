@@ -51,6 +51,11 @@ public class ConnectFourGame extends AbstractGame<Connect4Turn> {
 	}
 
 	@Override
+	public boolean shouldClearReactionsEachTurn() {
+		return false;
+	}
+
+	@Override
 	public String getFullname() {
 		return "Connect Four";
 	}

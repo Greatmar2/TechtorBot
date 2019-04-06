@@ -52,6 +52,11 @@ public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 	}
 
 	@Override
+	public boolean shouldClearReactionsEachTurn() {
+		return false;
+	}
+
+	@Override
 	public String getFullname() {
 		return "Tic tac toe";
 	}

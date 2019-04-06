@@ -178,6 +178,10 @@ public class GameHandler {
 		if (!gameMessage.isEmpty()) {
 			if (targetMessage != null) {
 				bot.queue.add(targetMessage.editMessage(gameMessage));
+				bot.queue.add(targetMessage.clearReactions());
+				for (String reaction : playerGames.get(player.getId()).getReactions()) {
+
+				}
 			} else {
 				if (playerGames.containsKey(player.getId()) && playerGames.get(player.getId()).couldAddReactions()) {
 					bot.out.sendAsyncMessage(channel, gameMessage, msg -> {
@@ -335,7 +339,7 @@ public class GameHandler {
 			}
 			GameTurn gameTurnInstance = game.getGameTurnInstance();
 			if (gameTurnInstance == null) {
-				return "BEEP BOOP CONTACT KAAZ THIS SHIT IS ON FIRE **game.getGameTurnInstance()** failed somehow";
+				return "BEEP BOOP CONTACT MAR SOMETHIGN IS ON FIRE **game.getGameTurnInstance()** failed somehow";
 			}
 			if (!gameTurnInstance.parseInput(input)) {
 				if (isInPlayMode(player, channel)) {

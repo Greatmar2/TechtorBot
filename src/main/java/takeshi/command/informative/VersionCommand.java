@@ -21,48 +21,43 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
-import takeshi.main.Launcher;
-import takeshi.util.UpdateUtil;
-
 
 /**
- * !version
- * some general information about the bot
+ * !version some general information about the bot
  */
 public class VersionCommand extends AbstractCommand {
 
-    public VersionCommand() {
-        super();
-    }
+	public VersionCommand() {
+		super();
+	}
 
-    @Override
-    public String getDescription() {
-        return "Shows what versions I'm using";
-    }
+	@Override
+	public String getDescription() {
+		return "Shows what versions I'm using";
+	}
 
-    @Override
-    public String getCommand() {
-        return "version";
-    }
+	@Override
+	public String getCommand() {
+		return "version";
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{
-                "version  //version usage"
-        };
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] { "version  //version usage" };
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{
-                "v"
-        };
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] { "v" };
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        return "Info about the versions:\n" +
-                "Current version: `" + Launcher.getVersion() + "`\n" +
-                "Latest  version: `" + UpdateUtil.getLatestVersion() + "`\n";
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		return "Nosey one, ain't ya?\nI'm always the latest and the greatest.";
+		/*
+		 * return "Info about the versions:\n" + "Current version: `" +
+		 * Launcher.getVersion() + "`\n" + "Latest  version: `" +
+		 * UpdateUtil.getLatestVersion() + "`\n";
+		 */
+	}
 }

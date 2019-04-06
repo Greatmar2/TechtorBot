@@ -48,6 +48,11 @@ public class GameOfSticks extends AbstractGame<GoSTurn> {
 	}
 
 	@Override
+	public boolean shouldClearReactionsEachTurn() {
+		return false;
+	}
+
+	@Override
 	public String getFullname() {
 		return "Game of sticks";
 	}

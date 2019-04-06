@@ -38,8 +38,8 @@ import net.dv8tion.jda.core.entities.User;
 
 public class Misc {
 
-	private static final String[] numberToEmote = { "\u0030\u20E3", "\u0031\u20E3", "\u0032\u20E3", "\u0033\u20E3", "\u0034\u20E3", "\u0035\u20E3", "\u0036\u20E3",
-			"\u0037\u20E3", "\u0038\u20E3", "\u0039\u20E3", "\uD83D\uDD1F" };
+	private static final String[] numberToEmote = { "\u0030\u20E3", "\u0031\u20E3", "\u0032\u20E3", "\u0033\u20E3", "\u0034\u20E3", "\u0035\u20E3",
+			"\u0036\u20E3", "\u0037\u20E3", "\u0038\u20E3", "\u0039\u20E3", "\uD83D\uDD1F", "⬅", "➡", "❗" };
 	private final static HashSet<String> fuzzyTrue = new HashSet<>(Arrays.asList("yea", "yep", "yes", "true", "ja", "y", "t", "1", "check"));
 	private final static HashSet<String> fuzzyFalse = new HashSet<>(Arrays.asList("no", "false", "nope", "nein", "nee", "n", "f", "0"));
 	private final static Pattern patternGuildEmote = Pattern.compile("<:.*:(\\d+)>");
@@ -123,8 +123,8 @@ public class Misc {
 	 *
 	 * @param map   the map to search in
 	 * @param value the value to search for
-	 * @param       <T> map key type
-	 * @param       <E> map value type
+	 * @param <T>   map key type
+	 * @param <E>   map value type
 	 * @return matched key of the map or null
 	 */
 	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
@@ -339,8 +339,8 @@ public class Misc {
 	 * Sorts a map by value descending
 	 *
 	 * @param map the map to sort
-	 * @param     <K> key
-	 * @param     <V> a sortable value
+	 * @param <K> key
+	 * @param <V> a sortable value
 	 * @return the same map but sorted descending
 	 */
 	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {

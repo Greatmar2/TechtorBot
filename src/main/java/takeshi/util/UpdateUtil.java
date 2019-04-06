@@ -26,14 +26,14 @@ import takeshi.main.ProgramVersion;
  * Created on 22-9-2016
  */
 public class UpdateUtil {
-    private static final Pattern versionPattern = Pattern.compile("version = '([0-9]+\\.[0-9]+\\.[0-9]+)'");
+	private static final Pattern versionPattern = Pattern.compile("<version>([0-9]+\\.[0-9]+\\.[0-9]+)");
 
-    public static ProgramVersion getLatestVersion() {
-        String request = HttpHelper.doRequest("https://raw.githubusercontent.com/Kaaz/DiscordBot/master/build.gradle");
-        Matcher matcher = versionPattern.matcher(request);
-        if (matcher.find()) {
-            return ProgramVersion.fromString(matcher.group(1));
-        }
-        return Launcher.getVersion();
-    }
+	public static ProgramVersion getLatestVersion() {
+		String request = HttpHelper.doRequest("https://raw.githubusercontent.com/Greatmar2/TechtorBot/TechtorBot/pom.xml");
+		Matcher matcher = versionPattern.matcher(request);
+		if (matcher.find()) {
+			return ProgramVersion.fromString(matcher.group(1));
+		}
+		return Launcher.getVersion();
+	}
 }
