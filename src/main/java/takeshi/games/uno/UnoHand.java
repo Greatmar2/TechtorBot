@@ -75,6 +75,17 @@ public class UnoHand {
 		page = 0;
 	}
 
+	private void updateMessage() {
+		if (message == null) return;
+		int numMessagesSince = message.getChannel().getHistoryAfter(message.getId(), 11).complete().size();
+		if (numMessagesSince > 10) {
+			message = message.getChannel().sendMessage(toString()).complete();
+		} else {
+			message.editMessage(toString()).queue();
+			//return msg;
+		}
+	}
+
 	/**
 	 * Gets hand.
 	 *
@@ -135,7 +146,7 @@ public class UnoHand {
 	 */
 	public void removeCard(UnoCard card) {
 		hand.remove(card);
-		updateMessage(message, toString());
+		updateMessage();
 		/*for (int i = 0; i < hand.size(); i++) {
 			UnoCard checkCard = hand.get(i);
 			if(checkCard.equals(card)) {
@@ -152,7 +163,7 @@ public class UnoHand {
 	public UnoCard removeCardAbs(int index) {
 		UnoCard card = getCardAbs(index);
 		hand.remove(index);
-		updateMessage(message, toString());
+		updateMessage();
 		return card;
 	}
 
@@ -164,7 +175,7 @@ public class UnoHand {
 	void addCard(UnoCard card) {
 		hand.add(card);
 		sortHand();
-		updateMessage(message, toString());
+		updateMessage();
 	}
 
 	/**
@@ -266,16 +277,6 @@ public class UnoHand {
 			if (card.color == playedOnCard.getCurrentColor()) return false;
 		}
 		return true;
-	}
-
-	Message updateMessage(Message msg, String text) {
-		int numMessagesSince = msg.getChannel().getHistoryAfter(msg.getId(), 11).complete().size();
-		if (numMessagesSince > 10) {
-			return msg.getChannel().sendMessage(text).complete();
-		} else {
-			msg.editMessage(text).queue();
-			return msg;
-		}
 	}
 
 	/**

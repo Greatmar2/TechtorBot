@@ -25,7 +25,7 @@ import java.util.Random;
 
 public abstract class AbstractGame<turnType extends GameTurn> {
 	private User[] players;
-	private boolean reverse = false;
+	private boolean reverse;
 	private int activePlayerIndex = 0;
 	private GameState gameState = GameState.OVER;
 	private volatile int winnerIndex = -1;
@@ -198,12 +198,18 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 		return false;
 	}
 
+	protected final void setReverse(boolean reverse) {
+		this.reverse = reverse;
+	}
+
 	/**
 	 * shifts the active player index over to the next one
 	 */
 	private void endTurn() {
+		//System.out.println("Ending turn of " + getActivePlayer().getName() + ", reverse = " + reverse);
 		activePlayerIndex = (reverse ? activePlayerIndex - 1 : activePlayerIndex + 1) % getTotalPlayers();
 		if (activePlayerIndex < 0) activePlayerIndex += getTotalPlayers();
+		//System.out.println("Now " + getActivePlayer().getName() + "'s turn");
 	}
 
 	/**

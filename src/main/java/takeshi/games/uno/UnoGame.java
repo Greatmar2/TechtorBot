@@ -369,7 +369,15 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 		String previousName = getPlayer(getActivePlayerIndex() - getIndexMod()).getName();
 		String nextName = getPlayer(getActivePlayerIndex() + getIndexMod()).getName();
 
-		if (canChallenge) { //If the player can challenge, they either challenge or press anything else to not challenge.
+		if (canSelectColor && turnInfo.getAction() >= 14 && turnInfo.getAction() <= 17) { // If player can select color, it's the only thing they can do
+			Color selectedCol = Color.values()[turnInfo.getAction() - 14];
+			discard.getLastCard().selCol = selectedCol;
+			//if (discard.getLastCard().value == Value.DRAW) adjustTurn(1);
+			canSelectColor = false;
+			lastTurnDesc += "\nThey select the color " + selectedCol;
+			if (canChallenge) lastTurnDesc += "\n**" + nextName + "** can challenge **" + playerName
+					+ "** with:grey_exclamation:if they think **" + playerName + "** actually has a " + discard.getCardAbs(discard.getSize() - 2).color + " card or press another button to not challenge.";
+		} else if (canChallenge) { //If the player can challenge, they either challenge or press anything else to not challenge.
 			if (turnInfo.getAction() == 13) {
 				UnoHand previousHand = getHand(getActivePlayerIndex() - getIndexMod());
 				if (previousHand.isWildDrawLegal(discard.getCard(discard.getSize() - 2))) {// Playing the draw four was legal
@@ -396,9 +404,9 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 				} else if (turnInfo.getAction() == 12) {
 					hand.page++;
 					adjustTurn(-1);
-				} else if (turnInfo.getAction() == 13) { //Shouldn't get here
+				} /*else if (turnInfo.getAction() == 13) { //Shouldn't get here
 					lastTurnDesc += "Error, special action not consumed. Contact Mar.";
-					/*if (canUno) { // Player calls Uno
+					if (canUno) { // Player calls Uno
 						// handle player check
 						// lastTurnDesc
 						canUno = false;
@@ -419,7 +427,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 							}
 						}
 						canChallenge = false;
-					}*/
+					}
 				} else if (turnInfo.getAction() >= 14 && turnInfo.getAction() <= 17) { // Select color
 					Color selectedCol = Color.values()[turnInfo.getAction() - 14];
 					discard.getLastCard().selCol = selectedCol;
@@ -428,7 +436,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 					lastTurnDesc += "\nThey select the color " + selectedCol;
 					if (canChallenge) lastTurnDesc += "\n**" + nextName + "** can challenge **" + playerName
 							+ "** with:grey_exclamation:if they think **" + playerName + "** actually has a " + discard.getCardAbs(discard.getSize() - 2).color + " card or press another button to not challenge.";
-				}
+				}*/
 			} else { // Play card from hand
 				if (canUno) canUno = false;
 				if (canChallenge) canChallenge = false;
@@ -455,15 +463,18 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 		switch (playedCard.value) {
 			case SKIP:
 				adjustTurn(1);
-				lastTurnDesc = "**" + playerName + "** *skips* the turn of **" + nextName + "**";
+				lastTurnDesc = "**" + playerName + "** *skips* the turn of **" + nextName + "**.";
 				break;
 			case REVERSE:
 				if (getTotalPlayers() > 2) {
-					reverse = !reverse;
+					//System.out.println("Reversing, reverse = " + reverse);
+					//reverse = !reverse;
+					setReverse(!reverse);
+					//System.out.println("Reversed, reverse = " + reverse);
 					lastTurnDesc = "**" + playerName + "** *reverses* the turn order! **" + previousName + "** plays next.";
 				} else {
 					adjustTurn(1);
-					lastTurnDesc = "**" + playerName + "** *skips* the turn of **" + nextName + "**";
+					lastTurnDesc = "**" + playerName + "** *skips* the turn of **" + nextName + "**.";
 				}
 				break;
 			case DRAW:

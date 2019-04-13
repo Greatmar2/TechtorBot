@@ -382,7 +382,7 @@ public class GameHandler {
 				if (args.length == 2) return createGameFromUserMention(channel, player, args[1], args[0]);
 				else {
 					String[] mentions = new String[args.length - 1];
-					System.arraycopy(args, 1, mentions, 1, args.length - 1);
+					System.arraycopy(args, 1, mentions, 0, args.length - 1);
 					return createGameFromUserMention(channel, player, mentions, args[0]);
 				}
 			}
