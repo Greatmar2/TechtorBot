@@ -18,26 +18,49 @@ package takeshi.games.uno;
 
 import takeshi.games.meta.GameTurn;
 
+/**
+ * The type Uno turn.
+ */
 public class UnoTurn extends GameTurn {
 	private int action;
 
+	/**
+	 * Instantiates a new Uno turn.
+	 */
 	public UnoTurn() {
 
 	}
 
+	/**
+	 * Instantiates a new Uno turn.
+	 *
+	 * @param action the action
+	 */
 	public UnoTurn(int action) {
-
+		if (action <= 10) {
+			action--;
+		}
 		this.action = action;
 	}
 
-	public int getAction() {
+	/**
+	 * Gets action.
+	 *
+	 * @return the action
+	 */
+	int getAction() {
 		return action;
 	}
 
 	@Override
 	public boolean parseInput(String input) {
-		if (input != null && input.matches("^[1-13]$")) {
-			this.action = Integer.parseInt(input) - 1;
+		action = UnoGame.reactionToCommand(input);
+		if (action >= 0) return true;
+		if (input != null && input.matches("^[1-9]{1,2}$")) {
+			action = Integer.parseInt(input);
+			/*if (action <= 10) {
+				action--;
+			}*/
 			return true;
 		}
 		return false;
@@ -45,7 +68,7 @@ public class UnoTurn extends GameTurn {
 
 	@Override
 	public String getInputErrorMessage() {
-		return "Expecting a numeric input between 1 and 13";
+		return "Expecting a numeric input between 1 and 17 or a letter between 'a' and 'j'";
 	}
 	// Will handle the events of a turn
 

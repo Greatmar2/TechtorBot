@@ -50,11 +50,11 @@ public class Game2048 extends AbstractGame<Game2048Turn> {
 
 	@Override
 	public String[] getReactions() {
-		return new String[] { "left", "up", "down", "right" };
+		return new String[] {"left", "up", "down", "right"};
 	}
 
 	@Override
-	public boolean shouldClearReactionsEachTurn() {
+	public boolean shouldUpdateReactionsEachTurn() {
 		return false;
 	}
 
@@ -64,7 +64,7 @@ public class Game2048 extends AbstractGame<Game2048Turn> {
 	}
 
 	@Override
-	public int getTotalPlayers() {
+	public int getMaxPlayers() {
 		return 1;
 	}
 
@@ -76,32 +76,32 @@ public class Game2048 extends AbstractGame<Game2048Turn> {
 	@Override
 	public boolean isValidMove(User player, Game2048Turn turnInfo) {
 		switch (turnInfo.getDirection()) {
-		case LEFT:
-		case RIGHT:
-			return grid.canMove(true);
-		case UP:
-		case DOWN:
-			return grid.canMove(false);
-		default:
-			return false;
+			case LEFT:
+			case RIGHT:
+				return grid.canMove(true);
+			case UP:
+			case DOWN:
+				return grid.canMove(false);
+			default:
+				return false;
 		}
 	}
 
 	@Override
 	protected void doPlayerMove(User player, Game2048Turn turnInfo) {
 		switch (turnInfo.getDirection()) {
-		case LEFT:
-			grid.moveLeft();
-			break;
-		case RIGHT:
-			grid.moveRight();
-			break;
-		case UP:
-			grid.moveUp();
-			break;
-		case DOWN:
-			grid.moveDown();
-			break;
+			case LEFT:
+				grid.moveLeft();
+				break;
+			case RIGHT:
+				grid.moveRight();
+				break;
+			case UP:
+				grid.moveUp();
+				break;
+			case DOWN:
+				grid.moveDown();
+				break;
 		}
 		grid.addRandomTwo();
 	}

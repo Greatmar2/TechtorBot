@@ -16,19 +16,14 @@
 
 package takeshi.modules.reddit;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
-import takeshi.modules.reddit.pojo.Comment;
-import takeshi.modules.reddit.pojo.CommentData;
-import takeshi.modules.reddit.pojo.InitialData;
-import takeshi.modules.reddit.pojo.InitialDataComment;
-import takeshi.modules.reddit.pojo.Post;
+import takeshi.modules.reddit.pojo.*;
 import takeshi.util.HttpHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RedditScraper {
 	private final static Gson gson = new GsonBuilder().registerTypeAdapter(CommentData.class, new CommentDataDeserializer())
@@ -44,8 +39,8 @@ public class RedditScraper {
 		return new ArrayList<>();
 	}
 
-	public static List<Post> getDailyTop(String subreddit) {
-		String response = HttpHelper.doRequest(RedditConstants.URL + RedditConstants.SUBREDDIT_INDICATOR + subreddit + "/top.json?sort=top&t=day&limit=100");
+	public static List<Post> getWeeklyTop(String subreddit) {
+		String response = HttpHelper.doRequest(RedditConstants.URL + RedditConstants.SUBREDDIT_INDICATOR + subreddit + "/top.json?sort=top&t=week&limit=50");
 		InitialData listing = gson.fromJson(response, InitialData.class);
 		if (listing.data != null && listing.data.children != null) {
 			return listing.data.children;

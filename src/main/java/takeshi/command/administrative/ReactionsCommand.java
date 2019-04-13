@@ -26,51 +26,51 @@ import takeshi.main.DiscordBot;
 import takeshi.util.Emojibet;
 
 public class ReactionsCommand extends AbstractCommand {
-    @Override
-    public String getDescription() {
-        return "Configure what reactions do to messages";
-    }
+	@Override
+	public String getDescription() {
+		return "Configure what reactions do to messages";
+	}
 
-    @Override
-    public String getCommand() {
-        return "reactions";
-    }
+	@Override
+	public String getCommand() {
+		return "reactions";
+	}
 
-    @Override
-    public boolean isListed() {
-        return false;
-    }
+	@Override
+	public boolean isListed() {
+		return false;
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{
-                "reactions       //settings for user placed reactions ",
-                "reactions music //reactions for now playing message"
-        };
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] {
+				"reactions       //settings for user placed reactions ",
+				"reactions music //reactions for now playing message"
+		};
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{"reaction", "r"};
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] {"reaction", "react"};
+	}
 
-    private String buildMessage() {
-        String[] onoff = {Emojibet.OKE_SIGN, Emojibet.X};
-        StringBuilder sb = new StringBuilder();
-        int i = 0;
-        for (ReactionType reactionType : ReactionType.values()) {
-            sb.append("**").append(reactionType.getTitle()).append("** \n");
-            sb.append(reactionType.getDescription()).append("\n\n");
-            for (Reactions reactions : reactionType.getReactions()) {
-                sb.append(onoff[++i % 2]).append(" | ").append(reactions.getEmote()).append(" | ").append(reactions.getDescription()).append("\n");
-            }
-            sb.append("\n\n");
-        }
-        return sb.toString();
-    }
+	private String buildMessage() {
+		String[] onoff = {Emojibet.OKE_SIGN, Emojibet.X};
+		StringBuilder sb = new StringBuilder();
+		int i = 0;
+		for (ReactionType reactionType : ReactionType.values()) {
+			sb.append("**").append(reactionType.getTitle()).append("** \n");
+			sb.append(reactionType.getDescription()).append("\n\n");
+			for (Reactions reactions : reactionType.getReactions()) {
+				sb.append(onoff[++i % 2]).append(" | ").append(reactions.getEmote()).append(" | ").append(reactions.getDescription()).append("\n");
+			}
+			sb.append("\n\n");
+		}
+		return sb.toString();
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        return "The following :\n" + buildMessage();
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		return "The following :\n" + buildMessage();
+	}
 }

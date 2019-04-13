@@ -9,11 +9,12 @@ public enum Value {
 
 	private String unicode;
 
-	public String getUnicode() {
-		return this.unicode;
-	}
-
 	private Value(String unicode) {
 		this.unicode = unicode;
+	}
+
+	@Override
+	public String toString() {
+		return this.unicode;
 	}
 }

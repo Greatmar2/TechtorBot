@@ -47,11 +47,11 @@ public class ConnectFourGame extends AbstractGame<Connect4Turn> {
 
 	@Override
 	public String[] getReactions() {
-		return new String[] { "1", "2", "3", "4", "5", "6", "7" };
+		return new String[] {"1", "2", "3", "4", "5", "6", "7"};
 	}
 
 	@Override
-	public boolean shouldClearReactionsEachTurn() {
+	public boolean shouldUpdateReactionsEachTurn() {
 		return false;
 	}
 
@@ -61,7 +61,7 @@ public class ConnectFourGame extends AbstractGame<Connect4Turn> {
 	}
 
 	@Override
-	public int getTotalPlayers() {
+	public int getMaxPlayers() {
 		return 2;
 	}
 

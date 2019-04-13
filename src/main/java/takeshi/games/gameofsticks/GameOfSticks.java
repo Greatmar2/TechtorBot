@@ -44,11 +44,11 @@ public class GameOfSticks extends AbstractGame<GoSTurn> {
 
 	@Override
 	public String[] getReactions() {
-		return new String[] { "1", "2", "3" };
+		return new String[] {"1", "2", "3"};
 	}
 
 	@Override
-	public boolean shouldClearReactionsEachTurn() {
+	public boolean shouldUpdateReactionsEachTurn() {
 		return false;
 	}
 
@@ -58,7 +58,7 @@ public class GameOfSticks extends AbstractGame<GoSTurn> {
 	}
 
 	@Override
-	public int getTotalPlayers() {
+	public int getMaxPlayers() {
 		return 2;
 	}
 

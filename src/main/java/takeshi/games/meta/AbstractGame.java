@@ -16,17 +16,18 @@
 
 package takeshi.games.meta;
 
+import net.dv8tion.jda.core.entities.User;
+import takeshi.main.BotConfig;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Random;
 
-import net.dv8tion.jda.core.entities.User;
-import takeshi.main.BotConfig;
-
 public abstract class AbstractGame<turnType extends GameTurn> {
-	private GameState gameState = GameState.OVER;
 	private User[] players;
-	private volatile int activePlayerIndex = 0;
+	private boolean reverse = false;
+	private int activePlayerIndex = 0;
+	private GameState gameState = GameState.OVER;
 	private volatile int winnerIndex = -1;
 	private String lastPrefix = BotConfig.BOT_COMMAND_PREFIX;
 	private volatile long lastTurnTimestamp = System.currentTimeMillis();
@@ -39,7 +40,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 		return lastTurnTimestamp;
 	}
 
-	public String getLastPrefix() {
+	protected String getLastPrefix() {
 		return lastPrefix;
 	}
 
@@ -61,11 +62,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 
 	public abstract String[] getReactions();
 
-	public String[] getReactions(User player) {
-		return getReactions();
-	};
-
-	public abstract boolean shouldClearReactionsEachTurn();
+	public abstract boolean shouldUpdateReactionsEachTurn();
 
 	/**
 	 * a full version of the name, this is used to display
@@ -90,7 +87,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	}
 
 	protected User getPlayer(int index) {
-		return players[index];
+		return players[index < 0 ? index + getTotalPlayers() : index % getTotalPlayers()];
 	}
 
 	protected int getActivePlayerIndex() {
@@ -114,18 +111,40 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	 *
 	 * @return total players
 	 */
-	public abstract int getTotalPlayers();
+	public int getTotalPlayers() {
+		return players.length;
+	}
+
+	;
+
+	/**
+	 * The maximum amount of players allowed in a game
+	 *
+	 * @return max players
+	 */
+	public abstract int getMaxPlayers();
 
 	/**
 	 * Resets the game
 	 */
 	public void reset() {
-		winnerIndex = getTotalPlayers();
-		players = new User[getTotalPlayers()];
-		for (int i = 0; i < getTotalPlayers(); i++) {
+		reset(2);
+	}
+
+	/**
+	 * Resets the game
+	 */
+	public void reset(int playerCount) {
+		winnerIndex = playerCount;
+		players = new User[playerCount];
+		for (int i = 0; i < playerCount; i++) {
 			players[i] = null;
 		}
 		gameState = GameState.INITIALIZING;
+	}
+
+	protected void startGame() {
+		gameState = GameState.READY;
 	}
 
 	public GameState getGameState() {
@@ -139,7 +158,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	 * @param turnInfo the details about the move
 	 * @return turn successfully played?
 	 */
-	public final boolean playTurn(User player, turnType turnInfo) {
+	public boolean playTurn(User player, turnType turnInfo) {
 		if (!(gameState.equals(GameState.IN_PROGRESS) || gameState.equals(GameState.READY))) {
 			return false;
 		}
@@ -171,7 +190,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 				players[i] = player;
 				if (i == (getTotalPlayers() - 1)) {
 					activePlayerIndex = new Random().nextInt(getTotalPlayers());
-					gameState = GameState.READY;
+					startGame();
 				}
 				return true;
 			}
@@ -183,7 +202,28 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	 * shifts the active player index over to the next one
 	 */
 	private void endTurn() {
-		activePlayerIndex = (activePlayerIndex + 1) % getTotalPlayers();
+		activePlayerIndex = (reverse ? activePlayerIndex - 1 : activePlayerIndex + 1) % getTotalPlayers();
+		if (activePlayerIndex < 0) activePlayerIndex += getTotalPlayers();
+	}
+
+	/**
+	 * Shifts the active player index a custom amount
+	 *
+	 * @param amount to adjust the index by
+	 */
+	protected void adjustTurn(int amount) {
+		activePlayerIndex = (reverse ? activePlayerIndex - amount : activePlayerIndex + amount) % getTotalPlayers();
+		if (activePlayerIndex < 0) activePlayerIndex += getTotalPlayers();
+	}
+
+	/**
+	 * Gets the amount that the index will be modified by for the next turn.
+	 * 1 if the game is going in normal direction, -1 if in reverse.
+	 *
+	 * @return
+	 */
+	protected int getIndexMod() {
+		return reverse ? -1 : 1;
 	}
 
 	/**
@@ -226,5 +266,4 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	public boolean waitingForPlayer() {
 		return gameState.equals(GameState.INITIALIZING);
 	}
-
 }

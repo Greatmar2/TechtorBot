@@ -128,6 +128,11 @@ public class Emojibet {
 		emojis.put("down", "\u2B07");
 		emojis.put("left", "\u2B05");
 		emojis.put("right", "\u27A1");
+		emojis.put("red", "❤");
+		emojis.put("yellow", "💛");
+		emojis.put("green", "💚");
+		emojis.put("blue", "💙");
+		emojis.put("black", "🖤");
 
 	}
 
@@ -138,10 +143,21 @@ public class Emojibet {
 	 * @return emoji version, or UNKNOWN
 	 */
 	public static String getEmojiFor(String character) {
+		character = character.toLowerCase();
 		if (emojis.containsKey(character)) {
 			return emojis.get(character);
 		}
 		return UNKNOWN;
+	}
+
+	/**
+	 * Character for a single emoji
+	 *
+	 * @param emoji the emoji to look for
+	 * @return the character version
+	 */
+	public static String getTextFor(String emoji) {
+		return Misc.getKeyByValue(emojis, emoji);
 	}
 
 	public static boolean isEmoji(String emoji) {

@@ -23,7 +23,7 @@ import takeshi.util.Misc;
 
 public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 	private static final int TILES_ON_BOARD = 9;
-	private final int[][] winCombos = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 } };
+	private final int[][] winCombos = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 	private TicTile[] board = new TicTile[TILES_ON_BOARD];
 
 	public TicTacToeGame() {
@@ -48,11 +48,11 @@ public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 
 	@Override
 	public String[] getReactions() {
-		return new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+		return new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 	}
 
 	@Override
-	public boolean shouldClearReactionsEachTurn() {
+	public boolean shouldUpdateReactionsEachTurn() {
 		return false;
 	}
 
@@ -62,7 +62,7 @@ public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 	}
 
 	@Override
-	public int getTotalPlayers() {
+	public int getMaxPlayers() {
 		return 2;
 	}
 

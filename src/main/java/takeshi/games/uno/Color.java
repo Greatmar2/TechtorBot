@@ -8,7 +8,8 @@ public enum Color {
 
 	private String unicode;
 
-	public String getUnicode() {
+	@Override
+	public String toString() {
 		return this.unicode;
 	}
 

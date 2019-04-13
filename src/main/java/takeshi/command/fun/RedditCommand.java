@@ -16,28 +16,11 @@
 
 package takeshi.command.fun;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
-import javax.imageio.ImageIO;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.utils.PermissionUtil;
+import org.apache.commons.lang3.StringEscapeUtils;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.modules.reddit.RedditScraper;
@@ -45,6 +28,13 @@ import takeshi.modules.reddit.pojo.Image;
 import takeshi.modules.reddit.pojo.ImagePreview;
 import takeshi.modules.reddit.pojo.Post;
 import takeshi.templates.Templates;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.*;
 
 /**
  * !r show something from reddit :)
@@ -84,7 +74,7 @@ public class RedditCommand extends AbstractCommand {
 		if (args.length > 0) {
 			subReddit = args[0];
 		}
-		List<Post> dailyTop = RedditScraper.getDailyTop(subReddit);
+		List<Post> dailyTop = RedditScraper.getWeeklyTop(subReddit);
 		if (dailyTop.size() == 0) {
 			return Templates.command.reddit_sub_not_found.formatGuild(channel);
 		}
