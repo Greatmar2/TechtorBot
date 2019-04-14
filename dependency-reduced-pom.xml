@@ -4,7 +4,7 @@
   <groupId>mar</groupId>
   <artifactId>TechtorBot</artifactId>
   <name>TechtorBot</name>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -73,7 +73,9 @@
   </dependencies>
   <properties>
     <slf4jVersion>1.7.25</slf4jVersion>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
 

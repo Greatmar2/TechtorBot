@@ -5,31 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0560e972-0718-417e-9b25-465dc5347a06" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RedditCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RedditCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GameOfSticks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GameOfSticks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Value.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditScraper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditScraper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Emojibet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Emojibet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/log4j2.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -69,23 +50,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6103">
-              <caret line="396" column="19" selection-start-line="396" selection-start-column="19" selection-end-line="396" selection-end-column="19" />
+            <state relative-caret-position="123">
+              <caret line="190" column="74" lean-forward="true" selection-start-line="190" selection-start-column="74" selection-end-line="190" selection-end-column="74" />
               <folding>
-                <element signature="e#9927#9928#0" expanded="true" />
-                <element signature="e#9978#9979#0" expanded="true" />
-                <element signature="e#13769#13770#0" expanded="true" />
-                <element signature="e#13800#13801#0" expanded="true" />
+                <element signature="e#10031#10032#0" expanded="true" />
+                <element signature="e#13853#13854#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2550">
-              <caret line="221" column="36" selection-start-line="221" selection-start-column="36" selection-end-line="221" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -93,89 +63,33 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1173">
-              <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
+            <state relative-caret-position="309">
+              <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="75" column="52" lean-forward="true" selection-start-line="75" selection-start-column="52" selection-end-line="75" selection-end-column="52" />
               <folding>
-                <element signature="e#1424#1425#0" expanded="true" />
-                <element signature="e#1455#1456#0" expanded="true" />
-                <element signature="e#1705#1706#0" expanded="true" />
-                <element signature="e#1781#1782#0" expanded="true" />
-                <element signature="e#2909#2910#0" expanded="true" />
-                <element signature="e#2934#2935#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#17516#17517#0" expanded="true" />
+                <element signature="e#17602#17603#0" expanded="true" />
+                <element signature="e#18131#18132#0" expanded="true" />
+                <element signature="e#18183#18184#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="363" column="19" lean-forward="true" selection-start-line="363" selection-start-column="19" selection-end-line="363" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#16744#16745#0" expanded="true" />
-                <element signature="e#17325#17326#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1938">
-              <caret line="144" column="9" selection-start-line="144" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-65">
-              <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2555#2556#0" expanded="true" />
-                <element signature="e#2603#2604#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/util/Emojibet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2006">
-              <caret line="133" column="29" selection-start-line="133" selection-start-column="29" selection-end-line="133" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/Color.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="46" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3383">
-              <caret line="199" column="72" selection-start-line="199" selection-start-column="72" selection-end-line="199" selection-end-column="72" />
+            <state relative-caret-position="562">
+              <caret line="179" column="55" selection-start-line="179" selection-start-column="55" selection-end-line="179" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -211,6 +125,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
@@ -222,7 +137,6 @@
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Value.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoCard.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditScraper.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/fun/JokeCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/fun/ConnectFourCommand.java" />
@@ -236,11 +150,13 @@
         <option value="$PROJECT_DIR$/src/main/resources/log4j2.xml" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" />
       </list>
     </option>
   </component>
@@ -272,7 +188,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -308,12 +223,22 @@
             </path>
             <path>
               <item name="TechtorBot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TechtorBot" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="takeshi" type="462c0819:PsiDirectoryNode" />
+              <item name="command" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TechtorBot" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -413,12 +338,28 @@
       <workItem from="1555079481368" duration="19813000" />
       <workItem from="1555141903391" duration="12699000" />
       <workItem from="1555156920638" duration="47000" />
-      <workItem from="1555157016178" duration="2164000" />
+      <workItem from="1555157016178" duration="8656000" />
+      <workItem from="1555251397698" duration="3375000" />
     </task>
+    <task id="LOCAL-00001" summary="Version 1.4.0&#10;Added Uno Game, still needs more thorough bugtesting">
+      <created>1555160427182</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1555160427182</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Version 1.4.1&#10;Fixed some Uno bugs">
+      <created>1555165550263</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1555165550263</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98542000" />
+    <option name="totallyTimeSpent" value="108409000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -433,8 +374,8 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48465267" visible="true" weight="0.30863538" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.51534736" side_tool="true" visible="true" weight="0.30863538" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.48429036" visible="true" weight="0.31183368" />
+      <window_info id="Structure" order="1" sideWeight="0.51570964" side_tool="true" visible="true" weight="0.31183368" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -442,17 +383,17 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50053304" side_tool="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49946696" weight="0.32936078" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Version Control" order="12" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32936078" />
       <window_info anchor="bottom" id="Inspection Results" order="13" weight="0.32936078" />
       <window_info anchor="bottom" id="Problems" order="14" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -469,6 +410,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Version 1.4.0&#10;Added Uno Game, still needs more thorough bugtesting" />
+    <MESSAGE value="Version 1.4.1&#10;Fixed some Uno bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.4.1&#10;Fixed some Uno bugs" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoReplyCommand.java">
@@ -673,25 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="154" column="25" selection-start-line="154" selection-start-column="25" selection-end-line="154" selection-end-column="25" />
-          <folding>
-            <element signature="e#1864#1865#0" expanded="true" />
-            <element signature="e#1920#1921#0" expanded="true" />
-            <element signature="e#3134#3135#0" expanded="true" />
-            <element signature="e#3188#3189#0" expanded="true" />
-            <element signature="e#3386#3387#0" expanded="true" />
-            <element signature="e#3441#3442#0" expanded="true" />
-            <element signature="e#4821#4822#0" expanded="true" />
-            <element signature="e#4858#4859#0" expanded="true" />
-            <element signature="e#5656#5657#0" expanded="true" />
-            <element signature="e#5701#5702#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -738,19 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6103">
-          <caret line="396" column="19" selection-start-line="396" selection-start-column="19" selection-end-line="396" selection-end-column="19" />
-          <folding>
-            <element signature="e#9927#9928#0" expanded="true" />
-            <element signature="e#9978#9979#0" expanded="true" />
-            <element signature="e#13769#13770#0" expanded="true" />
-            <element signature="e#13800#13801#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2550">
@@ -758,25 +672,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
+        <state relative-caret-position="986">
+          <caret line="78" column="36" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
           <folding>
-            <element signature="e#1424#1425#0" expanded="true" />
-            <element signature="e#1455#1456#0" expanded="true" />
-            <element signature="e#1705#1706#0" expanded="true" />
-            <element signature="e#1781#1782#0" expanded="true" />
-            <element signature="e#2909#2910#0" expanded="true" />
-            <element signature="e#2934#2935#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="144" column="9" selection-start-line="144" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -796,39 +698,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3383">
-          <caret line="199" column="72" selection-start-line="199" selection-start-column="72" selection-end-line="199" selection-end-column="72" />
+        <state relative-caret-position="265">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-65">
-          <caret line="137" column="8" selection-start-line="137" selection-start-column="8" selection-end-line="137" selection-end-column="8" />
+        <state relative-caret-position="385">
+          <caret line="133" column="54" lean-forward="true" selection-start-line="133" selection-start-column="54" selection-end-line="133" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="190" column="74" lean-forward="true" selection-start-line="190" selection-start-column="74" selection-end-line="190" selection-end-column="74" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2555#2556#0" expanded="true" />
-            <element signature="e#2603#2604#0" expanded="true" />
+            <element signature="e#10031#10032#0" expanded="true" />
+            <element signature="e#13853#13854#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="165" column="36" selection-start-line="165" selection-start-column="36" selection-end-line="165" selection-end-column="36" />
+          <folding>
+            <element signature="e#1864#1865#0" expanded="true" />
+            <element signature="e#1920#1921#0" expanded="true" />
+            <element signature="e#3134#3135#0" expanded="true" />
+            <element signature="e#3188#3189#0" expanded="true" />
+            <element signature="e#3386#3387#0" expanded="true" />
+            <element signature="e#3441#3442#0" expanded="true" />
+            <element signature="e#4821#4822#0" expanded="true" />
+            <element signature="e#4858#4859#0" expanded="true" />
+            <element signature="e#5656#5657#0" expanded="true" />
+            <element signature="e#5701#5702#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
+        <state relative-caret-position="450">
+          <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="363" column="19" lean-forward="true" selection-start-line="363" selection-start-column="19" selection-end-line="363" selection-end-column="19" />
+        <state relative-caret-position="410">
+          <caret line="75" column="52" lean-forward="true" selection-start-line="75" selection-start-column="52" selection-end-line="75" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#16744#16745#0" expanded="true" />
-            <element signature="e#17325#17326#0" expanded="true" />
+            <element signature="e#17516#17517#0" expanded="true" />
+            <element signature="e#17602#17603#0" expanded="true" />
+            <element signature="e#18131#18132#0" expanded="true" />
+            <element signature="e#18183#18184#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="562">
+          <caret line="179" column="55" selection-start-line="179" selection-start-column="55" selection-end-line="179" selection-end-column="55" />
         </state>
       </provider>
     </entry>

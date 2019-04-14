@@ -16,20 +16,10 @@
 
 package takeshi.command.administrative;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
-
 import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.entities.Message.Attachment;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
@@ -43,6 +33,11 @@ import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 import takeshi.util.Misc;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class RaffleCommand extends AbstractCommand {
 
@@ -67,7 +62,7 @@ public class RaffleCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "raf list",
+		return new String[] {"raf list",
 				"raf new [#chan] [owner] [prize]    //Creates a new raffle. If a channel is mentioned, the raffle will immediately be started.",
 				"raf start <id> [chan] [del]    //Optionally auto-deletes raffle at end. Default: Current channel", "raf end <id>", "raf cancel <id>",
 				"raf delete <id>", "raf preview <id>    //Displays a preview of the raffle",
@@ -77,12 +72,12 @@ public class RaffleCommand extends AbstractCommand {
 				"raf entrants <id> [entrants]    //Max entrants before the raffle auto-ends. Default: " + RaffleHandler.MAX_ENTRIES + " (current cap)",
 				"raf winners <id> [winners]    //Number of winners selected. Default: 1",
 				"raf thumb <id>    //Attatched image displays in the top right. Default: None",
-				"raf image <id>    //Attatched image displays at the bottom. Default: None", "raf blacklist [<user> [id] [y/n]]" };
+				"raf image <id>    //Attatched image displays at the bottom. Default: None", "raf blacklist [<user> [id] [y/n]]"};
 	}
 
 	@Override
 	public String[] getAliases() {
-		return new String[] { "raf", "rfl" };
+		return new String[] {"raf", "rfl"};
 	}
 
 	@Override
@@ -125,7 +120,8 @@ public class RaffleCommand extends AbstractCommand {
 				List<List<String>> tableInfo = new ArrayList<>();
 
 				for (ORaffle raffle : raffles) {
-					tableInfo.add(Arrays.asList(raffle.id + "", guild.getMemberById(raffle.ownerId).getEffectiveName() + "", raffle.prize));
+					if (raffle != null)
+						tableInfo.add(Arrays.asList(raffle.id + "", guild.getMemberById(raffle.ownerId).getEffectiveName() + "", raffle.prize));//NullPointerException
 				}
 
 				return Misc.makeAsciiTable(Arrays.asList("ID", "Owner", "Prize"), tableInfo, null);
@@ -179,7 +175,9 @@ public class RaffleCommand extends AbstractCommand {
 				ret.append("** with ID `");
 				ret.append(r.id);
 				ret.append("`, beloning to ");
-				ret.append(guild.getMemberById(r.ownerId).getAsMention());
+				Member owner = guild.getMemberById(r.ownerId);
+				if (owner != null)
+					ret.append(owner.getAsMention());//NullPointerException
 				return ret.toString();
 			} else if (args[0].equalsIgnoreCase("blacklist") || args[0].equalsIgnoreCase("bl")) { // Blacklist user from all or particular raffles
 				if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
@@ -244,230 +242,230 @@ public class RaffleCommand extends AbstractCommand {
 
 				// Figure out which sub-command was issued
 				switch (args[0].toLowerCase()) {
-				case "s":
-				case "start": // raf start <id> [chan] [del]
-					if (r.messageId != 0L) {
-						return "This raffle has already been started.";
-					}
-					TextChannel startChan = null;
-					r.guildId = guild.getIdLong();
-					// Channel
-					if (args.length > argStart && DisUtil.isChannelMention(args[argStart])) {
-						startChan = inputMessage.getMentionedChannels().get(0);
-						argStart++;
-					} else {
-						startChan = chan;
-					}
-					r.channelId = startChan.getIdLong();
-					// Delete on end
-					if (args.length > argStart && (Misc.isFuzzyTrue(args[argStart]) || args[argStart].equalsIgnoreCase("d")
-							|| args[argStart].equalsIgnoreCase("del") || args[argStart].equalsIgnoreCase("delete"))) {
-						r.deleteOnEnd = true;
-					}
-					// Start raffle
-					bot.raffleHandler.startRaffle(r, guild);
-					if (r.messageId == 0L) {
-						return "Failed to start raffle `" + r.id + "`.";
-					} else {
-						return "Started raffle `" + r.id + "` in channel " + startChan.getAsMention();
-					}
-				case "e":
-				case "end": // raf end <id>
-					if (r.messageId == 0) {
-						return "This raffle has not been started.";
-					}
-					bot.raffleHandler.endRaffle(r, guild);
-					return "Raffle `" + r.id + "` ended";
-				case "c":
-				case "cancel": // raf cancel <id>
-					if (r.messageId == 0) {
-						return "This raffle has not been started.";
-					}
-					bot.raffleHandler.cancelRaffle(r, guild);
-					return "Raffle `" + r.id + "` cancelled";
-				case "d":
-				case "del":
-				case "delete": // raf delete <id>
-					if (r.messageId != 0L) {
-						return "This raffle is currently in progress. First `end` or `cancel` it.";
-					}
-					CRaffle.delete(r);
-					return "Raffle `" + r.id + "` deleted";
-				case "p":
-				case "pre":
-				case "preview": // raf preview <id>
-					r.channelId = chan.getIdLong();
-					bot.raffleHandler.displayRaffle(r, guild);
-					return "";
-				case "o":
-				case "own":
-				case "owner": // raf owner <id> [owner]
+					case "s":
+					case "start": // raf start <id> [chan] [del]
+						if (r.messageId != 0L) {
+							return "This raffle has already been started.";
+						}
+						TextChannel startChan = null;
+						r.guildId = guild.getIdLong();
+						// Channel
+						if (args.length > argStart && DisUtil.isChannelMention(args[argStart])) {
+							startChan = inputMessage.getMentionedChannels().get(0);
+							argStart++;
+						} else {
+							startChan = chan;
+						}
+						r.channelId = startChan.getIdLong();
+						// Delete on end
+						if (args.length > argStart && (Misc.isFuzzyTrue(args[argStart]) || args[argStart].equalsIgnoreCase("d")
+								|| args[argStart].equalsIgnoreCase("del") || args[argStart].equalsIgnoreCase("delete"))) {
+							r.deleteOnEnd = true;
+						}
+						// Start raffle
+						bot.raffleHandler.startRaffle(r, guild);
+						if (r.messageId == 0L) {
+							return "Failed to start raffle `" + r.id + "`.";
+						} else {
+							return "Started raffle `" + r.id + "` in channel " + startChan.getAsMention();
+						}
+					case "e":
+					case "end": // raf end <id>
+						if (r.messageId == 0) {
+							return "This raffle has not been started.";
+						}
+						bot.raffleHandler.endRaffle(r, guild);
+						return "Raffle `" + r.id + "` ended";
+					case "c":
+					case "cancel": // raf cancel <id>
+						if (r.messageId == 0) {
+							return "This raffle has not been started.";
+						}
+						bot.raffleHandler.cancelRaffle(r, guild);
+						return "Raffle `" + r.id + "` cancelled";
+					case "d":
+					case "del":
+					case "delete": // raf delete <id>
+						if (r.messageId != 0L) {
+							return "This raffle is currently in progress. First `end` or `cancel` it.";
+						}
+						CRaffle.delete(r);
+						return "Raffle `" + r.id + "` deleted";
+					case "p":
+					case "pre":
+					case "preview": // raf preview <id>
+						r.channelId = chan.getIdLong();
+						bot.raffleHandler.displayRaffle(r, guild);
+						return "";
+					case "o":
+					case "own":
+					case "owner": // raf owner <id> [owner]
 //					User owner = author;
 //					if (args.length > argStart && DisUtil.isUserMention(args[argStart])) {
 //						owner = inputMessage.getMentionedUsers().get(0);
 //					}
-					User owner = DisUtil.findUser(chan, Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length)));
-					if (owner == null) {
-						owner = author;
-					}
-					r.ownerId = owner.getIdLong();
-					CRaffle.update(r);
-					return "Set owner of raffle `" + r.id + "` to " + owner.getAsMention();
-				case "pri":
-				case "prize": // raf prize <id> [prize]
-					String prize = "Mystery Prize";
-					if (args.length > argStart) {
-						prize = Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length));
+						User owner = DisUtil.findUser(chan, Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length)));
+						if (owner == null) {
+							owner = author;
+						}
+						r.ownerId = owner.getIdLong();
+						CRaffle.update(r);
+						return "Set owner of raffle `" + r.id + "` to " + owner.getAsMention();
+					case "pri":
+					case "prize": // raf prize <id> [prize]
+						String prize = "Mystery Prize";
+						if (args.length > argStart) {
+							prize = Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length));
 //						if (debug) {
 //							channel.sendMessage("[DEBUG] Joiner output: " + prize).queue();
 //						}
-					}
-					if (prize.length() > CRaffle.PRIZE_LENGTH) {
-						return "Max `" + CRaffle.PRIZE_LENGTH + "` characters for prize name, yours was `" + prize.length() + "` characters long.";
-					}
-					r.prize = prize;
-					CRaffle.update(r);
-					return "Set prize of raffle `" + r.id + "` to **" + prize + "**";
-				case "des":
-				case "desc":
-				case "description": // raf description <id> [description]
-					String desc = "";
-					if (args.length > argStart) {
-						desc = Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length));
-					}
-					if (desc.length() > CRaffle.DESC_LENGTH) {
-						return "Max `" + CRaffle.DESC_LENGTH + "` characters for description, yours was `" + desc.length() + "` characters long.";
-					}
-					r.description = desc;
-					CRaffle.update(r);
-					if (desc.length() == 0) {
-						return "Removed description from raffle `" + r.id + "`";
-					} else {
-						return "Set description of raffle `" + r.id + "` to *" + desc + "*";
-					}
-				case "time":
-				case "dur":
-				case "duration": // raf duration <id> [<m/h/d> <time>]
-					int duration = 0;
-					TimeUnit unit = TimeUnit.DAYS;
-					if (args.length > argStart) {
-						if (args.length > argStart + 1) {
-							switch (args[argStart].toLowerCase()) {
-							case "m":
-								unit = TimeUnit.MINUTES;
-								break;
-							case "h":
-								unit = TimeUnit.HOURS;
-								break;
-							case "d":
-								unit = TimeUnit.DAYS;
-								break;
-							default:
+						}
+						if (prize.length() > CRaffle.PRIZE_LENGTH) {
+							return "Max `" + CRaffle.PRIZE_LENGTH + "` characters for prize name, yours was `" + prize.length() + "` characters long.";
+						}
+						r.prize = prize;
+						CRaffle.update(r);
+						return "Set prize of raffle `" + r.id + "` to **" + prize + "**";
+					case "des":
+					case "desc":
+					case "description": // raf description <id> [description]
+						String desc = "";
+						if (args.length > argStart) {
+							desc = Joiner.on(" ").join(Arrays.copyOfRange(args, argStart, args.length));
+						}
+						if (desc.length() > CRaffle.DESC_LENGTH) {
+							return "Max `" + CRaffle.DESC_LENGTH + "` characters for description, yours was `" + desc.length() + "` characters long.";
+						}
+						r.description = desc;
+						CRaffle.update(r);
+						if (desc.length() == 0) {
+							return "Removed description from raffle `" + r.id + "`";
+						} else {
+							return "Set description of raffle `" + r.id + "` to *" + desc + "*";
+						}
+					case "time":
+					case "dur":
+					case "duration": // raf duration <id> [<m/h/d> <time>]
+						int duration = 0;
+						TimeUnit unit = TimeUnit.DAYS;
+						if (args.length > argStart) {
+							if (args.length > argStart + 1) {
+								switch (args[argStart].toLowerCase()) {
+									case "m":
+										unit = TimeUnit.MINUTES;
+										break;
+									case "h":
+										unit = TimeUnit.HOURS;
+										break;
+									case "d":
+										unit = TimeUnit.DAYS;
+										break;
+									default:
+										return Templates.invalid_use.formatGuild(guild.getIdLong());
+								}
+								try {
+									duration = Integer.parseInt(args[argStart + 1]);
+									if (unit == TimeUnit.MINUTES && duration % 60 == 0) {
+										unit = TimeUnit.HOURS;
+										duration /= 60;
+									}
+									if (unit == TimeUnit.HOURS && duration % 24 == 0) {
+										unit = TimeUnit.DAYS;
+										duration /= 24;
+									}
+									if (duration < 0) {
+										return "Duration may not be less than 0";
+									}
+									if (unit.toDays(duration) > 30) {
+										return "Duration may not be more than 30 days";
+									}
+								} catch (NumberFormatException e) {
+									return Templates.invalid_use.formatGuild(guild.getIdLong());
+								}
+							} else {
 								return Templates.invalid_use.formatGuild(guild.getIdLong());
 							}
+						}
+						r.durationUnit = unit;
+						r.duration = duration;
+						CRaffle.update(r);
+						if (duration == 0) {
+							return "Removed duration from raffle `" + r.id + "`";
+						} else {
+							return "Set duration of raffle `" + r.id + "` to " + duration + " " + unit.toString().toLowerCase();
+						}
+					case "ent":
+					case "entries":
+					case "entrants": // raf entrants <id> [entrants]
+						int entrants = RaffleHandler.MAX_ENTRIES;
+						if (args.length > argStart) {
 							try {
-								duration = Integer.parseInt(args[argStart + 1]);
-								if (unit == TimeUnit.MINUTES && duration % 60 == 0) {
-									unit = TimeUnit.HOURS;
-									duration /= 60;
-								}
-								if (unit == TimeUnit.HOURS && duration % 24 == 0) {
-									unit = TimeUnit.DAYS;
-									duration /= 24;
-								}
-								if (duration < 0) {
-									return "Duration may not be less than 0";
-								}
-								if (unit.toDays(duration) > 30) {
-									return "Duration may not be more than 30 days";
-								}
+								entrants = Integer.parseInt(args[argStart]);
 							} catch (NumberFormatException e) {
 								return Templates.invalid_use.formatGuild(guild.getIdLong());
 							}
+						}
+						if (entrants < r.winners) {
+							return "You can't have less entrants than winners!";
+						}
+						r.entrants = entrants;
+						CRaffle.update(r);
+						return "Set max entrants of raffle `" + r.id + "` to " + entrants;
+					case "win":
+					case "wins":
+					case "winners": // raf winners <id> [winners]
+						int winners = 1;
+						if (args.length > argStart) {
+							try {
+								winners = Integer.parseInt(args[argStart]);
+							} catch (NumberFormatException e) {
+								return Templates.invalid_use.formatGuild(guild.getIdLong());
+							}
+						}
+						if (winners > r.entrants) {
+							return "You can't have more winners than entrants!";
+						}
+						r.winners = winners;
+						CRaffle.update(r);
+						return "Set max winners of raffle `" + r.id + "` to " + winners;
+					case "th":
+					case "thm":
+					case "thumb": // raf thumb <id>
+						String thumb = "";
+						List<Attachment> attsT = inputMessage.getAttachments();
+						if (attsT.size() != 0 && attsT.get(0).isImage()) {
+							thumb = attsT.get(0).getUrl();
+						}
+						if (thumb.length() > CRaffle.IMAGE_LENGTH) {
+							return "Max `" + CRaffle.IMAGE_LENGTH + "` characters for image URL, yours was `" + thumb.length() + "` characters long.";
+						}
+						r.thumb = thumb;
+						CRaffle.update(r);
+						if (thumb.length() == 0) {
+							return "Removed thumbnail from raffle `" + r.id + "`";
 						} else {
-							return Templates.invalid_use.formatGuild(guild.getIdLong());
+							return "Set thumbnail of raffle `" + r.id + "` to " + thumb;
 						}
-					}
-					r.durationUnit = unit;
-					r.duration = duration;
-					CRaffle.update(r);
-					if (duration == 0) {
-						return "Removed duration from raffle `" + r.id + "`";
-					} else {
-						return "Set duration of raffle `" + r.id + "` to " + duration + " " + unit.toString().toLowerCase();
-					}
-				case "ent":
-				case "entries":
-				case "entrants": // raf entrants <id> [entrants]
-					int entrants = RaffleHandler.MAX_ENTRIES;
-					if (args.length > argStart) {
-						try {
-							entrants = Integer.parseInt(args[argStart]);
-						} catch (NumberFormatException e) {
-							return Templates.invalid_use.formatGuild(guild.getIdLong());
+					case "im":
+					case "img":
+					case "image": // raf image <id>
+						String image = "";
+						List<Attachment> attsI = inputMessage.getAttachments();
+						if (attsI.size() != 0 && attsI.get(0).isImage()) {
+							image = attsI.get(0).getUrl();
 						}
-					}
-					if (entrants < r.winners) {
-						return "You can't have less entrants than winners!";
-					}
-					r.entrants = entrants;
-					CRaffle.update(r);
-					return "Set max entrants of raffle `" + r.id + "` to " + entrants;
-				case "win":
-				case "wins":
-				case "winners": // raf winners <id> [winners]
-					int winners = 1;
-					if (args.length > argStart) {
-						try {
-							winners = Integer.parseInt(args[argStart]);
-						} catch (NumberFormatException e) {
-							return Templates.invalid_use.formatGuild(guild.getIdLong());
+						if (image.length() > CRaffle.IMAGE_LENGTH) {
+							return "Max `" + CRaffle.IMAGE_LENGTH + "` characters for image URL, yours was `" + image.length() + "` characters long.";
 						}
-					}
-					if (winners > r.entrants) {
-						return "You can't have more winners than entrants!";
-					}
-					r.winners = winners;
-					CRaffle.update(r);
-					return "Set max winners of raffle `" + r.id + "` to " + winners;
-				case "th":
-				case "thm":
-				case "thumb": // raf thumb <id>
-					String thumb = "";
-					List<Attachment> attsT = inputMessage.getAttachments();
-					if (attsT.size() != 0 && attsT.get(0).isImage()) {
-						thumb = attsT.get(0).getUrl();
-					}
-					if (thumb.length() > CRaffle.IMAGE_LENGTH) {
-						return "Max `" + CRaffle.IMAGE_LENGTH + "` characters for image URL, yours was `" + thumb.length() + "` characters long.";
-					}
-					r.thumb = thumb;
-					CRaffle.update(r);
-					if (thumb.length() == 0) {
-						return "Removed thumbnail from raffle `" + r.id + "`";
-					} else {
-						return "Set thumbnail of raffle `" + r.id + "` to " + thumb;
-					}
-				case "im":
-				case "img":
-				case "image": // raf image <id>
-					String image = "";
-					List<Attachment> attsI = inputMessage.getAttachments();
-					if (attsI.size() != 0 && attsI.get(0).isImage()) {
-						image = attsI.get(0).getUrl();
-					}
-					if (image.length() > CRaffle.IMAGE_LENGTH) {
-						return "Max `" + CRaffle.IMAGE_LENGTH + "` characters for image URL, yours was `" + image.length() + "` characters long.";
-					}
-					r.image = image;
-					CRaffle.update(r);
-					if (image.length() == 0) {
-						return "Removed image from raffle `" + r.id + "`";
-					} else {
-						return "Set image of raffle `" + r.id + "` to " + image;
-					}
-				default:
-					return Templates.invalid_use.format(guild.getIdLong());
+						r.image = image;
+						CRaffle.update(r);
+						if (image.length() == 0) {
+							return "Removed image from raffle `" + r.id + "`";
+						} else {
+							return "Set image of raffle `" + r.id + "` to " + image;
+						}
+					default:
+						return Templates.invalid_use.format(guild.getIdLong());
 				}
 			}
 		}

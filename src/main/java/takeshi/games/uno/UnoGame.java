@@ -351,7 +351,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 		if (canUno && turnInfo.getAction() == 13) {
 			UnoHand hand = getHand(getActivePlayerIndex() - getIndexMod());
 			lastTurnDesc += "\n**" + player.getName() + "** calls Uno!";
-			if (!isTurnOf(getPlayer(getActivePlayerIndex() - getIndexMod()))) {
+			if (player.getIdLong() != getPlayer(getActivePlayerIndex() - getIndexMod()).getIdLong()) {
 				lastTurnDesc += " **" + getActivePlayer().getName() + "** draws two cards.";
 				hand.addCard(drawCard());
 				hand.addCard(drawCard());

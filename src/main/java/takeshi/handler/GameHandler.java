@@ -188,41 +188,43 @@ public class GameHandler {
 				//if (game == null || !game.shouldUpdateReactionsEachTurn()) {
 				//Some overcomplicated coding here, trying to get the darn reactions to just keep the needed ones
 				if (!message.contains("It is over!")) {
-					String[] reactionsNeeded = Objects.requireNonNull(getGame(player.getId())).getReactions();
-					List<MessageReaction> reactionsPresent = targetMessage.getReactions();
-					boolean[] hasReaction = new boolean[reactionsNeeded.length];
-					Arrays.fill(hasReaction, false);
-					//for (int i = 0; i < reactionsNeeded.length; i++) {
-					for (MessageReaction reaction : reactionsPresent) {
-						boolean needReaction = false;
-						if (!reaction.getReactionEmote().isEmote()) { //Find which needed reactions are already present
-							for (int i = 0; !needReaction && i < reactionsNeeded.length; i++) {
-								if (Emojibet.getTextFor(reaction.getReactionEmote().getName()).equals(reactionsNeeded[i])) {
-									needReaction = true;
-									hasReaction[i] = true;
+					String[] reactionsNeeded = getGame(player.getId()).getReactions();
+					if (reactionsNeeded != null) {
+						List<MessageReaction> reactionsPresent = targetMessage.getReactions();
+						boolean[] hasReaction = new boolean[reactionsNeeded.length];
+						Arrays.fill(hasReaction, false);
+						//for (int i = 0; i < reactionsNeeded.length; i++) {
+						for (MessageReaction reaction : reactionsPresent) {
+							boolean needReaction = false;
+							if (!reaction.getReactionEmote().isEmote()) { //Find which needed reactions are already present
+								for (int i = 0; !needReaction && i < reactionsNeeded.length; i++) {
+									if (Emojibet.getTextFor(reaction.getReactionEmote().getName()).equals(reactionsNeeded[i])) {
+										needReaction = true;
+										hasReaction[i] = true;
+									}
 								}
 							}
-						}
-						if (!needReaction) { //Remove the emojis that aren't needed
-							removingReactions = true;
-							//System.out.println("Removing reaction " + reaction.getReactionEmote().getName());
-							List<User> users = reaction.getUsers().complete();
-							for (User user : users) {
-								reaction.removeReaction(user).complete();
-								//bot.queue.add(reaction.removeReaction(user));
+							if (!needReaction) { //Remove the emojis that aren't needed
+								removingReactions = true;
+								//System.out.println("Removing reaction " + reaction.getReactionEmote().getName());
+								List<User> users = reaction.getUsers().complete();
+								for (User user : users) {
+									reaction.removeReaction(user).complete();
+									//bot.queue.add(reaction.removeReaction(user));
+								}
+								reaction.removeReaction().complete();
+								removingReactions = false;
+								//bot.queue.add(reaction.removeReaction(), v -> removingReactions = false);
 							}
-							reaction.removeReaction().complete();
-							removingReactions = false;
-							//bot.queue.add(reaction.removeReaction(), v -> removingReactions = false);
 						}
-					}
-					for (int i = 0; i < reactionsNeeded.length; i++) {
-						if (!hasReaction[i]) {
-							//System.out.println("Adding reaction " + Emojibet.getEmojiFor(reactionsNeeded[i]));
-							bot.queue.add(targetMessage.addReaction(Emojibet.getEmojiFor(reactionsNeeded[i])));
+						for (int i = 0; i < reactionsNeeded.length; i++) {
+							if (!hasReaction[i]) {
+								//System.out.println("Adding reaction " + Emojibet.getEmojiFor(reactionsNeeded[i]));
+								bot.queue.add(targetMessage.addReaction(Emojibet.getEmojiFor(reactionsNeeded[i])));
+							}
 						}
+						//}
 					}
-					//}
 				}
 			} else {
 				//if (targetMessage != null) bot.queue.add(targetMessage.delete());
