@@ -120,8 +120,11 @@ public class RaffleCommand extends AbstractCommand {
 				List<List<String>> tableInfo = new ArrayList<>();
 
 				for (ORaffle raffle : raffles) {
-					if (raffle != null)
-						tableInfo.add(Arrays.asList(raffle.id + "", guild.getMemberById(raffle.ownerId).getEffectiveName() + "", raffle.prize));//NullPointerException
+					if (raffle != null) {
+						Member owner = guild.getMemberById(raffle.ownerId);
+						tableInfo.add(Arrays.asList(raffle.id + "", (owner == null ? "" : owner.getEffectiveName()) + "", raffle.prize))
+						;//NullPointerException
+					}
 				}
 
 				return Misc.makeAsciiTable(Arrays.asList("ID", "Owner", "Prize"), tableInfo, null);

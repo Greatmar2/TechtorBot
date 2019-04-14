@@ -36,7 +36,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 	private UnoHand[] hands;
 	private UnoCard[] wildDrawCards = new UnoCard[4];
 	private boolean canChallenge; // Indicates whether current player can challenge the previous' use of a +4
-	private boolean canUno; // Indicates whether the previous player should call uno. Players can press the
+	private int canUno; // Indicates whether the previous player should call uno. Players can press the
 	// !. Only first to click is counted.
 	private boolean reverse;
 	private boolean canSelectColor;
@@ -112,7 +112,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 		deck = new UnoHand();
 		discard = new UnoHand();
 		canChallenge = false;
-		canUno = false;
+		canUno = -1;
 		reverse = false;
 		canSelectColor = false;
 		playableCheck = false;
@@ -251,7 +251,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 			if (remainingHandSize > 10) {
 				reactions.add(12);
 			}
-			if (canChallenge || canUno) {
+			if (canChallenge || canUno >= 0) {
 				reactions.add(13);
 			}
 		} else {
@@ -297,14 +297,14 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 	@Override
 	public boolean isTurnOf(User player) {
 		//System.out.println("Checking if turn of " + player.getName() + ", is turn of " + getActivePlayer().getName());
-		if (canUno) return true;
+		if (canUno >= 0) return true;
 		return super.isTurnOf(player);
 	}
 
 	@Override
 	public boolean isValidMove(User player, UnoTurn turnInfo) {
 		if (!super.isTurnOf(player)) {
-			return canUno;
+			return canUno >= 0;
 		}
 		if (canChallenge) return true;
 		UnoHand hand = hands[getActivePlayerIndex()];
@@ -319,7 +319,7 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 			} else if (turnInfo.getAction() == 12) {
 				return (hand.getSize() - (10 * hand.page)) > 0;
 			} else if (turnInfo.getAction() == 13) {
-				return canChallenge || canUno;
+				return canChallenge || canUno >= 0;
 			} else if (turnInfo.getAction() >= 14 && turnInfo.getAction() <= 17) {
 				return canSelectColor;
 			}
@@ -348,15 +348,16 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 
 	@Override
 	protected void doPlayerMove(User player, UnoTurn turnInfo) {
-		if (canUno && turnInfo.getAction() == 13) {
-			UnoHand hand = getHand(getActivePlayerIndex() - getIndexMod());
+		if (canUno >= 0 && turnInfo.getAction() == 13) {
+			User unoPlayer = getPlayer(canUno);
+			UnoHand hand = getHand(canUno);
 			lastTurnDesc += "\n**" + player.getName() + "** calls Uno!";
-			if (player.getIdLong() != getPlayer(getActivePlayerIndex() - getIndexMod()).getIdLong()) {
-				lastTurnDesc += " **" + getActivePlayer().getName() + "** draws two cards.";
+			if (player.getIdLong() != unoPlayer.getIdLong()) {
+				lastTurnDesc += " **" + unoPlayer.getName() + "** draws two cards.";
 				hand.addCard(drawCard());
 				hand.addCard(drawCard());
 			}
-			canUno = false;
+			canUno = -1;
 		}
 
 		if (!super.isTurnOf(player)) {
@@ -438,11 +439,11 @@ public class UnoGame extends AbstractGame<UnoTurn> {
 							+ "** with:grey_exclamation:if they think **" + playerName + "** actually has a " + discard.getCardAbs(discard.getSize() - 2).color + " card or press another button to not challenge.";
 				}*/
 			} else { // Play card from hand
-				if (canUno) canUno = false;
+				if (canUno >= 0) canUno = -1;
 				if (canChallenge) canChallenge = false;
 				playCard(hand.removeCard(turnInfo.getAction()));
 				if (hand.getSize() == 1) {
-					canUno = true;
+					canUno = getActivePlayerIndex();
 				}
 				/*Message msg = updateMessage(hand.message, hand.toString());
 				if (msg.getIdLong() != hand.message.getIdLong()) {
