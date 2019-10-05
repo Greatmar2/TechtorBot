@@ -25,15 +25,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.MessageEmbed.Field;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.MessageReaction.ReactionEmote;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.MessageEmbed.Field;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.MessageReaction.ReactionEmote;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.db.controllers.CPoll;
 import takeshi.db.model.OPoll;
 import takeshi.guildsettings.GSetting;
@@ -153,7 +153,7 @@ public class PollHandler {
 			if (poll.channelId > 0 && poll.messageId > 0) {
 				if (tchan != null && tchan.canTalk()) {
 					// Count messages then delete them
-					Message message = tchan.getMessageById(poll.messageId).complete();
+					Message message = tchan.retrieveMessageById(poll.messageId).complete();
 					if (message == null) {
 						if (debug) {
 							tchan.sendMessage(String.format("[DEBUG] Null message at ID:\n$s", poll.messageId)).queue();
@@ -170,7 +170,7 @@ public class PollHandler {
 						if (debug) {
 							tchan.sendMessage(String.format("[DEBUG] Counting reactions: checking %s", emoji)).queue();
 						}
-						if (reaction.getUsers().complete().contains(guild.getJDA().getSelfUser())) {
+						if (reaction.retrieveUsers().complete().contains(guild.getJDA().getSelfUser())) {
 							voteCounts[val] = reaction.getCount();
 							val++;
 						}
@@ -236,7 +236,7 @@ public class PollHandler {
 				if (!poll.single || poll.id <= 0) {
 					return ret;
 				}
-				Message mess = channel.getMessageById(message).complete();
+				Message mess = channel.retrieveMessageById(message).complete();
 				List<MessageReaction> reactions = mess.getReactions();
 				for (MessageReaction messageReaction : reactions) {
 //						boolean debug = GuildSettings.getBoolFor(channel, GSetting.DEBUG);

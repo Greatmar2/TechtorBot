@@ -16,7 +16,7 @@
 
 package takeshi.games.game2048;
 
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 
 /**

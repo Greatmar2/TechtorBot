@@ -16,9 +16,26 @@
 
 package takeshi.handler;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+
 import org.reflections.Reflections;
+
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 import takeshi.games.meta.GameTurn;
@@ -29,11 +46,6 @@ import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 import takeshi.util.Emojibet;
 import takeshi.util.Misc;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
 public class GameHandler {
 	// amount of invalid input attempts before auto-leaving playmode
@@ -96,7 +108,8 @@ public class GameHandler {
 	}
 
 	public final boolean executeReaction(User player, MessageChannel channel, MessageReaction reaction, String messageId) {
-		if (removingReactions) return false;
+		if (removingReactions)
+			return false;
 		if (!channel.getType().equals(ChannelType.TEXT) || !reactionMessages.containsKey(messageId)) {
 			return false;
 		}
@@ -106,8 +119,8 @@ public class GameHandler {
 		if (!getGame(player.getId()).isTurnOf(player)) {
 			return false;
 		}
-		final String input = Emojibet.getTextFor(reaction.getReactionEmote().getName());//Misc.emoteToNumber(reaction.getReactionEmote().getName());
-		Message msg = channel.getMessageById(messageId).complete();
+		final String input = Emojibet.getTextFor(reaction.getReactionEmote().getName());// Misc.emoteToNumber(reaction.getReactionEmote().getName());
+		Message msg = channel.retrieveMessageById(messageId).complete();
 		if (msg == null) {
 			return false;
 		}
@@ -144,21 +157,21 @@ public class GameHandler {
 			message = message.replace(DisUtil.getCommandPrefix(channel) + COMMAND_NAME, "").trim();
 		}
 		switch (message) {
-			case "playmode":
-			case "enter":
-			case "play":
-				enterPlayMode(channel, player);
-				bot.out.sendAsyncMessage(channel, Templates.playmode_entering_mode.formatGuild(channel));
-				return;
-			case "exit":
-			case "leave":
-			case "stop":
-				if (leavePlayMode(player)) {
-					bot.out.sendAsyncMessage(channel, Templates.playmode_leaving_mode.formatGuild(channel));
-				}
-				return;
-			default:
-				break;
+		case "playmode":
+		case "enter":
+		case "play":
+			enterPlayMode(channel, player);
+			bot.out.sendAsyncMessage(channel, Templates.playmode_entering_mode.formatGuild(channel));
+			return;
+		case "exit":
+		case "leave":
+		case "stop":
+			if (leavePlayMode(player)) {
+				bot.out.sendAsyncMessage(channel, Templates.playmode_leaving_mode.formatGuild(channel));
+			}
+			return;
+		default:
+			break;
 		}
 		String[] args = message.split(" ");
 		String gameMessage = executeGameMove(args, player, channel);
@@ -168,25 +181,27 @@ public class GameHandler {
 			gameMessage = showList(channel);
 		}
 		if (!gameMessage.isEmpty()) {
-			//AbstractGame game = getGame(player.getId());
+			// AbstractGame game = getGame(player.getId());
 			if (targetMessage != null && (targetMessage.getChannel().getHistoryAfter(targetMessage.getId(), 11).complete().size() <= 10)) {
 				bot.queue.add(targetMessage.editMessage(gameMessage));
 
-				//bot.out.editAsync(targetMessage, gameMessage);
-				//bot.queue.add(targetMessage.editMessage(gameMessage));
-				//bot.queue.add(targetMessage.clearReactions());
-				//System.out.println("Reactions for player " + player.getName());
-				/*for (MessageReaction reaction : targetMessage.getReactions()) {
-					bot.queue.add(reaction.removeReaction());
-				}*/
+				// bot.out.editAsync(targetMessage, gameMessage);
+				// bot.queue.add(targetMessage.editMessage(gameMessage));
+				// bot.queue.add(targetMessage.clearReactions());
+				// System.out.println("Reactions for player " + player.getName());
+				/*
+				 * for (MessageReaction reaction : targetMessage.getReactions()) {
+				 * bot.queue.add(reaction.removeReaction()); }
+				 */
 
-				//String emote = Misc.numberToEmote(Integer.parseInt(reaction));
-				//bot.queue.add(targetMessage.addReaction(emote));
-				//targetMessage.addReaction(Misc.numberToEmote(Integer.parseInt(reaction))).complete();
-				//System.out.println("Adding reaction " + reaction);
+				// String emote = Misc.numberToEmote(Integer.parseInt(reaction));
+				// bot.queue.add(targetMessage.addReaction(emote));
+				// targetMessage.addReaction(Misc.numberToEmote(Integer.parseInt(reaction))).complete();
+				// System.out.println("Adding reaction " + reaction);
 
-				//if (game == null || !game.shouldUpdateReactionsEachTurn()) {
-				//Some overcomplicated coding here, trying to get the darn reactions to just keep the needed ones
+				// if (game == null || !game.shouldUpdateReactionsEachTurn()) {
+				// Some overcomplicated coding here, trying to get the darn reactions to just
+				// keep the needed ones
 				if (!message.contains("It is over!")) {
 					AbstractGame game = getGame(player.getId());
 					if (game != null) {
@@ -194,10 +209,10 @@ public class GameHandler {
 						List<MessageReaction> reactionsPresent = targetMessage.getReactions();
 						boolean[] hasReaction = new boolean[reactionsNeeded.length];
 						Arrays.fill(hasReaction, false);
-						//for (int i = 0; i < reactionsNeeded.length; i++) {
+						// for (int i = 0; i < reactionsNeeded.length; i++) {
 						for (MessageReaction reaction : reactionsPresent) {
 							boolean needReaction = false;
-							if (!reaction.getReactionEmote().isEmote()) { //Find which needed reactions are already present
+							if (!reaction.getReactionEmote().isEmote()) { // Find which needed reactions are already present
 								for (int i = 0; !needReaction && i < reactionsNeeded.length; i++) {
 									if (Emojibet.getTextFor(reaction.getReactionEmote().getName()).equals(reactionsNeeded[i])) {
 										needReaction = true;
@@ -205,30 +220,32 @@ public class GameHandler {
 									}
 								}
 							}
-							if (!needReaction) { //Remove the emojis that aren't needed
+							if (!needReaction) { // Remove the emojis that aren't needed
 								removingReactions = true;
-								//System.out.println("Removing reaction " + reaction.getReactionEmote().getName());
-								List<User> users = reaction.getUsers().complete();
+								// System.out.println("Removing reaction " +
+								// reaction.getReactionEmote().getName());
+								List<User> users = reaction.retrieveUsers().complete();
 								for (User user : users) {
 									reaction.removeReaction(user).complete();
-									//bot.queue.add(reaction.removeReaction(user));
+									// bot.queue.add(reaction.removeReaction(user));
 								}
 								reaction.removeReaction().complete();
 								removingReactions = false;
-								//bot.queue.add(reaction.removeReaction(), v -> removingReactions = false);
+								// bot.queue.add(reaction.removeReaction(), v -> removingReactions = false);
 							}
 						}
 						for (int i = 0; i < reactionsNeeded.length; i++) {
 							if (!hasReaction[i]) {
-								//System.out.println("Adding reaction " + Emojibet.getEmojiFor(reactionsNeeded[i]));
+								// System.out.println("Adding reaction " +
+								// Emojibet.getEmojiFor(reactionsNeeded[i]));
 								bot.queue.add(targetMessage.addReaction(Emojibet.getEmojiFor(reactionsNeeded[i])));
 							}
 						}
-						//}
+						// }
 					}
 				}
 			} else {
-				//if (targetMessage != null) bot.queue.add(targetMessage.delete());
+				// if (targetMessage != null) bot.queue.add(targetMessage.delete());
 
 				if (playerGames.containsKey(player.getId()) && playerGames.get(player.getId()).couldAddReactions()) {
 					bot.out.sendAsyncMessage(channel, gameMessage, msg -> {
@@ -300,7 +317,7 @@ public class GameHandler {
 	}
 
 	private String createGameFromUserMention(TextChannel channel, User player, String theMention, String gamecode) {
-		return createGameFromUserMention(channel, player, new String[] {theMention}, gamecode);
+		return createGameFromUserMention(channel, player, new String[] { theMention }, gamecode);
 	}
 
 	private String createGameFromUserMention(TextChannel channel, User player, String[] theMentions, String gamecode) {
@@ -317,7 +334,8 @@ public class GameHandler {
 			if (targetUsers[i].isBot()) {
 				return Templates.playmode_not_vs_bots.formatGuild(channel);
 			}
-			if (targetUsers[i].getIdLong() == player.getIdLong() || targetUsers[i].equals(player) && !bot.security.getSimpleRank(player).isAtLeast(SimpleRank.CREATOR)) {
+			if (targetUsers[i].getIdLong() == player.getIdLong()
+					|| targetUsers[i].equals(player) && !bot.security.getSimpleRank(player).isAtLeast(SimpleRank.CREATOR)) {
 				return Templates.playmode_not_vs_self.formatGuild(channel);
 			}
 			if (isInAGame(targetUsers[i].getId())) {
@@ -382,7 +400,8 @@ public class GameHandler {
 				}
 				return Templates.playmode_invalid_usage.formatGuild(channel);
 			} else if (args.length > 1 && DisUtil.isUserMention(args[1])) {
-				if (args.length == 2) return createGameFromUserMention(channel, player, args[1], args[0]);
+				if (args.length == 2)
+					return createGameFromUserMention(channel, player, args[1], args[0]);
 				else {
 					String[] mentions = new String[args.length - 1];
 					System.arraycopy(args, 1, mentions, 0, args.length - 1);

@@ -26,9 +26,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.handler.CommandHandler;
 import takeshi.main.DiscordBot;

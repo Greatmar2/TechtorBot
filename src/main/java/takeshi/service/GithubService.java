@@ -16,8 +16,8 @@
 
 package takeshi.service;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
 import takeshi.core.AbstractService;
 import takeshi.main.BotContainer;
 import takeshi.modules.github.GitHub;

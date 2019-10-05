@@ -20,17 +20,17 @@ import java.util.List;
 
 import org.trello4j.Trello;
 import org.trello4j.TrelloImpl;
-import org.trello4j.model.Card;
 import org.trello4j.model.Checklist;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CooldownScope;
 import takeshi.command.meta.ICommandCooldown;
+import takeshi.games.card.Card;
 import takeshi.handler.CommandHandler;
 import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
@@ -86,8 +86,7 @@ public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 	}
 
 	@Override
-	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		EmbedBuilder emInfo = new EmbedBuilder();
 
 		emInfo.setColor(QuickEmbedBuilder.MAR_COL);
@@ -110,8 +109,7 @@ public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (args.length > 0 && BotConfig.TRELLO_ACTIVE) {
 			switch (args[0].toLowerCase()) {
 			case "planned":
@@ -121,30 +119,25 @@ public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 			case "bug":
 				return "The following bugs are known:\n" + getListFor(BotConfig.TRELLO_LIST_BUGS, ":exclamation:");
 			case "progress":
-				return "The following items are being worked on:\n"
-						+ getListFor(BotConfig.TRELLO_LIST_IN_PROGRESS, ":construction:");
+				return "The following items are being worked on:\n" + getListFor(BotConfig.TRELLO_LIST_IN_PROGRESS, ":construction:");
 			default:
 				break;
 			}//
 		}
 		String onlineFor = TimeUtil.getRelativeTime(bot.startupTimeStamp, false);
 		String prefix = DisUtil.getCommandPrefix(channel);
-		return "\u2139 > Info  \n" + "Where should I start :thinking:\n" + "**What am I?** I'm batman\n"
-				+ "**My purpose?** About as clear as yours \n" + "The last time I restarted was  " + onlineFor + ".\n"
-				+ "Running version `" + Launcher.getVersion().toString() + "`. You can use `" + prefix
-				+ "changelog` to see what changed.\n\n" + "Type **" + prefix
-				+ "help** to see what I'll allow you to do. In total there are " + CommandHandler.getCommands().length
-				+ " commands I can perform.\n\n" + "For help about a specific command type `" + prefix
-				+ "<command> help`\n" + "An example: `" + prefix
-				+ "skip help` to see what you can do with the skip command.\n\n"
-				+ "If you need assistance, want to share your thoughts or want to contribute feel free to join my __"
-				+ prefix + "discord__";
+		return "\u2139 > Info  \n" + "Where should I start :thinking:\n" + "**What am I?** I'm batman\n" + "**My purpose?** About as clear as yours \n"
+				+ "The last time I restarted was  " + onlineFor + ".\n" + "Running version `" + Launcher.getVersion().toString() + "`. You can use `" + prefix
+				+ "changelog` to see what changed.\n\n" + "Type **" + prefix + "help** to see what I'll allow you to do. In total there are "
+				+ CommandHandler.getCommands().length + " commands I can perform.\n\n" + "For help about a specific command type `" + prefix
+				+ "<command> help`\n" + "An example: `" + prefix + "skip help` to see what you can do with the skip command.\n\n"
+				+ "If you need assistance, want to share your thoughts or want to contribute feel free to join my __" + prefix + "discord__";
 	}
 
 	private String getListFor(String listId, String itemPrefix) {
 		StringBuilder sb = new StringBuilder();
-		List<Card> cardsByList = trello.getCardsByList(listId);
-		for (Card card : cardsByList) {
+		List<org.trello4j.model.Card> cardsByList = trello.getCardsByList(listId);
+		for (org.trello4j.model.Card card : cardsByList) {
 			sb.append(itemPrefix).append(" **").append(card.getName()).append("**").append("\n");
 			if (card.getDesc().length() > 2) {
 				sb.append(card.getDesc()).append("\n");
@@ -153,9 +146,7 @@ public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 			for (Checklist clist : checkItemStates) {
 				sb.append("\n");
 				for (Checklist.CheckItem item : clist.getCheckItems()) {
-					sb.append(String.format(" %s %s",
-							item.isChecked() ? ":ballot_box_with_check:" : ":white_large_square:", item.getName()))
-							.append("\n");
+					sb.append(String.format(" %s %s", item.isChecked() ? ":ballot_box_with_check:" : ":white_large_square:", item.getName())).append("\n");
 				}
 			}
 

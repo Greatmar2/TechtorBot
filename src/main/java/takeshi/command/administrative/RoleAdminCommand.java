@@ -18,15 +18,15 @@ package takeshi.command.administrative;
 
 import java.util.List;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.db.controllers.CGuild;
@@ -50,11 +50,9 @@ public class RoleAdminCommand extends AbstractCommand {
 
 	@Override
 	public String getDescription() {
-		return "Management of roles & general permissions \n"
-				+ "You can give users the ability to self-assign roles. \n\n" + "Note:\n"
-				+ "self-assignable roles are not created by techtor!\n"
-				+ "To add an assignable role, you'll first have to add that role though discord.\n" + "\n\n"
-				+ "Users can get/remove their own roles with the `getrole` command ";
+		return "Management of roles & general permissions \n" + "You can give users the ability to self-assign roles. \n\n" + "Note:\n"
+				+ "self-assignable roles are not created by techtor!\n" + "To add an assignable role, you'll first have to add that role though discord.\n"
+				+ "\n\n" + "Users can get/remove their own roles with the `getrole` command ";
 	}
 
 	@Override
@@ -64,16 +62,14 @@ public class RoleAdminCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "You can specify which roles are self-assignable by users with the following commands: ",
-				"", "roleadmin self                                 //check what roles are self-assignable",
+		return new String[] { "You can specify which roles are self-assignable by users with the following commands: ", "",
+				"roleadmin self                                 //check what roles are self-assignable",
 				"roleadmin self add <rolename>                  //add a role to the list of assignable roles",
 				"roleadmin self remove <rolename>               //remove a role from the list of assignable roles",
 				// "roleadmin self describe <role> <description> //add a description to what
 				// this role does",
-				"", "//You can use everyone as <user> and it'll apply to everyone",
-				"roleadmin give <user> <role>     //gives a user a role",
-				"roleadmin take <user> <role>     //takes away role", "",
-				"roleadmin                        //lists roles",
+				"", "//You can use everyone as <user> and it'll apply to everyone", "roleadmin give <user> <role>     //gives a user a role",
+				"roleadmin take <user> <role>     //takes away role", "", "roleadmin                        //lists roles",
 				"roleadmin cleanup                //cleans up the roles from the time-based rankings",
 				"roleadmin setup                  //creates the roles for the time-based rankings",
 				// "roleadmin bind BOT_ROLE <discordrole> //binds a discordrole to a botrole",
@@ -132,8 +128,7 @@ public class RoleAdminCommand extends AbstractCommand {
 			switch (args[1].toLowerCase()) {
 			case "add":
 			case "+":
-				CGuildRoleAssignable.insertOrUpdate(CGuild.getCachedId(guild.getIdLong()), role.getIdLong(),
-						role.getName());
+				CGuildRoleAssignable.insertOrUpdate(CGuild.getCachedId(guild.getIdLong()), role.getIdLong(), role.getName());
 				return Templates.command.role_admin.adding.formatGuild(channel, role.getName());
 			case "remove":
 			case "-":
@@ -193,9 +188,7 @@ public class RoleAdminCommand extends AbstractCommand {
 			}
 			return String.format("removing %s from %s", r.getName(), u.getName());
 		}
-		return String.format(
-				"I can't edit the %s role, you need to make sure my highest role is above this one for it to work",
-				r.getName());
+		return String.format("I can't edit the %s role, you need to make sure my highest role is above this one for it to work", r.getName());
 	}
 
 	private void _mutateRole(Role role, Member member, boolean adding) {
@@ -206,7 +199,7 @@ public class RoleAdminCommand extends AbstractCommand {
 						return;
 					}
 				}
-				role.getGuild().getController().addRolesToMember(member, role).complete();
+				role.getGuild().addRoleToMember(member, role).complete();
 			} else {
 				boolean hasRole = false;
 				for (Role memberRole : member.getRoles()) {
@@ -218,7 +211,7 @@ public class RoleAdminCommand extends AbstractCommand {
 				if (!hasRole) {
 					return;
 				}
-				role.getGuild().getController().removeRolesFromMember(member, role).complete();
+				role.getGuild().removeRoleFromMember(member, role).complete();
 
 			}
 		} else {

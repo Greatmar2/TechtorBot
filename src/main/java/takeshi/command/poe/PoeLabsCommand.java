@@ -16,9 +16,9 @@
 
 package takeshi.command.poe;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.modules.reddit.RedditScraper;

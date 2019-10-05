@@ -16,11 +16,28 @@
 
 package takeshi.command.fun;
 
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import javax.imageio.ImageIO;
+
 import org.apache.commons.lang3.StringEscapeUtils;
+
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.modules.reddit.RedditScraper;
@@ -28,13 +45,6 @@ import takeshi.modules.reddit.pojo.Image;
 import takeshi.modules.reddit.pojo.ImagePreview;
 import takeshi.modules.reddit.pojo.Post;
 import takeshi.templates.Templates;
-
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.*;
 
 /**
  * !r show something from reddit :)
@@ -109,7 +119,8 @@ public class RedditCommand extends AbstractCommand {
 				try (InputStream in = new URL(StringEscapeUtils.unescapeHtml4(image.source.url)).openStream()) {
 					File outputfile = new File("tmp_" + channel.getId() + ".jpg");
 					ImageIO.write(ImageIO.read(in), "jpg", outputfile);
-					bot.queue.add(channel.sendFile(outputfile, new MessageBuilder().append(post.data.title).build()), message -> outputfile.delete());
+					bot.queue.add(channel.sendMessage(new MessageBuilder().append(post.data.title).build()).addFile(outputfile),
+							message -> outputfile.delete());
 					return "";
 				} catch (IOException e) {
 					e.printStackTrace();

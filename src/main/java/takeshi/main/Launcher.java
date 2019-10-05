@@ -23,8 +23,8 @@ import java.util.Properties;
 
 import com.kaaz.configuration.ConfigurationBuilder;
 
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.managers.AudioManager;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.managers.AudioManager;
 import takeshi.core.ExitCode;
 import takeshi.core.Logger;
 import takeshi.db.DbUpdate;

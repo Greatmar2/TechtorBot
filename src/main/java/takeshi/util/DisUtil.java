@@ -32,17 +32,17 @@ import javax.imageio.ImageIO;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.core.OnlineStatus;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Channel;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.model.OGuild;
 import takeshi.guildsettings.DefaultGuildSettings;
@@ -194,7 +194,7 @@ public class DisUtil {
 	 * @param channel channel to check
 	 * @return use economy?
 	 */
-	public static boolean useEconomy(Channel channel) {
+	public static boolean useEconomy(GuildChannel channel) {
 		return channel != null && channel instanceof TextChannel && GuildSettings.getBoolFor(((TextChannel) channel), GSetting.MODULE_ECONOMY);
 	}
 

@@ -16,10 +16,10 @@
 
 package takeshi.command.bot_administration;
 
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
@@ -79,21 +79,21 @@ public class BotStatusCommand extends AbstractCommand {
 				if (args.length < 2) {
 					return Templates.invalid_use.formatGuild(channel);
 				}
-				Game.GameType gameType = Game.GameType.DEFAULT;
+				Activity.ActivityType gameType = Activity.ActivityType.DEFAULT;
 				if (args[0].equalsIgnoreCase("watch")) {
-					gameType = Game.GameType.WATCHING;
+					gameType = Activity.ActivityType.WATCHING;
 				} else if (args[0].equalsIgnoreCase("listen")) {
-					gameType = Game.GameType.LISTENING;
+					gameType = Activity.ActivityType.LISTENING;
 				}
-				channel.getJDA().getPresence().setGame(Game.of(gameType, Misc.joinStrings(args, 1)));
+				channel.getJDA().getPresence().setActivity(Activity.of(gameType, Misc.joinStrings(args, 1)));
 				break;
 			case "stream":
 				if (args.length < 3) {
 					return Templates.invalid_use.formatGuild(channel);
 				}
 				try {
-					channel.getJDA().getPresence().setGame(Game.of(Game.GameType.STREAMING, Misc.joinStrings(args, 2),
-							"http://www.twitch.tv/" + args[1]));
+					channel.getJDA().getPresence()
+							.setActivity(Activity.of(Activity.ActivityType.STREAMING, Misc.joinStrings(args, 2), "http://www.twitch.tv/" + args[1]));
 				} catch (Exception e) {
 					return Emojibet.THUMBS_DOWN + " " + e.getMessage();
 				}

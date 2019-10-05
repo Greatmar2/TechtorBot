@@ -16,7 +16,7 @@
 
 package takeshi.guildsettings.types;
 
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 import takeshi.guildsettings.IGuildSettingType;
 import takeshi.util.Emojibet;
 import takeshi.util.Misc;

@@ -4,7 +4,7 @@
   <groupId>mar</groupId>
   <artifactId>TechtorBot</artifactId>
   <name>TechtorBot</name>
-  <version>1.4.3</version>
+  <version>1.5.0</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -58,21 +58,14 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.jagrosh</groupId>
       <artifactId>jda-utilities</artifactId>
-      <version>2.1.4</version>
+      <version>3.0.2</version>
       <type>pom</type>
       <scope>compile</scope>
     </dependency>
   </dependencies>
   <properties>
-    <slf4jVersion>1.7.25</slf4jVersion>
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>

@@ -21,12 +21,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.CommandReactionListener;
 
 public class CommandReactionHandler {
@@ -79,7 +79,7 @@ public class CommandReactionHandler {
 				reactions.get(channel.getGuild().getIdLong()).remove(messageId);
 			} else if (listener.hasReaction(reaction.getReactionEmote().getName()) && listener.getUserId() == userId) {
 				reactions.get(channel.getGuild().getIdLong()).get(messageId).updateLastAction();
-				Message message = channel.getMessageById(messageId).complete();
+				Message message = channel.retrieveMessageById(messageId).complete();
 				listener.react(reaction.getReactionEmote().getName(), message);
 			}
 			// reaction.removeReaction(channel.getJDA().getUserById(userId)).complete();
@@ -96,7 +96,7 @@ public class CommandReactionHandler {
 			// lock = false;
 //		} else {
 			// reaction.removeReaction();
-			// channel.getMessageById(messageId).complete().addReaction(reaction.getReactionEmote().getEmote());
+			// channel.retrieveMessageById(messageId).complete().addReaction(reaction.getReactionEmote().getEmote());
 			// Misc.clearReactions(message, userId);
 //			lock = false;
 		}

@@ -16,7 +16,7 @@
 
 package takeshi.command.informative;
 
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.entities.*;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.db.controllers.CBanks;
 import takeshi.db.controllers.CGuild;
@@ -129,7 +129,7 @@ public class UserCommand extends AbstractCommand {
                     OGuildMember member = CGuildMember.findBy(guildId, userId);
                     Guild guild = ((TextChannel) channel).getGuild();
                     if (args[2].equals("reset")) {
-                        member.joinDate = new Timestamp(guild.getMember(infoUser).getJoinDate().toInstant().toEpochMilli());
+                        member.joinDate = new Timestamp(guild.getMember(infoUser).getTimeJoined().toInstant().toEpochMilli());
                     } else {
                         member.joinDate = new Timestamp(joindateFormat.parse(args[2].replace("-", "/")).getTime());
                     }
@@ -155,7 +155,7 @@ public class UserCommand extends AbstractCommand {
             Guild guild = ((TextChannel) channel).getGuild();
             OGuildMember member = CGuildMember.findBy(guildId, userId);
             if (member.joinDate == null) {
-                member.joinDate = new Timestamp(guild.getMember(infoUser).getJoinDate().toInstant().toEpochMilli());
+                member.joinDate = new Timestamp(guild.getMember(infoUser).getTimeJoined().toInstant().toEpochMilli());
                 CGuildMember.insertOrUpdate(member);
             }
 

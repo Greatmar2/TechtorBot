@@ -18,9 +18,9 @@ package takeshi.command.creator;
 
 import com.google.common.base.Joiner;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;

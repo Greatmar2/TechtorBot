@@ -2,7 +2,7 @@ package takeshi.handler.discord;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-import net.dv8tion.jda.core.requests.RestAction;
+import net.dv8tion.jda.api.requests.RestAction;
 import takeshi.main.DiscordBot;
 
 import java.util.concurrent.ExecutorService;

@@ -23,16 +23,16 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Channel;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Message.Attachment;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Message.Attachment;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
@@ -110,7 +110,7 @@ public class SayCommand extends AbstractCommand {
 				for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make sure it doesn't.
 					channel.sendTyping().queueAfter(i, TimeUnit.MILLISECONDS);
 				}
-			} else if (PermissionUtil.checkPermission((Channel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+			} else if (PermissionUtil.checkPermission((GuildChannel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
 				inputMessage.delete().queue();
 			}
 
@@ -125,9 +125,9 @@ public class SayCommand extends AbstractCommand {
 					tempFolder.mkdir();
 				}
 				File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
-				if (attachs.get(0).download(temp)) {
+				if (attachs.get(0).downloadToFile(temp).isDone()) {
 
-					bot.queue.add(channel.sendFile(temp, outMessage.build()), message -> temp.delete());
+					bot.queue.add(channel.sendMessage(outMessage.build()).addFile(temp), message -> temp.delete());
 				}
 
 			} else if (!output.trim().isEmpty()) {

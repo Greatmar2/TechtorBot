@@ -16,9 +16,9 @@
 
 package takeshi.command.administrative;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import takeshi.command.administrative.modactions.AbstractModActionCommand;
 import takeshi.db.model.OModerationCase;
 import takeshi.main.DiscordBot;
@@ -27,34 +27,34 @@ import takeshi.main.DiscordBot;
  * command for kicking users from a guild
  */
 public class KickCommand extends AbstractModActionCommand {
-    @Override
-    public String getDescription() {
-        return "Kicks a member from your guild";
-    }
+	@Override
+	public String getDescription() {
+		return "Kicks a member from your guild";
+	}
 
-    @Override
-    public String getCommand() {
-        return "kick";
-    }
+	@Override
+	public String getCommand() {
+		return "kick";
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[0];
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[0];
+	}
 
-    @Override
-    protected OModerationCase.PunishType getPunishType() {
-        return OModerationCase.PunishType.KICK;
-    }
+	@Override
+	protected OModerationCase.PunishType getPunishType() {
+		return OModerationCase.PunishType.KICK;
+	}
 
-    @Override
-    protected Permission getRequiredPermission() {
-        return Permission.KICK_MEMBERS;
-    }
+	@Override
+	protected Permission getRequiredPermission() {
+		return Permission.KICK_MEMBERS;
+	}
 
-    @Override
-    protected boolean punish(DiscordBot bot, Guild guild, Member member) {
-        bot.queue.add(guild.getController().kick(member));
-        return true;
-    }
+	@Override
+	protected boolean punish(DiscordBot bot, Guild guild, Member member) {
+		bot.queue.add(guild.kick(member));
+		return true;
+	}
 }

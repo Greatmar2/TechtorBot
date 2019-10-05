@@ -16,8 +16,8 @@
 
 package takeshi.handler.discord;
 
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
 
 public class RoleModifyTask {
 

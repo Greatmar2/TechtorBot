@@ -16,9 +16,9 @@
 
 package takeshi.handler;
 
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.db.controllers.CMusic;
 import takeshi.db.controllers.CPlaylist;
 import takeshi.db.controllers.CUser;

@@ -16,7 +16,7 @@
 
 package takeshi.templates;
 
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 import takeshi.db.WebDb;
 import takeshi.db.controllers.CGuild;
 import takeshi.main.BotContainer;

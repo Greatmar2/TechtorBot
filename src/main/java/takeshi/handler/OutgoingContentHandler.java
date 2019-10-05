@@ -21,19 +21,19 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.requests.RestAction;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.MessageBuilder.SplitPolicy;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.requests.RestAction;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.handler.discord.RoleModifyTask;
 import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
@@ -60,12 +60,9 @@ public class OutgoingContentHandler {
 	}
 
 	/**
-	 * @param channel
-	 *                     channel to send to
-	 * @param content
-	 *                     the message
-	 * @param callback
-	 *                     callback to execute after the message is sent
+	 * @param channel  channel to send to
+	 * @param content  the message
+	 * @param callback callback to execute after the message is sent
 	 */
 	public void sendAsyncMessage(MessageChannel channel, String content, Consumer<Message> callback) {
 		sendAsyncMessage(channel, new MessageBuilder(content), callback);
@@ -91,8 +88,7 @@ public class OutgoingContentHandler {
 				RestAction<Message> messageRestAction = channel.sendMessage(thisMessage);
 				botInstance.queue.add(messageRestAction, message -> {
 					if (botInstance.shouldCleanUpMessages(channel)) {
-						botInstance.schedule(() -> saveDelete(message), BotConfig.DELETE_MESSAGES_AFTER,
-								TimeUnit.MILLISECONDS);
+						botInstance.schedule(() -> saveDelete(message), BotConfig.DELETE_MESSAGES_AFTER, TimeUnit.MILLISECONDS);
 					}
 				});
 			} else {
@@ -112,10 +108,8 @@ public class OutgoingContentHandler {
 	/**
 	 * adds a role to a user
 	 *
-	 * @param user
-	 *                 the user
-	 * @param role
-	 *                 the role
+	 * @param user the user
+	 * @param role the role
 	 */
 	public void addRole(User user, Role role) {
 		roleThread.offer(new RoleModifyTask(user, role, true));
@@ -124,10 +118,8 @@ public class OutgoingContentHandler {
 	/**
 	 * removes a role from a user
 	 *
-	 * @param user
-	 *                 the user
-	 * @param role
-	 *                 the role
+	 * @param user the user
+	 * @param role the role
 	 */
 	public void removeRole(User user, Role role) {
 		roleThread.offer(new RoleModifyTask(user, role, false));
@@ -137,26 +129,22 @@ public class OutgoingContentHandler {
 	 * send a message to creator {@link BotConfig#CREATOR_ID} has to be in the
 	 * {@link BotConfig#BOT_GUILD_ID } bot's guild
 	 *
-	 * @param message
-	 *                    the message to send
+	 * @param message the message to send
 	 */
 	public void sendMessageToCreator(String message) {
 		User user = botInstance.getJda().getUserById(BotConfig.CREATOR_ID);
 		if (user != null) {
 			sendPrivateMessage(user, message);
 		} else {
-			sendPrivateMessage(botInstance.getContainer().getShardFor(BotConfig.BOT_GUILD_ID).getJda()
-					.getUserById(BotConfig.CREATOR_ID), message);
+			sendPrivateMessage(botInstance.getContainer().getShardFor(BotConfig.BOT_GUILD_ID).getJda().getUserById(BotConfig.CREATOR_ID), message);
 		}
 	}
 
 	/**
 	 * Sends a private message to user
 	 *
-	 * @param target
-	 *                    the user to send it to
-	 * @param message
-	 *                    the message
+	 * @param target  the user to send it to
+	 * @param message the message
 	 */
 	public void sendPrivateMessage(User target, String message) {
 		sendPrivateMessage(target, message, null);
@@ -164,22 +152,19 @@ public class OutgoingContentHandler {
 
 	public void sendPrivateMessage(User target, String message, final Consumer<Message> onSuccess) {
 		if (target != null && !target.isFake() && message != null && !message.isEmpty()) {
-			botInstance.queue.add(target.openPrivateChannel(),
-					privateChannel -> botInstance.queue.add(privateChannel.sendMessage(message), onSuccess));
+			botInstance.queue.add(target.openPrivateChannel(), privateChannel -> botInstance.queue.add(privateChannel.sendMessage(message), onSuccess));
 		}
 	}
 
 	/**
 	 * Retrieves the message again before deleting it Mostly for delayed deletion
 	 *
-	 * @param messageToDelete
-	 *                            the message to delete
+	 * @param messageToDelete the message to delete
 	 */
 	public void saveDelete(Message messageToDelete) {
 		if (messageToDelete != null && botInstance.getJda() == messageToDelete.getJDA()) {
 			TextChannel channel = botInstance.getJda().getTextChannelById(messageToDelete.getChannel().getId());
-			if (channel != null && PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(),
-					Permission.MESSAGE_HISTORY)) {
+			if (channel != null && PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_HISTORY)) {
 				botInstance.queue.add(channel.deleteMessageById(messageToDelete.getId()));
 			}
 		}
@@ -207,9 +192,9 @@ public class OutgoingContentHandler {
 						}
 						if (PermissionUtil.canInteract(guild.getSelfMember(), role)) {
 							if (roleToModify.isAdd()) {
-								guild.getController().addRolesToMember(member, role).complete();
+								guild.addRoleToMember(member, role).complete();
 							} else {
-								guild.getController().removeRolesFromMember(member, role).complete();
+								guild.removeRoleFromMember(member, role).complete();
 							}
 						}
 					}

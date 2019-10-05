@@ -16,79 +16,79 @@
 
 package takeshi.templates;
 
-import com.google.api.client.repackaged.com.google.common.base.Joiner;
-
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.entities.impl.GuildImpl;
-import net.dv8tion.jda.core.entities.impl.RoleImpl;
-import net.dv8tion.jda.core.entities.impl.TextChannelImpl;
-import net.dv8tion.jda.core.entities.impl.UserImpl;
-import takeshi.main.BotContainer;
-
 import java.util.HashMap;
 
+import com.google.api.client.repackaged.com.google.common.base.Joiner;
+
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.entities.GuildImpl;
+import net.dv8tion.jda.internal.entities.RoleImpl;
+import net.dv8tion.jda.internal.entities.TextChannelImpl;
+import net.dv8tion.jda.internal.entities.UserImpl;
+import takeshi.main.BotContainer;
+
 public class TemplateVariables {
-    public static final TemplateVariables EMPTY = new TemplateVariables();
-    private static final HashMap<Class, TemplateVariableParser> mapper = new HashMap<>();
+	public static final TemplateVariables EMPTY = new TemplateVariables();
+	private static final HashMap<Class, TemplateVariableParser> mapper = new HashMap<>();
 
-    static {
-        init();
-    }
+	static {
+		init();
+	}
 
-    public User user = null;
-    public TextChannel channel = null;
-    public Guild guild = null;
-    public Role role = null;
-    public String args = null;
-    public String[] arg = {null, null, null};
+	public User user = null;
+	public TextChannel channel = null;
+	public Guild guild = null;
+	public Role role = null;
+	public String args = null;
+	public String[] arg = { null, null, null };
 
-    private static void init() {
-        mapper.put(User.class, (var, object) -> var.user = (User) object);
-        mapper.put(UserImpl.class, (var, object) -> var.user = (User) object);
-        mapper.put(TextChannel.class, (var, object) -> var.channel = (TextChannel) object);
-        mapper.put(TextChannelImpl.class, (var, object) -> var.channel = (TextChannel) object);
-        mapper.put(Guild.class, (var, object) -> var.guild = (Guild) object);
-        mapper.put(GuildImpl.class, (var, object) -> var.guild = (Guild) object);
-        mapper.put(Role.class, (var, object) -> var.role = (Role) object);
-        mapper.put(RoleImpl.class, (var, object) -> var.role = (Role) object);
+	private static void init() {
+		mapper.put(User.class, (var, object) -> var.user = (User) object);
+		mapper.put(UserImpl.class, (var, object) -> var.user = (User) object);
+		mapper.put(TextChannel.class, (var, object) -> var.channel = (TextChannel) object);
+		mapper.put(TextChannelImpl.class, (var, object) -> var.channel = (TextChannel) object);
+		mapper.put(Guild.class, (var, object) -> var.guild = (Guild) object);
+		mapper.put(GuildImpl.class, (var, object) -> var.guild = (Guild) object);
+		mapper.put(Role.class, (var, object) -> var.role = (Role) object);
+		mapper.put(RoleImpl.class, (var, object) -> var.role = (Role) object);
 
-        mapper.put(String.class, (var, object) -> {
-            if (var.args == null) {
-                var.args = (String) object;
-            }
-            for (int i = 0; i < var.arg.length; i++) {
-                if (var.arg[i] == null) {
-                    var.arg[i] = (String) object;
-                    break;
-                }
-            }
-        });
-        mapper.put(String[].class, (var, object) -> var.args = Joiner.on(" ").join((String[]) object));
-    }
+		mapper.put(String.class, (var, object) -> {
+			if (var.args == null) {
+				var.args = (String) object;
+			}
+			for (int i = 0; i < var.arg.length; i++) {
+				if (var.arg[i] == null) {
+					var.arg[i] = (String) object;
+					break;
+				}
+			}
+		});
+		mapper.put(String[].class, (var, object) -> var.args = Joiner.on(" ").join((String[]) object));
+	}
 
-    public static TemplateVariables create(Object... vars) {
-        if (vars == null || vars.length == 0) {
-            return EMPTY;
-        }
-        TemplateVariables tmp = new TemplateVariables();
-        for (Object var : vars) {
-            if (var == null) {
-                continue;
-            }
-            if (mapper.containsKey(var.getClass())) {
-                mapper.get(var.getClass()).apply(tmp, var);
-            } else {
-                BotContainer.LOGGER.warn("[template] UNMAPPED TYPE: " + var.getClass().getSimpleName());
-            }
-        }
-        return tmp;
-    }
+	public static TemplateVariables create(Object... vars) {
+		if (vars == null || vars.length == 0) {
+			return EMPTY;
+		}
+		TemplateVariables tmp = new TemplateVariables();
+		for (Object var : vars) {
+			if (var == null) {
+				continue;
+			}
+			if (mapper.containsKey(var.getClass())) {
+				mapper.get(var.getClass()).apply(tmp, var);
+			} else {
+				BotContainer.LOGGER.warn("[template] UNMAPPED TYPE: " + var.getClass().getSimpleName());
+			}
+		}
+		return tmp;
+	}
 
-    private interface TemplateVariableParser {
-        void apply(TemplateVariables var, Object o);
-    }
+	private interface TemplateVariableParser {
+		void apply(TemplateVariables var, Object o);
+	}
 
 }

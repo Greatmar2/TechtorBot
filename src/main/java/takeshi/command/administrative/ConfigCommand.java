@@ -25,16 +25,16 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandReactionListener;
 import takeshi.command.meta.CommandVisibility;
@@ -98,9 +98,10 @@ public class ConfigCommand extends AbstractCommand implements ICommandReactionLi
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "config                    //overview", "config page <number>      //show page <number>", "config tags               //see what tags exist",
-				"config tag <tagname>      //show settings with tagname", "config <property>         //check details of property",
-				"config <property> <value> //sets property", "", "config reset yesimsure    //resets the configuration to the default settings", };
+		return new String[] { "config                    //overview", "config page <number>      //show page <number>",
+				"config tags               //see what tags exist", "config tag <tagname>      //show settings with tagname",
+				"config <property>         //check details of property", "config <property> <value> //sets property", "",
+				"config reset yesimsure    //resets the configuration to the default settings", };
 	}
 
 	@Override
@@ -214,9 +215,9 @@ public class ConfigCommand extends AbstractCommand implements ICommandReactionLi
 				newValue = newValue.substring(0, 64);
 			}
 			if (args[0].equals("bot_listen") && args[1].equals("mine")) {
-				bot.queue.add(channel.sendMessage(
-						Emojibet.WARNING + " I will only listen to the configured `bot_channel`. If you rename the channel, you might not be able to access me anymore. "
-								+ "You can reset by typing `@" + channel.getJDA().getSelfUser().getName() + " reset yesimsure`"));
+				bot.queue.add(channel.sendMessage(Emojibet.WARNING
+						+ " I will only listen to the configured `bot_channel`. If you rename the channel, you might not be able to access me anymore. "
+						+ "You can reset by typing `@" + channel.getJDA().getSelfUser().getName() + " reset yesimsure`"));
 			}
 
 			if (GuildSettings.get(guild).set(guild, args[0], newValue)) {
@@ -227,9 +228,9 @@ public class ConfigCommand extends AbstractCommand implements ICommandReactionLi
 		String tblContent = "";
 		GuildSettings setting = GuildSettings.get(guild);
 		tblContent += setting.getDescription(args[0]);
-		return "Config help for **" + args[0] + "**\n\n" + "Current value: \"**" + GuildSettings.get(guild.getIdLong()).getDisplayValue(guild, args[0]) + "**\"\n"
-				+ "Default value: \"**" + setting.getDefaultValue(args[0]) + "**\"\n\n" + "Description: \n" + Misc.makeTable(tblContent) + "To set it back to default: `"
-				+ DisUtil.getCommandPrefix(channel) + "cfg " + args[0] + " " + setting.getDefaultValue(args[0]) + "`";
+		return "Config help for **" + args[0] + "**\n\n" + "Current value: \"**" + GuildSettings.get(guild.getIdLong()).getDisplayValue(guild, args[0])
+				+ "**\"\n" + "Default value: \"**" + setting.getDefaultValue(args[0]) + "**\"\n\n" + "Description: \n" + Misc.makeTable(tblContent)
+				+ "To set it back to default: `" + DisUtil.getCommandPrefix(channel) + "cfg " + args[0] + " " + setting.getDefaultValue(args[0]) + "`";
 	}
 
 	@Override

@@ -16,7 +16,7 @@
 
 package takeshi.command.music;
 
-import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.api.entities.*;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.guildsettings.GSetting;

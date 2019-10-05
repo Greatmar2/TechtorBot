@@ -18,8 +18,8 @@ package takeshi.service;
 
 import java.util.Random;
 
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Game;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Activity;
 import takeshi.core.AbstractService;
 import takeshi.main.BotContainer;
 import takeshi.main.DiscordBot;
@@ -28,7 +28,7 @@ import takeshi.main.DiscordBot;
  * pseudo randomly sets the now playing tag of the bot
  */
 public class BotStatusService extends AbstractService {
-	private final static String[] playingStatusList = { "with %s human pets", "Teaching %s Minions", "Bot simulator 2%03d", "Planning for wold domination",
+	private final static String[] playingStatusList = { "with %s human pets", "Teaching %s Minions", "Bot Simulator %03d", "Planning for world domination",
 			"Talking to %s idiots", "Analyzing %s fellow humans", "Predicting the future", "with your CPU" };
 	private final static String[] watchingStatusList = { "spoilers", "your every move", "your computer", "my top %s most wanted" };
 	private final static String[] listeningStatusList = { "backchannel frequencies", "people scream", "Scope shouting", "leaks" };
@@ -81,39 +81,39 @@ public class BotStatusService extends AbstractService {
 		// #%s");
 		// } else {
 		int roll = new Random().nextInt(playingStatusList.length + watchingStatusList.length + listeningStatusList.length + streamingStatusList.length);
-		// int statusNum = bot.getShards()[0].getJda().getUsers().size();
+		// int statusNum = bot.getShards()[0].getJda().retrieveUsers().size();
 		String status;
-		Game.GameType gameType;
+		Activity.ActivityType gameType;
 		// Set the status type from one of the status lists, with the appropriate game
 		// type
 		if (roll < playingStatusList.length) {
 			status = playingStatusList[roll];
-			gameType = Game.GameType.DEFAULT;
+			gameType = Activity.ActivityType.DEFAULT;
 		} else if (roll < (playingStatusList.length + watchingStatusList.length)) {
 			status = watchingStatusList[roll - playingStatusList.length];
-			gameType = Game.GameType.WATCHING;
+			gameType = Activity.ActivityType.WATCHING;
 		} else if (roll < (playingStatusList.length + watchingStatusList.length + listeningStatusList.length)) {
 			status = listeningStatusList[roll - playingStatusList.length - watchingStatusList.length];
-			gameType = Game.GameType.LISTENING;
+			gameType = Activity.ActivityType.LISTENING;
 		} else if (roll < (playingStatusList.length + watchingStatusList.length + listeningStatusList.length + streamingStatusList.length)) {
 			status = streamingStatusList[roll - playingStatusList.length - watchingStatusList.length - listeningStatusList.length];
-			gameType = Game.GameType.STREAMING;
+			gameType = Activity.ActivityType.STREAMING;
 		} else { // This shouldn't happen
 			status = "broken code";
-			gameType = Game.GameType.STREAMING;
+			gameType = Activity.ActivityType.STREAMING;
 		}
 		setGameOnShards(bot, status, gameType);
 		// }
 	}
 
-	private void setGameOnShards(BotContainer container, String status, Game.GameType gameType) {
+	private void setGameOnShards(BotContainer container, String status, Activity.ActivityType gameType) {
 		for (DiscordBot shard : container.getShards()) {
 			JDA jda = shard.getJda();
 			int statusNum = jda.getUsers().size() - 2;// Don't count Elek or itself
-			if (gameType == Game.GameType.STREAMING) {
-				jda.getPresence().setGame(Game.streaming(status, "http://www.twitch.tv/elektronxz"));
+			if (gameType == Activity.ActivityType.STREAMING) {
+				jda.getPresence().setActivity(Activity.streaming(status, "http://www.twitch.tv/elektronxz"));
 			} else {
-				jda.getPresence().setGame(Game.of(gameType, String.format(status, statusNum)));
+				jda.getPresence().setActivity(Activity.of(gameType, String.format(status, statusNum)));
 			}
 
 			// Check polls every 5 min, with status change.

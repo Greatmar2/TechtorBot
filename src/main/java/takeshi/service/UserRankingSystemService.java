@@ -16,7 +16,7 @@
 
 package takeshi.service;
 
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 import takeshi.core.AbstractService;
 import takeshi.guildsettings.GSetting;
 import takeshi.handler.GuildSettings;

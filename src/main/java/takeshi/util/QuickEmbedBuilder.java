@@ -18,8 +18,8 @@ package takeshi.util;
 
 import java.awt.Color;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 
 public class QuickEmbedBuilder {
 	// Default values

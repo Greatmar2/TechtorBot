@@ -21,12 +21,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.exceptions.HierarchyException;
-import net.dv8tion.jda.core.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.exceptions.HierarchyException;
+import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
 import takeshi.core.Logger;
 import takeshi.db.controllers.CReactionRole;
 import takeshi.db.model.OReactionRoleKey;
@@ -123,12 +123,12 @@ public class RoleReactionHandler {
 			try {
 
 				if (isAdding) {
-					channel.getGuild().getController().addRolesToMember(channel.getGuild().getMember(invoker), role).queue();
+					channel.getGuild().addRoleToMember(channel.getGuild().getMember(invoker), role).queue();
 					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
 						channel.sendMessage(String.format("[DEBUG] Giving the role '%s' to %s", role.getName(), invoker.getName())).queue();
 					}
 				} else {
-					channel.getGuild().getController().removeRolesFromMember(channel.getGuild().getMember(invoker), role).queue();
+					channel.getGuild().removeRoleFromMember(channel.getGuild().getMember(invoker), role).queue();
 					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
 						channel.sendMessage(String.format("[DEBUG] Removing the role '%s' to %s", role.getName(), invoker.getName())).queue();
 					}

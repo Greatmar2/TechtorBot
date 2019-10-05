@@ -16,8 +16,8 @@
 
 package takeshi.service;
 
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 import takeshi.core.AbstractService;
 import takeshi.core.ExitCode;
 import takeshi.guildsettings.GSetting;

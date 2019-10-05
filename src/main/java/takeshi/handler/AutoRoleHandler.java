@@ -19,9 +19,9 @@ package takeshi.handler;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import takeshi.core.Logger;
 import takeshi.db.controllers.CAutoRole;
 import takeshi.db.model.OAutoRole;
@@ -76,7 +76,7 @@ public class AutoRoleHandler {
 			CAutoRole.update(setRole);
 			return false;
 		}
-		guild.getController().addSingleRoleToMember(member, role).queue();
+		guild.addRoleToMember(member, role).queue();
 		return true;
 	}
 }

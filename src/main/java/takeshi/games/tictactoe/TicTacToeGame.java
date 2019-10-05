@@ -16,14 +16,14 @@
 
 package takeshi.games.tictactoe;
 
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 import takeshi.util.Misc;
 
 public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 	private static final int TILES_ON_BOARD = 9;
-	private final int[][] winCombos = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+	private final int[][] winCombos = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 } };
 	private TicTile[] board = new TicTile[TILES_ON_BOARD];
 
 	public TicTacToeGame() {
@@ -48,7 +48,7 @@ public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 
 	@Override
 	public String[] getReactions() {
-		return new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		return new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 	}
 
 	@Override

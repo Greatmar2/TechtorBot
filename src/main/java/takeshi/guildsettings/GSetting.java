@@ -16,7 +16,7 @@
 
 package takeshi.guildsettings;
 
-import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.api.entities.Guild;
 import takeshi.guildsettings.types.EnumSettingType;
 import takeshi.guildsettings.types.NumberBetweenSettingType;
 import takeshi.guildsettings.types.StringLengthSettingType;

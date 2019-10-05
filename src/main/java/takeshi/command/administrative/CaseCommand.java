@@ -21,14 +21,14 @@ import java.util.List;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.core.Logger;
@@ -194,7 +194,7 @@ public class CaseCommand extends AbstractCommand {
 			if (channel == null) {
 				return Templates.config.modlog_not_found.formatGuild(guild.getIdLong());
 			}
-			bot.queue.add(channel.getMessageById(oCase.messageId), msg -> {
+			bot.queue.add(channel.retrieveMessageById(oCase.messageId), msg -> {
 				if (msg != null) {
 					bot.queue.add(msg.editMessage(new MessageBuilder().setEmbed(CModerationCase.buildCase(guild, oCase)).build()));
 				} else {

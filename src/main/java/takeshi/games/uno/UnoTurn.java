@@ -55,12 +55,13 @@ public class UnoTurn extends GameTurn {
 	@Override
 	public boolean parseInput(String input) {
 		action = UnoGame.reactionToCommand(input);
-		if (action >= 0) return true;
+		if (action >= 0)
+			return true;
 		if (input != null && input.matches("^[1-9]{1,2}$")) {
 			action = Integer.parseInt(input);
-			/*if (action <= 10) {
-				action--;
-			}*/
+			/*
+			 * if (action <= 10) { action--; }
+			 */
 			return true;
 		}
 		return false;

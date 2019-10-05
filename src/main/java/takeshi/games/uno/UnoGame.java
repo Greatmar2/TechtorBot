@@ -16,9 +16,9 @@
 
 package takeshi.games.uno;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.PrivateChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 

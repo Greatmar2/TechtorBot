@@ -18,9 +18,9 @@ package takeshi.command.fun;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.handler.CommandHandler;
 import takeshi.main.DiscordBot;

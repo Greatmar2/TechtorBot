@@ -27,12 +27,12 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.managers.RoleManager;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.managers.RoleManager;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.db.controllers.CGuildMember;
 import takeshi.db.model.OGuildMember;
 import takeshi.guildsettings.GSetting;
@@ -138,7 +138,7 @@ public class RoleRankings {
 		if (rolesByName.size() > 0) {
 			role = rolesByName.get(0);
 		} else {
-			Role newRole = guild.getController().createRole().complete();
+			Role newRole = guild.createRole().complete();
 			RoleManager manager = newRole.getManager();
 			manager.setName(getFullName(guild, rank));
 			manager.setColor(rank.getColor());
@@ -239,7 +239,7 @@ public class RoleRankings {
 		boolean hasTargetRole = false;
 		String prefix = RoleRankings.getPrefix(guild);
 		if (membership.joinDate == null) {
-			membership.joinDate = new Timestamp(guild.getMember(user).getJoinDate().toInstant().toEpochMilli());
+			membership.joinDate = new Timestamp(guild.getMember(user).getTimeJoined().toInstant().toEpochMilli());
 			CGuildMember.insertOrUpdate(membership);
 		}
 		MemberShipRole targetRole = RoleRankings

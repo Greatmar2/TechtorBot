@@ -80,7 +80,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="561">
               <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
@@ -89,7 +89,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="8823">
               <caret line="556" selection-start-line="556" selection-end-line="556" />
@@ -158,8 +158,8 @@
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/fun/ConnectFourCommand.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GameOfSticks.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" />
@@ -169,9 +169,9 @@
         <option value="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoTurn.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java" />
+        <option value="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
@@ -582,7 +582,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="61" column="5" selection-start-line="61" selection-start-column="5" selection-end-line="61" selection-end-column="5" />
@@ -703,7 +703,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="385">
           <caret line="133" column="54" lean-forward="true" selection-start-line="133" selection-start-column="54" selection-end-line="133" selection-end-column="54" />
@@ -764,14 +764,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
           <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoGame.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8823">
           <caret line="556" selection-start-line="556" selection-end-line="556" />

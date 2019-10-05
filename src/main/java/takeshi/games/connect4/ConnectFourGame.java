@@ -16,7 +16,7 @@
 
 package takeshi.games.connect4;
 
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 import takeshi.util.Emojibet;

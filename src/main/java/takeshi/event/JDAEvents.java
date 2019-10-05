@@ -21,33 +21,33 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.events.DisconnectEvent;
-import net.dv8tion.jda.core.events.ReconnectedEvent;
-import net.dv8tion.jda.core.events.ResumedEvent;
-import net.dv8tion.jda.core.events.StatusChangeEvent;
-import net.dv8tion.jda.core.events.guild.GuildBanEvent;
-import net.dv8tion.jda.core.events.guild.GuildJoinEvent;
-import net.dv8tion.jda.core.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
-import net.dv8tion.jda.core.events.guild.member.GuildMemberNickChangeEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceJoinEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.core.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.core.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.core.events.message.priv.PrivateMessageReceivedEvent;
-import net.dv8tion.jda.core.events.message.react.GenericMessageReactionEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
-import net.dv8tion.jda.core.events.user.update.UserUpdateGameEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.DisconnectEvent;
+import net.dv8tion.jda.api.events.ReconnectedEvent;
+import net.dv8tion.jda.api.events.ResumedEvent;
+import net.dv8tion.jda.api.events.StatusChangeEvent;
+import net.dv8tion.jda.api.events.guild.GuildBanEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.user.update.UserUpdateActivityOrderEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import takeshi.db.controllers.CBotEvent;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.controllers.CGuildMember;
@@ -172,7 +172,7 @@ public class JDAEvents extends ListenerAdapter {
 			User guildUser = member.getUser();
 			int userId = CUser.getCachedId(guildUser.getIdLong(), guildUser.getName());
 			OGuildMember guildMember = CGuildMember.findBy(dbGuild.id, userId);
-			guildMember.joinDate = new Timestamp(member.getJoinDate().toInstant().toEpochMilli());
+			guildMember.joinDate = new Timestamp(member.getTimeJoined().toInstant().toEpochMilli());
 			CGuildMember.insertOrUpdate(guildMember);
 		}
 	}
@@ -250,13 +250,13 @@ public class JDAEvents extends ListenerAdapter {
 	}
 
 	@Override
-	public void onGuildMemberNickChange(GuildMemberNickChangeEvent event) {
+	public void onGuildMemberUpdateNickname(GuildMemberUpdateNicknameEvent event) {
 		String message = "**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator() + "** changed nickname ";
-		if (event.getPrevNick() != null) {
-			message += "from _~~" + event.getPrevNick() + "~~_ ";
+		if (event.getOldNickname() != null) {
+			message += "from _~~" + event.getOldNickname() + "~~_ ";
 		}
-		if (event.getNewNick() != null) {
-			message += "to **" + event.getNewNick() + "**";
+		if (event.getNewNickname() != null) {
+			message += "to **" + event.getNewNickname() + "**";
 		} else {
 			message += "back to normal";
 		}
@@ -341,7 +341,7 @@ public class JDAEvents extends ListenerAdapter {
 	}
 
 	@Override
-	public void onUserUpdateGame(UserUpdateGameEvent event) {
+	public void onUserUpdateActivityOrder(UserUpdateActivityOrderEvent event) {
 	}
 
 	@Override
@@ -351,7 +351,7 @@ public class JDAEvents extends ListenerAdapter {
 		}
 		// Change status when people join voice channel
 		if (event.getChannelJoined().getMembers().size() > 1) {
-			event.getJDA().getPresence().setGame(Game.listening("your calls"));
+			event.getJDA().getPresence().setActivity(Activity.listening("your calls"));
 		}
 		MusicPlayerHandler player = MusicPlayerHandler.getFor(event.getGuild(), discordBot);
 		if (player.isConnected()) {

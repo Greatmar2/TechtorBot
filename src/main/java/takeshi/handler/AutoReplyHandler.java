@@ -16,9 +16,9 @@
 
 package takeshi.handler;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.PrivateChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.controllers.CReplyPattern;
 import takeshi.db.model.OReplyPattern;

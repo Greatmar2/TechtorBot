@@ -27,15 +27,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.MessageReaction.ReactionEmote;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.MessageReaction.ReactionEmote;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.db.controllers.CRaffle;
 import takeshi.db.controllers.CRaffleBlacklist;
 import takeshi.db.model.ORaffle;
@@ -171,7 +171,7 @@ public class RaffleHandler {
 			endRaffle(raffle, guild);
 			ended = true;
 		} else {
-			Message message = guild.getTextChannelById(raffle.channelId).getMessageById(raffle.messageId).complete();
+			Message message = guild.getTextChannelById(raffle.channelId).retrieveMessageById(raffle.messageId).complete();
 			List<MessageReaction> reactions = message.getReactions();
 			for (MessageReaction reaction : reactions) {
 				if (reaction.getReactionEmote().getName().equals(ENTRY_EMOJI)) {
@@ -200,7 +200,7 @@ public class RaffleHandler {
 		if (raffle.channelId > 0 && raffle.messageId > 0) {
 			if (tchan != null && tchan.canTalk()) {
 				// Find the raffle message
-				Message message = tchan.getMessageById(raffle.messageId).complete();
+				Message message = tchan.retrieveMessageById(raffle.messageId).complete();
 				if (message == null) {
 					if (debug) {
 						tchan.sendMessage(String.format("[DEBUG] Null message at ID:\n$s", raffle.messageId)).queue();
@@ -216,7 +216,7 @@ public class RaffleHandler {
 						continue;
 					}
 //					reaction.removeReaction(guild.getSelfMember().getUser()).complete();
-					List<User> entrants = reaction.getUsers().complete();
+					List<User> entrants = reaction.retrieveUsers().complete();
 					entrants.remove(guild.getSelfMember().getUser());
 					numEntrants = entrants.size();
 					List<ORaffleBlacklist> bls = CRaffleBlacklist.getForRaffle(guild.getIdLong(), raffle.id);
@@ -275,7 +275,7 @@ public class RaffleHandler {
 //			return;
 //		}
 		TextChannel chan = guild.getTextChannelById(raffle.channelId);
-		Message mess = chan.getMessageById(raffle.messageId).complete();
+		Message mess = chan.retrieveMessageById(raffle.messageId).complete();
 		mess.delete().queue();
 
 		raffle.channelId = 0L;
@@ -293,7 +293,7 @@ public class RaffleHandler {
 				ret = true;
 				ORaffle raffle = CRaffle.findByMessage(guildId, message);
 
-				Message mess = channel.getMessageById(message).complete();
+				Message mess = channel.retrieveMessageById(message).complete();
 				List<MessageReaction> reactions = mess.getReactions();
 				for (MessageReaction messageReaction : reactions) {
 //						boolean debug = GuildSettings.getBoolFor(channel, GSetting.DEBUG);

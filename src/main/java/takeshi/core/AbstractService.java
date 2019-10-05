@@ -16,10 +16,10 @@
 
 package takeshi.core;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.utils.PermissionUtil;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.db.controllers.CChannels;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.controllers.CServiceVariables;

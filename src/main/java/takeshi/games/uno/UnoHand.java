@@ -16,13 +16,13 @@
 
 package takeshi.games.uno;
 
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.User;
-import takeshi.util.Emojibet;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
+import takeshi.util.Emojibet;
 
 /**
  * The type Uno hand.
@@ -76,13 +76,14 @@ public class UnoHand {
 	}
 
 	private void updateMessage() {
-		if (message == null) return;
+		if (message == null)
+			return;
 		int numMessagesSince = message.getChannel().getHistoryAfter(message.getId(), 11).complete().size();
 		if (numMessagesSince > 10) {
 			message = message.getChannel().sendMessage(toString()).complete();
 		} else {
 			message.editMessage(toString()).queue();
-			//return msg;
+			// return msg;
 		}
 	}
 
@@ -116,8 +117,10 @@ public class UnoHand {
 
 	UnoCard getCardAbs(int index) {
 //		return hand.get(index);
-		if (index < hand.size()) return hand.get(index);
-		else return null;
+		if (index < hand.size())
+			return hand.get(index);
+		else
+			return null;
 	}
 
 	/**
@@ -147,11 +150,10 @@ public class UnoHand {
 	public void removeCard(UnoCard card) {
 		hand.remove(card);
 		updateMessage();
-		/*for (int i = 0; i < hand.size(); i++) {
-			UnoCard checkCard = hand.get(i);
-			if(checkCard.equals(card)) {
-			}
-		}*/
+		/*
+		 * for (int i = 0; i < hand.size(); i++) { UnoCard checkCard = hand.get(i);
+		 * if(checkCard.equals(card)) { } }
+		 */
 	}
 
 	/**
@@ -185,7 +187,8 @@ public class UnoHand {
 	 */
 	void addCard(UnoCard card, boolean sort) {
 		hand.add(card);
-		if (sort) sortHand();
+		if (sort)
+			sortHand();
 	}
 
 	private void sortHand() {
@@ -269,12 +272,14 @@ public class UnoHand {
 	 * @param playedOnCard the played on card
 	 * @return the boolean
 	 */
-/*
-	Returns whether the card that the wild draw was played on was legal to be played.
+	/*
+	 * Returns whether the card that the wild draw was played on was legal to be
+	 * played.
 	 */
 	boolean isWildDrawLegal(UnoCard playedOnCard) {
 		for (UnoCard card : hand) {
-			if (card.color == playedOnCard.getCurrentColor()) return false;
+			if (card.color == playedOnCard.getCurrentColor())
+				return false;
 		}
 		return true;
 	}
@@ -299,7 +304,7 @@ public class UnoHand {
 		builder.append(" <- colors\n");
 		for (int i = 1; i <= hand.size(); i++) {
 			if (i > (10 * page) && i <= (10 * (page + 1))) {
-				//builder.append(Misc.numberToEmote(i - (10 * page)));
+				// builder.append(Misc.numberToEmote(i - (10 * page)));
 				builder.append(Emojibet.getEmojiFor(UnoGame.commandToReaction(i - (10 * page))));
 				builder.append(" ");
 			} else {

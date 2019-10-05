@@ -17,9 +17,9 @@
 package takeshi.util;
 
 import com.google.common.base.Strings;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageReaction;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.util.List;
@@ -414,7 +414,7 @@ public class Misc {
 	public static void clearReactions(Message message, long userId) {
 		List<MessageReaction> reactions = message.getReactions();
 		for (MessageReaction react : reactions) {
-			List<User> users = react.getUsers().getCached();
+			List<User> users = react.retrieveUsers().getCached();
 			for (int i = 0; i < users.size(); i++) {
 				User thisUser = users.get(i);
 				if (userId != thisUser.getIdLong()) {

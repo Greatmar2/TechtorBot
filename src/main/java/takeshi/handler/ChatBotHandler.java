@@ -17,7 +17,7 @@
 package takeshi.handler;
 
 
-import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
 

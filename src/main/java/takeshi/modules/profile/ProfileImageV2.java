@@ -27,7 +27,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.entities.User;
 import takeshi.main.Launcher;
 import takeshi.util.GfxUtil;
 

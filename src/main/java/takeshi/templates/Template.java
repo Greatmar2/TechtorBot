@@ -16,9 +16,9 @@
 
 package takeshi.templates;
 
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import takeshi.db.controllers.CGuild;
 import takeshi.guildsettings.GSetting;
 import takeshi.handler.GuildSettings;

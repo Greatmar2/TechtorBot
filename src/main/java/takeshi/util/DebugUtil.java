@@ -19,7 +19,7 @@ package takeshi.util;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import takeshi.main.DiscordBot;
 
 public class DebugUtil {

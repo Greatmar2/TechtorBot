@@ -16,9 +16,9 @@
 
 package takeshi.command.administrative;
 
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import takeshi.command.administrative.modactions.AbstractModActionCommand;
 import takeshi.db.model.OModerationCase;
 import takeshi.main.DiscordBot;
@@ -51,7 +51,7 @@ public class BanCommand extends AbstractModActionCommand {
 
     @Override
     protected boolean punish(DiscordBot bot, Guild guild, Member member) {
-        bot.queue.add(guild.getController().ban(member, 7));
+        bot.queue.add(guild.ban(member, 7));
         return true;
     }
 }
