@@ -49,7 +49,11 @@ public class MusicUtil {
 		Guild guild = player.getJDA().getGuildById(player.getGuild());
 
 		embed.setThumbnail("https://i.ytimg.com/vi/" + record.youtubecode + "/0.jpg");
-		embed.setAuthor(record.artist, "https://www.youtube.com/results?search_query=" + record.artist);
+		try {
+			embed.setAuthor(record.artist, "https://www.youtube.com/results?search_query=" + record.artist);
+		} catch (java.lang.IllegalArgumentException ex) {
+
+		}
 		embed.setTitle("\uD83C\uDFB6 " + record.youtubeTitle, null);
 		embed.setDescription("[Source](https://www.youtube.com/watch?v=" + record.youtubecode + ") | `" + DisUtil.getCommandPrefix(player.getGuild()) + "pl` - "
 				+ player.getPlaylist().title);

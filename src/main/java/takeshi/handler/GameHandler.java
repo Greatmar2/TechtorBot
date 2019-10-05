@@ -188,8 +188,9 @@ public class GameHandler {
 				//if (game == null || !game.shouldUpdateReactionsEachTurn()) {
 				//Some overcomplicated coding here, trying to get the darn reactions to just keep the needed ones
 				if (!message.contains("It is over!")) {
-					String[] reactionsNeeded = getGame(player.getId()).getReactions();
-					if (reactionsNeeded != null) {
+					AbstractGame game = getGame(player.getId());
+					if (game != null) {
+						String[] reactionsNeeded = game.getReactions();
 						List<MessageReaction> reactionsPresent = targetMessage.getReactions();
 						boolean[] hasReaction = new boolean[reactionsNeeded.length];
 						Arrays.fill(hasReaction, false);

@@ -4,7 +4,7 @@
   <groupId>mar</groupId>
   <artifactId>TechtorBot</artifactId>
   <name>TechtorBot</name>
-  <version>1.4.1</version>
+  <version>1.4.3</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
