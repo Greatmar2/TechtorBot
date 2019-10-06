@@ -123,7 +123,6 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\adventure\ProfileCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\core\ExitCode.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\fun\MemeCommand.java
-D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\poe\PoeCurrency.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\bot_administration\ReloadCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\games\card\CardSuit.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\KickCommand.java
@@ -193,6 +192,7 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\OGuild.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\OUser.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\ReactionRoleCommand.java
+D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\bot_administration\ListGuildsCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\CaseCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\QActiveSubscriptions.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\modules\gif\GifWriter.java
@@ -236,6 +236,7 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\bot_administration\ImportMusicCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\modules\reddit\CommentDataDeserializer.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\games\connect4\C4Board.java
+D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\bot_administration\ReplyCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\OAutoRole.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\modules\reddit\RedditScraper.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\controllers\CPlaylist.java
@@ -281,7 +282,6 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\ConfigCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\exceptions\TemplateNotSetException.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\util\GfxUtil.java
-D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\poe\PoeLabsCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\OBotEvent.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\fun\FightCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\modules\gif\OverlayActor.java
@@ -313,7 +313,6 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\controllers\CRaffle.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\fun\ConnectFourCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\model\OBotVersionChange.java
-D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\leagueoflegends\LoLCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\modules\reddit\pojo\Post.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\templates\Template.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\db\DbUpdate.java
@@ -333,7 +332,6 @@ D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\tak
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\AutoRoleCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\service\BotMetaEventsService.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\creator\ChangeLogAdminCommand.java
-D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\poe\PoeItemCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\games\uno\UnoHand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\administrative\ModCaseCommand.java
 D:\Users\Aaron\Google Drive\Coding\Git Repositories\TechtorBot\src\main\java\takeshi\command\meta\ICommandCooldown.java

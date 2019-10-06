@@ -16,6 +16,8 @@
 
 package takeshi.main;
 
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -44,6 +46,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.exceptions.RateLimitedException;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
+import takeshi.command.bot_administration.ReplyCommand.ReplyListener;
 import takeshi.db.controllers.CBanks;
 import takeshi.db.controllers.CGuild;
 import takeshi.event.JDAEventManager;
@@ -90,6 +93,7 @@ public class DiscordBot {
 	public AutoRoleHandler autoRoleHandler = null;
 	public CommandReactionHandler commandReactionHandler = null;
 	public GameHandler gameHandler = null;
+	public List<ReplyListener> replyListeners = new ArrayList<ReplyListener>();
 	private AutoReplyHandler autoReplyhandler;
 	private volatile boolean isReady = false;
 	private int shardId;
@@ -376,6 +380,8 @@ public class DiscordBot {
 		}
 		if (CommandHandler.isCommand(null, message.getContentRaw(), mentionMe, mentionMeAlias)) {
 			CommandHandler.process(this, channel, author, message);
+		} else if (BotConfig.PRIVATE_MESSAGE_FORWARDING_ENABLED) {
+			DisUtil.forwardMessage(this, message);
 		} else if (BotConfig.BOT_CHATTING_ENABLED) {
 			channel.sendTyping().queue();
 			this.out.sendAsyncMessage(channel, this.chatBotHandler.chat(0L, message.getContentRaw(), channel), null);
@@ -392,21 +398,41 @@ public class DiscordBot {
 		}
 		GuildSettings settings = GuildSettings.get(guild.getIdLong());
 //		pollHandler.checkPolls(guild);
+		// Check if bot is listening for replies on any specific channel
+		if (replyListeners.size() > 0) {
+			for (ReplyListener replyListener : replyListeners) {
+				if (replyListener.getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION).isAfter(OffsetDateTime.now())) {
+					if (channel.getIdLong() == replyListener.getChannelID()) {
+						DisUtil.forwardMessage(this, message);
+					}
+				} else {
+					replyListeners.remove(replyListener);
+				}
+			}
+		}
+		// Handle users in game mode
 		if (gameHandler.isGameInput(channel, author, message.getContentRaw().toLowerCase())) {
 			gameHandler.execute(author, channel, message.getContentRaw(), null);
 			return;
 		}
+		// Handle commands
 		if (CommandHandler.isCommand(channel, message.getContentRaw().trim(), mentionMe, mentionMeAlias)) {
 			CommandHandler.process(this, channel, author, message);
 			return;
 		}
+		// If autoreply is active, check for regexes that match with set autoreplies
 		if (GuildSettings.getBoolFor(channel, GSetting.AUTO_REPLY)) {
 			if (autoReplyhandler.autoReplied(message)) {
 				return;
 			}
 		}
-		if (BotConfig.BOT_CHATTING_ENABLED && settings.getBoolValue(GSetting.CHAT_BOT_ENABLED)
+		// If Techtor's name is mentioned and bot forwarding is enabled
+		if (message.getContentDisplay().toLowerCase().contains(BotConfig.BOT_NAME.toLowerCase()) && BotConfig.GUILD_MESSAGE_FORWARDING_ENABLED) {
+			DisUtil.forwardMessage(this, message);
+			return;
+		} else if (BotConfig.BOT_CHATTING_ENABLED && settings.getBoolValue(GSetting.CHAT_BOT_ENABLED)
 				&& channel.getId().equals(GuildSettings.get(channel.getGuild()).getOrDefault(GSetting.BOT_CHANNEL))) {
+			// If bot AI chatting is enabled and forwarding is disabled
 			if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_WRITE)) {
 				channel.sendTyping().queue();
 				this.out.sendAsyncMessage(channel, this.chatBotHandler.chat(guild.getIdLong(), message.getContentRaw(), channel), null);

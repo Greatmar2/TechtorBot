@@ -31,7 +31,7 @@ import takeshi.command.meta.CommandReactionListener;
 
 public class CommandReactionHandler {
 	private final ConcurrentHashMap<Long, ConcurrentHashMap<Long, CommandReactionListener<?>>> reactions;
-	private boolean lock = false;
+//	private boolean lock = false;
 
 	public CommandReactionHandler() {
 		reactions = new ConcurrentHashMap<>();

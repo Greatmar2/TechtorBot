@@ -24,7 +24,7 @@ public class BotConfig {
 
 	public static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36";
 	// the bot/users ratio for guilds
-	public static final double GUILD_MAX_USER_BOT_RATIO = 0.75D;
+	public static final double GUILD_MAX_BOT_USER_RATIO = 0.5D;
 	// the minimum age of the guild owner's account in days
 	public static final long GUILD_OWNER_MIN_ACCOUNT_AGE = 7;
 	// if a guild has less users it will be marked as a test guild
@@ -116,6 +116,24 @@ public class BotConfig {
 	// prefix for all commands !help etc.
 	@ConfigurationOption
 	public static boolean BOT_CHATTING_ENABLED = false;
+
+	// whether to log non-command messages on the bot's forward channel, allowing
+	// bot admins to use !reply to give the appearance of an extremely intelligent
+	// chat bot.
+	@ConfigurationOption
+	public static boolean PRIVATE_MESSAGE_FORWARDING_ENABLED = false;
+
+	@ConfigurationOption
+	public static boolean GUILD_MESSAGE_FORWARDING_ENABLED = false;
+
+	// how long (minutes) to forward all messages from a guild channel that !reply
+	// was used on
+	@ConfigurationOption
+	public static int CHANNEL_WATCH_DURATION = 15;
+
+	// which channel to forward messages to
+	@ConfigurationOption
+	public static String BOT_FORWARD_CHANNEL_ID = "249646038443491340";
 
 	// default prefix to mark messages as commands
 	@ConfigurationOption

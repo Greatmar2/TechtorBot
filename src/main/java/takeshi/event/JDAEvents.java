@@ -66,6 +66,7 @@ import takeshi.role.RoleRankings;
 import takeshi.service.BotStatusService;
 import takeshi.templates.Template;
 import takeshi.templates.Templates;
+import takeshi.util.DisUtil;
 
 /**
  * Created on 12-10-2016
@@ -119,7 +120,10 @@ public class JDAEvents extends ListenerAdapter {
 		}
 		discordBot.loadGuild(guild);
 		String cmdPre = GuildSettings.get(guild).getOrDefault(GSetting.COMMAND_PREFIX);
+		String joinEventMessage = "Guild joined. "; // This message will be displayed in the bot's home guild to notify of actions
+		// in other guilds.
 		GuildCheckResult guildCheck = discordBot.security.checkGuild(guild);
+
 		if (dbGuild.active != 1) {
 			String message = "Thanks for adding me to your guild!\n" + "To see what I can do you can type the command `" + cmdPre + "help`.\n"
 					+ "Most of my features are opt-in, which means that you'll have to enable them first. Admins can use `" + cmdPre
@@ -129,18 +133,21 @@ public class JDAEvents extends ListenerAdapter {
 //					+ "If you need help or would like to give feedback, feel free to let me know on either `" + cmdPre + "discord` or `" + cmdPre + "github`";
 			switch (guildCheck) {
 			case TEST_GUILD:
-				message += "\n\n:warning: The guild has been categorized as a test guild. This means that I might leave this guild when the next cleanup happens.\n"
+				message += "\n\n:Warning: The guild has been categorized as a test guild. This means that I might leave this guild when the next cleanup happens.\n"
 						+ "If this is not a test guild feel free to join my `" + cmdPre + "discord` and ask to have your guild added to the whitelist!";
+				joinEventMessage += ":warning: Test guild! Will leave at next cleanup.";
 				break;
 			case BOT_GUILD:
-				message += "\n\n:warning: :robot: Too many bots here, I'm leaving!\n"
+				message += "\n\n:Warning: :robot: Too many bots here, I'm leaving!\n"
 						+ "If your guild is not a collection of bots and you actually plan on using me join my `" + cmdPre
 						+ "discord` and ask to have your guild added to the whitelist!";
+				joinEventMessage += ":robot: Bot guild! Leaving.";
 				break;
 			case SMALL:
 			case OWNER_TOO_NEW:
 			case OKE:
 			default:
+				joinEventMessage += ":inbox_tray: Normal Guild.";
 				break;
 			}
 			TextChannel outChannel = null;
@@ -175,6 +182,10 @@ public class JDAEvents extends ListenerAdapter {
 			guildMember.joinDate = new Timestamp(member.getTimeJoined().toInstant().toEpochMilli());
 			CGuildMember.insertOrUpdate(guildMember);
 		}
+		if (joinEventMessage.length() > 0) {
+			DisUtil.notifyOfEvent(discordBot, guild, joinEventMessage);
+		}
+
 	}
 
 	@Override
@@ -193,6 +204,7 @@ public class JDAEvents extends ListenerAdapter {
 		Launcher.log("bot leaves guild", "bot", "guild-leave", "guild-id", guild.getId(), "guild-name", guild.getName());
 		CBotEvent.insert(":house_abandoned:", ":fire:",
 				String.format(":id: %s | :hash: %s | %s", guild.getId(), server.id, EmojiUtils.shortCodify(guild.getName()).replace("@", "@\u200B")));
+		DisUtil.notifyOfEvent(discordBot, guild, "Left Guild");
 	}
 
 	@Override
@@ -251,7 +263,8 @@ public class JDAEvents extends ListenerAdapter {
 
 	@Override
 	public void onGuildMemberUpdateNickname(GuildMemberUpdateNicknameEvent event) {
-		String message = "**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator() + "** changed nickname ";
+		String message = "**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator() + "** ("
+				+ event.getMember().getAsMention() + ") changed nickname ";
 		if (event.getOldNickname() != null) {
 			message += "from _~~" + event.getOldNickname() + "~~_ ";
 		}
@@ -276,7 +289,9 @@ public class JDAEvents extends ListenerAdapter {
 		// PM owner if PM_USER_EVENTS is true
 		if (settings.getBoolValue(GSetting.PM_USER_EVENTS)) {
 			discordBot.out.sendPrivateMessage(guild.getOwner().getUser(),
-					String.format("[user-event] **%s#%s** joined the guild **%s**", user.getName(), user.getDiscriminator(), guild.getName()), null);
+					String.format("[user-event] **%s#%s** (" + event.getMember().getAsMention() + ") joined the guild **%s**", user.getName(),
+							user.getDiscriminator(), guild.getName()),
+					null);
 		}
 		// Log the event in the guild log channel
 		discordBot.logGuildEvent(guild, "\uD83D\uDC64",
@@ -320,7 +335,8 @@ public class JDAEvents extends ListenerAdapter {
 		Guild guild = event.getGuild();
 		if (GuildSettings.get(guild).getBoolValue(GSetting.PM_USER_EVENTS)) {
 			discordBot.out.sendPrivateMessage(guild.getOwner().getUser(),
-					String.format("[user-event] **%s#%s** left the guild **%s**", user.getName(), user.getDiscriminator(), guild.getName()));
+					String.format("[user-event] **%s#%s** (" + event.getMember().getAsMention() + ") left the guild **%s**", user.getName(),
+							user.getDiscriminator(), guild.getName()));
 		}
 		if (GuildSettings.get(guild).getBoolValue(GSetting.WELCOME_NEW_USERS)) {
 			TextChannel defaultChannel = discordBot.getDefaultChannel(guild);

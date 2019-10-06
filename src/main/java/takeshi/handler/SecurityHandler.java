@@ -130,7 +130,7 @@ public class SecurityHandler {
 			}
 			users++;
 		}
-		if ((double) bots / users > BotConfig.GUILD_MAX_USER_BOT_RATIO) {
+		if ((double) bots / users > BotConfig.GUILD_MAX_BOT_USER_RATIO) {
 			return GuildCheckResult.BOT_GUILD;
 		}
 		if (users < BotConfig.GUILD_MIN_USERS) {

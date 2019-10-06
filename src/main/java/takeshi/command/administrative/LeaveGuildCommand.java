@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import takeshi.command.meta.AbstractCommand;
+import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
@@ -31,65 +32,66 @@ import takeshi.util.DisUtil;
  * leaves the guild
  */
 public class LeaveGuildCommand extends AbstractCommand {
-    public LeaveGuildCommand() {
-        super();
-    }
+	public LeaveGuildCommand() {
+		super();
+	}
 
-    @Override
-    public String getDescription() {
-        return "leaves guild :(";
-    }
+	@Override
+	public String getDescription() {
+		return "leaves guild :(";
+	}
 
-    @Override
-    public String getCommand() {
-        return "leaveguild";
-    }
+	@Override
+	public String getCommand() {
+		return "leaveguild";
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{
-                "leaveguild     //leaves the guild"
-        };
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] { "leaveguild     //leaves the guild" };
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{};
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] {};
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        boolean shouldLeave = false;
-        Guild guild = ((TextChannel) channel).getGuild();
-        SimpleRank rank = bot.security.getSimpleRank(author, channel);
-        if (!rank.isAtLeast(SimpleRank.GUILD_ADMIN)) {
-            return Templates.no_permission.formatGuild(channel);
-        }
-        if (rank.isAtLeast(SimpleRank.BOT_ADMIN) && args.length >= 1 && args[0].matches("^\\d{10,}$")) {
-            guild = channel.getJDA().getGuildById(args[0]);
-            if (guild == null) {
-                return Templates.config.cant_find_guild.formatGuild(channel);
-            }
-            if (args.length == 1) {
-                return "are you sure? :sob: type **`" + DisUtil.getCommandPrefix(channel) + "leaveguild " + args[0] + " confirm`** to leave _" + guild.getName() + "_";
-            }
-            if (args[1].equals("confirm")) {
-                shouldLeave = true;
-            }
-        }
-        if (args.length == 0) {
-            return "are you sure? :sob: type **" + DisUtil.getCommandPrefix(channel) + "leaveguild confirm** to leave";
-        }
-        if (args[0].equals("confirm")) {
-            shouldLeave = true;
-        }
-        if (shouldLeave) {
-            Guild finalGuild = guild;
-            bot.out.sendAsyncMessage(bot.getDefaultChannel(guild), "This is goodbye :wave:", message -> {
-                bot.queue.add(finalGuild.leave());
-            });
-            return "";
-        }
-        return ":face_palm: I expected you to know how to use it";
-    }
+	@Override
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		boolean shouldLeave = false;
+		Guild guild = ((TextChannel) channel).getGuild();
+		SimpleRank rank = bot.security.getSimpleRank(author, channel);
+		if (!rank.isAtLeast(SimpleRank.GUILD_ADMIN)) {
+			return Templates.no_permission.formatGuild(channel);
+		}
+		if (rank.isAtLeast(SimpleRank.BOT_ADMIN) && args.length >= 1 && args[0].matches("^\\d{10,}$")) {
+			guild = channel.getJDA().getGuildById(args[0]);
+			if (guild == null) {
+				return Templates.config.cant_find_guild.formatGuild(channel);
+			}
+			if (args.length == 1) {
+				return "Are you sure? Type `" + DisUtil.getCommandPrefix(channel) + "leaveguild " + args[0] + " confirm` to leave _" + guild.getName() + "_";
+			}
+			if (args[1].equals("confirm")) {
+				shouldLeave = true;
+			}
+		}
+		if (args.length == 0) {
+			return "Are you sure? Type `" + DisUtil.getCommandPrefix(channel) + "leaveguild confirm` to leave";
+		}
+		if (args[0].equals("confirm")) {
+			shouldLeave = true;
+		}
+		if (shouldLeave) {
+			final Guild finalGuild = guild;
+			bot.getJda().getGuildById(BotConfig.BOT_GUILD_ID).getDefaultChannel().createInvite().setMaxAge(0).setMaxUses(5).queue(invite -> {
+				bot.out.sendAsyncMessage(bot.getDefaultChannel(finalGuild),
+						"I have been ordered to leave. Goodbye.\nVisit here for queries: " + invite.getUrl(), message -> {
+							bot.queue.add(finalGuild.leave());
+						});
+			});
+			return "";
+		}
+		return ":face_palm: I expected you to know how to use it";
+	}
 }

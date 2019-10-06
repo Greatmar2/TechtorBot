@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 github.com/kaaz
+ * Copyright 2017 github.com/kaaz and 2019 Greatmar2
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,12 +32,17 @@ import javax.imageio.ImageIO;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import emoji4j.EmojiUtils;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.Message.Attachment;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -48,6 +53,7 @@ import takeshi.db.model.OGuild;
 import takeshi.guildsettings.DefaultGuildSettings;
 import takeshi.guildsettings.GSetting;
 import takeshi.handler.GuildSettings;
+import takeshi.main.BotConfig;
 import takeshi.main.BotContainer;
 import takeshi.main.DiscordBot;
 import takeshi.main.Launcher;
@@ -467,5 +473,122 @@ public class DisUtil {
 			return bot.getJda().getEmoteById(emote).getAsMention();
 		}
 		return "";
+	}
+
+	/**
+	 * Send a message in the home guild's error log channel about the guild event
+	 * 
+	 * @param discordBot
+	 * @param guild
+	 * @param message
+	 */
+	public static void notifyOfEvent(DiscordBot discordBot, Guild guild, String message) {
+		TextChannel homeGuildErrorChannel = discordBot.getJda().getTextChannelById(BotConfig.BOT_ERROR_CHANNEL_ID);
+		MessageBuilder messageBuild = new MessageBuilder("[Guild Event] ");
+		messageBuild.append(getServerInfo(guild));
+		messageBuild.append(": **");
+		messageBuild.append(message);
+		messageBuild.append("**");
+		discordBot.out.sendAsyncMessage(homeGuildErrorChannel, messageBuild);
+	}
+
+	public static MessageBuilder getGuildList(DiscordBot discordBot) {
+		List<Guild> guilds = discordBot.getJda().getGuilds();
+		MessageBuilder messageBuild = new MessageBuilder();
+		for (Guild guild : guilds) {
+			messageBuild.append(getServerInfo(guild));
+			messageBuild.append("\n");
+		}
+		return messageBuild;
+	}
+
+	/**
+	 * Returns a string with the server name, ID, owner, and number of members
+	 * 
+	 * @param guild
+	 * @return
+	 */
+	public static String getServerInfo(Guild guild) {
+		Member owner = guild.getOwner();
+
+		StringBuilder strBuild = new StringBuilder(guild.getName());
+		strBuild.append(" (");
+		strBuild.append(guild.getId());
+		strBuild.append("), owned by ");
+		strBuild.append(owner.getUser().getName());
+		strBuild.append("#");
+		strBuild.append(owner.getUser().getDiscriminator());
+		strBuild.append(" (");
+		strBuild.append(owner.getAsMention());
+		strBuild.append("), with ");
+		strBuild.append(guild.getMembers().size());
+		strBuild.append(" members.");
+		return strBuild.toString();
+	}
+
+	/**
+	 * Will forward the message to the bot's forwarding channel
+	 * 
+	 * @param message
+	 */
+	public static void forwardMessage(DiscordBot bot, Message message) {
+		TextChannel forwardChannel = bot.getJda().getTextChannelById(BotConfig.BOT_FORWARD_CHANNEL_ID);
+		if (forwardChannel != null) {
+			MessageBuilder builder = new MessageBuilder("[Message Forward] ");
+			if (message.getChannelType() == ChannelType.TEXT && forwardChannel.getGuild().getIdLong() != message.getGuild().getIdLong()) {
+				// Handle message from a guild
+				TextChannel fromChannel = (TextChannel) message.getChannel();
+				builder.append("*From guild ");
+				builder.append(fromChannel.getGuild().getName());
+				builder.append(", on channel #");
+				builder.append(fromChannel.getName());
+				builder.append(" (");
+				builder.append(fromChannel.getId());
+				builder.append(")*:\n");
+			} else if (message.getChannelType() == ChannelType.PRIVATE) {
+				// Handle a private message
+				PrivateChannel fromChannel = (PrivateChannel) message.getChannel();
+				User fromUser = fromChannel.getUser();
+				builder.append("*From user ");
+				builder.append(fromUser.getName());
+				builder.append("#");
+				builder.append(fromUser.getDiscriminator());
+				builder.append(" (");
+				builder.append(fromUser.getAsMention());
+				builder.append("). Reply to ");
+				builder.append(fromChannel.getId());
+				builder.append(":*\n");
+			} else {
+				return;
+			}
+			// Add the message itself
+			builder.append(message.getContentRaw());
+			List<Attachment> attatchments = message.getAttachments();
+			if (attatchments.size() > 0) {
+				builder.append("\n*Attatchments:*\n");
+				for (Attachment attachment : attatchments) {
+					builder.append(attachment.getUrl());
+					builder.append("\n");
+				}
+			}
+			// Forward the message
+			bot.queue.add(forwardChannel.sendMessage(builder.build()));
+		}
+	}
+
+	/**
+	 * Checks if the bot has permission to delete a message in specified channel,
+	 * then deletes it if possible
+	 * 
+	 * @param channel
+	 * @param inputMessage
+	 */
+	public static void tryDeleteMessage(Message messageToDelete) {
+		if (messageToDelete.getChannelType() == ChannelType.TEXT) {
+			GuildChannel channel = (GuildChannel) messageToDelete.getChannel();
+			if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+				messageToDelete.delete().queue();
+			}
+		}
 	}
 }

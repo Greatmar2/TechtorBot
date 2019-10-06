@@ -178,11 +178,15 @@ public class CommandHandler {
 		} else if (guildCommands.containsKey(guildId) && guildCommands.get(guildId).containsKey(input[0])) {
 			commandUsed = "custom:" + input[0];
 			outMsg.setContent(DisUtil.replaceTags(guildCommands.get(guildId).get(input[0]), author, channel, args));
-		} else if (startedWithMention && BotConfig.BOT_CHATTING_ENABLED) {
-			commandSuccess = false;
-			channel.sendTyping().queue();
-			outMsg.setContent(
-					author.getAsMention() + ", " + bot.chatBotHandler.chat(guildId > 0 ? Long.parseLong(CGuild.getCachedDiscordId(guildId)) : 0L, inputMessage, channel));
+		} else if (startedWithMention) {
+			if (BotConfig.GUILD_MESSAGE_FORWARDING_ENABLED) {
+				DisUtil.forwardMessage(bot, incomingMessage);
+			} else if (BotConfig.BOT_CHATTING_ENABLED) {
+				commandSuccess = false;
+				channel.sendTyping().queue();
+				outMsg.setContent(author.getAsMention() + ", "
+						+ bot.chatBotHandler.chat(guildId > 0 ? Long.parseLong(CGuild.getCachedDiscordId(guildId)) : 0L, inputMessage, channel));
+			}
 		} else if (BotConfig.BOT_COMMAND_SHOW_UNKNOWN || GuildSettings.getBoolFor(channel, GSetting.SHOW_UNKNOWN_COMMANDS)) {
 			commandSuccess = false;
 			outMsg.setContent(Templates.unknown_command.format(GuildSettings.getFor(channel, GSetting.COMMAND_PREFIX) + "help"));
@@ -201,8 +205,8 @@ public class CommandHandler {
 				Launcher.log("command executed", "bot", "command", "input", incomingMessage, "user-id", author.getId(), "command", commandUsed, "user-name",
 						author.getName(), "guild-id", tc.getGuild().getId(), "guild-name", tc.getGuild().getName(), "response", outMsg);
 			} else {
-				Launcher.log("command executed", "bot", "command-private", "input", incomingMessage, "user-id", author.getId(), "command", commandUsed, "user-name",
-						author.getName(), "response", outMsg);
+				Launcher.log("command executed", "bot", "command-private", "input", incomingMessage, "user-id", author.getId(), "command", commandUsed,
+						"user-name", author.getName(), "response", outMsg);
 			}
 			CUser.registerCommandUse(CUser.getCachedId(author.getIdLong()));
 		}
@@ -238,8 +242,8 @@ public class CommandHandler {
 				break;
 			case GUILD:
 				if (channel instanceof PrivateChannel) {
-					CBotEvent.insert(OBotEvent.Level.WARN, ":warning:", ":keyboard:",
-							String.format("`%s` issued the `%s` Command with guild-scale cooldown in private channel!", author.getName(), command.getCommand()));
+					CBotEvent.insert(OBotEvent.Level.WARN, ":warning:", ":keyboard:", String
+							.format("`%s` issued the `%s` Command with guild-scale cooldown in private channel!", author.getName(), command.getCommand()));
 				}
 				targetId = ((TextChannel) channel).getGuild().getId();
 				break;

@@ -16,23 +16,31 @@
 
 package takeshi.util;
 
-import com.google.common.base.Strings;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.entities.User;
-
-import java.awt.*;
+import java.awt.Color;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Random;
+import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Strings;
+
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
+import net.dv8tion.jda.api.entities.User;
+
 public class Misc {
 
-	private static final String[] numberToEmote = {"\u0030\u20E3", "\u0031\u20E3", "\u0032\u20E3", "\u0033\u20E3", "\u0034\u20E3", "\u0035\u20E3",
-			"\u0036\u20E3", "\u0037\u20E3", "\u0038\u20E3", "\u0039\u20E3", "\uD83D\uDD1F", "⬅", "➡", "❗", "❤", "💛", "💚", "💙"};
-	//11 = left, 12 = right, 13 = !, 14 = red, 15 = yellow, 16 = green, 17 = blue
+	private static final String[] numberToEmote = { "\u0030\u20E3", "\u0031\u20E3", "\u0032\u20E3", "\u0033\u20E3", "\u0034\u20E3", "\u0035\u20E3",
+			"\u0036\u20E3", "\u0037\u20E3", "\u0038\u20E3", "\u0039\u20E3", "\uD83D\uDD1F", "⬅", "➡", "❗", "❤", "💛", "💚", "💙" };
+	// 11 = left, 12 = right, 13 = !, 14 = red, 15 = yellow, 16 = green, 17 = blue
 	private final static HashSet<String> fuzzyTrue = new HashSet<>(Arrays.asList("yea", "yep", "yes", "true", "ja", "y", "t", "1", "check"));
 	private final static HashSet<String> fuzzyFalse = new HashSet<>(Arrays.asList("no", "false", "nope", "nein", "nee", "n", "f", "0"));
 	private final static Pattern patternGuildEmote = Pattern.compile("<:.*:(\\d+)>");
@@ -147,7 +155,7 @@ public class Misc {
 			int number = Integer.parseInt(character);
 			return numberToEmote(number);
 		} catch (NumberFormatException ex) {
-			//TODO Return unicode value for emoji of the character
+			// TODO Return unicode value for emoji of the character
 			return character;
 		}
 	}
@@ -166,7 +174,7 @@ public class Misc {
 	 * @return formatted controllers
 	 */
 	public static String makeTable(List<String> items) {
-		return makeTable(items, 16, 4);
+		return makeTable(items, 14, 4);
 	}
 
 	/**

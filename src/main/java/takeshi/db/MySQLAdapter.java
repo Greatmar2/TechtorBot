@@ -59,6 +59,7 @@ public class MySQLAdapter {
 			dataSource.setDatabaseName(DB_NAME);
 			dataSource.setZeroDateTimeBehavior("CONVERT_TO_NULL");
 			dataSource.setServerTimezone("UTC");
+			dataSource.setCharacterEncoding("UTF-8");
 //            dataSource.unisetUseUnicode(true);
 			return dataSource.getConnection();
 		} catch (SQLException e) {

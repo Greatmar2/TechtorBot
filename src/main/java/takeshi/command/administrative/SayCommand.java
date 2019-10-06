@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 github.com/kaaz
+ * Copyright 2017 github.com/kaaz and Greatmar2
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,20 +24,18 @@ import java.util.concurrent.TimeUnit;
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 
 import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.Message.Attachment;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
+import takeshi.util.DisUtil;
 
 /**
  * !say make the bot say something
@@ -82,7 +80,7 @@ public class SayCommand extends AbstractCommand {
 	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		// boolean atLeastAdmin = bot.security.getSimpleRank(author,
 		// channel).isAtLeast(SimpleRank.BOT_ADMIN);
-		if (bot.security.isBotAdmin(author.getIdLong()) || bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_BOT_ADMIN)) {
+		if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_BOT_ADMIN)) {
 			TextChannel targetChannel = null;
 			List<Attachment> attachs = inputMessage.getAttachments();
 
@@ -103,15 +101,16 @@ public class SayCommand extends AbstractCommand {
 //			}
 			// Calculate queue delay based on message length
 			long queueDelay = 0L;
-			if (targetChannel != null) {
+			final boolean sendingInOtherChannel = targetChannel != null;
+			if (sendingInOtherChannel) {
 				channel = targetChannel;
 				channel.sendTyping().queue();
 				queueDelay = Math.min((output.length() * 1000) / 7, 30000); // Cap at 30 seconds
 				for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make sure it doesn't.
 					channel.sendTyping().queueAfter(i, TimeUnit.MILLISECONDS);
 				}
-			} else if (PermissionUtil.checkPermission((GuildChannel) channel, ((TextChannel) channel).getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
-				inputMessage.delete().queue();
+			} else if (attachs.size() == 0) {
+				DisUtil.tryDeleteMessage(inputMessage);
 			}
 
 			MessageBuilder outMessage = new MessageBuilder(output);
@@ -125,10 +124,25 @@ public class SayCommand extends AbstractCommand {
 					tempFolder.mkdir();
 				}
 				File temp = new File("tmp/" + author.getId() + "_" + attachs.get(0).getFileName());
-				if (attachs.get(0).downloadToFile(temp).isDone()) {
-
-					bot.queue.add(channel.sendMessage(outMessage.build()).addFile(temp), message -> temp.delete());
-				}
+				final MessageChannel finalChannel = channel;
+				attachs.get(0).downloadToFile(temp).thenRun(new Runnable() {
+					@Override
+					public void run() {
+						bot.queue.add(finalChannel.sendMessage(outMessage.build()).addFile(temp), message -> {
+							temp.delete();
+							if (sendingInOtherChannel) {
+								DisUtil.tryDeleteMessage(inputMessage);
+							}
+						});
+					}
+				});
+//				if (attachs.get(0).downloadToFile(temp).isDone()) {
+//					if (outMessage.length() > 0) {
+//						bot.queue.add(channel.sendMessage(outMessage.build()).addFile(temp), message -> temp.delete());
+//					} else {
+//						bot.queue.add(channel.sendFile(temp), message -> temp.delete());
+//					}
+//				}
 
 			} else if (!output.trim().isEmpty()) {
 				channel.sendMessage(outMessage.build()).queueAfter(queueDelay, TimeUnit.MILLISECONDS);

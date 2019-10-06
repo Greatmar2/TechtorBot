@@ -66,8 +66,7 @@ public abstract class AbstractCommand {
 	 * The command will be set to the category matching the last part of the package
 	 * name.
 	 *
-	 * @param newCategory
-	 *                        category of the command
+	 * @param newCategory category of the command
 	 */
 	public void setCommandCategory(CommandCategory newCategory) {
 		commandCategory = newCategory;
@@ -110,24 +109,30 @@ public abstract class AbstractCommand {
 		return true;
 	}
 
-	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	/**
+	 * By default will call simpleExecute which returns a string. Must override to
+	 * return a MessageBuilder.
+	 * 
+	 * @param bot
+	 * @param args
+	 * @param channel
+	 * @param author
+	 * @param inputMessage
+	 * @return
+	 */
+	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return new MessageBuilder(simpleExecute(bot, args, channel, author, inputMessage));
 	}
 
 	/**
-	 * @param bot
-	 *                         the shard where its executing on
-	 * @param args
-	 *                         arguments for the command
-	 * @param channel
-	 *                         channel where the command is executed
-	 * @param author
-	 *                         who invoked the command
-	 * @param inputMessage
-	 *                         the incoming message object
+	 * @param bot          the shard where its executing on
+	 * @param args         arguments for the command
+	 * @param channel      channel where the command is executed
+	 * @param author       who invoked the command
+	 * @param inputMessage the incoming message object
 	 * @return the message to output or an empty string for nothing
 	 */
-	public abstract String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage);
+	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		return "SimpleExecute " + this.getClass();
+	};
 }

@@ -107,7 +107,7 @@ public class RoleReactionHandler {
 		long msgId = Long.valueOf(messageId);
 		initGuild(guildId, false);
 		String theEmote;
-		if (emote.getId() == null) {
+		if (!emote.isEmote()) {
 			theEmote = EmojiUtils.shortCodify(emote.getName());
 		} else {
 			theEmote = emote.getId();
