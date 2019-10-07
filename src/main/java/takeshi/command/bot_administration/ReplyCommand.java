@@ -93,26 +93,21 @@ public class ReplyCommand extends AbstractCommand {
 			if (args.length > 0 || attachs.size() > 0) {
 				// Find the channel that the message must be sent to
 				// Check if the first argument is a channel ID
-				if (args.length > 0) {
-					String channelId = DisUtil.extractId(args[0]);
-					if (channelId != null) {
-						targetChannel = bot.getJda().getTextChannelById(channelId);
-						if (targetChannel == null) {
-							targetChannel = bot.getJda().getPrivateChannelById(channelId);
-						}
+				String channelId;
+				if (args.length > 0 && (channelId = DisUtil.extractId(args[0])) != null) {
+					targetChannel = bot.getJda().getTextChannelById(channelId);
+					if (targetChannel == null) {
+						targetChannel = bot.getJda().getPrivateChannelById(channelId);
 					}
-				}
-				if (targetChannel == null) {
-					if (bot.lastForward != null) {
-						targetChannel = bot.lastForward;
-					} else {
-						return Templates.command.reply.to_who.formatGuild(channel);
-					}
-				} else {
 					args = Arrays.copyOfRange(args, 1, args.length);
+				} else if (bot.lastForward != null) {
+					targetChannel = bot.lastForward;
+				} else {
+					return Templates.command.reply.to_who.formatGuild(channel);
 				}
-				// Calculate queue delay based on message length
+
 				if (targetChannel != null && DisUtil.hasPermission(targetChannel, bot.getJda().getSelfUser(), Permission.MESSAGE_WRITE)) {
+					// Calculate queue delay based on message length
 					long queueDelay = 0L;
 					output = Joiner.on(" ").join(args);
 

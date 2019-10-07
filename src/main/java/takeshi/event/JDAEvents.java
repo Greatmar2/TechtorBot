@@ -16,18 +16,8 @@
 
 package takeshi.event;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.DisconnectEvent;
 import net.dv8tion.jda.api.events.ReconnectedEvent;
 import net.dv8tion.jda.api.events.ResumedEvent;
@@ -68,6 +58,10 @@ import takeshi.templates.Template;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created on 12-10-2016
  */
@@ -101,7 +95,7 @@ public class JDAEvents extends ListenerAdapter {
 
 	@Override
 	public void onReconnect(ReconnectedEvent event) {
-		discordBot.getContainer().reportError(String.format("[RECONCT] \\#%02d with a different JDA", discordBot.getShardId()));
+		discordBot.getContainer().reportError(String.format("[RECONNECT] \\#%02d with a different JDA", discordBot.getShardId()));
 	}
 
 	@Override
@@ -137,23 +131,23 @@ public class JDAEvents extends ListenerAdapter {
 					+ "If you need help or would like to give feedback, feel free to let me know on `" + cmdPre + "discord`";
 //					+ "If you need help or would like to give feedback, feel free to let me know on either `" + cmdPre + "discord` or `" + cmdPre + "github`";
 			switch (guildCheck) {
-			case TEST_GUILD:
-				message += "\n\n:Warning: The guild has been categorized as a test guild. This means that I might leave this guild when the next cleanup happens.\n"
-						+ "If this is not a test guild feel free to join my `" + cmdPre + "discord` and ask to have your guild added to the whitelist!";
-				joinEventMessage += ":warning: Test guild! Will leave at next cleanup.";
-				break;
-			case BOT_GUILD:
-				message += "\n\n:Warning: :robot: Too many bots here, I'm leaving!\n"
-						+ "If your guild is not a collection of bots and you actually plan on using me join my `" + cmdPre
-						+ "discord` and ask to have your guild added to the whitelist!";
-				joinEventMessage += ":robot: Bot guild! Leaving.";
-				break;
-			case SMALL:
-			case OWNER_TOO_NEW:
-			case OKE:
-			default:
-				joinEventMessage += ":inbox_tray: Normal Guild.";
-				break;
+				case TEST_GUILD:
+					message += "\n\n:Warning: The guild has been categorized as a test guild. This means that I might leave this guild when the next cleanup happens.\n"
+							+ "If this is not a test guild feel free to join my `" + cmdPre + "discord` and ask to have your guild added to the whitelist!";
+					joinEventMessage += ":warning: Test guild! Will leave at next cleanup.";
+					break;
+				case BOT_GUILD:
+					message += "\n\n:Warning: :robot: Too many bots here, I'm leaving!\n"
+							+ "If your guild is not a collection of bots and you actually plan on using me join my `" + cmdPre
+							+ "discord` and ask to have your guild added to the whitelist!";
+					joinEventMessage += ":robot: Bot guild! Leaving.";
+					break;
+				case SMALL:
+				case OWNER_TOO_NEW:
+				case OKE:
+				default:
+					joinEventMessage += ":inbox_tray: Normal Guild.";
+					break;
 			}
 			TextChannel outChannel = null;
 			for (TextChannel channel : guild.getTextChannels()) {

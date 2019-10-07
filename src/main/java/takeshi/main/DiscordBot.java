@@ -16,6 +16,30 @@
 
 package takeshi.main;
 
+import com.mashape.unirest.http.Unirest;
+import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.MessageBuilder.SplitPolicy;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.exceptions.RateLimitedException;
+import net.dv8tion.jda.internal.utils.PermissionUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+import takeshi.command.bot_administration.ReplyCommand;
+import takeshi.db.controllers.CBanks;
+import takeshi.db.controllers.CGuild;
+import takeshi.event.JDAEventManager;
+import takeshi.event.JDAEvents;
+import takeshi.guildsettings.GSetting;
+import takeshi.handler.*;
+import takeshi.handler.discord.RestQueue;
+import takeshi.permission.SimpleRank;
+import takeshi.role.RoleRankings;
+import takeshi.templates.Templates;
+import takeshi.util.DisUtil;
+import takeshi.util.Misc;
+
+import javax.security.auth.login.LoginException;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,56 +49,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
-import javax.security.auth.login.LoginException;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
-
-import com.mashape.unirest.http.Unirest;
-
-import net.dv8tion.jda.api.AccountType;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.MessageBuilder;
-import net.dv8tion.jda.api.MessageBuilder.SplitPolicy;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Emote;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.PrivateChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.exceptions.RateLimitedException;
-import net.dv8tion.jda.internal.utils.PermissionUtil;
-import takeshi.command.bot_administration.ReplyCommand.ReplyListener;
-import takeshi.db.controllers.CBanks;
-import takeshi.db.controllers.CGuild;
-import takeshi.event.JDAEventManager;
-import takeshi.event.JDAEvents;
-import takeshi.guildsettings.GSetting;
-import takeshi.handler.AutoReplyHandler;
-import takeshi.handler.AutoRoleHandler;
-import takeshi.handler.ChatBotHandler;
-import takeshi.handler.CommandHandler;
-import takeshi.handler.CommandReactionHandler;
-import takeshi.handler.GameHandler;
-import takeshi.handler.GuildSettings;
-import takeshi.handler.MusicPlayerHandler;
-import takeshi.handler.MusicReactionHandler;
-import takeshi.handler.OutgoingContentHandler;
-import takeshi.handler.PollHandler;
-import takeshi.handler.RaffleHandler;
-import takeshi.handler.RoleReactionHandler;
-import takeshi.handler.SecurityHandler;
-import takeshi.handler.discord.RestQueue;
-import takeshi.permission.SimpleRank;
-import takeshi.role.RoleRankings;
-import takeshi.templates.Templates;
-import takeshi.util.DisUtil;
-import takeshi.util.Misc;
 
 /**
  * The type Discord bot.
@@ -147,7 +121,7 @@ public class DiscordBot {
 	/**
 	 * The Reply listeners.
 	 */
-	public List<ReplyListener> replyListeners = new ArrayList<ReplyListener>();
+	public List<ReplyCommand.ReplyListener> replyListeners = new ArrayList<>();
 	/**
 	 * The Last forward.
 	 */
@@ -547,7 +521,7 @@ public class DiscordBot {
 //		pollHandler.checkPolls(guild);
 		// Check if bot is listening for replies on any specific channel
 		if (replyListeners.size() > 0) {
-			for (ReplyListener replyListener : replyListeners) {
+			for (ReplyCommand.ReplyListener replyListener : replyListeners) {
 				if (replyListener.getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION)
 						.isAfter(OffsetDateTime.now())) {
 					if (channel.getIdLong() == replyListener.getChannelID()) {

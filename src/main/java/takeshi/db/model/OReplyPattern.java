@@ -16,9 +16,9 @@
 
 package takeshi.db.model;
 
-import java.sql.Timestamp;
-
 import takeshi.db.AbstractModel;
+
+import java.sql.Timestamp;
 
 /**
  * The type O reply pattern.
@@ -56,4 +56,9 @@ public class OReplyPattern extends AbstractModel {
 	 * The Cooldown.
 	 */
 	public long cooldown = 0;
+
+	/**
+	 * Whether to mention user
+	 */
+	public boolean mention = true;
 }

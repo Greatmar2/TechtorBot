@@ -16,21 +16,8 @@
 
 package takeshi.command.administrative;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-
 import emoji4j.EmojiUtils;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.controllers.CReplyPattern;
@@ -42,6 +29,14 @@ import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
 import takeshi.util.Misc;
 import takeshi.util.TimeUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * managing auto replies for the bot
@@ -73,23 +68,24 @@ public class AutoReplyCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "ar create <tagname>      //creates tag",
-				"ar regex <tag> <value>     //edit the regex of a tag",
-				"ar response <tag> <value>  //change the response of a reply",
-				"ar tag <tag> <value>       //change the tag of a reply",
-				"ar cd <tag> <value>        //change the cooldown (millis) of a reply",
-				"ar guild <tag> <guildid>   //guild of a tag, 0 for global",
-				"ar test <tag> <text>       //test for a match", "ar delete <tag>            //deletes a tag", };
+		return new String[] {"ar create <tagname>\t//creates tag",
+				"ar regex <tag> <value>\t//edit the regex of a tag",
+				"ar response <tag> <value>\t//change the response of a reply",
+				"ar tag <tag> <value>\t//change the tag of a reply",
+				"ar cd <tag> <value>\t//change the cooldown (millis) of a reply",
+				"ar guild <tag> <guildid>\t//guild of a tag, 0 for global",
+				"ar mention <tag> <true/false>\t//whether to mention the user that triggered the reply",
+				"ar test <tag> <text>\t//test for a match", "ar delete <tag>\t//deletes a tag",};
 	}
 
 	@Override
 	public String[] getAliases() {
-		return new String[] { "ar" };
+		return new String[] {"ar"};
 	}
 
 	@Override
 	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
-			Message inputMessage) {
+	                            Message inputMessage) {
 		if (channel.getType() == ChannelType.TEXT) {
 			Guild guild = ((TextChannel) channel).getGuild();
 			SimpleRank rank = bot.security.getSimpleRankForGuild(author, guild);
@@ -107,10 +103,11 @@ public class AutoReplyCommand extends AbstractCommand {
 					row.add(TimeUtil.getRelativeTime(
 							(System.currentTimeMillis() + replyPattern.cooldown + 1000L) / 1000L, false, false));
 					row.add(replyPattern.reply.substring(0, Math.min(40, replyPattern.reply.length())));
+					row.add("" + replyPattern.mention);
 					tbl.add(row);
 				}
 				return "The following All Auto replies information. For details about a specific one use **`ar <tag>`**\n"
-						+ Misc.makeAsciiTable(Arrays.asList("tag", "trigger", "cooldown", "response"), tbl, null);
+						+ Misc.makeAsciiTable(Arrays.asList("tag", "trigger", "cooldown", "response", "mention"), tbl, null);
 			}
 			if (args.length >= 2) {
 				if (args[1].length() < MIN_TAG_LENGTH) {
@@ -124,6 +121,7 @@ public class AutoReplyCommand extends AbstractCommand {
 						replyPattern.guildId = rank.isAtLeast(SimpleRank.CREATOR) ? 0
 								: CGuild.getCachedId(guild.getIdLong());
 						replyPattern.cooldown = TimeUnit.MINUTES.toMillis(1);
+						replyPattern.mention = true;
 						CReplyPattern.insert(replyPattern);
 						return Templates.command.autoreply.created.formatGuild(channel, args[1]);
 					}
@@ -140,74 +138,86 @@ public class AutoReplyCommand extends AbstractCommand {
 					}
 				}
 				switch (args[0].toLowerCase()) {
-				case "delete":
-				case "remove":
-				case "del":
-					if (rank.isAtLeast(SimpleRank.CREATOR) || (rank.isAtLeast(SimpleRank.GUILD_ADMIN)
-							&& CGuild.getCachedId(guild.getIdLong()) == replyPattern.guildId)) {
-						CReplyPattern.delete(replyPattern);
-						bot.reloadAutoReplies();
-					}
-					return Templates.command.autoreply.deleted.formatGuild(channel, args[1]);
-				case "regex":
-				case "pattern":
-				case "trigger":
-					try {
-						Pattern pattern = Pattern.compile(restOfArgs.toString());// used to see if a patterns is valid,
-																					// invalid = exception ;)
-						replyPattern.pattern = restOfArgs.toString();
-						CReplyPattern.update(replyPattern);
-					} catch (PatternSyntaxException exception) {
-						return Templates.command.autoreply.regex_invalid.formatGuild(channel) + "\n"
-								+ exception.getDescription() + "\n" + Misc.makeTable(exception.getMessage());
-					}
-					bot.reloadAutoReplies();
-					return Templates.command.autoreply.regex_saved.formatGuild(channel);
-				case "guild":
-				case "gid":
-					if (!rank.isAtLeast(SimpleRank.BOT_ADMIN)) {
-						return Templates.no_permission.formatGuild(channel);
-					}
-					if (args[2].equalsIgnoreCase("this")) {
-						replyPattern.guildId = CGuild.getCachedId(guild.getIdLong());
-					} else if (!args[2].equals("0")) {
-						OGuild server = CGuild.findBy(args[2]);
-						if (server.id == 0) {
-							return Templates.command.autoreply.guild_invalid.formatGuild(channel, args[2]);
+					case "delete":
+					case "remove":
+					case "del":
+						if (rank.isAtLeast(SimpleRank.CREATOR) || (rank.isAtLeast(SimpleRank.GUILD_ADMIN)
+								&& CGuild.getCachedId(guild.getIdLong()) == replyPattern.guildId)) {
+							CReplyPattern.delete(replyPattern);
+							bot.reloadAutoReplies();
 						}
-						replyPattern.guildId = server.id;
-					} else {
-						replyPattern.guildId = 0;
-					}
-					CReplyPattern.update(replyPattern);
-					bot.reloadAutoReplies();
-					return Templates.command.autoreply.guild_saved.formatGuild(channel, args[2]);
-				case "response":
-				case "reply":
-					replyPattern.reply = EmojiUtils.shortCodify(restOfArgs.toString());
-					CReplyPattern.update(replyPattern);
-					bot.reloadAutoReplies();
-					return Templates.command.autoreply.response_saved.formatGuild(channel);
-				case "tag":
-					replyPattern.tag = args[2];
-					CReplyPattern.update(replyPattern);
-					bot.reloadAutoReplies();
-					return Templates.command.autoreply.tag_saved.formatGuild(channel);
-				case "cd":
-				case "cooldown":
-					replyPattern.cooldown = Math.max(TimeUnit.MINUTES.toMillis(1), Long.parseLong(args[2]));
-					CReplyPattern.update(replyPattern);
-					bot.reloadAutoReplies();
-					return Templates.command.autoreply.cooldown_saved.formatGuild(channel);
-				case "test":
-					Pattern pattern = Pattern.compile(replyPattern.pattern);
-					Matcher matcher = pattern.matcher(restOfArgs.toString());
-					if (matcher.find()) {
-						return replyPattern.reply;
-					}
-					return Templates.command.autoreply.no_match.formatGuild(channel);
-				default:
-					return Templates.invalid_use.formatGuild(channel);
+						return Templates.command.autoreply.deleted.formatGuild(channel, args[1]);
+					case "regex":
+					case "pattern":
+					case "trigger":
+						try {
+							Pattern pattern = Pattern.compile(restOfArgs.toString());// used to see if a patterns is valid,
+							// invalid = exception ;)
+							replyPattern.pattern = restOfArgs.toString();
+							CReplyPattern.update(replyPattern);
+						} catch (PatternSyntaxException exception) {
+							return Templates.command.autoreply.regex_invalid.formatGuild(channel) + "\n"
+									+ exception.getDescription() + "\n" + Misc.makeTable(exception.getMessage());
+						}
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.regex_saved.formatGuild(channel);
+					case "guild":
+					case "gid":
+						if (!rank.isAtLeast(SimpleRank.BOT_ADMIN)) {
+							return Templates.no_permission.formatGuild(channel);
+						}
+						if (args[2].equalsIgnoreCase("this")) {
+							replyPattern.guildId = CGuild.getCachedId(guild.getIdLong());
+						} else if (!args[2].equals("0")) {
+							OGuild server = CGuild.findBy(args[2]);
+							if (server.id == 0) {
+								return Templates.command.autoreply.guild_invalid.formatGuild(channel, args[2]);
+							}
+							replyPattern.guildId = server.id;
+						} else {
+							replyPattern.guildId = 0;
+						}
+						CReplyPattern.update(replyPattern);
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.guild_saved.formatGuild(channel, args[2]);
+					case "response":
+					case "reply":
+						replyPattern.reply = EmojiUtils.shortCodify(restOfArgs.toString());
+						CReplyPattern.update(replyPattern);
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.response_saved.formatGuild(channel);
+					case "tag":
+						replyPattern.tag = args[2];
+						CReplyPattern.update(replyPattern);
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.tag_saved.formatGuild(channel);
+					case "cd":
+					case "cooldown":
+						replyPattern.cooldown = Math.max(TimeUnit.MINUTES.toMillis(1), Long.parseLong(args[2]));
+						CReplyPattern.update(replyPattern);
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.cooldown_saved.formatGuild(channel);
+					case "mention":
+					case "men":
+						if (Misc.isFuzzyTrue(args[2])) {
+							replyPattern.mention = true;
+						} else if (Misc.isFuzzyFalse(args[2])) {
+							replyPattern.mention = false;
+						} else {
+							return Templates.command.autoreply.mention_invalid.formatGuild(channel);
+						}
+						CReplyPattern.update(replyPattern);
+						bot.reloadAutoReplies();
+						return Templates.command.autoreply.mention_saved.formatGuild(channel);
+					case "test":
+						Pattern pattern = Pattern.compile(replyPattern.pattern);
+						Matcher matcher = pattern.matcher(restOfArgs.toString());
+						if (matcher.find()) {
+							return replyPattern.reply;
+						}
+						return Templates.command.autoreply.no_match.formatGuild(channel);
+					default:
+						return Templates.invalid_use.formatGuild(channel);
 				}
 			}
 			OReplyPattern replyPattern = CReplyPattern.findBy(args[0]);
@@ -224,6 +234,7 @@ public class AutoReplyCommand extends AbstractCommand {
 			tbl.add(Arrays.asList("cooldown",
 					"" + TimeUtil.getRelativeTime((System.currentTimeMillis() + replyPattern.cooldown + 1000L) / 1000L,
 							false, false)));
+			tbl.add(Arrays.asList("mention", "" + replyPattern.mention));
 			return "Auto reply information for `" + args[0] + "`:"
 					+ Misc.makeAsciiTable(Arrays.asList("Property", "Value"), tbl, null);
 		} else {

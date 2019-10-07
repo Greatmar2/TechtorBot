@@ -333,6 +333,8 @@ public final class Templates {
 			public static final Template response_saved = new Template();
 			public static final Template tag_saved = new Template();
 			public static final Template cooldown_saved = new Template();
+			public static final Template mention_invalid = new Template();
+			public static final Template mention_saved = new Template();
 			public static final Template no_match = new Template();
 		}
 

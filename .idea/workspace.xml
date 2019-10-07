@@ -4,345 +4,18 @@
     <option name="FILTER_RESOLVED_ITEMS" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0560e972-0718-417e-9b25-465dc5347a06" name="Default Changelist" comment="">
+    <list default="true" id="0560e972-0718-417e-9b25-465dc5347a06" name="Default Changelist" comment="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoReplyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoRoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoRoleCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/BanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/BanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CaseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CommandAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CommandAdminCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ConfigCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CustomCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/CustomCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/GuildStatsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/GuildStatsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/LeaveGuildCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/LeaveGuildCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ModCaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ModCaseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/PMCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/PMCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/PurgeComand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/PurgeComand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RaffleCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionRoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionRoleCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/ReactionsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RoleAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/RoleAdminCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/SayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/SayCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/Subscribe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/Subscribe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/SystemCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/SystemCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/TempBanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/TempBanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/TemplateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/TemplateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/WarnCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/WarnCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/modactions/AbstractModActionCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/modactions/AbstractModActionCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/adventure/ProfileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/adventure/ProfileCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/BotStatusCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/BotStatusCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ChangeAvatar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ChangeAvatar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ChangeName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ChangeName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/GlobalBanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/GlobalBanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ImportMusicCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ImportMusicCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ListGuildsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ListGuildsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/QueryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/QueryCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/RebootCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/RebootCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReloadCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReloadCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReplyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ChangeLogAdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ChangeLogAdminCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/DebugCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/DebugCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ExecCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ExecCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/SendFileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/SendFileCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/UserRankCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/creator/UserRankCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/BankCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/BankCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/BetCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/BetCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/CookieCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/economy/CookieCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/BlackJackCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/BlackJackCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/CatFactCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/CatFactCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/ConnectFourCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/ConnectFourCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/EightballCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/EightballCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/EmojifyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/EmojifyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/FMLCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/FMLCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/FightCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/FightCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GameCommandCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GeckoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GeckoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GifCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/GifCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/JokeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/JokeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/MemeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/MemeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/PollCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/PollCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/PunCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/PunCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RedditCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RedditCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RollCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RollCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RotateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/RotateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/SlotMachineCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/SlotMachineCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TagCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TagCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TicTacToeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TicTacToeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TwoZeroFourZeroCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/TwoZeroFourZeroCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/UrbanDictionaryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/fun/UrbanDictionaryCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ChangelogCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ChangelogCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/GetroleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/GetroleCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/InviteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/InviteCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/LinksCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/LinksCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/PingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/PingCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/PrefixCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/PrefixCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ReportCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ReportCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ServerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ServerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ToDoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/ToDoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/UptimeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/UptimeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/UserCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/UserCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/VersionCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/informative/VersionCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/AbstractCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/AbstractCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandReactionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandReactionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandVisibility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CommandVisibility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CooldownScope.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/CooldownScope.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandCleanup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandCleanup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandCooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandCooldown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandReactionListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ICommandReactionListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/PaginationInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/PaginationInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ReactionType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/ReactionType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/Reactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/meta/Reactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/JoinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/JoinCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/MusicCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/MusicCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/NowPlayingCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/NowPlayingCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PauseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PauseCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PlayCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PlayCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PlaylistCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/PlaylistCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/QueueCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/QueueCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/SkipTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/SkipTrack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/StopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/StopCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/StreamCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/StreamCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/music/VolumeCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/music/VolumeCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/core/AbstractService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/core/AbstractService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/core/ExitCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/core/ExitCode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/core/IEconomyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/core/IEconomyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/core/LogLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/core/LogLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/core/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/core/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/DbUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/DbUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/MySQLAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/MySQLAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/SQLFileRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/SQLFileRunner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/WebDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/WebDb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CAutoRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CAutoRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBankTransactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBankTransactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBanks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBanks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBetOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBetOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBlacklistCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBlacklistCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotPlayingOn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotPlayingOn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotStat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotVersionChanges.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotVersionChanges.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotVersions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CBotVersions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CChannels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CChannels.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CCommandCooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CCommandCooldown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CCommandLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CCommandLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuild.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuildMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuildMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuildRoleAssignable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CGuildRoleAssignable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CModerationCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CModerationCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusicLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusicLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusicVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CMusicVote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPlaylist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPlaylist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPoEToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPoEToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPoll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CPoll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRaffle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRaffle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRaffleBlacklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRaffleBlacklist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReactionRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReactionRole.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReplyPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReplyPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CServiceVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CServiceVariables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CSubscriptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CSubscriptions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTodoItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTodoItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTodoLists.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CTodoLists.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CUserRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CUserRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OAutoRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OAutoRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBankTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBankTransaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBetOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBetOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBlacklistCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBlacklistCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotPlayingOn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotPlayingOn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotStats.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotStats.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotVersion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotVersionChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OBotVersionChange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OChannel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OChannel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OCommandCooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OCommandCooldown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuild.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuild.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuildMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuildMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuildRoleAssignable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OGuildRoleAssignable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OModerationCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OModerationCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusicLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusicLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusicVote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OMusicVote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPlaylist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPlaylist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPoEToken.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPoEToken.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPoll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OPoll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORaffle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORaffle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORaffleBlacklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORaffleBlacklist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/ORank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReactionRoleKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReactionRoleKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReactionRoleMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReactionRoleMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReplyPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReplyPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OServiceVariable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OServiceVariable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OSubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OSubscription.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTodoItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTodoItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTodoList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OTodoList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OUserRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OUserRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/QActiveSubscriptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/QActiveSubscriptions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEventManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/DefaultSettingAlreadyExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/DefaultSettingAlreadyExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/TemplateNotSetException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/TemplateNotSetException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/UnimplementedParameterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/exceptions/UnimplementedParameterException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/blackjack/BlackJackHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/blackjack/BlackJackHand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/blackjack/Blackjack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/blackjack/Blackjack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/card/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/card/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardHand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardSuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/card/CardSuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/C4Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/C4Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/C4Column.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/C4Column.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/Connect4Turn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/Connect4Turn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/connect4/ConnectFourGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048Direction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048Direction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048Turn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Game2048Turn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/game2048/Grid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GameOfSticks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GameOfSticks.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GoSTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/gameofsticks/GoSTurn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/AbstractGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GamePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GamePlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GameTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/meta/GameTurn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/slotmachine/Slot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/slotmachine/Slot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/slotmachine/SlotMachine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/slotmachine/SlotMachine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicGameTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicGameTurn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTacToeGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TicTile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TileState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/tictactoe/TileState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/UnoHand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Value.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/games/uno/Value.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/DefaultGuildSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/DefaultGuildSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GSetting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GSetting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GSettingTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GSettingTag.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GuildSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/GuildSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/IGuildSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/IGuildSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/EnumSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/EnumSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/NumberBetweenSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/NumberBetweenSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/RoleSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/RoleSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/StringLengthSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/StringLengthSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/TextChannelSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/TextChannelSettingType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/VoiceChannelSettingType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/guildsettings/types/VoiceChannelSettingType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoReplyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoReplyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoRoleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoRoleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/ChatBotHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/ChatBotHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/CommandHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/CommandReactionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/CommandReactionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/GameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/GuildSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/GuildSettings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/MusicPlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/MusicPlayerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/MusicReactionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/MusicReactionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/OutgoingContentHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/OutgoingContentHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/PollHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/PollHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/RaffleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/RaffleHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/RoleReactionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/RoleReactionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/SecurityHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/SecurityHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/audio/AudioPlayerSendHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/audio/AudioPlayerSendHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/audio/QueuedAudioTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/audio/QueuedAudioTrack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/MessageMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/MessageMetaData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RestQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RestQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RestTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RestTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RoleModifyTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/discord/RoleModifyTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/BotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/BotConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/BotContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/BotContainer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/GuildCheckResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/GuildCheckResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/ProgramVersion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/ProgramVersion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/cleverbotio/CleverbotIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/cleverbotio/CleverbotIO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/GifWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayActor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayActor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/OverlayEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/PositionFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/PositionFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/events/PositionEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/events/PositionEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/events/SizeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/gif/events/SizeEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/GitHub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/GitHub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/GithubConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/GithubConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Author.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/AuthorShort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/AuthorShort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Commit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Commit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Committer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Committer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/CommitterShort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/CommitterShort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Parent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Parent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/RepositoryCommit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/RepositoryCommit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/github/pojo/Tree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/IPoEAnalyzePart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/IPoEAnalyzePart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/ItemAnalyzer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/ItemAnalyzer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeItemLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeItemLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeRarityAndName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeRarityAndName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeRequirements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/analyzepart/AnalyzeRequirements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/enums/Rarity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/enums/Rarity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/obj/PoEItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/pathofexile/obj/PoEItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/profile/ProfileImageV3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditScraper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/RedditScraper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/CommentData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/CommentData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Image.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/ImagePreview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/ImagePreview.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/InitialData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/InitialData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/InitialDataComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/InitialDataComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Listing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Listing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/ListingComment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/ListingComment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Post.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/PostData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/PostData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Source.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/modules/reddit/pojo/Source.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/permission/SimpleRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/permission/SimpleRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/role/MemberShipRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/role/MemberShipRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/role/RoleRankings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/role/RoleRankings.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/BotCleanupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/BotCleanupService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/BotMetaEventsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/BotMetaEventsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/BotSelfUpdateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/BotSelfUpdateService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/BotStatusService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/BotStatusService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/ConnectionCheckerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/ConnectionCheckerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/GithubService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/GithubService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/service/UserRankingSystemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/service/UserRankingSystemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/Template.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/Template.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateArgument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateCache.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateVariables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateVariables.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/threads/GrayLogThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/threads/GrayLogThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/threads/PollTimerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/threads/PollTimerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/threads/ServiceHandlerThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/threads/ServiceHandlerThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/DebugUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/DebugUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/DisUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/DisUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Emojibet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Emojibet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/GameUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/GameUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/GfxUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/GfxUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/HttpHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/HttpHelper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/MusicUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/MusicUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Pair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/QuickEmbedBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/QuickEmbedBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/ReadmeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/ReadmeHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/TimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/TimeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/UpdateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/UpdateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/YTSearch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/YTSearch.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/YTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/YTUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -537,6 +210,10 @@
       <workItem from="1570438744635" duration="39000" />
       <workItem from="1570453285830" duration="653000" />
       <workItem from="1570454261522" duration="3675000" />
+      <workItem from="1570459875433" duration="316000" />
+      <workItem from="1570461678859" duration="1972000" />
+      <workItem from="1570467614896" duration="152000" />
+      <workItem from="1570468241369" duration="5100000" />
     </task>
     <task id="LOCAL-00001" summary="Version 1.4.0&#10;Added Uno Game, still needs more thorough bugtesting">
       <created>1555160427182</created>
@@ -566,17 +243,15 @@
       <option name="project" value="LOCAL" />
       <updated>1555263119503</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything.">
+      <created>1570460151621</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1570460151621</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -599,6 +274,7 @@
     <MESSAGE value="Version 1.4.1&#10;Fixed some Uno bugs" />
     <MESSAGE value="Version 1.4.1&#10;Fixed more Uno bugs&#10;Fixed raffle bugs" />
     <MESSAGE value="Version 1.4.1&#10;Fixed Uno bugs&#10;Fixed raffle bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.4.1&#10;Fixed Uno bugs&#10;Fixed raffle bugs" />
+    <MESSAGE value="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything." />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything." />
   </component>
 </project>
