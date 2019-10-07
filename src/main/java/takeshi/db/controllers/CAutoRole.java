@@ -28,10 +28,22 @@ import takeshi.db.model.OAutoRole;
  */
 public class CAutoRole {
 
+	/**
+	 * Find by o auto role.
+	 *
+	 * @param guildId the guild id
+	 * @return the o auto role
+	 */
 	public static OAutoRole findBy(Long guildId) {
 		return findBy(CGuild.getCachedId(guildId));
 	}
 
+	/**
+	 * Find by o auto role.
+	 *
+	 * @param guildId the guild id
+	 * @return the o auto role
+	 */
 	public static OAutoRole findBy(int guildId) {
 		OAutoRole s = new OAutoRole();
 		try (ResultSet rs = WebDb.get().select("SELECT id, role_name, role_id, guild_id FROM auto_role WHERE guild_id = ? ", guildId)) {
@@ -45,6 +57,12 @@ public class CAutoRole {
 		return s;
 	}
 
+	/**
+	 * Find by id o auto role.
+	 *
+	 * @param internalId the internal id
+	 * @return the o auto role
+	 */
 	public static OAutoRole findById(int internalId) {
 		OAutoRole s = new OAutoRole();
 		try (ResultSet rs = WebDb.get().select("SELECT id, role_name, role_id, guild_id FROM auto_role WHERE id = ? ", internalId)) {
@@ -67,6 +85,11 @@ public class CAutoRole {
 		return s;
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OAutoRole record) {
 		if (record.id == 0) {
 			insert(record);
@@ -80,6 +103,11 @@ public class CAutoRole {
 		}
 	}
 
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
 	public static void insert(OAutoRole record) {
 		if (record.id > 0) {
 			update(record);

@@ -32,11 +32,25 @@ import takeshi.db.model.OChannel;
 public class CChannels {
     private static Map<Long, Integer> channelCache = new ConcurrentHashMap<>();
 
-    public static int getCachedId(long discordChannelId, long discordGuildId) {
+	/**
+	 * Gets cached id.
+	 *
+	 * @param discordChannelId the discord channel id
+	 * @param discordGuildId   the discord guild id
+	 * @return the cached id
+	 */
+	public static int getCachedId(long discordChannelId, long discordGuildId) {
         return getCachedId(discordChannelId, CGuild.getCachedId(discordGuildId));
     }
 
-    public static int getCachedId(long channelId, int serverId) {
+	/**
+	 * Gets cached id.
+	 *
+	 * @param channelId the channel id
+	 * @param serverId  the server id
+	 * @return the cached id
+	 */
+	public static int getCachedId(long channelId, int serverId) {
         if (!channelCache.containsKey(channelId)) {
             OChannel channel = findBy(channelId);
             if (channel.id == 0) {
@@ -49,7 +63,13 @@ public class CChannels {
         return channelCache.get(channelId);
     }
 
-    public static OChannel findBy(long discordId) {
+	/**
+	 * Find by o channel.
+	 *
+	 * @param discordId the discord id
+	 * @return the o channel
+	 */
+	public static OChannel findBy(long discordId) {
         OChannel s = new OChannel();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, discord_id, server_id, name " +
@@ -68,7 +88,13 @@ public class CChannels {
         return s;
     }
 
-    public static OChannel findById(int id) {
+	/**
+	 * Find by id o channel.
+	 *
+	 * @param id the id
+	 * @return the o channel
+	 */
+	public static OChannel findById(int id) {
         OChannel s = new OChannel();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, discord_id, server_id, name " +
@@ -93,7 +119,12 @@ public class CChannels {
         return s;
     }
 
-    public static void update(OChannel record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OChannel record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -109,7 +140,12 @@ public class CChannels {
         }
     }
 
-    public static void insert(OChannel record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OChannel record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO channels(discord_id, server_id, name) " +

@@ -27,10 +27,18 @@ import takeshi.core.AbstractService;
 import takeshi.main.BotContainer;
 import takeshi.main.Launcher;
 
+/**
+ * The type Service handler thread.
+ */
 public class ServiceHandlerThread extends Thread {
 	private BotContainer bot;
 	private List<AbstractService> instances;
 
+	/**
+	 * Instantiates a new Service handler thread.
+	 *
+	 * @param bot the bot
+	 */
 	public ServiceHandlerThread(BotContainer bot) {
 		super("ServiceHandler");
 		instances = new ArrayList<>();

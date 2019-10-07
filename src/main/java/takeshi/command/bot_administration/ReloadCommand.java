@@ -33,6 +33,9 @@ import takeshi.templates.Templates;
  * reloads config
  */
 public class ReloadCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Reload command.
+     */
     public ReloadCommand() {
         super();
     }
@@ -63,7 +66,7 @@ public class ReloadCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         SimpleRank rank = bot.security.getSimpleRank(author, channel);
         if (rank.isAtLeast(SimpleRank.BOT_ADMIN)) {

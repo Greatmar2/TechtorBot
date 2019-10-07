@@ -27,27 +27,33 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Yt util.
+ */
 public class YTUtil {
-    public final static Pattern yturl = Pattern.compile("^(?:https?:\\/\\/)?(?:(?:www\\.)?)?(?:youtube\\.com|youtu\\.be)\\/.*?(?:embed|e|v|watch.*?v=)?\\/?([-_a-z0-9]{10,})?(?:&?index=\\d+)?(?>(?:playlist\\?|&)?list=([^#\\\\&\\?]{12,}))?", Pattern.CASE_INSENSITIVE);
+	/**
+	 * The constant yturl.
+	 */
+	public final static Pattern yturl = Pattern.compile("^(?:https?:\\/\\/)?(?:(?:www\\.)?)?(?:youtube\\.com|youtu\\.be)\\/.*?(?:embed|e|v|watch.*?v=)?\\/?([-_a-z0-9]{10,})?(?:&?index=\\d+)?(?>(?:playlist\\?|&)?list=([^#\\\\&\\?]{12,}))?", Pattern.CASE_INSENSITIVE);
     private final static Pattern youtubeCode = Pattern.compile("^[A-Za-z0-9_-]{11}$");
 
-    /**
-     * checks if it could be a youtube videocode
-     *
-     * @param videocode code to check
-     * @return could be a code
-     */
-    public static boolean isValidYoutubeCode(String videocode) {
+	/**
+	 * checks if it could be a youtube videocode
+	 *
+	 * @param videocode code to check
+	 * @return could be a code
+	 */
+	public static boolean isValidYoutubeCode(String videocode) {
         return youtubeCode.matcher(videocode).matches();
     }
 
-    /**
-     * Extracts the videocode from an url
-     *
-     * @param url youtube link
-     * @return videocode
-     */
-    public static String extractCodeFromUrl(String url) {
+	/**
+	 * Extracts the videocode from an url
+	 *
+	 * @param url youtube link
+	 * @return videocode string
+	 */
+	public static String extractCodeFromUrl(String url) {
         Matcher matcher = yturl.matcher(url);
         if (matcher.find()) {
             if (matcher.group(1) != null) {
@@ -57,13 +63,13 @@ public class YTUtil {
         return url;
     }
 
-    /**
-     * Extracts the playlistcode from a yt url
-     *
-     * @param url the url
-     * @return playlistcode || null if not found
-     */
-    public static String getPlayListCode(String url) {
+	/**
+	 * Extracts the playlistcode from a yt url
+	 *
+	 * @param url the url
+	 * @return playlistcode || null if not found
+	 */
+	public static String getPlayListCode(String url) {
         Matcher matcher = yturl.matcher(url);
         if (matcher.find()) {
             if (matcher.groupCount() == 2) {
@@ -73,11 +79,13 @@ public class YTUtil {
         return null;
     }
 
-    /**
-     * @param videocode youtubecode
-     * @return whats in the <title> tag on a youtube page
-     */
-    public static String getTitleFromPage(String videocode) {
+	/**
+	 * Gets title from page.
+	 *
+	 * @param videocode youtubecode
+	 * @return whats in the <title> tag on a youtube page
+	 */
+	public static String getTitleFromPage(String videocode) {
         String ret = "";
         try {
             URL loginurl = new URL("https://www.youtube.com/watch?v=" + videocode);
@@ -101,12 +109,12 @@ public class YTUtil {
         return StringEscapeUtils.unescapeHtml4(ret);
     }
 
-    /**
-     * Time until the next google api reset happens (Midnight PT), or 9am GMT
-     *
-     * @return formatted string, eg. "10 minutes form now"
-     */
-    public static String nextApiResetTime() {
+	/**
+	 * Time until the next google api reset happens (Midnight PT), or 9am GMT
+	 *
+	 * @return formatted string, eg. "10 minutes form now"
+	 */
+	public static String nextApiResetTime() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH, 0);
         c.set(Calendar.HOUR_OF_DAY, 9);

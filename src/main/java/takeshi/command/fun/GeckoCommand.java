@@ -28,6 +28,9 @@ import takeshi.main.DiscordBot;
  * <@user>
  */
 public class GeckoCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Gecko command.
+	 */
 	public GeckoCommand() {
 		super();
 	}
@@ -53,7 +56,7 @@ public class GeckoCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-		return CommandHandler.getCommand("gif").simpleExecute(bot, new String[] { "gecko" }, channel, author, inputMessage);
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		return CommandHandler.getCommand("gif").stringExecute(bot, new String[] { "gecko" }, channel, author, inputMessage);
 	}
 }

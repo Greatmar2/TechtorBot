@@ -25,6 +25,9 @@ import takeshi.command.meta.Reactions;
 import takeshi.main.DiscordBot;
 import takeshi.util.Emojibet;
 
+/**
+ * The type Reactions command.
+ */
 public class ReactionsCommand extends AbstractCommand {
 	@Override
 	public String getDescription() {
@@ -70,7 +73,7 @@ public class ReactionsCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "The following :\n" + buildMessage();
 	}
 }

@@ -35,7 +35,10 @@ import takeshi.util.Misc;
  * make the bot join the channel of the user
  */
 public class JoinCommand extends AbstractCommand {
-    public JoinCommand() {
+	/**
+	 * Instantiates a new Join command.
+	 */
+	public JoinCommand() {
         super();
     }
 
@@ -68,7 +71,7 @@ public class JoinCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         TextChannel chan = (TextChannel) channel;
         MusicPlayerHandler player = MusicPlayerHandler.getFor(chan.getGuild(), bot);
         if (args.length == 0) {

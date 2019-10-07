@@ -49,6 +49,12 @@ import takeshi.role.RoleRankings;
  */
 public class ReadmeHelper {
 
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		new ConfigurationBuilder(BotConfig.class, new File("application.cfg")).build(true);
 		WebDb.init();

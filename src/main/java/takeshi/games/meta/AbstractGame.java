@@ -23,6 +23,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Random;
 
+/**
+ * The type Abstract game.
+ *
+ * @param <turnType> the type parameter
+ */
 public abstract class AbstractGame<turnType extends GameTurn> {
 	private User[] players;
 	private boolean reverse;
@@ -32,18 +37,38 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	private String lastPrefix = BotConfig.BOT_COMMAND_PREFIX;
 	private volatile long lastTurnTimestamp = System.currentTimeMillis();
 
+	/**
+	 * Is listed boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isListed() {
 		return true;
 	}
 
+	/**
+	 * Gets last turn timestamp.
+	 *
+	 * @return the last turn timestamp
+	 */
 	public long getLastTurnTimestamp() {
 		return lastTurnTimestamp;
 	}
 
+	/**
+	 * Gets last prefix.
+	 *
+	 * @return the last prefix
+	 */
 	protected String getLastPrefix() {
 		return lastPrefix;
 	}
 
+	/**
+	 * Sets last prefix.
+	 *
+	 * @param prefix the prefix
+	 */
 	public void setLastPrefix(String prefix) {
 		this.lastPrefix = prefix;
 	}
@@ -56,12 +81,27 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	 */
 	public abstract String getCodeName();
 
+	/**
+	 * Could add reactions boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean couldAddReactions() {
 		return GameState.READY.equals(gameState) && getReactions().length > 0;
 	}
 
+	/**
+	 * Get reactions string [ ].
+	 *
+	 * @return the string [ ]
+	 */
 	public abstract String[] getReactions();
 
+	/**
+	 * Should update reactions each turn boolean.
+	 *
+	 * @return the boolean
+	 */
 	public abstract boolean shouldUpdateReactionsEachTurn();
 
 	/**
@@ -86,22 +126,48 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 		return null;
 	}
 
+	/**
+	 * Gets player.
+	 *
+	 * @param index the index
+	 * @return the player
+	 */
 	protected User getPlayer(int index) {
 		return players[index < 0 ? index + getTotalPlayers() : index % getTotalPlayers()];
 	}
 
+	/**
+	 * Gets active player index.
+	 *
+	 * @return the active player index
+	 */
 	protected int getActivePlayerIndex() {
 		return activePlayerIndex;
 	}
 
+	/**
+	 * Gets active player.
+	 *
+	 * @return the active player
+	 */
 	protected User getActivePlayer() {
 		return players[activePlayerIndex];
 	}
 
+	/**
+	 * Sets winner.
+	 *
+	 * @param playerIndex the player index
+	 */
 	protected void setWinner(int playerIndex) {
 		winnerIndex = playerIndex;
 	}
 
+	/**
+	 * Gets winner index.
+	 *
+	 * @return the winner index
+	 */
 	protected int getWinnerIndex() {
 		return winnerIndex;
 	}
@@ -133,6 +199,8 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 
 	/**
 	 * Resets the game
+	 *
+	 * @param playerCount the player count
 	 */
 	public void reset(int playerCount) {
 		winnerIndex = playerCount;
@@ -143,10 +211,18 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 		gameState = GameState.INITIALIZING;
 	}
 
+	/**
+	 * Start game.
+	 */
 	protected void startGame() {
 		gameState = GameState.READY;
 	}
 
+	/**
+	 * Gets game state.
+	 *
+	 * @return the game state
+	 */
 	public GameState getGameState() {
 		return gameState;
 	}
@@ -198,6 +274,11 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 		return false;
 	}
 
+	/**
+	 * Sets reverse.
+	 *
+	 * @param reverse the reverse
+	 */
 	protected final void setReverse(boolean reverse) {
 		this.reverse = reverse;
 	}
@@ -226,7 +307,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	 * Gets the amount that the index will be modified by for the next turn.
 	 * 1 if the game is going in normal direction, -1 if in reverse.
 	 *
-	 * @return
+	 * @return index mod
 	 */
 	protected int getIndexMod() {
 		return reverse ? -1 : 1;
@@ -240,6 +321,8 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	protected abstract boolean isTheGameOver();
 
 	/**
+	 * Is turn of boolean.
+	 *
 	 * @param player to check
 	 * @return is it players turn?
 	 */
@@ -267,7 +350,7 @@ public abstract class AbstractGame<turnType extends GameTurn> {
 	/**
 	 * are we still waiting for more players?
 	 *
-	 * @return well?
+	 * @return well ?
 	 */
 	public boolean waitingForPlayer() {
 		return gameState.equals(GameState.INITIALIZING);

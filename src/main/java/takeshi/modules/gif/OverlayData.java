@@ -20,12 +20,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Overlay data.
+ */
 public class OverlayData {
     private final Map<Integer, List<OverlayEvent>> events;
     private final String filename;
     private final int requiredActors;
 
-    public OverlayData(String filename, int requiredActors) {
+	/**
+	 * Instantiates a new Overlay data.
+	 *
+	 * @param filename       the filename
+	 * @param requiredActors the required actors
+	 */
+	public OverlayData(String filename, int requiredActors) {
         this.filename = filename;
         this.requiredActors = requiredActors;
         this.events = new HashMap<>();

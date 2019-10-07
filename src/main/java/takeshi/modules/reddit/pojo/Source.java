@@ -23,10 +23,19 @@ import com.google.gson.annotations.Expose;
  */
 public class Source {
 
-    @Expose
+	/**
+	 * The Height.
+	 */
+	@Expose
     public Integer height;
-    @Expose
+	/**
+	 * The Width.
+	 */
+	@Expose
     public Integer width;
-    @Expose
+	/**
+	 * The Url.
+	 */
+	@Expose
     public String url;
 }

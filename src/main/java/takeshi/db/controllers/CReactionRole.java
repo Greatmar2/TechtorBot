@@ -26,12 +26,29 @@ import takeshi.db.WebDb;
 import takeshi.db.model.OReactionRoleKey;
 import takeshi.db.model.OReactionRoleMessage;
 
+/**
+ * The type C reaction role.
+ */
 public class CReactionRole {
 
+	/**
+	 * Find by o reaction role key.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param key            the key
+	 * @return the o reaction role key
+	 */
 	public static OReactionRoleKey findBy(long discordGuildId, String key) {
 		return findBy(CGuild.getCachedId(discordGuildId), key);
 	}
 
+	/**
+	 * Find or create o reaction role key.
+	 *
+	 * @param discordGuildid the discord guildid
+	 * @param key            the key
+	 * @return the o reaction role key
+	 */
 	public static OReactionRoleKey findOrCreate(long discordGuildid, String key) {
 		OReactionRoleKey rec = findBy(CGuild.getCachedId(discordGuildid), key);
 		if (rec.id == 0) {
@@ -42,6 +59,13 @@ public class CReactionRole {
 		return rec;
 	}
 
+	/**
+	 * Find by o reaction role key.
+	 *
+	 * @param serverId the server id
+	 * @param key      the key
+	 * @return the o reaction role key
+	 */
 	public static OReactionRoleKey findBy(int serverId, String key) {
 		OReactionRoleKey t = new OReactionRoleKey();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM reaction_role_key " + "WHERE guild_id = ? AND message_key = ? ", serverId, key)) {
@@ -55,10 +79,22 @@ public class CReactionRole {
 		return t;
 	}
 
+	/**
+	 * Gets keys for guild.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @return the keys for guild
+	 */
 	public static List<OReactionRoleKey> getKeysForGuild(long guildDiscordId) {
 		return getKeysForGuild(CGuild.getCachedId(guildDiscordId));
 	}
 
+	/**
+	 * Gets keys for guild.
+	 *
+	 * @param guildId the guild id
+	 * @return the keys for guild
+	 */
 	public static List<OReactionRoleKey> getKeysForGuild(int guildId) {
 		List<OReactionRoleKey> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM reaction_role_key " + "WHERE guild_id = ?", guildId)) {
@@ -94,6 +130,11 @@ public class CReactionRole {
 		return t;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
 	public static void delete(OReactionRoleKey record) {
 		try {
 			WebDb.get().query("DELETE FROM reaction_role_key WHERE message_key = ? AND guild_id = ? ", record.messageKey, record.guildId);
@@ -102,10 +143,20 @@ public class CReactionRole {
 		}
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(long guildId) {
 		deleteGuild(CGuild.getCachedId(guildId));
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(int guildId) {
 		try {
 			WebDb.get().query("DELETE FROM reaction_role_key WHERE guild_id = ? ", guildId);
@@ -114,6 +165,11 @@ public class CReactionRole {
 		}
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OReactionRoleKey record) {
 		if (record.id == 0) {
 			insert(record);
@@ -127,6 +183,11 @@ public class CReactionRole {
 		}
 	}
 
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
 	public static void insert(OReactionRoleKey record) {
 		if (record.id > 0) {
 			update(record);
@@ -140,6 +201,12 @@ public class CReactionRole {
 		}
 	}
 
+	/**
+	 * Gets reactions for key.
+	 *
+	 * @param id the id
+	 * @return the reactions for key
+	 */
 	public static List<OReactionRoleMessage> getReactionsForKey(int id) {
 		List<OReactionRoleMessage> l = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM reaction_role_message " + "WHERE reaction_role_key_id = ? ", id)) {
@@ -153,6 +220,14 @@ public class CReactionRole {
 		return l;
 	}
 
+	/**
+	 * Add reaction.
+	 *
+	 * @param reactionRoleKeyId the reaction role key id
+	 * @param emote             the emote
+	 * @param isNormalEmote     the is normal emote
+	 * @param roleId            the role id
+	 */
 	public static void addReaction(int reactionRoleKeyId, String emote, boolean isNormalEmote, long roleId) {
 		try {
 			WebDb.get().insert("INSERT INTO reaction_role_message (reaction_role_key_id, role_id, emoji, custom_emoji) " + "VALUES(?,?,?,?)", reactionRoleKeyId,
@@ -162,6 +237,12 @@ public class CReactionRole {
 		}
 	}
 
+	/**
+	 * Remove reaction.
+	 *
+	 * @param reactionRoleKeyId the reaction role key id
+	 * @param emote             the emote
+	 */
 	public static void removeReaction(int reactionRoleKeyId, String emote) {
 		try {
 			WebDb.get().query("DELETE FROM reaction_role_message WHERE reaction_role_key_id = ? AND emoji= ? ", reactionRoleKeyId, emote);

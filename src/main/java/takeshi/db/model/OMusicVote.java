@@ -20,9 +20,24 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O music vote.
+ */
 public class OMusicVote extends AbstractModel {
-    public int songId = 0;
-    public int userId = 0;
-    public int vote = 0;
-    public Timestamp createdOn = null;
+	/**
+	 * The Song id.
+	 */
+	public int songId = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Vote.
+	 */
+	public int vote = 0;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
 }

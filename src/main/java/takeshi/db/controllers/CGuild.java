@@ -49,6 +49,12 @@ public class CGuild {
 		return 0;
 	}
 
+	/**
+	 * Gets cached id.
+	 *
+	 * @param discordId the discord id
+	 * @return the cached id
+	 */
 	public static int getCachedId(long discordId) {
 		if (!guildIdCache.containsKey(discordId)) {
 			OGuild server = findBy(discordId);
@@ -62,6 +68,12 @@ public class CGuild {
 		return guildIdCache.get(discordId);
 	}
 
+	/**
+	 * Gets cached discord id l.
+	 *
+	 * @param id the id
+	 * @return the cached discord id l
+	 */
 	public static long getCachedDiscordIdL(int id) {
 		if (!discordIdCache.containsKey(id)) {
 			OGuild server = findById(id);
@@ -73,6 +85,12 @@ public class CGuild {
 		return discordIdCache.get(id);
 	}
 
+	/**
+	 * Gets cached discord id.
+	 *
+	 * @param id the id
+	 * @return the cached discord id
+	 */
 	public static String getCachedDiscordId(int id) {
 		if (!discordIdCache.containsKey(id)) {
 			OGuild server = findById(id);
@@ -84,6 +102,12 @@ public class CGuild {
 		return Long.toString(discordIdCache.get(id));
 	}
 
+	/**
+	 * Gets most used guilds for.
+	 *
+	 * @param userId the user id
+	 * @return the most used guilds for
+	 */
 	public static List<OGuild> getMostUsedGuildsFor(int userId) {
 		List<OGuild> list = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT g.id, discord_id, name, owner, active, banned " + "FROM command_log l "
@@ -98,10 +122,22 @@ public class CGuild {
 		return list;
 	}
 
+	/**
+	 * Find by o guild.
+	 *
+	 * @param discordId the discord id
+	 * @return the o guild
+	 */
 	public static OGuild findBy(long discordId) {
 		return findBy(String.valueOf(discordId));
 	}
 
+	/**
+	 * Find by o guild.
+	 *
+	 * @param discordId the discord id
+	 * @return the o guild
+	 */
 	public static OGuild findBy(String discordId) {
 		OGuild s = new OGuild();
 		try (ResultSet rs = WebDb.get().select("SELECT id, discord_id, name, owner,active,banned  " + "FROM guilds " + "WHERE discord_id = ? ", discordId)) {
@@ -115,6 +151,12 @@ public class CGuild {
 		return s;
 	}
 
+	/**
+	 * Find by id o guild.
+	 *
+	 * @param id the id
+	 * @return the o guild
+	 */
 	public static OGuild findById(int id) {
 		OGuild s = new OGuild();
 		try (ResultSet rs = WebDb.get().select("SELECT id, discord_id, name, owner,active,banned  " + "FROM guilds " + "WHERE id = ? ", id)) {
@@ -128,6 +170,11 @@ public class CGuild {
 		return s;
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OGuild record) {
 		if (record.id == 0) {
 			insert(record);
@@ -141,6 +188,11 @@ public class CGuild {
 		}
 	}
 
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
 	public static void insert(OGuild record) {
 		try {
 			record.id = WebDb.get().insert("INSERT INTO guilds(discord_id, name, owner,active,banned) " + "VALUES (?,?,?,?,?)", record.discord_id, record.name,
@@ -169,6 +221,11 @@ public class CGuild {
 		return amount;
 	}
 
+	/**
+	 * Gets banned guilds.
+	 *
+	 * @return the banned guilds
+	 */
 	public static List<OGuild> getBannedGuilds() {
 		List<OGuild> list = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM guilds WHERE banned = 1")) {

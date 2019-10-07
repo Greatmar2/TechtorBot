@@ -23,6 +23,9 @@ import takeshi.command.administrative.modactions.AbstractModActionCommand;
 import takeshi.db.model.OModerationCase;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Temp ban command.
+ */
 public class TempBanCommand extends AbstractModActionCommand {
     @Override
     public String getDescription() {

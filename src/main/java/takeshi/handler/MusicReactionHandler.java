@@ -34,39 +34,81 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The type Music reaction handler.
+ */
 public class MusicReactionHandler {
 
     private final Map<Long, HashSet<Long>> listeningMessages;
     private final DiscordBot discordBot;
 
-    public MusicReactionHandler(DiscordBot discordBot) {
+	/**
+	 * Instantiates a new Music reaction handler.
+	 *
+	 * @param discordBot the discord bot
+	 */
+	public MusicReactionHandler(DiscordBot discordBot) {
         this.discordBot = discordBot;
         listeningMessages = new ConcurrentHashMap<>();
     }
 
-    public synchronized void addMessage(long guildId, long id) {
+	/**
+	 * Add message.
+	 *
+	 * @param guildId the guild id
+	 * @param id      the id
+	 */
+	public synchronized void addMessage(long guildId, long id) {
         if (!listeningMessages.containsKey(guildId)) {
             listeningMessages.put(guildId, new HashSet<>());
         }
         listeningMessages.get(guildId).add(id);
     }
 
-    public synchronized boolean isListening(long guildId, long messageId) {
+	/**
+	 * Is listening boolean.
+	 *
+	 * @param guildId   the guild id
+	 * @param messageId the message id
+	 * @return the boolean
+	 */
+	public synchronized boolean isListening(long guildId, long messageId) {
         return listeningMessages.containsKey(guildId) && listeningMessages.get(guildId).contains(messageId);
     }
 
-    public synchronized void removeMessage(long guildId, long id) {
+	/**
+	 * Remove message.
+	 *
+	 * @param guildId the guild id
+	 * @param id      the id
+	 */
+	public synchronized void removeMessage(long guildId, long id) {
         if (listeningMessages.containsKey(guildId))
             listeningMessages.get(guildId).remove(id);
     }
 
-    public synchronized void clearGuild(long guildId) {
+	/**
+	 * Clear guild.
+	 *
+	 * @param guildId the guild id
+	 */
+	public synchronized void clearGuild(long guildId) {
         if (listeningMessages.containsKey(guildId)) {
             listeningMessages.get(guildId).clear();
         }
     }
 
-    public synchronized boolean handle(long messageId, TextChannel channel, User invoker, MessageReaction.ReactionEmote emote, boolean isAdding) {
+	/**
+	 * Handle boolean.
+	 *
+	 * @param messageId the message id
+	 * @param channel   the channel
+	 * @param invoker   the invoker
+	 * @param emote     the emote
+	 * @param isAdding  the is adding
+	 * @return the boolean
+	 */
+	public synchronized boolean handle(long messageId, TextChannel channel, User invoker, MessageReaction.ReactionEmote emote, boolean isAdding) {
         long guildId = channel.getGuild().getIdLong();
         if (!isListening(guildId, messageId)) {
             return false;

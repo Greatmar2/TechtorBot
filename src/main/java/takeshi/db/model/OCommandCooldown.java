@@ -18,9 +18,24 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O command cooldown.
+ */
 public class OCommandCooldown extends AbstractModel {
-    public String command = "";
-    public String targetId = "";
-    public int targetType = 0;
-    public long lastTime = 0L;
+	/**
+	 * The Command.
+	 */
+	public String command = "";
+	/**
+	 * The Target id.
+	 */
+	public String targetId = "";
+	/**
+	 * The Target type.
+	 */
+	public int targetType = 0;
+	/**
+	 * The Last time.
+	 */
+	public long lastTime = 0L;
 }

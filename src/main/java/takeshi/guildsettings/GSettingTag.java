@@ -16,6 +16,48 @@
 
 package takeshi.guildsettings;
 
+/**
+ * The enum G setting tag.
+ */
 public enum GSettingTag {
-    META, LOGGING, ROLE, MODERATION, CHANNEL, MUSIC, ADMIN, INTERNAL, COMMAND, DEBUG
+	/**
+	 * Meta g setting tag.
+	 */
+	META,
+	/**
+	 * Logging g setting tag.
+	 */
+	LOGGING,
+	/**
+	 * Role g setting tag.
+	 */
+	ROLE,
+	/**
+	 * Moderation g setting tag.
+	 */
+	MODERATION,
+	/**
+	 * Channel g setting tag.
+	 */
+	CHANNEL,
+	/**
+	 * Music g setting tag.
+	 */
+	MUSIC,
+	/**
+	 * Admin g setting tag.
+	 */
+	ADMIN,
+	/**
+	 * Internal g setting tag.
+	 */
+	INTERNAL,
+	/**
+	 * Command g setting tag.
+	 */
+	COMMAND,
+	/**
+	 * Debug g setting tag.
+	 */
+	DEBUG
 }

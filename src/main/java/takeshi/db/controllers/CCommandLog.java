@@ -26,7 +26,15 @@ import takeshi.db.WebDb;
  */
 public class CCommandLog {
 
-    public static void saveLog(int userId, int guildId, String commandUsed, String commandArgs) {
+	/**
+	 * Save log.
+	 *
+	 * @param userId      the user id
+	 * @param guildId     the guild id
+	 * @param commandUsed the command used
+	 * @param commandArgs the command args
+	 */
+	public static void saveLog(int userId, int guildId, String commandUsed, String commandArgs) {
         try {
             WebDb.get().insert(
                     "INSERT INTO command_log(user_id, guild, command, args, execute_date) " +

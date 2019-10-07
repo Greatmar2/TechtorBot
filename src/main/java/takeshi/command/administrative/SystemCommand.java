@@ -28,6 +28,9 @@ import takeshi.main.Launcher;
  * shows status of the bot's system
  */
 public class SystemCommand extends AbstractCommand {
+    /**
+     * Instantiates a new System command.
+     */
     public SystemCommand() {
         super();
     }
@@ -56,7 +59,7 @@ public class SystemCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         final Runtime runtime = Runtime.getRuntime();
         StringBuilder sb = new StringBuilder();
         long memoryLimit = runtime.maxMemory();

@@ -24,16 +24,29 @@ import takeshi.games.meta.GameTurn;
 public class Connect4Turn extends GameTurn {
     private int columnIndex;
 
-    public Connect4Turn() {
+	/**
+	 * Instantiates a new Connect 4 turn.
+	 */
+	public Connect4Turn() {
 
     }
 
-    public Connect4Turn(int boardIndex) {
+	/**
+	 * Instantiates a new Connect 4 turn.
+	 *
+	 * @param boardIndex the board index
+	 */
+	public Connect4Turn(int boardIndex) {
 
         this.columnIndex = boardIndex;
     }
 
-    public int getColumnIndex() {
+	/**
+	 * Gets column index.
+	 *
+	 * @return the column index
+	 */
+	public int getColumnIndex() {
         return columnIndex;
     }
 

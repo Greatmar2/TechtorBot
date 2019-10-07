@@ -18,9 +18,24 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O channel.
+ */
 public class OChannel extends AbstractModel {
-    public int id = 0;
-    public String discord_id = "";
-    public String name = "";
-    public int server_id = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Discord id.
+	 */
+	public String discord_id = "";
+	/**
+	 * The Name.
+	 */
+	public String name = "";
+	/**
+	 * The Server id.
+	 */
+	public int server_id = 0;
 }

@@ -16,6 +16,9 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The type Position file.
+ */
 public class PositionFile {
 
 }

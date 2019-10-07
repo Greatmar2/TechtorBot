@@ -36,6 +36,11 @@ import takeshi.main.Launcher;
 public class BotMetaEventsService extends AbstractService {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+	/**
+	 * Instantiates a new Bot meta events service.
+	 *
+	 * @param b the b
+	 */
 	public BotMetaEventsService(BotContainer b) {
 		super(b);
 	}

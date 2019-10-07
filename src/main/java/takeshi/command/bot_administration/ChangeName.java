@@ -31,6 +31,9 @@ import takeshi.templates.Templates;
  * changes the bots name
  */
 public class ChangeName extends AbstractCommand {
+    /**
+     * Instantiates a new Change name.
+     */
     public ChangeName() {
         super();
     }
@@ -56,7 +59,7 @@ public class ChangeName extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author);
         if (!rank.isAtLeast(SimpleRank.CREATOR)) {
             return Templates.no_permission.formatGuild(channel);

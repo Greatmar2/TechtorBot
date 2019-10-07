@@ -37,10 +37,23 @@ public class CUser {
 	private static Map<Long, Integer> userCache = new ConcurrentHashMap<>();
 	private static Map<Integer, Long> discordCache = new ConcurrentHashMap<>();
 
+	/**
+	 * Gets cached id.
+	 *
+	 * @param discordId the discord id
+	 * @return the cached id
+	 */
 	public static int getCachedId(long discordId) {
 		return getCachedId(discordId, String.valueOf(discordId));
 	}
 
+	/**
+	 * Gets cached id.
+	 *
+	 * @param discordId the discord id
+	 * @param username  the username
+	 * @return the cached id
+	 */
 	public static int getCachedId(long discordId, String username) {
 		if (!userCache.containsKey(discordId)) {
 			OUser user = findBy(discordId);
@@ -58,6 +71,12 @@ public class CUser {
 		return userCache.get(discordId);
 	}
 
+	/**
+	 * Gets cached discord id.
+	 *
+	 * @param userId the user id
+	 * @return the cached discord id
+	 */
 	public static long getCachedDiscordId(int userId) {
 		if (!discordCache.containsKey(userId)) {
 			OUser user = findById(userId);
@@ -69,6 +88,12 @@ public class CUser {
 		return discordCache.get(userId);
 	}
 
+	/**
+	 * Find by o user.
+	 *
+	 * @param discordId the discord id
+	 * @return the o user
+	 */
 	public static OUser findBy(long discordId) {
 		OUser s = new OUser();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM users " + "WHERE discord_id = ? ", discordId)) {
@@ -82,6 +107,12 @@ public class CUser {
 		return s;
 	}
 
+	/**
+	 * Find by id o user.
+	 *
+	 * @param internalId the internal id
+	 * @return the o user
+	 */
 	public static OUser findById(int internalId) {
 		OUser s = new OUser();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM users " + "WHERE id = ? ", internalId)) {
@@ -107,6 +138,11 @@ public class CUser {
 		return s;
 	}
 
+	/**
+	 * Gets banned users.
+	 *
+	 * @return the banned users
+	 */
 	public static List<OUser> getBannedUsers() {
 		List<OUser> list = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM users WHERE banned = 1")) {
@@ -120,6 +156,11 @@ public class CUser {
 		return list;
 	}
 
+	/**
+	 * Register command use.
+	 *
+	 * @param userId the user id
+	 */
 	public static void registerCommandUse(int userId) {
 		try {
 			WebDb.get().query("UPDATE users SET  commands_used = commands_used + 1 " + "WHERE id = ? ", userId);
@@ -128,6 +169,11 @@ public class CUser {
 		}
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OUser record) {
 		if (record.id == 0) {
 			insert(record);
@@ -143,6 +189,11 @@ public class CUser {
 		}
 	}
 
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
 	public static void insert(OUser record) {
 		try {
 			record.id = WebDb.get().insert(
@@ -154,6 +205,11 @@ public class CUser {
 		}
 	}
 
+	/**
+	 * Add banned user ids.
+	 *
+	 * @param bannedUsers the banned users
+	 */
 	public static void addBannedUserIds(HashSet<Long> bannedUsers) {
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM users WHERE banned = 1")) {
 			while (rs.next()) {

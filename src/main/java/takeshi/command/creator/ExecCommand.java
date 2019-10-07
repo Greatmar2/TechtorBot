@@ -33,9 +33,13 @@ import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * The type Exec command.
  */
 public class ExecCommand extends AbstractCommand {
-    public ExecCommand() {
+	/**
+	 * Instantiates a new Exec command.
+	 */
+	public ExecCommand() {
         super();
     }
 
@@ -65,7 +69,7 @@ public class ExecCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (!bot.security.getSimpleRank(author).isAtLeast(SimpleRank.SYSTEM_ADMIN)) {
             return Templates.no_permission.formatGuild(channel);
         }

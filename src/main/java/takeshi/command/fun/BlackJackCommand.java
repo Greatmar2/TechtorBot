@@ -34,12 +34,18 @@ import java.util.concurrent.Future;
  * play a game of blackjack with the bot
  */
 public class BlackJackCommand extends AbstractCommand {
-    public final long DEALER_TURN_INTERVAL = 2000L;
+	/**
+	 * The Dealer turn interval.
+	 */
+	public final long DEALER_TURN_INTERVAL = 2000L;
 
     //@todo, Icleanupcommand listener; kill games older than x
     private Map<String, Blackjack> playerGames = new ConcurrentHashMap<>();
 
-    public BlackJackCommand() {
+	/**
+	 * Instantiates a new Black jack command.
+	 */
+	public BlackJackCommand() {
         super();
     }
 
@@ -70,7 +76,7 @@ public class BlackJackCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (args.length == 0) {
             if (playerGames.containsKey(author.getId()) && playerGames.get(author.getId()).isInProgress()) {
                 return "You are still in a Activity. To finish type **blackjack stand**\n" +

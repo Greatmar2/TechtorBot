@@ -16,7 +16,13 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
+/**
+ * The type Auto role command.
+ */
 public class AutoRoleCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Auto role command.
+	 */
 	public AutoRoleCommand() {
 		super();
 	}
@@ -49,7 +55,7 @@ public class AutoRoleCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel tchan = (TextChannel) channel;
 		Guild guild = tchan.getGuild();
 

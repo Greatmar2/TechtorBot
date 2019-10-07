@@ -20,11 +20,29 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O bot stats.
+ */
 public class OBotStats extends AbstractModel {
-    public Timestamp createdOn = null;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
 
-    public int id = 0;
-    public long guildCount = 0;
-    public long userCount = 0;
-    public long musicCount = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Guild count.
+	 */
+	public long guildCount = 0;
+	/**
+	 * The User count.
+	 */
+	public long userCount = 0;
+	/**
+	 * The Music count.
+	 */
+	public long musicCount = 0;
 }

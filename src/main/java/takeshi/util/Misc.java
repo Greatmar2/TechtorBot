@@ -36,6 +36,9 @@ import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 
+/**
+ * The type Misc.
+ */
 public class Misc {
 
 	private static final String[] numberToEmote = { "\u0030\u20E3", "\u0031\u20E3", "\u0032\u20E3", "\u0033\u20E3", "\u0034\u20E3", "\u0035\u20E3",
@@ -59,7 +62,7 @@ public class Misc {
 	 * returns the ID part of a guild emote
 	 *
 	 * @param emote the emote to extract from
-	 * @return id
+	 * @return id guild emote id
 	 */
 	public static String getGuildEmoteId(String emote) {
 		Matcher matcher = patternGuildEmote.matcher(emote);
@@ -73,6 +76,13 @@ public class Misc {
 		return null;
 	}
 
+	/**
+	 * Make progressbar string.
+	 *
+	 * @param max     the max
+	 * @param current the current
+	 * @return the string
+	 */
 	public static String makeProgressbar(int max, int current) {
 		int parts = 8;
 		String bar = "";
@@ -87,6 +97,14 @@ public class Misc {
 		return bar;
 	}
 
+	/**
+	 * Make stacked bar string.
+	 *
+	 * @param max     the max
+	 * @param bar     the bar
+	 * @param barChar the bar char
+	 * @return the string
+	 */
 	public static String makeStackedBar(int max, int bar, String barChar) {
 		String fill = ":wavy_dash:";
 		StringBuilder sb = new StringBuilder();
@@ -122,10 +140,10 @@ public class Misc {
 	/**
 	 * searches a map by value and returns the key if found otherwise null
 	 *
-	 * @param map   the map to search in
-	 * @param value the value to search for
 	 * @param <T>   map key type
 	 * @param <E>   map value type
+	 * @param map   the map to search in
+	 * @param value the value to search for
 	 * @return matched key of the map or null
 	 */
 	public static <T, E> T getKeyByValue(Map<T, E> map, E value) {
@@ -150,6 +168,12 @@ public class Misc {
 		return ":x:";
 	}
 
+	/**
+	 * String to emote string.
+	 *
+	 * @param character the character
+	 * @return the string
+	 */
 	public static String stringToEmote(String character) {
 		try {
 			int number = Integer.parseInt(character);
@@ -160,6 +184,12 @@ public class Misc {
 		}
 	}
 
+	/**
+	 * Emote to number string.
+	 *
+	 * @param emote the emote
+	 * @return the string
+	 */
 	public static String emoteToNumber(String emote) {
 		for (int i = 0; i < numberToEmote.length; i++) {
 			if (numberToEmote[i].equals(emote)) {
@@ -170,6 +200,8 @@ public class Misc {
 	}
 
 	/**
+	 * Make table string.
+	 *
 	 * @param items items in the controllers
 	 * @return formatted controllers
 	 */
@@ -202,6 +234,8 @@ public class Misc {
 	}
 
 	/**
+	 * Make table string.
+	 *
 	 * @param tableText text
 	 * @return formatted controllers
 	 */
@@ -223,6 +257,12 @@ public class Misc {
 		return joiner.toString();
 	}
 
+	/**
+	 * Concat string.
+	 *
+	 * @param list the list
+	 * @return the string
+	 */
 	public static String concat(int[] list) {
 		StringJoiner joiner = new StringJoiner(" ");
 		for (int s : list) {
@@ -231,6 +271,12 @@ public class Misc {
 		return joiner.toString();
 	}
 
+	/**
+	 * Concat string.
+	 *
+	 * @param list the list
+	 * @return the string
+	 */
 	public static String concat(Object[] list) {
 		StringJoiner joiner = new StringJoiner(" ");
 		for (Object s : list) {
@@ -256,9 +302,10 @@ public class Misc {
 	}
 
 	/**
+	 * Make ascii table string.
+	 *
 	 * @param headers array containing the headers
-	 * @param table   array[n size] of array's[header size], containing the rows of
-	 *                the controllers
+	 * @param table   array[n size] of array's[header size], containing the rows of                the controllers
 	 * @param footer  array containing the footers
 	 * @return a formatted controllers
 	 */
@@ -349,9 +396,9 @@ public class Misc {
 	/**
 	 * Sorts a map by value descending
 	 *
-	 * @param map the map to sort
 	 * @param <K> key
 	 * @param <V> a sortable value
+	 * @param map the map to sort
 	 * @return the same map but sorted descending
 	 */
 	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
@@ -397,6 +444,13 @@ public class Misc {
 		return "";
 	}
 
+	/**
+	 * Parse int int.
+	 *
+	 * @param intString the int string
+	 * @param fallback  the fallback
+	 * @return the int
+	 */
 	public static int parseInt(String intString, int fallback) {
 		try {
 			return Integer.parseInt(intString);
@@ -405,6 +459,13 @@ public class Misc {
 		}
 	}
 
+	/**
+	 * Parse long long.
+	 *
+	 * @param longstr  the longstr
+	 * @param fallback the fallback
+	 * @return the long
+	 */
 	public static long parseLong(String longstr, int fallback) {
 		try {
 			return Long.parseLong(longstr);
@@ -413,12 +474,23 @@ public class Misc {
 		}
 	}
 
+	/**
+	 * Clear other reactions.
+	 *
+	 * @param message the message
+	 */
 	public static void clearOtherReactions(Message message) {
 		long botId = message.getJDA().getSelfUser().getIdLong();
 		clearReactions(message, botId);
 	}
 
-	// Removes all user reactions except the specified user's
+	/**
+	 * Clear reactions.
+	 *
+	 * @param message the message
+	 * @param userId  the user id
+	 */
+// Removes all user reactions except the specified user's
 	public static void clearReactions(Message message, long userId) {
 		List<MessageReaction> reactions = message.getReactions();
 		for (MessageReaction react : reactions) {
@@ -433,6 +505,11 @@ public class Misc {
 		}
 	}
 
+	/**
+	 * Random col color.
+	 *
+	 * @return the color
+	 */
 	public static Color randomCol() {
 		Random rand = new Random();
 		return new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());

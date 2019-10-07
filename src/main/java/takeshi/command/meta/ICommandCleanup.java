@@ -20,9 +20,9 @@ package takeshi.command.meta;
  * Indicating that a command has data/cache to clean up after a while
  */
 public interface ICommandCleanup {
-    /**
-     * This method is called in the cleanup service {@link takeshi.service.BotCleanupService}
-     * to clean up cached data
-     */
-    void cleanup();
+	/**
+	 * This method is called in the cleanup service {@link takeshi.service.BotCleanupService}
+	 * to clean up cached data
+	 */
+	void cleanup();
 }

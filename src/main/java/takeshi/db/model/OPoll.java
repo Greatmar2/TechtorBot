@@ -20,12 +20,36 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O poll.
+ */
 public class OPoll extends AbstractModel {
+	/**
+	 * The Id.
+	 */
 	public int id = 0;
+	/**
+	 * The Channel id.
+	 */
 	public long channelId = 0L;
+	/**
+	 * The Message id.
+	 */
 	public long messageId = 0L;
+	/**
+	 * The Message.
+	 */
 	public String message = "";
+	/**
+	 * The Single.
+	 */
 	public boolean single = false;
+	/**
+	 * The Message expire.
+	 */
 	public Timestamp messageExpire = new Timestamp(0);
+	/**
+	 * The Guild id.
+	 */
 	public int guildId = 0;
 }

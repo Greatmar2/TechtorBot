@@ -28,11 +28,25 @@ import takeshi.db.model.OMusicVote;
  * data communication with the controllers `music_votes`
  */
 public class CMusicVote {
-    public static OMusicVote findBy(int songId, long userDiscordId) {
+	/**
+	 * Find by o music vote.
+	 *
+	 * @param songId        the song id
+	 * @param userDiscordId the user discord id
+	 * @return the o music vote
+	 */
+	public static OMusicVote findBy(int songId, long userDiscordId) {
         return findBy(songId, CUser.getCachedId(userDiscordId));
     }
 
-    public static OMusicVote findBy(int songId, int userId) {
+	/**
+	 * Find by o music vote.
+	 *
+	 * @param songId the song id
+	 * @param userId the user id
+	 * @return the o music vote
+	 */
+	public static OMusicVote findBy(int songId, int userId) {
         OMusicVote token = new OMusicVote();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT song_id, user_id, vote, created_on  " +
@@ -57,11 +71,25 @@ public class CMusicVote {
         return record;
     }
 
-    public static void insertOrUpdate(int songId, long userDiscordId, int vote) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param songId        the song id
+	 * @param userDiscordId the user discord id
+	 * @param vote          the vote
+	 */
+	public static void insertOrUpdate(int songId, long userDiscordId, int vote) {
         insertOrUpdate(songId, CUser.getCachedId(userDiscordId), vote);
     }
 
-    public static void insertOrUpdate(int songId, int userId, int vote) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param songId the song id
+	 * @param userId the user id
+	 * @param vote   the vote
+	 */
+	public static void insertOrUpdate(int songId, int userId, int vote) {
         try {
             WebDb.get().insert(
                     "INSERT INTO music_votes(song_id, user_id, vote, created_on) " +

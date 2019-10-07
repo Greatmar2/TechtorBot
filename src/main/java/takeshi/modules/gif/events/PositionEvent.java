@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 import takeshi.modules.gif.OverlayActor;
 import takeshi.modules.gif.OverlayEvent;
 
+/**
+ * The type Position event.
+ */
 public class PositionEvent implements OverlayEvent {
     private static final Pattern inputPattern = Pattern.compile("pos:? ?(\\d+) (\\d+)", Pattern.CASE_INSENSITIVE);
     private final int x;

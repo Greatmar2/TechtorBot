@@ -42,7 +42,10 @@ public class SlotMachineCommand extends AbstractCommand implements ICommandCoold
     private final long SPIN_INTERVAL = 2000L;
     private final int MAX_BET = 1000;
 
-    public SlotMachineCommand() {
+	/**
+	 * Instantiates a new Slot machine command.
+	 */
+	public SlotMachineCommand() {
         super();
     }
 
@@ -81,7 +84,7 @@ public class SlotMachineCommand extends AbstractCommand implements ICommandCoold
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (args.length == 0 || args.length >= 1 && !args[0].equals("info")) {
             final int betAmount;
             if (args.length > 0 && args[0].matches("\\d+")) {

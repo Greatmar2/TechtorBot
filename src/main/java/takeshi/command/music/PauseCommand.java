@@ -36,7 +36,10 @@ import takeshi.templates.Templates;
  * pause the music or resume it
  */
 public class PauseCommand extends AbstractCommand {
-    public PauseCommand() {
+	/**
+	 * Instantiates a new Pause command.
+	 */
+	public PauseCommand() {
         super();
     }
 
@@ -68,7 +71,7 @@ public class PauseCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         SimpleRank userRank = bot.security.getSimpleRank(author, channel);
         if (!GuildSettings.get(guild).canUseMusicCommands(author, userRank)) {

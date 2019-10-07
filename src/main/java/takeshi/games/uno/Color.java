@@ -1,10 +1,32 @@
 package takeshi.games.uno;
 
+/**
+ * The enum Color.
+ */
 public enum Color {
 
 	// Enum to handle the colors of the cards
 
-	RED("❤"), YELLOW("💛"), GREEN("💚"), BLUE("💙"), BLACK("🖤");
+	/**
+	 * Red color.
+	 */
+	RED("❤"),
+	/**
+	 * Yellow color.
+	 */
+	YELLOW("💛"),
+	/**
+	 * Green color.
+	 */
+	GREEN("💚"),
+	/**
+	 * Blue color.
+	 */
+	BLUE("💙"),
+	/**
+	 * Black color.
+	 */
+	BLACK("🖤");
 
 	private String unicode;
 

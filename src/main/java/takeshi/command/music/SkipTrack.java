@@ -35,7 +35,10 @@ import takeshi.templates.Templates;
  * skips current active track
  */
 public class SkipTrack extends AbstractCommand {
-    public SkipTrack() {
+	/**
+	 * Instantiates a new Skip track.
+	 */
+	public SkipTrack() {
         super();
     }
 
@@ -73,7 +76,7 @@ public class SkipTrack extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         MusicPlayerHandler player = MusicPlayerHandler.getFor(guild, bot);
         SimpleRank userRank = bot.security.getSimpleRank(author, channel);

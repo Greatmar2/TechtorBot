@@ -37,11 +37,22 @@ import takeshi.util.GfxUtil;
 public class ProfileImageV2 extends ProfileImage {
 	private Random rng;
 
+	/**
+	 * Instantiates a new Profile image v 2.
+	 *
+	 * @param user the user
+	 */
 	public ProfileImageV2(User user) {
 		super(user);
 		rng = new Random();
 	}
 
+	/**
+	 * Gets profile image.
+	 *
+	 * @return the profile image
+	 * @throws IOException the io exception
+	 */
 	public File getProfileImage() throws IOException {
 		int fontsize = 28;
 		if (getUser().getName().length() <= 4) {

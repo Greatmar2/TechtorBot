@@ -51,6 +51,9 @@ import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 import takeshi.util.Misc;
 
+/**
+ * The type Meme command.
+ */
 public class MemeCommand extends AbstractCommand {
 	private final HashSet<String> memeTypes = new HashSet<>();
 
@@ -81,7 +84,7 @@ public class MemeCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (channel instanceof TextChannel) {
 			TextChannel txt = (TextChannel) channel;
 			if (!PermissionUtil.checkPermission(txt, txt.getGuild().getSelfMember(), Permission.MESSAGE_ATTACH_FILES)) {

@@ -16,8 +16,20 @@
 
 package takeshi.modules.reddit;
 
+/**
+ * The type Reddit constants.
+ */
 class RedditConstants {
-    public final static String URL = "https://www.reddit.com/";
-    public final static String SUBREDDIT_INDICATOR = "r/";
-    public final static String SEARCH_PAGE = "/search.json?q=";
+	/**
+	 * The constant URL.
+	 */
+	public final static String URL = "https://www.reddit.com/";
+	/**
+	 * The constant SUBREDDIT_INDICATOR.
+	 */
+	public final static String SUBREDDIT_INDICATOR = "r/";
+	/**
+	 * The constant SEARCH_PAGE.
+	 */
+	public final static String SEARCH_PAGE = "/search.json?q=";
 }

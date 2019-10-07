@@ -16,9 +16,24 @@
 
 package takeshi.core;
 
+/**
+ * The enum Log level.
+ */
 public enum LogLevel {
-    DEBUG,
-    INFO,
-    WARN,
-    FATAL
+	/**
+	 * Debug log level.
+	 */
+	DEBUG,
+	/**
+	 * Info log level.
+	 */
+	INFO,
+	/**
+	 * Warn log level.
+	 */
+	WARN,
+	/**
+	 * Fatal log level.
+	 */
+	FATAL
 }

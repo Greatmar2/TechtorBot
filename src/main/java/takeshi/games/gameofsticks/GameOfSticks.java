@@ -27,6 +27,9 @@ public class GameOfSticks extends AbstractGame<GoSTurn> {
 
 	private int sticksleft;
 
+	/**
+	 * Instantiates a new Game of sticks.
+	 */
 	public GameOfSticks() {
 		reset();
 	}

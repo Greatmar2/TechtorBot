@@ -49,6 +49,9 @@ import takeshi.util.TimeUtil;
 public class AutoReplyCommand extends AbstractCommand {
 	private final static int MIN_TAG_LENGTH = 2;
 
+	/**
+	 * Instantiates a new Auto reply command.
+	 */
 	public AutoReplyCommand() {
 		super();
 	}
@@ -85,7 +88,7 @@ public class AutoReplyCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
 			Message inputMessage) {
 		if (channel.getType() == ChannelType.TEXT) {
 			Guild guild = ((TextChannel) channel).getGuild();

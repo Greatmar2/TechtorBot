@@ -2,9 +2,18 @@ package takeshi.command.meta;
 
 import takeshi.util.Emojibet;
 
+/**
+ * The enum Reactions.
+ */
 public enum Reactions {
-    STAR(ReactionType.USER_INPUT, Emojibet.STAR, "Starboard, See the starboard command for more info"),
-    SKIP_TRACK(ReactionType.MUSIC, Emojibet.NEXT_TRACK, "Vote to skip the now playing track"),
+	/**
+	 * The Star.
+	 */
+	STAR(ReactionType.USER_INPUT, Emojibet.STAR, "Starboard, See the starboard command for more info"),
+	/**
+	 * The Skip track.
+	 */
+	SKIP_TRACK(ReactionType.MUSIC, Emojibet.NEXT_TRACK, "Vote to skip the now playing track"),
     ;
 
     private final ReactionType reactionType;
@@ -18,15 +27,30 @@ public enum Reactions {
         this.description = description;
     }
 
-    public String getDescription() {
+	/**
+	 * Gets description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
         return description;
     }
 
-    public String getEmote() {
+	/**
+	 * Gets emote.
+	 *
+	 * @return the emote
+	 */
+	public String getEmote() {
         return emote;
     }
 
-    public ReactionType getReactionType() {
+	/**
+	 * Gets reaction type.
+	 *
+	 * @return the reaction type
+	 */
+	public ReactionType getReactionType() {
         return reactionType;
     }
 }

@@ -30,12 +30,12 @@ public class RoleSettingType implements IGuildSettingType {
 
     private final boolean allowNull;
 
-    /**
-     * Allow a null/false value?
-     *
-     * @param allowNull true if it can be null
-     */
-    public RoleSettingType(boolean allowNull) {
+	/**
+	 * Allow a null/false value?
+	 *
+	 * @param allowNull true if it can be null
+	 */
+	public RoleSettingType(boolean allowNull) {
 
         this.allowNull = allowNull;
     }

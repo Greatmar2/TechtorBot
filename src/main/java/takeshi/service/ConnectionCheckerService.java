@@ -30,7 +30,12 @@ public class ConnectionCheckerService extends AbstractService {
 
     private static final long RESTART_AFTER = TimeUnit.MINUTES.toMillis(1);
 
-    public ConnectionCheckerService(BotContainer b) {
+	/**
+	 * Instantiates a new Connection checker service.
+	 *
+	 * @param b the b
+	 */
+	public ConnectionCheckerService(BotContainer b) {
         super(b);
     }
 

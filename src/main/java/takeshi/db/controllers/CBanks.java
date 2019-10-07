@@ -31,24 +31,53 @@ import takeshi.main.BotConfig;
  */
 public class CBanks {
 
-    //the amount of currency you claim each hour
+	/**
+	 * The constant CURRENCY_PER_HOUR.
+	 */
+//the amount of currency you claim each hour
     public static final double CURRENCY_PER_HOUR = 0.5D;
-    public static final long SECONDS_PER_CURRENCY = (long) (1 / CURRENCY_PER_HOUR * 3600D);
-    //after reaching this amount amount, you can't claim anymore
+	/**
+	 * The constant SECONDS_PER_CURRENCY.
+	 */
+	public static final long SECONDS_PER_CURRENCY = (long) (1 / CURRENCY_PER_HOUR * 3600D);
+	/**
+	 * The constant CURRENCY_NO_HELP_AFTER.
+	 */
+//after reaching this amount amount, you can't claim anymore
     public static final long CURRENCY_NO_HELP_AFTER = 10000;
-    //the max currency you can get from a claim
+	/**
+	 * The constant CURRENCY_GIVEAWAY_MAX.
+	 */
+//the max currency you can get from a claim
     public static int CURRENCY_GIVEAWAY_MAX = (int) (CURRENCY_PER_HOUR * 24D);
     private static volatile OBank BOT_BANK_ACCOUNT = null;
 
-    public static OBank findBy(long discordId) {
+	/**
+	 * Find by o bank.
+	 *
+	 * @param discordId the discord id
+	 * @return the o bank
+	 */
+	public static OBank findBy(long discordId) {
         return findBy(CUser.getCachedId(discordId));
     }
 
-    public static OBank getBotAccount() {
+	/**
+	 * Gets bot account.
+	 *
+	 * @return the bot account
+	 */
+	public static OBank getBotAccount() {
         return BOT_BANK_ACCOUNT;
     }
 
-    public static OBank findBy(int userId) {
+	/**
+	 * Find by o bank.
+	 *
+	 * @param userId the user id
+	 * @return the o bank
+	 */
+	public static OBank findBy(int userId) {
         OBank bank = new OBank();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, user, current_balance, created_on  " +
@@ -76,7 +105,12 @@ public class CBanks {
         return bank;
     }
 
-    public static void insert(OBank bank) {
+	/**
+	 * Insert.
+	 *
+	 * @param bank the bank
+	 */
+	public static void insert(OBank bank) {
         if (bank.id > 0) {
             update(bank);
             return;
@@ -95,7 +129,13 @@ public class CBanks {
         }
     }
 
-    public static void updateBalance(int bankId, int relativeAmount) {
+	/**
+	 * Update balance.
+	 *
+	 * @param bankId         the bank id
+	 * @param relativeAmount the relative amount
+	 */
+	public static void updateBalance(int bankId, int relativeAmount) {
         if (bankId == BOT_BANK_ACCOUNT.id || relativeAmount == 0) {
             return;
         }
@@ -106,7 +146,12 @@ public class CBanks {
         }
     }
 
-    public static void update(OBank bank) {
+	/**
+	 * Update.
+	 *
+	 * @param bank the bank
+	 */
+	public static void update(OBank bank) {
         if (bank.id == 0) {
             insert(bank);
             return;
@@ -120,7 +165,13 @@ public class CBanks {
         }
     }
 
-    public static void init(long botId, String botName) {
+	/**
+	 * Init.
+	 *
+	 * @param botId   the bot id
+	 * @param botName the bot name
+	 */
+	public static void init(long botId, String botName) {
         OUser user = CUser.findBy(botId);
         if (user.id == 0 || botName.equals(user.name) || user.name.isEmpty()) {
             user.name = botName;

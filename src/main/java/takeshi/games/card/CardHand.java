@@ -19,27 +19,55 @@ package takeshi.games.card;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Card hand.
+ */
 public class CardHand {
 
-    protected ArrayList<Card> cardsInHand;
+	/**
+	 * The Cards in hand.
+	 */
+	protected ArrayList<Card> cardsInHand;
 
-    public CardHand() {
+	/**
+	 * Instantiates a new Card hand.
+	 */
+	public CardHand() {
         reset();
     }
 
-    public void reset() {
+	/**
+	 * Reset.
+	 */
+	public void reset() {
         cardsInHand = new ArrayList<>();
     }
 
-    public void add(Card card) {
+	/**
+	 * Add.
+	 *
+	 * @param card the card
+	 */
+	public void add(Card card) {
         cardsInHand.add(card);
     }
 
-    public boolean remove(Card card) {
+	/**
+	 * Remove boolean.
+	 *
+	 * @param card the card
+	 * @return the boolean
+	 */
+	public boolean remove(Card card) {
         return cardsInHand.remove(card);
     }
 
-    public List<Card> getHand() {
+	/**
+	 * Gets hand.
+	 *
+	 * @return the hand
+	 */
+	public List<Card> getHand() {
         return cardsInHand;
     }
 }

@@ -30,9 +30,15 @@ import takeshi.util.Emojibet;
  * !emojify
  */
 public class EmojifyCommand extends AbstractCommand {
-    public static final int MAX_SIZE = 200;
+	/**
+	 * The constant MAX_SIZE.
+	 */
+	public static final int MAX_SIZE = 200;
 
-    public EmojifyCommand() {
+	/**
+	 * Instantiates a new Emojify command.
+	 */
+	public EmojifyCommand() {
         super();
     }
 
@@ -67,7 +73,7 @@ public class EmojifyCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (args.length > 0) {
             String combined = Joiner.on(" ").join(args).toLowerCase();
             int strlen = combined.length();

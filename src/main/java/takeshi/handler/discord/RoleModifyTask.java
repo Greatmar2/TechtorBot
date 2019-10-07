@@ -19,28 +19,53 @@ package takeshi.handler.discord;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 
+/**
+ * The type Role modify task.
+ */
 public class RoleModifyTask {
 
     private final User user;
     private final Role role;
     private final boolean add;
 
-    public RoleModifyTask(User user, Role role, boolean add) {
+	/**
+	 * Instantiates a new Role modify task.
+	 *
+	 * @param user the user
+	 * @param role the role
+	 * @param add  the add
+	 */
+	public RoleModifyTask(User user, Role role, boolean add) {
 
         this.user = user;
         this.role = role;
         this.add = add;
     }
 
-    public boolean isAdd() {
+	/**
+	 * Is add boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isAdd() {
         return add;
     }
 
-    public Role getRole() {
+	/**
+	 * Gets role.
+	 *
+	 * @return the role
+	 */
+	public Role getRole() {
         return role;
     }
 
-    public User getUser() {
+	/**
+	 * Gets user.
+	 *
+	 * @return the user
+	 */
+	public User getUser() {
         return user;
     }
 }

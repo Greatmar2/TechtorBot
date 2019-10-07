@@ -17,33 +17,66 @@
 package takeshi.permission;
 
 /**
- *
+ * The enum Simple rank.
  */
 public enum SimpleRank {
-    BANNED_USER("Will be ignored"),
-    BOT("Will be ignored"),
-    USER("Regular user"),
-    INTERACTION_BOT("Bot can interact"),
-    GUILD_BOT_ADMIN("Bot admin for a guild"),
-    GUILD_ADMIN("Admin in a guild"),
-    GUILD_OWNER("Owner of a guild"),
-    CONTRIBUTOR("Contributor"),
-    BOT_ADMIN("Bot administrator"),
-    SYSTEM_ADMIN("System admin"),
-    CREATOR("Creator");
+	/**
+	 * The Banned user.
+	 */
+	BANNED_USER("Will be ignored"),
+	/**
+	 * The Bot.
+	 */
+	BOT("Will be ignored"),
+	/**
+	 * The User.
+	 */
+	USER("Regular user"),
+	/**
+	 * The Interaction bot.
+	 */
+	INTERACTION_BOT("Bot can interact"),
+	/**
+	 * The Guild bot admin.
+	 */
+	GUILD_BOT_ADMIN("Bot admin for a guild"),
+	/**
+	 * The Guild admin.
+	 */
+	GUILD_ADMIN("Admin in a guild"),
+	/**
+	 * The Guild owner.
+	 */
+	GUILD_OWNER("Owner of a guild"),
+	/**
+	 * Contributor simple rank.
+	 */
+	CONTRIBUTOR("Contributor"),
+	/**
+	 * The Bot admin.
+	 */
+	BOT_ADMIN("Bot administrator"),
+	/**
+	 * The System admin.
+	 */
+	SYSTEM_ADMIN("System admin"),
+	/**
+	 * Creator simple rank.
+	 */
+	CREATOR("Creator");
     private final String description;
 
     SimpleRank(String description) {
         this.description = description;
     }
 
-    /**
-     * find a rank by name
-     *
-     * @param search the role to search for
-     * @return rank || null
-     */
-    public static SimpleRank findRank(String search) {
+	/**
+	 * find a rank by name
+	 *
+	 * @param search the role to search for
+	 * @return rank || null
+	 */
+	public static SimpleRank findRank(String search) {
         for (SimpleRank simpleRank : values()) {
             if (simpleRank.name().equalsIgnoreCase(search)) {
                 return simpleRank;
@@ -52,15 +85,32 @@ public enum SimpleRank {
         return null;
     }
 
-    public boolean isAtLeast(SimpleRank rank) {
+	/**
+	 * Is at least boolean.
+	 *
+	 * @param rank the rank
+	 * @return the boolean
+	 */
+	public boolean isAtLeast(SimpleRank rank) {
         return this.ordinal() >= rank.ordinal();
     }
 
-    public boolean isHigherThan(SimpleRank rank) {
+	/**
+	 * Is higher than boolean.
+	 *
+	 * @param rank the rank
+	 * @return the boolean
+	 */
+	public boolean isHigherThan(SimpleRank rank) {
         return this.ordinal() > rank.ordinal();
     }
 
-    public String getDescription() {
+	/**
+	 * Gets description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
         return description;
     }
 }

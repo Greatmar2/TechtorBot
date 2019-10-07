@@ -22,9 +22,24 @@ import takeshi.db.AbstractModel;
  * Created on 8-9-2016
  */
 public class OService extends AbstractModel {
-    public int activated = 0;
-    public String description = "";
-    public String displayName = "";
-    public String name = "";
-    public int id = 0;
+	/**
+	 * The Activated.
+	 */
+	public int activated = 0;
+	/**
+	 * The Description.
+	 */
+	public String description = "";
+	/**
+	 * The Display name.
+	 */
+	public String displayName = "";
+	/**
+	 * The Name.
+	 */
+	public String name = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
 }

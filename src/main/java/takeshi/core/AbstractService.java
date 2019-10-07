@@ -39,23 +39,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Abstract service.
+ */
 public abstract class AbstractService {
-    protected BotContainer bot;
+	/**
+	 * The Bot.
+	 */
+	protected BotContainer bot;
     private Map<String, OServiceVariable> cache;
     private long cachedLastRun = 0L;
 
-    public AbstractService(BotContainer b) {
+	/**
+	 * Instantiates a new Abstract service.
+	 *
+	 * @param b the b
+	 */
+	public AbstractService(BotContainer b) {
         bot = b;
         cache = new HashMap<>();
     }
 
-    /**
-     * retrieves a list of subscribed channels for service
-     *
-     * @return list of {@link TextChannel} channels
-     */
-
-    public List<TextChannel> getSubscribedChannels() {
+	/**
+	 * retrieves a list of subscribed channels for service
+	 *
+	 * @return list of {@link TextChannel} channels
+	 */
+	public List<TextChannel> getSubscribedChannels() {
         List<TextChannel> channels = new ArrayList<>();
         List<QActiveSubscriptions> subscriptionsForService = CSubscriptions.getSubscriptionsForService(CServices.getCachedId(getIdentifier()));
         for (QActiveSubscriptions activeSubscriptions : subscriptionsForService) {
@@ -79,20 +89,32 @@ public abstract class AbstractService {
         return channels;
     }
 
-    protected void sendTo(TextChannel channel, MessageEmbed message) {
+	/**
+	 * Send to.
+	 *
+	 * @param channel the channel
+	 * @param message the message
+	 */
+	protected void sendTo(TextChannel channel, MessageEmbed message) {
         if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_EMBED_LINKS)) {
             bot.getShardFor(channel.getGuild().getId()).queue.add(channel.sendMessage(message));
         }
     }
 
-    protected void sendTo(TextChannel channel, String message) {
+	/**
+	 * Send to.
+	 *
+	 * @param channel the channel
+	 * @param message the message
+	 */
+	protected void sendTo(TextChannel channel, String message) {
         this.bot.getShardFor(channel.getGuild().getId()).out.sendAsyncMessage(channel, message, null);
     }
 
-    /**
-     * Start the service
-     */
-    public final void start() {
+	/**
+	 * Start the service
+	 */
+	public final void start() {
         if (cachedLastRun == 0L) {
             cachedLastRun = Long.parseLong("0" + getData("abs_last_service_run"));
         }
@@ -114,13 +136,13 @@ public abstract class AbstractService {
         }
     }
 
-    /**
-     * gets data for a certain key and caches it
-     *
-     * @param key key used
-     * @return the value of the key
-     */
-    protected String getData(String key) {
+	/**
+	 * gets data for a certain key and caches it
+	 *
+	 * @param key key used
+	 * @return the value of the key
+	 */
+	protected String getData(String key) {
         return getDataObject(key).value;
     }
 
@@ -138,13 +160,13 @@ public abstract class AbstractService {
     }
 
 
-    /**
-     * saves service data
-     *
-     * @param key   the key
-     * @param value Any value converted to string
-     */
-    protected void saveData(String key, Object value) {
+	/**
+	 * saves service data
+	 *
+	 * @param key   the key
+	 * @param value Any value converted to string
+	 */
+	protected void saveData(String key, Object value) {
         OServiceVariable dataObject = getDataObject(key);
         dataObject.variable = key;
         dataObject.serviceId = CServices.getCachedId(getIdentifier());
@@ -152,39 +174,41 @@ public abstract class AbstractService {
         CServiceVariables.insertOrUpdate(dataObject);
     }
 
-    /**
-     * The identifier of the service. This is used to reference the service and the key to store data with.
-     *
-     * @return the identifier of the service
-     */
-    public abstract String getIdentifier();
+	/**
+	 * The identifier of the service. This is used to reference the service and the key to store data with.
+	 *
+	 * @return the identifier of the service
+	 */
+	public abstract String getIdentifier();
 
-    /**
-     * milliseconds it should wait before attempting another run
-     *
-     * @return delay in milliseconds
-     */
-    public abstract long getDelayBetweenRuns();
+	/**
+	 * milliseconds it should wait before attempting another run
+	 *
+	 * @return delay in milliseconds
+	 */
+	public abstract long getDelayBetweenRuns();
 
-    /**
-     * Determines if the service should run
-     *
-     * @return should it run?
-     */
-    public abstract boolean shouldIRun();
+	/**
+	 * Determines if the service should run
+	 *
+	 * @return should it run?
+	 */
+	public abstract boolean shouldIRun();
 
-    /**
-     * called before run, so things can be prepared if needed
-     */
-    public abstract void beforeRun();
+	/**
+	 * called before run, so things can be prepared if needed
+	 */
+	public abstract void beforeRun();
 
-    /**
-     * the actual logic of the service
-     */
-    public abstract void run() throws Exception;
+	/**
+	 * the actual logic of the service
+	 *
+	 * @throws Exception the exception
+	 */
+	public abstract void run() throws Exception;
 
-    /**
-     * called after run(), can be used to clean up things if needed
-     */
-    public abstract void afterRun();
+	/**
+	 * called after run(), can be used to clean up things if needed
+	 */
+	public abstract void afterRun();
 }

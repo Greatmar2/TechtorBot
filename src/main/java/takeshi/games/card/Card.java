@@ -19,6 +19,9 @@ package takeshi.games.card;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Card.
+ */
 public class Card {
     private static final List<Card> protoDeck = new ArrayList<>();
 
@@ -38,15 +41,30 @@ public class Card {
         this.suit = suit;
     }
 
-    public static ArrayList<Card> newDeck() {
+	/**
+	 * New deck array list.
+	 *
+	 * @return the array list
+	 */
+	public static ArrayList<Card> newDeck() {
         return new ArrayList<>(protoDeck);
     }
 
-    public CardRank getRank() {
+	/**
+	 * Gets rank.
+	 *
+	 * @return the rank
+	 */
+	public CardRank getRank() {
         return rank;
     }
 
-    public CardSuit getSuit() {
+	/**
+	 * Gets suit.
+	 *
+	 * @return the suit
+	 */
+	public CardSuit getSuit() {
         return suit;
     }
 
@@ -54,7 +72,12 @@ public class Card {
         return rank.getDisplayName() + " of " + suit.getDisplayName();
     }
 
-    public String toEmote() {
+	/**
+	 * To emote string.
+	 *
+	 * @return the string
+	 */
+	public String toEmote() {
         return "[" + suit.getEmoticon() + rank.getEmoticon() + "]";
     }
 }

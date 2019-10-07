@@ -16,5 +16,8 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The type Gif reader.
+ */
 public class GifReader {
 }

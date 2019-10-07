@@ -37,7 +37,13 @@ import takeshi.threads.GrayLogThread;
 import takeshi.threads.ServiceHandlerThread;
 import takeshi.util.YTUtil;
 
+/**
+ * The type Launcher.
+ */
 public class Launcher {
+	/**
+	 * The constant isBeingKilled.
+	 */
 	public volatile static boolean isBeingKilled = false;
 	private static GrayLogThread GRAYLOG;
 	private static BotContainer botContainer = null;
@@ -57,16 +63,33 @@ public class Launcher {
 		}
 	}
 
+	/**
+	 * Log to discord.
+	 *
+	 * @param e    the e
+	 * @param args the args
+	 */
 	public static void logToDiscord(Throwable e, Object... args) {
 		if (botContainer != null) {
 			botContainer.reportError(e, args);
 		}
 	}
 
+	/**
+	 * Gets version.
+	 *
+	 * @return the version
+	 */
 	public static ProgramVersion getVersion() {
 		return version;
 	}
 
+	/**
+	 * The entry point of application.
+	 *
+	 * @param args the input arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		new ConfigurationBuilder(BotConfig.class, new File("application.cfg")).build(true);
 		WebDb.init();
@@ -109,6 +132,12 @@ public class Launcher {
 		stop(reason, null);
 	}
 
+	/**
+	 * Stop.
+	 *
+	 * @param reason the reason
+	 * @param e      the e
+	 */
 	public static void stop(ExitCode reason, Exception e) {
 		if (isBeingKilled) {
 			return;

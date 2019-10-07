@@ -18,11 +18,32 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O raffle blacklist.
+ */
 public class ORaffleBlacklist extends AbstractModel {
+	/**
+	 * The Id.
+	 */
 	public int id = 0;
+	/**
+	 * The Guild id.
+	 */
 	public long guildId = 0;
+	/**
+	 * The User id.
+	 */
 	public long userId = 0L;
+	/**
+	 * The Message id.
+	 */
 	public long messageId = 0L;
+	/**
+	 * The Raffle id.
+	 */
 	public int raffleId = 0;
+	/**
+	 * The Currently.
+	 */
 	public boolean currently = true;
 }

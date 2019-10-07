@@ -35,6 +35,9 @@ import java.io.IOException;
  * manage avatar
  */
 public class ChangeAvatar extends AbstractCommand {
+    /**
+     * Instantiates a new Change avatar.
+     */
     public ChangeAvatar() {
         super();
     }
@@ -65,7 +68,7 @@ public class ChangeAvatar extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author);
 
         if (!rank.isAtLeast(SimpleRank.CREATOR)) {

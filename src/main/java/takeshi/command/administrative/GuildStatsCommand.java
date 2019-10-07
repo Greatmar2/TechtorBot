@@ -51,6 +51,9 @@ import takeshi.util.Misc;
  * !reboot restarts the bot
  */
 public class GuildStatsCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Guild stats command.
+	 */
 	public GuildStatsCommand() {
 		super();
 	}
@@ -82,7 +85,7 @@ public class GuildStatsCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (!bot.getContainer().allShardsReady()) {
 			return "Not fully loaded yet!";
 		}

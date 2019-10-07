@@ -25,9 +25,19 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OGuildRoleAssignable;
 
+/**
+ * The type C guild role assignable.
+ */
 public class CGuildRoleAssignable {
 
-    public static OGuildRoleAssignable findBy(int guildId, String discordRoleId) {
+	/**
+	 * Find by o guild role assignable.
+	 *
+	 * @param guildId       the guild id
+	 * @param discordRoleId the discord role id
+	 * @return the o guild role assignable
+	 */
+	public static OGuildRoleAssignable findBy(int guildId, String discordRoleId) {
         OGuildRoleAssignable record = new OGuildRoleAssignable();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT guild_id, discord_role_id, description, role_name  " +
@@ -43,7 +53,13 @@ public class CGuildRoleAssignable {
         return record;
     }
 
-    public static List<OGuildRoleAssignable> getRolesFor(int guildId) {
+	/**
+	 * Gets roles for.
+	 *
+	 * @param guildId the guild id
+	 * @return the roles for
+	 */
+	public static List<OGuildRoleAssignable> getRolesFor(int guildId) {
         List<OGuildRoleAssignable> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -68,7 +84,14 @@ public class CGuildRoleAssignable {
         return record;
     }
 
-    public static void delete(int guildId, long discordRoleId, String roleName) {
+	/**
+	 * Delete.
+	 *
+	 * @param guildId       the guild id
+	 * @param discordRoleId the discord role id
+	 * @param roleName      the role name
+	 */
+	public static void delete(int guildId, long discordRoleId, String roleName) {
         try {
             WebDb.get().query(
                     "DELETE FROM guild_roles_self WHERE guild_id = ? AND (discord_role_id = ? OR role_name = '?')", guildId, discordRoleId, roleName);
@@ -77,7 +100,14 @@ public class CGuildRoleAssignable {
         }
     }
 
-    public static void insertOrUpdate(int guildId, long discordRoleId, String roleName) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param guildId       the guild id
+	 * @param discordRoleId the discord role id
+	 * @param roleName      the role name
+	 */
+	public static void insertOrUpdate(int guildId, long discordRoleId, String roleName) {
         OGuildRoleAssignable role = new OGuildRoleAssignable();
         role.guildId = guildId;
         role.discordRoleId = String.valueOf(discordRoleId);
@@ -85,7 +115,12 @@ public class CGuildRoleAssignable {
         insertOrUpdate(role);
     }
 
-    public static void insertOrUpdate(OGuildRoleAssignable record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OGuildRoleAssignable record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO guild_roles_self(guild_id, discord_role_id, description, role_name) " +

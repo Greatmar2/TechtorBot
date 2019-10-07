@@ -26,7 +26,13 @@ import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
 import takeshi.util.QuickEmbedBuilder;
 
+/**
+ * The type Links command.
+ */
 public class LinksCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Links command.
+	 */
 	public LinksCommand() {
 		super();
 	}
@@ -76,7 +82,7 @@ public class LinksCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
 			Message inputMessage) {
 		return "Use full execution";
 	}

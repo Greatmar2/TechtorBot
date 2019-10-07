@@ -27,9 +27,18 @@ import takeshi.util.Misc;
  */
 public class ConnectFourGame extends AbstractGame<Connect4Turn> {
 
-	public static final int ROWS = 6, COLS = 7;
+	/**
+	 * The constant ROWS.
+	 */
+	public static final int ROWS = 6, /**
+	 * The Cols.
+	 */
+	COLS = 7;
 	private C4Board board;
 
+	/**
+	 * Instantiates a new Connect four game.
+	 */
 	public ConnectFourGame() {
 		reset();
 	}

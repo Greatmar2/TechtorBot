@@ -50,7 +50,10 @@ import java.util.stream.Collectors;
 public class TagCommand extends AbstractCommand implements ICommandReactionListener<PaginationInfo> {
     private final int TAGS_PER_PAGE = 25;
 
-    public TagCommand() {
+	/**
+	 * Instantiates a new Tag command.
+	 */
+	public TagCommand() {
         super();
     }
 
@@ -92,7 +95,7 @@ public class TagCommand extends AbstractCommand implements ICommandReactionListe
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         SimpleRank rank = bot.security.getSimpleRank(author, channel);
         if (args.length == 0 || args[0].equals("list")) {

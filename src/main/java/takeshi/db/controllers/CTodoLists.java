@@ -23,9 +23,18 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OTodoList;
 
+/**
+ * The type C todo lists.
+ */
 public class CTodoLists {
 
-    public static OTodoList findBy(int userId) {
+	/**
+	 * Find by o todo list.
+	 *
+	 * @param userId the user id
+	 * @return the o todo list
+	 */
+	public static OTodoList findBy(int userId) {
         OTodoList t = new OTodoList();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -51,7 +60,12 @@ public class CTodoLists {
         return t;
     }
 
-    public static void delete(OTodoList record) {
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
+	public static void delete(OTodoList record) {
         try {
             WebDb.get().query(
                     "DELETE FROM todo_list WHERE id = ? ",
@@ -62,7 +76,12 @@ public class CTodoLists {
         }
     }
 
-    public static void update(OTodoList record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OTodoList record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -76,7 +95,12 @@ public class CTodoLists {
         }
     }
 
-    public static void insert(OTodoList record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OTodoList record) {
         if (record.id > 0) {
             update(record);
             return;

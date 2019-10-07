@@ -39,6 +39,9 @@ import takeshi.templates.Templates;
  * <@user>
  */
 public class JokeCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Joke command.
+	 */
 	public JokeCommand() {
 		super();
 	}
@@ -64,11 +67,11 @@ public class JokeCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		bot.out.sendAsyncMessage(channel, Templates.command.joke_wait.formatGuild(channel), message -> {
 			String joketxt = "";
 //			if (new Random().nextInt(100) < 80) {
-			joketxt = CommandHandler.getCommand("reddit").simpleExecute(bot, new String[] { "jokes" }, channel, author, null);
+			joketxt = CommandHandler.getCommand("reddit").stringExecute(bot, new String[] { "jokes" }, channel, author, null);
 //			} else {
 //				try {
 //					joketxt = getJokeFromWeb(URLEncoder.encode(author.getName(), "UTF-8"));

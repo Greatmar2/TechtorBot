@@ -18,19 +18,35 @@ package takeshi.games.gameofsticks;
 
 import takeshi.games.meta.GameTurn;
 
+/**
+ * The type Go s turn.
+ */
 public class GoSTurn extends GameTurn {
     private int substract = 0;
 
-    public GoSTurn() {
+	/**
+	 * Instantiates a new Go s turn.
+	 */
+	public GoSTurn() {
 
     }
 
-    public GoSTurn(int boardIndex) {
+	/**
+	 * Instantiates a new Go s turn.
+	 *
+	 * @param boardIndex the board index
+	 */
+	public GoSTurn(int boardIndex) {
 
         this.substract = boardIndex;
     }
 
-    public int getSubstract() {
+	/**
+	 * Gets substract.
+	 *
+	 * @return the substract
+	 */
+	public int getSubstract() {
         return substract;
     }
 

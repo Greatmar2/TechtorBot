@@ -29,6 +29,9 @@ import java.util.regex.Pattern;
 
 import takeshi.core.Logger;
 
+/**
+ * The type Sql file runner.
+ */
 public class SQLFileRunner {
 
 
@@ -44,7 +47,14 @@ public class SQLFileRunner {
     private String delimiter = DEFAULT_DELIMITER;
     private boolean fullLineDelimiter = false;
 
-    SQLFileRunner(Connection connection, boolean autoCommit,
+	/**
+	 * Instantiates a new Sql file runner.
+	 *
+	 * @param connection  the connection
+	 * @param autoCommit  the auto commit
+	 * @param stopOnError the stop on error
+	 */
+	SQLFileRunner(Connection connection, boolean autoCommit,
                   boolean stopOnError) {
         this.connection = connection;
         this.autoCommit = autoCommit;
@@ -57,12 +67,14 @@ public class SQLFileRunner {
         this.fullLineDelimiter = fullLineDelimiter;
     }
 
-    /**
-     * Runs an SQL script (read in using the Reader parameter)
-     *
-     * @param reader - the source of the script
-     */
-    public void runScript(Reader reader) throws IOException, SQLException {
+	/**
+	 * Runs an SQL script (read in using the Reader parameter)
+	 *
+	 * @param reader - the source of the script
+	 * @throws IOException  the io exception
+	 * @throws SQLException the sql exception
+	 */
+	public void runScript(Reader reader) throws IOException, SQLException {
         try {
             boolean originalAutoCommit = connection.getAutoCommit();
             try {

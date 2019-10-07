@@ -32,6 +32,9 @@ import takeshi.templates.Templates;
 import takeshi.util.Emojibet;
 import takeshi.util.Misc;
 
+/**
+ * The type Change log admin command.
+ */
 public class ChangeLogAdminCommand extends AbstractCommand {
 
     @Override
@@ -66,7 +69,7 @@ public class ChangeLogAdminCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (!bot.security.getSimpleRank(author).isAtLeast(SimpleRank.CREATOR)) {
             return Templates.no_permission.formatGuild(channel);
         }

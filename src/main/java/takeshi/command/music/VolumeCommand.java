@@ -33,7 +33,10 @@ import takeshi.templates.Templates;
  * With no params returns the current volume
  */
 public class VolumeCommand extends AbstractCommand {
-    public VolumeCommand() {
+	/**
+	 * Instantiates a new Volume command.
+	 */
+	public VolumeCommand() {
         super();
     }
 
@@ -67,7 +70,7 @@ public class VolumeCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         MusicPlayerHandler player = MusicPlayerHandler.getFor(guild, bot);
         if (args.length > 0) {

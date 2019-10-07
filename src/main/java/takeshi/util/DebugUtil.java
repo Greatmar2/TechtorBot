@@ -22,15 +22,18 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Debug util.
+ */
 public class DebugUtil {
-    /**
-     * Handles the debug output + response
-     *
-     * @param bot     the bot
-     * @param channel the channel to send the messages to
-     * @param output  the output to upload
-     */
-    public static void handleDebug(DiscordBot bot, MessageChannel channel, String output) {
+	/**
+	 * Handles the debug output + response
+	 *
+	 * @param bot     the bot
+	 * @param channel the channel to send the messages to
+	 * @param output  the output to upload
+	 */
+	public static void handleDebug(DiscordBot bot, MessageChannel channel, String output) {
         bot.queue.add(channel.sendMessage("One moment, uploading results: "),
                 message -> {
                     String result = DebugUtil.sendToHastebin(output);
@@ -42,13 +45,13 @@ public class DebugUtil {
                 });
     }
 
-    /**
-     * attempts to send the message to hastebin
-     *
-     * @param message the message to send
-     * @return the url or null
-     */
-    public static String sendToHastebin(String message) {
+	/**
+	 * attempts to send the message to hastebin
+	 *
+	 * @param message the message to send
+	 * @return the url or null
+	 */
+	public static String sendToHastebin(String message) {
         try {
             return "http://hastebin.com/" + handleHastebin(message);
         } catch (UnirestException ignored) {

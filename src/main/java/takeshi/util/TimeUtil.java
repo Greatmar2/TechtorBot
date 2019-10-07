@@ -25,6 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+/**
+ * The type Time util.
+ */
 public class TimeUtil {
 	private static final int SECOND_MILLIS = 1000;
 	private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -33,7 +36,13 @@ public class TimeUtil {
 	private static final SimpleDateFormat timestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	private static final SimpleDateFormat ymdFormat = new SimpleDateFormat("yyyy/MM/dd");
 	private static final Map<Character, Long> TIME_SYMBOLS = new HashMap<>();
+	/**
+	 * The constant DISCORD_EPOCH.
+	 */
 	public static final long DISCORD_EPOCH = 1420070400000L;
+	/**
+	 * The constant TIMESTAMP_OFFSET.
+	 */
 	public static final long TIMESTAMP_OFFSET = 22;
 	private static final DateTimeFormatter dtFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
 
@@ -45,6 +54,12 @@ public class TimeUtil {
 		TIME_SYMBOLS.put('s', 1000L);
 	}
 
+	/**
+	 * Gets creation time.
+	 *
+	 * @param entityId the entity id
+	 * @return the creation time
+	 */
 	public static OffsetDateTime getCreationTime(long entityId) {
 		long timestamp = (entityId >>> TIMESTAMP_OFFSET) + DISCORD_EPOCH;
 		Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
@@ -52,6 +67,12 @@ public class TimeUtil {
 		return OffsetDateTime.ofInstant(gmt.toInstant(), gmt.getTimeZone().toZoneId());
 	}
 
+	/**
+	 * Gets timestamp format.
+	 *
+	 * @param time the time
+	 * @return the timestamp format
+	 */
 	public static String getTimestampFormat(long time) {
 		try {
 			return timestamp.format(new Date(time));
@@ -60,11 +81,19 @@ public class TimeUtil {
 		}
 	}
 
+	/**
+	 * Format ymd string.
+	 *
+	 * @param date the date
+	 * @return the string
+	 */
 	public static String formatYMD(Date date) {
 		return ymdFormat.format(date);
 	}
 
 	/**
+	 * Gets relative time.
+	 *
 	 * @param time timestamp in seconds
 	 * @return string of x min ago
 	 */
@@ -73,6 +102,8 @@ public class TimeUtil {
 	}
 
 	/**
+	 * Gets relative time.
+	 *
 	 * @param time      timestamp in seconds
 	 * @param shortText short or long text
 	 * @return string of x min ago
@@ -82,6 +113,8 @@ public class TimeUtil {
 	}
 
 	/**
+	 * Gets relative time.
+	 *
 	 * @param time           timestamp in seconds
 	 * @param shortText      short or long texts
 	 * @param showChronology show when it was (ago or from now)
@@ -130,8 +163,7 @@ public class TimeUtil {
 	 * are added as millis.
 	 *
 	 * @param s the string to be parsed
-	 * @return the value of the string in milliseconds or null if it can not be
-	 *         parsed
+	 * @return the value of the string in milliseconds or null if it can not be         parsed
 	 */
 	public static long toMillis(String s) {
 		s = s.toLowerCase();

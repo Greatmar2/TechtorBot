@@ -35,6 +35,9 @@ import java.util.List;
  * !disable/enable commands per guild/channel
  */
 public class CommandAdminCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Command admin command.
+     */
     public CommandAdminCommand() {
         super();
     }
@@ -99,7 +102,7 @@ public class CommandAdminCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author, channel);
         TextChannel textChannel = (TextChannel) channel;
         Guild guild = textChannel.getGuild();

@@ -21,6 +21,9 @@ import java.util.Collections;
 
 import takeshi.games.card.Card;
 
+/**
+ * The type Blackjack.
+ */
 public class Blackjack {
 
 	private final String playerMention;
@@ -30,6 +33,11 @@ public class Blackjack {
 	private boolean gameInProgress = true;
 	private boolean playerStands = false;
 
+	/**
+	 * Instantiates a new Blackjack.
+	 *
+	 * @param playerMention the player mention
+	 */
 	public Blackjack(String playerMention) {
 		this.playerMention = playerMention;
 
@@ -39,24 +47,44 @@ public class Blackjack {
 	/**
 	 * Is the game still going?
 	 *
-	 * @return gamestatus
+	 * @return gamestatus boolean
 	 */
 	public boolean isInProgress() {
 		return gameInProgress;
 	}
 
+	/**
+	 * Player is standing boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean playerIsStanding() {
 		return playerStands;
 	}
 
+	/**
+	 * Print player hand string.
+	 *
+	 * @return the string
+	 */
 	public String printPlayerHand() {
 		return playerHand.printHand();
 	}
 
+	/**
+	 * Gets player value.
+	 *
+	 * @return the player value
+	 */
 	public int getPlayerValue() {
 		return playerHand.getValue();
 	}
 
+	/**
+	 * Gets dealer value.
+	 *
+	 * @return the dealer value
+	 */
 	public int getDealerValue() {
 		return dealerHand.getValue();
 	}
@@ -65,6 +93,9 @@ public class Blackjack {
 		return deck.remove(0);
 	}
 
+	/**
+	 * Hit.
+	 */
 	public void hit() {
 		if (playerStands) {
 			return;
@@ -81,6 +112,11 @@ public class Blackjack {
 		}
 	}
 
+	/**
+	 * Dealer hit boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean dealerHit() {
 		if (getPlayerValue() <= 21 && getDealerValue() < 21 && getDealerValue() <= getPlayerValue()) {
 			dealerHand.add(drawCard());
@@ -90,10 +126,16 @@ public class Blackjack {
 		return false;
 	}
 
+	/**
+	 * Stand.
+	 */
 	public void stand() {
 		playerStands = true;
 	}
 
+	/**
+	 * Reset game.
+	 */
 	public void resetGame() {
 
 		dealerHand = new BlackJackHand();

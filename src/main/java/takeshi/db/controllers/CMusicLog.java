@@ -39,7 +39,14 @@ public class CMusicLog {
         return s;
     }
 
-    public static void insert(int guildId, int musicId, int userId) {
+	/**
+	 * Insert.
+	 *
+	 * @param guildId the guild id
+	 * @param musicId the music id
+	 * @param userId  the user id
+	 */
+	public static void insert(int guildId, int musicId, int userId) {
         OMusicLog log = new OMusicLog();
         log.musicId = musicId;
         log.guildId = guildId;
@@ -48,7 +55,12 @@ public class CMusicLog {
         insert(log);
     }
 
-    public static void insert(OMusicLog record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OMusicLog record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO music_log(music_id, guild_id, user_id, play_date) " +

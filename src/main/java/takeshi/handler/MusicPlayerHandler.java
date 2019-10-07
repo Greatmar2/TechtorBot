@@ -73,9 +73,15 @@ import takeshi.permission.SimpleRank;
 import takeshi.util.Emojibet;
 import takeshi.util.MusicUtil;
 
+/**
+ * The type Music player handler.
+ */
 public class MusicPlayerHandler {
 	private final static DefaultAudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 	private final static Map<Long, MusicPlayerHandler> playerInstances = new ConcurrentHashMap<>();
+	/**
+	 * The Player.
+	 */
 	public final AudioPlayer player;
 	private final DiscordBot bot;
 	private final TrackScheduler scheduler;
@@ -128,16 +134,30 @@ public class MusicPlayerHandler {
 		skipVotes = new HashSet<>();
 	}
 
+	/**
+	 * Init.
+	 */
 	public static void init() {
 		AudioSourceManagers.registerRemoteSources(playerManager);
 		playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
 		playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guild the guild
+	 */
 	public static void removeGuild(Guild guild) {
 		removeGuild(guild, false);
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guild      the guild
+	 * @param saveStatus the save status
+	 */
 	public static void removeGuild(Guild guild, boolean saveStatus) {
 		if (playerInstances.containsKey(guild.getIdLong())) {
 			if (saveStatus && playerInstances.get(guild.getIdLong()).isConnected()) {
@@ -148,10 +168,23 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Gets for.
+	 *
+	 * @param guild the guild
+	 * @return the for
+	 */
 	public static MusicPlayerHandler getFor(Guild guild) {
 		return playerInstances.get(guild.getIdLong());
 	}
 
+	/**
+	 * Gets for.
+	 *
+	 * @param guild the guild
+	 * @param bot   the bot
+	 * @return the for
+	 */
 	public static MusicPlayerHandler getFor(Guild guild, DiscordBot bot) {
 		if (playerInstances.containsKey(guild.getIdLong())) {
 			return playerInstances.get(guild.getIdLong());
@@ -160,18 +193,40 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Go to time.
+	 *
+	 * @param millis the millis
+	 */
 	public void goToTime(Long millis) {
 		player.getPlayingTrack().setPosition(millis);
 	}
 
+	/**
+	 * Gets playlist.
+	 *
+	 * @return the playlist
+	 */
 	public OPlaylist getPlaylist() {
 		return playlist;
 	}
 
+	/**
+	 * Gets guild.
+	 *
+	 * @return the guild
+	 */
 	public long getGuild() {
 		return guildId;
 	}
 
+	/**
+	 * Is in voice with boolean.
+	 *
+	 * @param guild  the guild
+	 * @param author the author
+	 * @return the boolean
+	 */
 	public boolean isInVoiceWith(Guild guild, User author) {
 		VoiceChannel channel = guild.getMember(author).getVoiceState().getChannel();
 		if (channel == null) {
@@ -188,7 +243,9 @@ public class MusicPlayerHandler {
 	/**
 	 * Check if a user meets the requirements to use the music commands
 	 *
-	 * @return bool
+	 * @param user the user
+	 * @param rank the rank
+	 * @return bool boolean
 	 */
 	public boolean canUseVoiceCommands(User user, SimpleRank rank) {
 		Guild guild = user.getJDA().getGuildById(guildId);
@@ -212,14 +269,29 @@ public class MusicPlayerHandler {
 		return true;
 	}
 
+	/**
+	 * Is in repeat mode boolean.
+	 *
+	 * @return the boolean
+	 */
 	public synchronized boolean isInRepeatMode() {
 		return inRepeatMode;
 	}
 
+	/**
+	 * Sets repeat.
+	 *
+	 * @param repeatMode the repeat mode
+	 */
 	public synchronized void setRepeat(boolean repeatMode) {
 		inRepeatMode = repeatMode;
 	}
 
+	/**
+	 * Gets active p laylist id.
+	 *
+	 * @return the active p laylist id
+	 */
 	public int getActivePLaylistId() {
 		return activePlayListId;
 	}
@@ -381,10 +453,21 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Is connected to boolean.
+	 *
+	 * @param channel the channel
+	 * @return the boolean
+	 */
 	public boolean isConnectedTo(VoiceChannel channel) {
 		return channel != null && channel.equals(channel.getJDA().getGuildById(guildId).getAudioManager().getConnectedChannel());
 	}
 
+	/**
+	 * Connect to.
+	 *
+	 * @param channel the channel
+	 */
 	public synchronized void connectTo(VoiceChannel channel) {
 		if (channel != null && !isConnectedTo(channel)) {
 			Guild guild = channel.getJDA().getGuildById(guildId);
@@ -392,11 +475,21 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Is connected boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isConnected() {
 		Guild guildById = bot.getJda().getGuildById(guildId);
 		return guildById != null && guildById.getAudioManager().getConnectedChannel() != null;
 	}
 
+	/**
+	 * Leave boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean leave() {
 		if (isConnected()) {
 			stopMusic();
@@ -408,6 +501,11 @@ public class MusicPlayerHandler {
 		return true;
 	}
 
+	/**
+	 * Gets currently playing.
+	 *
+	 * @return the currently playing
+	 */
 	public int getCurrentlyPlaying() {
 		return this.currentlyPlaying;
 	}
@@ -433,10 +531,21 @@ public class MusicPlayerHandler {
 		return currentSongLength;
 	}
 
+	/**
+	 * Unregister vote skip.
+	 *
+	 * @param user the user
+	 */
 	public synchronized void unregisterVoteSkip(User user) {
 		skipVotes.remove(user);
 	}
 
+	/**
+	 * Vote skip boolean.
+	 *
+	 * @param user the user
+	 * @return the boolean
+	 */
 	public synchronized boolean voteSkip(User user) {
 		if (skipVotes.contains(user)) {
 			return false;
@@ -448,7 +557,7 @@ public class MusicPlayerHandler {
 	/**
 	 * retrieves the amount skip votes
 	 *
-	 * @return votes
+	 * @return votes vote count
 	 */
 	public synchronized int getVoteCount() {
 		return skipVotes.size();
@@ -516,10 +625,18 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Is playing boolean.
+	 *
+	 * @return the boolean
+	 */
 	public synchronized boolean isPlaying() {
 		return player.getPlayingTrack() != null;
 	}
 
+	/**
+	 * Start playing.
+	 */
 	public synchronized void startPlaying() {
 		if (!isPlaying()) {
 			if (player.isPaused()) {
@@ -531,6 +648,13 @@ public class MusicPlayerHandler {
 		}
 	}
 
+	/**
+	 * Add to queue boolean.
+	 *
+	 * @param filename the filename
+	 * @param user     the user
+	 * @return the boolean
+	 */
 	public synchronized boolean addToQueue(String filename, User user) {
 		OMusic record = CMusic.findByYoutubeId(filename);
 		if (record.id == 0) { // If the record do
@@ -600,10 +724,20 @@ public class MusicPlayerHandler {
 		return true;
 	}
 
+	/**
+	 * Gets volume.
+	 *
+	 * @return the volume
+	 */
 	public int getVolume() {
 		return player.getVolume();
 	}
 
+	/**
+	 * Sets volume.
+	 *
+	 * @param volume the volume
+	 */
 	public void setVolume(int volume) {
 		player.setVolume(volume);
 	}
@@ -673,54 +807,108 @@ public class MusicPlayerHandler {
 		return player.isPaused();
 	}
 
+	/**
+	 * Is paused boolean.
+	 *
+	 * @return the boolean
+	 */
 	public synchronized boolean isPaused() {
 		return player.isPaused();
 	}
 
+	/**
+	 * Stop music.
+	 */
 	public synchronized void stopMusic() {
 		currentlyPlaying = 0;
 		player.destroy();
 		Launcher.log("Stop playing", "music", "stop", "guild-id", guildId);
 	}
 
+	/**
+	 * Gets queue.
+	 *
+	 * @return the queue
+	 */
 	public List<OMusic> getQueue() {
 		return queue.stream().collect(Collectors.toList());
 	}
 
+	/**
+	 * Add stream.
+	 *
+	 * @param url the url
+	 */
 	public synchronized void addStream(String url) {
 
 	}
 
+	/**
+	 * Clear queue.
+	 */
 	public synchronized void clearQueue() {
 		queue.clear();
 	}
 
+	/**
+	 * Is update channel title boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isUpdateChannelTitle() {
 		return updateChannelTitle;
 	}
 
+	/**
+	 * Sets update channel title.
+	 *
+	 * @param updateChannelTitle the update channel title
+	 */
 	public void setUpdateChannelTitle(boolean updateChannelTitle) {
 		this.updateChannelTitle = updateChannelTitle;
 	}
 
+	/**
+	 * Gets jda.
+	 *
+	 * @return the jda
+	 */
 	public JDA getJDA() {
 		return bot.getJda();
 	}
 
+	/**
+	 * Stop after track.
+	 *
+	 * @param stopAfter the stop after
+	 */
 	public synchronized void stopAfterTrack(boolean stopAfter) {
 		this.stopAfterTrack = stopAfter;
 	}
 
+	/**
+	 * The type Track scheduler.
+	 */
 	public class TrackScheduler extends AudioEventAdapter {
 		private final AudioPlayer player;
 		private final BlockingQueue<QueuedAudioTrack> queue;
 		private volatile String lastRequester = "";
 
+		/**
+		 * Instantiates a new Track scheduler.
+		 *
+		 * @param player the player
+		 */
 		public TrackScheduler(AudioPlayer player) {
 			this.player = player;
 			this.queue = new LinkedBlockingQueue<>();
 		}
 
+		/**
+		 * Queue.
+		 *
+		 * @param track the track
+		 */
 		public void queue(QueuedAudioTrack track) {
 			if (queue.isEmpty()) {
 				lastRequester = track.getUserId();
@@ -730,6 +918,11 @@ public class MusicPlayerHandler {
 			}
 		}
 
+		/**
+		 * Gets last requester.
+		 *
+		 * @return the last requester
+		 */
 		public synchronized String getLastRequester() {
 			return lastRequester;
 		}
@@ -739,6 +932,9 @@ public class MusicPlayerHandler {
 			trackStarted();
 		}
 
+		/**
+		 * Skip track.
+		 */
 		public void skipTrack() {
 			trackEnded();
 			if (isInRepeatMode() && player.getPlayingTrack() != null) {

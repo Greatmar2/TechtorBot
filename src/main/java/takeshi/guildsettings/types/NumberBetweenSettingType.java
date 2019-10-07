@@ -26,11 +26,13 @@ import takeshi.guildsettings.IGuildSettingType;
 public class NumberBetweenSettingType implements IGuildSettingType {
     private final int min, max;
 
-    /**
-     * @param min minimum value
-     * @param max maximum value (including)
-     */
-    public NumberBetweenSettingType(int min, int max) {
+	/**
+	 * Instantiates a new Number between setting type.
+	 *
+	 * @param min minimum value
+	 * @param max maximum value (including)
+	 */
+	public NumberBetweenSettingType(int min, int max) {
         this.min = min;
         this.max = max;
     }

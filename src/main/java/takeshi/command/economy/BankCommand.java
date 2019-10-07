@@ -35,8 +35,14 @@ import takeshi.util.Misc;
 
 import java.util.List;
 
+/**
+ * The type Bank command.
+ */
 public class BankCommand extends AbstractCommand {
-    public BankCommand() {
+	/**
+	 * Instantiates a new Bank command.
+	 */
+	public BankCommand() {
         super();
     }
 
@@ -80,7 +86,7 @@ public class BankCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         OBank bank = CBanks.findBy(author.getIdLong());
         if (args.length == 0) {
             return String.format("Your current balance is `%s` %s ", bank.currentBalance, BotConfig.ECONOMY_CURRENCY_ICON);

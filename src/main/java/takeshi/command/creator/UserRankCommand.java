@@ -46,7 +46,10 @@ import java.util.List;
  */
 public class UserRankCommand extends AbstractCommand {
 
-    public UserRankCommand() {
+	/**
+	 * Instantiates a new User rank command.
+	 */
+	public UserRankCommand() {
         super();
     }
 
@@ -84,7 +87,7 @@ public class UserRankCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank authorRank = bot.security.getSimpleRank(author);
         if (!authorRank.isAtLeast(SimpleRank.BOT_ADMIN)) {
             return Templates.no_permission.formatGuild(channel);

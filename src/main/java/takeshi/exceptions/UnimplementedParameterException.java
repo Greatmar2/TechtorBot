@@ -18,15 +18,29 @@ package takeshi.exceptions;
 
 import java.sql.SQLException;
 
+/**
+ * The type Unimplemented parameter exception.
+ */
 public class UnimplementedParameterException extends SQLException {
 
     private String s;
 
-    public UnimplementedParameterException(Object parameter) {
+	/**
+	 * Instantiates a new Unimplemented parameter exception.
+	 *
+	 * @param parameter the parameter
+	 */
+	public UnimplementedParameterException(Object parameter) {
         s = "Parameter not implemented at for: " + parameter;
     }
 
-    public UnimplementedParameterException(Object parameter, int pos) {
+	/**
+	 * Instantiates a new Unimplemented parameter exception.
+	 *
+	 * @param parameter the parameter
+	 * @param pos       the pos
+	 */
+	public UnimplementedParameterException(Object parameter, int pos) {
         s = "Parameter not implemented! parameter:" + parameter + " - position:" + pos;
     }
 

@@ -19,6 +19,7 @@ package takeshi.main;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -36,6 +37,8 @@ import com.mashape.unirest.http.Unirest;
 import net.dv8tion.jda.api.AccountType;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.MessageBuilder.SplitPolicy;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Guild;
@@ -73,32 +76,94 @@ import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 import takeshi.util.Misc;
 
+/**
+ * The type Discord bot.
+ */
 public class DiscordBot {
 
+	/**
+	 * The constant LOGGER.
+	 */
 	public static final Logger LOGGER = LogManager.getLogger(DiscordBot.class);
+	/**
+	 * The Startup time stamp.
+	 */
 	public final long startupTimeStamp;
+	/**
+	 * The Queue.
+	 */
 	public final RestQueue queue;
 	private final int totShards;
 	private final ScheduledExecutorService scheduler;
 	private final AtomicReference<JDA> jda;
+	/**
+	 * The Mention me.
+	 */
 	public String mentionMe;
+	/**
+	 * The Mention me alias.
+	 */
 	public String mentionMeAlias;
+	/**
+	 * The Chat bot handler.
+	 */
 	public ChatBotHandler chatBotHandler = null;
+	/**
+	 * The Security.
+	 */
 	public SecurityHandler security = null;
+	/**
+	 * The Out.
+	 */
 	public OutgoingContentHandler out = null;
+	/**
+	 * The Music reaction handler.
+	 */
 	public MusicReactionHandler musicReactionHandler = null;
+	/**
+	 * The Raffle handler.
+	 */
 	public RaffleHandler raffleHandler = null;
+	/**
+	 * The Poll handler.
+	 */
 	public PollHandler pollHandler = null;
+	/**
+	 * The Role reaction handler.
+	 */
 	public RoleReactionHandler roleReactionHandler = null;
+	/**
+	 * The Auto role handler.
+	 */
 	public AutoRoleHandler autoRoleHandler = null;
+	/**
+	 * The Command reaction handler.
+	 */
 	public CommandReactionHandler commandReactionHandler = null;
+	/**
+	 * The Game handler.
+	 */
 	public GameHandler gameHandler = null;
+	/**
+	 * The Reply listeners.
+	 */
 	public List<ReplyListener> replyListeners = new ArrayList<ReplyListener>();
+	/**
+	 * The Last forward.
+	 */
+	public MessageChannel lastForward = null;
 	private AutoReplyHandler autoReplyhandler;
 	private volatile boolean isReady = false;
 	private int shardId;
 	private BotContainer container;
 
+	/**
+	 * Instantiates a new Discord bot.
+	 *
+	 * @param shardId   the shard id
+	 * @param numShards the num shards
+	 * @param container the container
+	 */
 	public DiscordBot(int shardId, int numShards, BotContainer container) {
 		queue = new RestQueue(this);
 		scheduler = Executors.newScheduledThreadPool(1);
@@ -125,6 +190,12 @@ public class DiscordBot {
 		container.setLastAction(shardId, System.currentTimeMillis());
 	}
 
+	/**
+	 * Gets emote.
+	 *
+	 * @param emoteString the emote string
+	 * @return the emote
+	 */
 	public Emote getEmote(String emoteString) {
 		List<Emote> emotes = jda.get().getEmotesByName(emoteString, true);
 		if (!emotes.isEmpty()) {
@@ -137,14 +208,31 @@ public class DiscordBot {
 		return null;
 	}
 
+	/**
+	 * Update jda.
+	 *
+	 * @param jda the jda
+	 */
 	public void updateJda(JDA jda) {
 		this.jda.compareAndSet(this.jda.get(), jda);
 	}
 
+	/**
+	 * Gets jda.
+	 *
+	 * @return the jda
+	 */
 	public JDA getJda() {
 		return jda.get();
 	}
 
+	/**
+	 * Restart jda.
+	 *
+	 * @throws LoginException       the login exception
+	 * @throws InterruptedException the interrupted exception
+	 * @throws RateLimitedException the rate limited exception
+	 */
 	public void restartJDA() throws LoginException, InterruptedException, RateLimitedException {
 		JDABuilder builder = new JDABuilder(AccountType.BOT).setToken(BotConfig.BOT_TOKEN);
 		if (totShards > 1) {
@@ -177,6 +265,7 @@ public class DiscordBot {
 	 * @param task        the task
 	 * @param startDelay  delay before starting the first iteration
 	 * @param repeatDelay delay between consecutive executions
+	 * @return the scheduled future
 	 */
 	public ScheduledFuture<?> scheduleRepeat(Runnable task, long startDelay, long repeatDelay) {
 		return scheduler.scheduleWithFixedDelay(task, startDelay, repeatDelay, TimeUnit.MILLISECONDS);
@@ -199,23 +288,40 @@ public class DiscordBot {
 		return false;
 	}
 
+	/**
+	 * Log guild event.
+	 *
+	 * @param guild    the guild
+	 * @param category the category
+	 * @param message  the message
+	 */
 	public void logGuildEvent(Guild guild, String category, String message) {
 		TextChannel channel = getChannelFor(guild.getIdLong(), GSetting.BOT_LOGGING_CHANNEL);
 		if (channel == null) {
 			return;
 		}
 		if (!channel.canTalk()) {
-			out.sendAsyncMessage(getDefaultChannel(guild),
-					Templates.config.cant_talk_in_channel.format(GuildSettings.get(guild).getOrDefault(GSetting.BOT_LOGGING_CHANNEL)));
+			out.sendAsyncMessage(getDefaultChannel(guild), Templates.config.cant_talk_in_channel
+					.format(GuildSettings.get(guild).getOrDefault(GSetting.BOT_LOGGING_CHANNEL)));
 			return;
 		}
 		out.sendAsyncMessage(channel, String.format("%s %s", category, message));
 	}
 
+	/**
+	 * Gets shard id.
+	 *
+	 * @return the shard id
+	 */
 	public int getShardId() {
 		return shardId;
 	}
 
+	/**
+	 * Is ready boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isReady() {
 		return isReady;
 	}
@@ -245,6 +351,12 @@ public class DiscordBot {
 		return getMusicChannel(guild.getIdLong());
 	}
 
+	/**
+	 * Gets music channel.
+	 *
+	 * @param guildId the guild id
+	 * @return the music channel
+	 */
 	public synchronized TextChannel getMusicChannel(long guildId) {
 		Guild guild = getJda().getGuildById(guildId);
 		if (guild == null) {
@@ -318,6 +430,9 @@ public class DiscordBot {
 		container.allShardsReady();
 	}
 
+	/**
+	 * Reload auto replies.
+	 */
 	public void reloadAutoReplies() {
 		autoReplyhandler.reload();
 	}
@@ -357,10 +472,21 @@ public class DiscordBot {
 		autoReplyhandler = new AutoReplyHandler(this);
 	}
 
+	/**
+	 * Gets user name.
+	 *
+	 * @return the user name
+	 */
 	public String getUserName() {
 		return getJda().getSelfUser().getName();
 	}
 
+	/**
+	 * Sets user name.
+	 *
+	 * @param newName the new name
+	 * @return the user name
+	 */
 	public boolean setUserName(String newName) {
 		if (!getUserName().equals(newName)) {
 			getJda().getSelfUser().getManager().setName(newName).complete();
@@ -369,11 +495,24 @@ public class DiscordBot {
 		return false;
 	}
 
+	/**
+	 * Add stream to queue.
+	 *
+	 * @param url   the url
+	 * @param guild the guild
+	 */
 	public void addStreamToQueue(String url, Guild guild) {
 		MusicPlayerHandler.getFor(guild, this).addStream(url);
 		MusicPlayerHandler.getFor(guild, this).startPlaying();
 	}
 
+	/**
+	 * Handle private message.
+	 *
+	 * @param channel the channel
+	 * @param author  the author
+	 * @param message the message
+	 */
 	public void handlePrivateMessage(PrivateChannel channel, User author, Message message) {
 		if (security.isBanned(author)) {
 			return;
@@ -388,6 +527,14 @@ public class DiscordBot {
 		}
 	}
 
+	/**
+	 * Handle message.
+	 *
+	 * @param guild   the guild
+	 * @param channel the channel
+	 * @param author  the author
+	 * @param message the message
+	 */
 	public void handleMessage(Guild guild, TextChannel channel, User author, Message message) {
 		// System.out.println(message.getContentRaw());
 		if (author == null || (author.isBot() && !security.isInteractionBot(author.getIdLong()))) {
@@ -401,7 +548,8 @@ public class DiscordBot {
 		// Check if bot is listening for replies on any specific channel
 		if (replyListeners.size() > 0) {
 			for (ReplyListener replyListener : replyListeners) {
-				if (replyListener.getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION).isAfter(OffsetDateTime.now())) {
+				if (replyListener.getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION)
+						.isAfter(OffsetDateTime.now())) {
 					if (channel.getIdLong() == replyListener.getChannelID()) {
 						DisUtil.forwardMessage(this, message);
 					}
@@ -427,7 +575,8 @@ public class DiscordBot {
 			}
 		}
 		// If Techtor's name is mentioned and bot forwarding is enabled
-		if (message.getContentDisplay().toLowerCase().contains(BotConfig.BOT_NAME.toLowerCase()) && BotConfig.GUILD_MESSAGE_FORWARDING_ENABLED) {
+		if (message.getContentDisplay().toLowerCase().contains(BotConfig.BOT_NAME.toLowerCase())
+				&& BotConfig.GUILD_MESSAGE_FORWARDING_ENABLED) {
 			DisUtil.forwardMessage(this, message);
 			return;
 		} else if (BotConfig.BOT_CHATTING_ENABLED && settings.getBoolValue(GSetting.CHAT_BOT_ENABLED)
@@ -435,19 +584,33 @@ public class DiscordBot {
 			// If bot AI chatting is enabled and forwarding is disabled
 			if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_WRITE)) {
 				channel.sendTyping().queue();
-				this.out.sendAsyncMessage(channel, this.chatBotHandler.chat(guild.getIdLong(), message.getContentRaw(), channel), null);
+				this.out.sendAsyncMessage(channel,
+						this.chatBotHandler.chat(guild.getIdLong(), message.getContentRaw(), channel), null);
 			}
 		}
 	}
 
+	/**
+	 * Gets container.
+	 *
+	 * @return the container
+	 */
 	public BotContainer getContainer() {
 		return container;
 	}
 
+	/**
+	 * Sets container.
+	 *
+	 * @param container the container
+	 */
 	public void setContainer(BotContainer container) {
 		this.container = container;
 	}
 
+	/**
+	 * Send stats to discord pw.
+	 */
 	public void sendStatsToDiscordPw() {
 		if (!BotConfig.BOT_STATS_DISCORD_PW_ENABLED) {
 			return;
@@ -459,9 +622,13 @@ public class DiscordBot {
 			data.put("shard_count", totShards);
 		}
 		Unirest.post("https://bots.discord.pw/api/bots/" + getJda().getSelfUser().getId() + "/stats")
-				.header("Authorization", BotConfig.BOT_TOKEN_BOTS_DISCORD_PW).header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
+				.header("Authorization", BotConfig.BOT_TOKEN_BOTS_DISCORD_PW).header("Content-Type", "application/json")
+				.body(data.toString()).asJsonAsync();
 	}
 
+	/**
+	 * Send stats to discordbots org.
+	 */
 	public void sendStatsToDiscordbotsOrg() {
 		if (BotConfig.BOT_TOKEN_DISCORDBOTS_ORG.length() < 10) {
 			return;
@@ -473,10 +640,28 @@ public class DiscordBot {
 			data.put("shard_count", totShards);
 		}
 		Unirest.post("https://discordbots.org/api/bots/" + getJda().getSelfUser().getId() + "/stats")
-				.header("Authorization", BotConfig.BOT_TOKEN_DISCORDBOTS_ORG).header("Content-Type", "application/json").body(data.toString()).asJsonAsync();
+				.header("Authorization", BotConfig.BOT_TOKEN_DISCORDBOTS_ORG).header("Content-Type", "application/json")
+				.body(data.toString()).asJsonAsync();
 	}
 
+	/**
+	 * Init once.
+	 */
 	public void initOnce() {
 		CBanks.init(getJda().getSelfUser().getIdLong(), getJda().getSelfUser().getName());
+	}
+
+	/**
+	 * Will attempt to sent a message to a channel after splitting it so as to not
+	 * hit the character count.
+	 *
+	 * @param channel the channel
+	 * @param message the message
+	 */
+	public void sendLongMessageToChannel(MessageChannel channel, MessageBuilder message) {
+		Queue<Message> messageQueue = message.buildAll(SplitPolicy.NEWLINE);
+		while (messageQueue.peek() != null) {
+			queue.add(channel.sendMessage(messageQueue.poll()));
+		}
 	}
 }

@@ -18,10 +18,28 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O todo item.
+ */
 public class OTodoItem extends AbstractModel {
-    public int id = 0;
-    public int listId = 0;
-    public String description = "";
-    public int checked = 0;
-    public int priority = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The List id.
+	 */
+	public int listId = 0;
+	/**
+	 * The Description.
+	 */
+	public String description = "";
+	/**
+	 * The Checked.
+	 */
+	public int checked = 0;
+	/**
+	 * The Priority.
+	 */
+	public int priority = 0;
 }

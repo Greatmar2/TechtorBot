@@ -21,6 +21,9 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
+/**
+ * The type Committer.
+ */
 @Generated("org.jsonschema2pojo")
 public class Committer {
 
@@ -76,241 +79,309 @@ public class Committer {
     @Expose
     private Boolean siteAdmin;
 
-    /**
-     * @return The login
-     */
-    public String getLogin() {
+	/**
+	 * Gets login.
+	 *
+	 * @return The login
+	 */
+	public String getLogin() {
         return login;
     }
 
-    /**
-     * @param login The login
-     */
-    public void setLogin(String login) {
+	/**
+	 * Sets login.
+	 *
+	 * @param login The login
+	 */
+	public void setLogin(String login) {
         this.login = login;
     }
 
-    /**
-     * @return The id
-     */
-    public Integer getId() {
+	/**
+	 * Gets id.
+	 *
+	 * @return The id
+	 */
+	public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
+	/**
+	 * Sets id.
+	 *
+	 * @param id The id
+	 */
+	public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return The avatarUrl
-     */
-    public String getAvatarUrl() {
+	/**
+	 * Gets avatar url.
+	 *
+	 * @return The avatarUrl
+	 */
+	public String getAvatarUrl() {
         return avatarUrl;
     }
 
-    /**
-     * @param avatarUrl The avatar_url
-     */
-    public void setAvatarUrl(String avatarUrl) {
+	/**
+	 * Sets avatar url.
+	 *
+	 * @param avatarUrl The avatar_url
+	 */
+	public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
-    /**
-     * @return The gravatarId
-     */
-    public String getGravatarId() {
+	/**
+	 * Gets gravatar id.
+	 *
+	 * @return The gravatarId
+	 */
+	public String getGravatarId() {
         return gravatarId;
     }
 
-    /**
-     * @param gravatarId The gravatar_id
-     */
-    public void setGravatarId(String gravatarId) {
+	/**
+	 * Sets gravatar id.
+	 *
+	 * @param gravatarId The gravatar_id
+	 */
+	public void setGravatarId(String gravatarId) {
         this.gravatarId = gravatarId;
     }
 
-    /**
-     * @return The url
-     */
-    public String getUrl() {
+	/**
+	 * Gets url.
+	 *
+	 * @return The url
+	 */
+	public String getUrl() {
         return url;
     }
 
-    /**
-     * @param url The url
-     */
-    public void setUrl(String url) {
+	/**
+	 * Sets url.
+	 *
+	 * @param url The url
+	 */
+	public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     * @return The htmlUrl
-     */
-    public String getHtmlUrl() {
+	/**
+	 * Gets html url.
+	 *
+	 * @return The htmlUrl
+	 */
+	public String getHtmlUrl() {
         return htmlUrl;
     }
 
-    /**
-     * @param htmlUrl The html_url
-     */
-    public void setHtmlUrl(String htmlUrl) {
+	/**
+	 * Sets html url.
+	 *
+	 * @param htmlUrl The html_url
+	 */
+	public void setHtmlUrl(String htmlUrl) {
         this.htmlUrl = htmlUrl;
     }
 
-    /**
-     * @return The followersUrl
-     */
-    public String getFollowersUrl() {
+	/**
+	 * Gets followers url.
+	 *
+	 * @return The followersUrl
+	 */
+	public String getFollowersUrl() {
         return followersUrl;
     }
 
-    /**
-     * @param followersUrl The followers_url
-     */
-    public void setFollowersUrl(String followersUrl) {
+	/**
+	 * Sets followers url.
+	 *
+	 * @param followersUrl The followers_url
+	 */
+	public void setFollowersUrl(String followersUrl) {
         this.followersUrl = followersUrl;
     }
 
-    /**
-     * @return The followingUrl
-     */
-    public String getFollowingUrl() {
+	/**
+	 * Gets following url.
+	 *
+	 * @return The followingUrl
+	 */
+	public String getFollowingUrl() {
         return followingUrl;
     }
 
-    /**
-     * @param followingUrl The following_url
-     */
-    public void setFollowingUrl(String followingUrl) {
+	/**
+	 * Sets following url.
+	 *
+	 * @param followingUrl The following_url
+	 */
+	public void setFollowingUrl(String followingUrl) {
         this.followingUrl = followingUrl;
     }
 
-    /**
-     * @return The gistsUrl
-     */
-    public String getGistsUrl() {
+	/**
+	 * Gets gists url.
+	 *
+	 * @return The gistsUrl
+	 */
+	public String getGistsUrl() {
         return gistsUrl;
     }
 
-    /**
-     * @param gistsUrl The gists_url
-     */
-    public void setGistsUrl(String gistsUrl) {
+	/**
+	 * Sets gists url.
+	 *
+	 * @param gistsUrl The gists_url
+	 */
+	public void setGistsUrl(String gistsUrl) {
         this.gistsUrl = gistsUrl;
     }
 
-    /**
-     * @return The starredUrl
-     */
-    public String getStarredUrl() {
+	/**
+	 * Gets starred url.
+	 *
+	 * @return The starredUrl
+	 */
+	public String getStarredUrl() {
         return starredUrl;
     }
 
-    /**
-     * @param starredUrl The starred_url
-     */
-    public void setStarredUrl(String starredUrl) {
+	/**
+	 * Sets starred url.
+	 *
+	 * @param starredUrl The starred_url
+	 */
+	public void setStarredUrl(String starredUrl) {
         this.starredUrl = starredUrl;
     }
 
-    /**
-     * @return The subscriptionsUrl
-     */
-    public String getSubscriptionsUrl() {
+	/**
+	 * Gets subscriptions url.
+	 *
+	 * @return The subscriptionsUrl
+	 */
+	public String getSubscriptionsUrl() {
         return subscriptionsUrl;
     }
 
-    /**
-     * @param subscriptionsUrl The subscriptions_url
-     */
-    public void setSubscriptionsUrl(String subscriptionsUrl) {
+	/**
+	 * Sets subscriptions url.
+	 *
+	 * @param subscriptionsUrl The subscriptions_url
+	 */
+	public void setSubscriptionsUrl(String subscriptionsUrl) {
         this.subscriptionsUrl = subscriptionsUrl;
     }
 
-    /**
-     * @return The organizationsUrl
-     */
-    public String getOrganizationsUrl() {
+	/**
+	 * Gets organizations url.
+	 *
+	 * @return The organizationsUrl
+	 */
+	public String getOrganizationsUrl() {
         return organizationsUrl;
     }
 
-    /**
-     * @param organizationsUrl The organizations_url
-     */
-    public void setOrganizationsUrl(String organizationsUrl) {
+	/**
+	 * Sets organizations url.
+	 *
+	 * @param organizationsUrl The organizations_url
+	 */
+	public void setOrganizationsUrl(String organizationsUrl) {
         this.organizationsUrl = organizationsUrl;
     }
 
-    /**
-     * @return The reposUrl
-     */
-    public String getReposUrl() {
+	/**
+	 * Gets repos url.
+	 *
+	 * @return The reposUrl
+	 */
+	public String getReposUrl() {
         return reposUrl;
     }
 
-    /**
-     * @param reposUrl The repos_url
-     */
-    public void setReposUrl(String reposUrl) {
+	/**
+	 * Sets repos url.
+	 *
+	 * @param reposUrl The repos_url
+	 */
+	public void setReposUrl(String reposUrl) {
         this.reposUrl = reposUrl;
     }
 
-    /**
-     * @return The eventsUrl
-     */
-    public String getEventsUrl() {
+	/**
+	 * Gets events url.
+	 *
+	 * @return The eventsUrl
+	 */
+	public String getEventsUrl() {
         return eventsUrl;
     }
 
-    /**
-     * @param eventsUrl The events_url
-     */
-    public void setEventsUrl(String eventsUrl) {
+	/**
+	 * Sets events url.
+	 *
+	 * @param eventsUrl The events_url
+	 */
+	public void setEventsUrl(String eventsUrl) {
         this.eventsUrl = eventsUrl;
     }
 
-    /**
-     * @return The receivedEventsUrl
-     */
-    public String getReceivedEventsUrl() {
+	/**
+	 * Gets received events url.
+	 *
+	 * @return The receivedEventsUrl
+	 */
+	public String getReceivedEventsUrl() {
         return receivedEventsUrl;
     }
 
-    /**
-     * @param receivedEventsUrl The received_events_url
-     */
-    public void setReceivedEventsUrl(String receivedEventsUrl) {
+	/**
+	 * Sets received events url.
+	 *
+	 * @param receivedEventsUrl The received_events_url
+	 */
+	public void setReceivedEventsUrl(String receivedEventsUrl) {
         this.receivedEventsUrl = receivedEventsUrl;
     }
 
-    /**
-     * @return The type
-     */
-    public String getType() {
+	/**
+	 * Gets type.
+	 *
+	 * @return The type
+	 */
+	public String getType() {
         return type;
     }
 
-    /**
-     * @param type The type
-     */
-    public void setType(String type) {
+	/**
+	 * Sets type.
+	 *
+	 * @param type The type
+	 */
+	public void setType(String type) {
         this.type = type;
     }
 
-    /**
-     * @return The siteAdmin
-     */
-    public Boolean getSiteAdmin() {
+	/**
+	 * Gets site admin.
+	 *
+	 * @return The siteAdmin
+	 */
+	public Boolean getSiteAdmin() {
         return siteAdmin;
     }
 
-    /**
-     * @param siteAdmin The site_admin
-     */
-    public void setSiteAdmin(Boolean siteAdmin) {
+	/**
+	 * Sets site admin.
+	 *
+	 * @param siteAdmin The site_admin
+	 */
+	public void setSiteAdmin(Boolean siteAdmin) {
         this.siteAdmin = siteAdmin;
     }
 

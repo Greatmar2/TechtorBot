@@ -47,6 +47,9 @@ public class PurgeComand extends AbstractCommand {
 	private static final int MAX_DELETE_COUNT = 2500;
 	private static final int MAX_BULK_SIZE = 100;
 
+	/**
+	 * Instantiates a new Purge comand.
+	 */
 	public PurgeComand() {
 		super();
 	}
@@ -82,7 +85,7 @@ public class PurgeComand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		final boolean hasManageMessages = PermissionUtil.checkPermission((TextChannel) channel, guild.getSelfMember(), Permission.MESSAGE_MANAGE);
 		List<Message> messagesToDelete = new ArrayList<>();
@@ -290,6 +293,33 @@ public class PurgeComand extends AbstractCommand {
 	}
 
 	private enum PurgeStyle {
-		UNKNOWN, ALL, BOTS, USER, MATCHES, NOTMATCHES, COMMANDS
+		/**
+		 * Unknown purge style.
+		 */
+		UNKNOWN,
+		/**
+		 * All purge style.
+		 */
+		ALL,
+		/**
+		 * Bots purge style.
+		 */
+		BOTS,
+		/**
+		 * User purge style.
+		 */
+		USER,
+		/**
+		 * Matches purge style.
+		 */
+		MATCHES,
+		/**
+		 * Notmatches purge style.
+		 */
+		NOTMATCHES,
+		/**
+		 * Commands purge style.
+		 */
+		COMMANDS
 	}
 }

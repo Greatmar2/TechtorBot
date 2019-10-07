@@ -21,11 +21,20 @@ import java.util.HashMap;
 
 import takeshi.main.BotConfig;
 
+/**
+ * The type Web db.
+ */
 public class WebDb {
 
 	private static final String DEFAULT_CONNECTION = "discord";
 	private static HashMap<String, MySQLAdapter> connections = new HashMap<>();
 
+	/**
+	 * Get my sql adapter.
+	 *
+	 * @param key the key
+	 * @return the my sql adapter
+	 */
 	public static MySQLAdapter get(String key) {
 		if (connections.containsKey(key)) {
 			return connections.get(key);
@@ -34,10 +43,18 @@ public class WebDb {
 		return null;
 	}
 
+	/**
+	 * Get my sql adapter.
+	 *
+	 * @return the my sql adapter
+	 */
 	public static MySQLAdapter get() {
 		return connections.get(DEFAULT_CONNECTION);
 	}
 
+	/**
+	 * Init.
+	 */
 	public static void init() {
 		connections.clear();
 		connections.put("discord", new MySQLAdapter(BotConfig.DB_HOST, BotConfig.DB_PORT, BotConfig.DB_USER, BotConfig.DB_PASS, BotConfig.DB_NAME));

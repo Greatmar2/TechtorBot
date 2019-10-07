@@ -33,10 +33,19 @@ import java.util.regex.Pattern;
  * return a random number
  */
 public class RollCommand extends AbstractCommand {
-    Random rng;
-    Pattern dice = Pattern.compile("(\\d+)d(\\d+)\\+?(\\d+)?");
+	/**
+	 * The Rng.
+	 */
+	Random rng;
+	/**
+	 * The Dice.
+	 */
+	Pattern dice = Pattern.compile("(\\d+)d(\\d+)\\+?(\\d+)?");
 
-    public RollCommand() {
+	/**
+	 * Instantiates a new Roll command.
+	 */
+	public RollCommand() {
         super();
         rng = new Random();
     }
@@ -70,7 +79,15 @@ public class RollCommand extends AbstractCommand {
         };
     }
 
-    public String multiDice(int dices, int sides, int bonus) {
+	/**
+	 * Multi dice string.
+	 *
+	 * @param dices the dices
+	 * @param sides the sides
+	 * @param bonus the bonus
+	 * @return the string
+	 */
+	public String multiDice(int dices, int sides, int bonus) {
         String text = String.format("Rolling %s x %s-sided dice: ", dices, sides);
         int total = 0;
         for (int i = 0; i < dices; i++) {
@@ -86,7 +103,7 @@ public class RollCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         int min = 1, max = 6, max_dice = 40, min_sides = 2;
         if (args.length == 1) {
             Matcher match = dice.matcher(args[0]);

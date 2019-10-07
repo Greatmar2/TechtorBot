@@ -18,8 +18,14 @@ package takeshi.games.slotmachine;
 
 import java.util.Random;
 
+/**
+ * The type Slot machine.
+ */
 public class SlotMachine {
-    public final static String emptySLotIcon = ":white_small_square:";
+	/**
+	 * The constant emptySLotIcon.
+	 */
+	public final static String emptySLotIcon = ":white_small_square:";
     private final Random rng;
     private final Slot[] slotOptions = Slot.values();
     private final int wheels;
@@ -29,14 +35,20 @@ public class SlotMachine {
     private int winSlotTimes = 0;
     private int winMultiplier = 0;
 
-    public SlotMachine() {
+	/**
+	 * Instantiates a new Slot machine.
+	 */
+	public SlotMachine() {
         rng = new Random();
         wheels = 3;
         currentWheel = 0;
         results = new int[wheels];
     }
 
-    public void spin() {
+	/**
+	 * Spin.
+	 */
+	public void spin() {
         if (currentWheel < wheels) {
             results[currentWheel] = rng.nextInt(slotOptions.length) + slotOptions.length;
             currentWheel++;
@@ -71,15 +83,30 @@ public class SlotMachine {
         }
     }
 
-    public Slot getWinSlot() {
+	/**
+	 * Gets win slot.
+	 *
+	 * @return the win slot
+	 */
+	public Slot getWinSlot() {
         return winSlot;
     }
 
-    public int getWinMultiplier() {
+	/**
+	 * Gets win multiplier.
+	 *
+	 * @return the win multiplier
+	 */
+	public int getWinMultiplier() {
         return winMultiplier;
     }
 
-    public boolean gameInProgress() {
+	/**
+	 * Game in progress boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean gameInProgress() {
         return wheels > currentWheel;
     }
 
@@ -116,7 +143,12 @@ public class SlotMachine {
         return table.toString();
     }
 
-    public int getWinSlotTimes() {
+	/**
+	 * Gets win slot times.
+	 *
+	 * @return the win slot times
+	 */
+	public int getWinSlotTimes() {
         return winSlotTimes;
     }
 }

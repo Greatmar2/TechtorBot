@@ -28,11 +28,25 @@ import takeshi.db.model.OGuildMember;
  */
 public class CGuildMember {
 
-    public static OGuildMember findBy(long guildDiscordId, long userDiscordId) {
+	/**
+	 * Find by o guild member.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @param userDiscordId  the user discord id
+	 * @return the o guild member
+	 */
+	public static OGuildMember findBy(long guildDiscordId, long userDiscordId) {
         return findBy(CGuild.getCachedId(guildDiscordId), CUser.getCachedId(userDiscordId));
     }
 
-    public static OGuildMember findBy(int guildId, int userId) {
+	/**
+	 * Find by o guild member.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 * @return the o guild member
+	 */
+	public static OGuildMember findBy(int guildId, int userId) {
         OGuildMember record = new OGuildMember();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -59,7 +73,12 @@ public class CGuildMember {
         return record;
     }
 
-    public static void insertOrUpdate(OGuildMember record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OGuildMember record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO guild_member(guild_id, user_id, join_date) " +

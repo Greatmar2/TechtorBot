@@ -20,7 +20,22 @@ package takeshi.command.meta;
  * The scale of the cooldown, is it based per user, channel, guild or global?
  */
 public enum CooldownScope {
-    USER(1), CHANNEL(2), GUILD(3), GLOBAL(4);
+	/**
+	 * User cooldown scope.
+	 */
+	USER(1),
+	/**
+	 * Channel cooldown scope.
+	 */
+	CHANNEL(2),
+	/**
+	 * Guild cooldown scope.
+	 */
+	GUILD(3),
+	/**
+	 * Global cooldown scope.
+	 */
+	GLOBAL(4);
 
     private final int identifier;
 
@@ -29,7 +44,12 @@ public enum CooldownScope {
         this.identifier = identifier;
     }
 
-    public int getId() {
+	/**
+	 * Gets id.
+	 *
+	 * @return the id
+	 */
+	public int getId() {
         return identifier;
     }
 }

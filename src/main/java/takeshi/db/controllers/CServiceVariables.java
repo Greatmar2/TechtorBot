@@ -28,11 +28,25 @@ import takeshi.db.model.OServiceVariable;
  */
 public class CServiceVariables {
 
-    public static OServiceVariable findBy(String serviceName, String variable) {
+	/**
+	 * Find by o service variable.
+	 *
+	 * @param serviceName the service name
+	 * @param variable    the variable
+	 * @return the o service variable
+	 */
+	public static OServiceVariable findBy(String serviceName, String variable) {
         return findBy(CServices.getCachedId(serviceName), variable);
     }
 
-    public static OServiceVariable findBy(int serviceId, String variable) {
+	/**
+	 * Find by o service variable.
+	 *
+	 * @param serviceId the service id
+	 * @param variable  the variable
+	 * @return the o service variable
+	 */
+	public static OServiceVariable findBy(int serviceId, String variable) {
         OServiceVariable record = new OServiceVariable();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -56,7 +70,12 @@ public class CServiceVariables {
         return record;
     }
 
-    public static void insertOrUpdate(OServiceVariable record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OServiceVariable record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO service_variables(service_id, variable, value) " +

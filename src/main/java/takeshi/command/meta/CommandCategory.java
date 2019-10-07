@@ -19,18 +19,54 @@ package takeshi.command.meta;
 import takeshi.permission.SimpleRank;
 import takeshi.util.Emojibet;
 
+/**
+ * The enum Command category.
+ */
 public enum CommandCategory {
-    CREATOR("creator", Emojibet.MAN_IN_SUIT, "Development", SimpleRank.CREATOR),
-    BOT_ADMINISTRATION("bot_administration", Emojibet.MONKEY, "Bot administration", SimpleRank.BOT_ADMIN),
-    ADMINISTRATIVE("administrative", Emojibet.POLICE, "Administration", SimpleRank.GUILD_ADMIN),
-    INFORMATIVE("informative", Emojibet.INFORMATION, "Information"),
-    MUSIC("music", Emojibet.MUSIC_NOTE, "Music"),
-    ECONOMY("economy", Emojibet.MONEY_BAG, "Money"),
-    FUN("fun", Emojibet.GAME_DICE, "Fun"),
-    POE("poe", Emojibet.CURRENCY_EXCHANGE, "Path of exile"),
-    HEARTHSTONE("hearthstone", Emojibet.SLOT_MACHINE, "Hearthstone"),
-    ADVENTURE("adventure", Emojibet.FOOTPRINTS, "Adventure"),
-    UNKNOWN("nopackage", Emojibet.QUESTION_MARK, "Misc");
+	/**
+	 * Creator command category.
+	 */
+	CREATOR("creator", Emojibet.MAN_IN_SUIT, "Development", SimpleRank.CREATOR),
+	/**
+	 * The Bot administration.
+	 */
+	BOT_ADMINISTRATION("bot_administration", Emojibet.MONKEY, "Bot administration", SimpleRank.BOT_ADMIN),
+	/**
+	 * Administrative command category.
+	 */
+	ADMINISTRATIVE("administrative", Emojibet.POLICE, "Administration", SimpleRank.GUILD_ADMIN),
+	/**
+	 * Informative command category.
+	 */
+	INFORMATIVE("informative", Emojibet.INFORMATION, "Information"),
+	/**
+	 * Music command category.
+	 */
+	MUSIC("music", Emojibet.MUSIC_NOTE, "Music"),
+	/**
+	 * Economy command category.
+	 */
+	ECONOMY("economy", Emojibet.MONEY_BAG, "Money"),
+	/**
+	 * Fun command category.
+	 */
+	FUN("fun", Emojibet.GAME_DICE, "Fun"),
+	/**
+	 * The Poe.
+	 */
+	POE("poe", Emojibet.CURRENCY_EXCHANGE, "Path of exile"),
+	/**
+	 * Hearthstone command category.
+	 */
+	HEARTHSTONE("hearthstone", Emojibet.SLOT_MACHINE, "Hearthstone"),
+	/**
+	 * Adventure command category.
+	 */
+	ADVENTURE("adventure", Emojibet.FOOTPRINTS, "Adventure"),
+	/**
+	 * Unknown command category.
+	 */
+	UNKNOWN("nopackage", Emojibet.QUESTION_MARK, "Misc");
     private final String packageName;
     private final String emoticon;
     private final String displayName;
@@ -52,7 +88,13 @@ public enum CommandCategory {
         this.rankRequired = rankRequired;
     }
 
-    public static CommandCategory getFirstWithPermission(SimpleRank rank) {
+	/**
+	 * Gets first with permission.
+	 *
+	 * @param rank the rank
+	 * @return the first with permission
+	 */
+	public static CommandCategory getFirstWithPermission(SimpleRank rank) {
         if (rank == null) {
             return INFORMATIVE;
         }
@@ -64,7 +106,13 @@ public enum CommandCategory {
         return INFORMATIVE;
     }
 
-    public static CommandCategory fromPackage(String packageName) {
+	/**
+	 * From package command category.
+	 *
+	 * @param packageName the package name
+	 * @return the command category
+	 */
+	public static CommandCategory fromPackage(String packageName) {
         if (packageName != null) {
             for (CommandCategory cc : values()) {
                 if (packageName.equalsIgnoreCase(cc.packageName)) {
@@ -75,19 +123,39 @@ public enum CommandCategory {
         return UNKNOWN;
     }
 
-    public String getDisplayName() {
+	/**
+	 * Gets display name.
+	 *
+	 * @return the display name
+	 */
+	public String getDisplayName() {
         return displayName;
     }
 
-    public String getPackageName() {
+	/**
+	 * Gets package name.
+	 *
+	 * @return the package name
+	 */
+	public String getPackageName() {
         return packageName;
     }
 
-    public String getEmoticon() {
+	/**
+	 * Gets emoticon.
+	 *
+	 * @return the emoticon
+	 */
+	public String getEmoticon() {
         return emoticon;
     }
 
-    public SimpleRank getRankRequired() {
+	/**
+	 * Gets rank required.
+	 *
+	 * @return the rank required
+	 */
+	public SimpleRank getRankRequired() {
         return rankRequired;
     }
 }

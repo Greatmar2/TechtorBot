@@ -50,7 +50,10 @@ public class EightballCommand extends AbstractCommand {
             "You are doomed",
             "You can't handle the truth"};
 
-    public EightballCommand() {
+	/**
+	 * Instantiates a new Eightball command.
+	 */
+	public EightballCommand() {
         super();
     }
 
@@ -76,7 +79,7 @@ public class EightballCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 
         return ":crystal_ball: " + a[(int) (Math.random() * a.length)];
     }

@@ -25,11 +25,30 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.ORaffleBlacklist;
 
+/**
+ * The type C raffle blacklist.
+ */
 public class CRaffleBlacklist {
+	/**
+	 * Find by o raffle blacklist.
+	 *
+	 * @param guildId  the guild id
+	 * @param userId   the user id
+	 * @param raffleId the raffle id
+	 * @return the o raffle blacklist
+	 */
 	public static ORaffleBlacklist findBy(long guildId, long userId, int raffleId) {
 		return findBy(CGuild.getCachedId(guildId), userId, raffleId);
 	}
 
+	/**
+	 * Find by o raffle blacklist.
+	 *
+	 * @param serverId the server id
+	 * @param userId   the user id
+	 * @param raffleId the raffle id
+	 * @return the o raffle blacklist
+	 */
 	public static ORaffleBlacklist findBy(int serverId, long userId, int raffleId) {
 		ORaffleBlacklist t = new ORaffleBlacklist();
 		try (ResultSet rs = WebDb.get().select(
@@ -45,10 +64,22 @@ public class CRaffleBlacklist {
 		return t;
 	}
 
+	/**
+	 * Gets for guild.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @return the for guild
+	 */
 	public static List<ORaffleBlacklist> getForGuild(long guildDiscordId) {
 		return getForGuild(CGuild.getCachedId(guildDiscordId));
 	}
 
+	/**
+	 * Gets for guild.
+	 *
+	 * @param guildId the guild id
+	 * @return the for guild
+	 */
 	public static List<ORaffleBlacklist> getForGuild(int guildId) {
 		List<ORaffleBlacklist> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM raffle_blacklist WHERE guild_id = ? ORDER BY user_id ASC, raffle_id ASC", guildId)) {
@@ -63,10 +94,24 @@ public class CRaffleBlacklist {
 
 	}
 
+	/**
+	 * Gets for raffle.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @param raffleId       the raffle id
+	 * @return the for raffle
+	 */
 	public static List<ORaffleBlacklist> getForRaffle(long guildDiscordId, int raffleId) {
 		return getForRaffle(CGuild.getCachedId(guildDiscordId), raffleId);
 	}
 
+	/**
+	 * Gets for raffle.
+	 *
+	 * @param guildId  the guild id
+	 * @param raffleId the raffle id
+	 * @return the for raffle
+	 */
 	public static List<ORaffleBlacklist> getForRaffle(int guildId, int raffleId) {
 		List<ORaffleBlacklist> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM raffle_blacklist WHERE guild_id = ? AND (raffle_id = ? OR raffle_id = ?) ORDER BY user_id ASC",
@@ -82,10 +127,24 @@ public class CRaffleBlacklist {
 
 	}
 
+	/**
+	 * Gets for user.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @param userId         the user id
+	 * @return the for user
+	 */
 	public static List<ORaffleBlacklist> getForUser(long guildDiscordId, long userId) {
 		return getForUser(CGuild.getCachedId(guildDiscordId), userId);
 	}
 
+	/**
+	 * Gets for user.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 * @return the for user
+	 */
 	public static List<ORaffleBlacklist> getForUser(int guildId, long userId) {
 		List<ORaffleBlacklist> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM raffle_blacklist WHERE guild_id = ? AND user_id = ? ORDER BY raffle_id DESC", guildId, userId)) {
@@ -110,6 +169,11 @@ public class CRaffleBlacklist {
 		return t;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
 	public static void delete(ORaffleBlacklist record) {
 		try {
 			WebDb.get().query("DELETE FROM raffle_blacklist WHERE id = ?", record.id);
@@ -118,10 +182,20 @@ public class CRaffleBlacklist {
 		}
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(long guildId) {
 		deleteGuild(CGuild.getCachedId(guildId));
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(int guildId) {
 		try {
 			WebDb.get().query("DELETE FROM raffle_blacklist WHERE guild_id = ? ", guildId);
@@ -130,6 +204,11 @@ public class CRaffleBlacklist {
 		}
 	}
 
+	/**
+	 * Safe update.
+	 *
+	 * @param bl the bl
+	 */
 	public static void safeUpdate(ORaffleBlacklist bl) {
 		bl.id = findBy(bl.guildId, bl.userId, bl.raffleId).id;
 
@@ -158,6 +237,11 @@ public class CRaffleBlacklist {
 		insert(bl);
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(ORaffleBlacklist record) {
 		if (record.id == 0) {
 			insert(record);
@@ -171,6 +255,12 @@ public class CRaffleBlacklist {
 		}
 	}
 
+	/**
+	 * Insert o raffle blacklist.
+	 *
+	 * @param record the record
+	 * @return the o raffle blacklist
+	 */
 	public static ORaffleBlacklist insert(ORaffleBlacklist record) {
 		if (record.id > 0) {
 			update(record);

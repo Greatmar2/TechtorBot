@@ -18,24 +18,65 @@ package takeshi.db.model;
 
 import takeshi.util.Emojibet;
 
+/**
+ * The type O bot version change.
+ */
 public class OBotVersionChange {
 
-    public int id = 0;
-    public int author = 0;
-    public String description = "";
-    public int version = 0;
-    public ChangeType changeType = ChangeType.UNKNOWN;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Author.
+	 */
+	public int author = 0;
+	/**
+	 * The Description.
+	 */
+	public String description = "";
+	/**
+	 * The Version.
+	 */
+	public int version = 0;
+	/**
+	 * The Change type.
+	 */
+	public ChangeType changeType = ChangeType.UNKNOWN;
 
-    public void setChangeType(int changeType) {
+	/**
+	 * Sets change type.
+	 *
+	 * @param changeType the change type
+	 */
+	public void setChangeType(int changeType) {
         this.changeType = ChangeType.fromId(changeType);
     }
 
-    public enum ChangeType {
-        ADDED(1, "A", "Added", Emojibet.CHECK_MARK_GREEN),
-        CHANGED(2, "C", "Changed", Emojibet.WRENCH),
-        REMOVED(3, "R", "Removed", Emojibet.BASKET),
-        FIXED(4, "F", "Bugs fixed", Emojibet.BUG),
-        UNKNOWN(5, "?", "Misc", Emojibet.QUESTION_MARK);
+	/**
+	 * The enum Change type.
+	 */
+	public enum ChangeType {
+		/**
+		 * Added change type.
+		 */
+		ADDED(1, "A", "Added", Emojibet.CHECK_MARK_GREEN),
+		/**
+		 * Changed change type.
+		 */
+		CHANGED(2, "C", "Changed", Emojibet.WRENCH),
+		/**
+		 * Removed change type.
+		 */
+		REMOVED(3, "R", "Removed", Emojibet.BASKET),
+		/**
+		 * The Fixed.
+		 */
+		FIXED(4, "F", "Bugs fixed", Emojibet.BUG),
+		/**
+		 * Unknown change type.
+		 */
+		UNKNOWN(5, "?", "Misc", Emojibet.QUESTION_MARK);
 
         private final int id;
         private final String title;
@@ -49,7 +90,13 @@ public class OBotVersionChange {
             this.emoji = emoji;
         }
 
-        public static ChangeType fromId(int id) {
+		/**
+		 * From id change type.
+		 *
+		 * @param id the id
+		 * @return the change type
+		 */
+		public static ChangeType fromId(int id) {
             for (ChangeType et : values()) {
                 if (id == et.getId()) {
                     return et;
@@ -58,7 +105,13 @@ public class OBotVersionChange {
             return UNKNOWN;
         }
 
-        public static ChangeType fromCode(String code) {
+		/**
+		 * From code change type.
+		 *
+		 * @param code the code
+		 * @return the change type
+		 */
+		public static ChangeType fromCode(String code) {
             for (ChangeType et : values()) {
                 if (code.equalsIgnoreCase(et.getCode())) {
                     return et;
@@ -67,19 +120,39 @@ public class OBotVersionChange {
             return UNKNOWN;
         }
 
-        public String getEmoji() {
+		/**
+		 * Gets emoji.
+		 *
+		 * @return the emoji
+		 */
+		public String getEmoji() {
             return emoji;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
 
-        public String getTitle() {
+		/**
+		 * Gets title.
+		 *
+		 * @return the title
+		 */
+		public String getTitle() {
             return title;
         }
 
-        public String getCode() {
+		/**
+		 * Gets code.
+		 *
+		 * @return the code
+		 */
+		public String getCode() {
             return code;
         }
     }

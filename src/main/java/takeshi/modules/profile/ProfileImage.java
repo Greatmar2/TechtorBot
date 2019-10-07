@@ -33,10 +33,21 @@ public abstract class ProfileImage {
 
 	private final User user;
 
+	/**
+	 * Instantiates a new Profile image.
+	 *
+	 * @param user the user
+	 */
 	public ProfileImage(User user) {
 		this.user = user;
 	}
 
+	/**
+	 * Gets user avatar.
+	 *
+	 * @return the user avatar
+	 * @throws IOException the io exception
+	 */
 	public BufferedImage getUserAvatar() throws IOException {
 
 		URLConnection connection = new URL(
@@ -52,6 +63,11 @@ public abstract class ProfileImage {
 		return profileImg;
 	}
 
+	/**
+	 * Gets user.
+	 *
+	 * @return the user
+	 */
 	public User getUser() {
 		return user;
 	}

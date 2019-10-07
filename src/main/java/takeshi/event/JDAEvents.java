@@ -74,6 +74,11 @@ import takeshi.util.DisUtil;
 public class JDAEvents extends ListenerAdapter {
 	private final DiscordBot discordBot;
 
+	/**
+	 * Instantiates a new Jda events.
+	 *
+	 * @param bot the bot
+	 */
 	public JDAEvents(DiscordBot bot) {
 		this.discordBot = bot;
 	}

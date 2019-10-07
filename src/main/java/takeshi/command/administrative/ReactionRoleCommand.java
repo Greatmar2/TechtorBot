@@ -46,6 +46,9 @@ import takeshi.util.Misc;
  * give and take away roles with reactions rather than typing
  */
 public class ReactionRoleCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Reaction role command.
+	 */
 	public ReactionRoleCommand() {
 		super();
 	}
@@ -80,7 +83,7 @@ public class ReactionRoleCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel t = (TextChannel) channel;
 		Guild guild = t.getGuild();
 		if (!PermissionUtil.checkPermission(guild.getSelfMember(), Permission.MANAGE_ROLES)) {

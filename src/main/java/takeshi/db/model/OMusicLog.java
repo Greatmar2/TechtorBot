@@ -20,11 +20,29 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O music log.
+ */
 public class OMusicLog extends AbstractModel {
-    public int id = 0;
-    public int musicId = 0;
-    public int guildId = 0;
-    public int userId = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Music id.
+	 */
+	public int musicId = 0;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
 
-    public Timestamp playDate = null;
+	/**
+	 * The Play date.
+	 */
+	public Timestamp playDate = null;
 }

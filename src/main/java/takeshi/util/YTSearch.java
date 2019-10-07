@@ -48,7 +48,10 @@ public class YTSearch {
     private final Queue<String> keyQueue;
     private volatile boolean hasValidKey = true;
 
-    public YTSearch() {
+	/**
+	 * Instantiates a new Yt search.
+	 */
+	public YTSearch() {
         keyQueue = new LinkedList<>();
         Collections.addAll(keyQueue, BotConfig.GOOGLE_API_KEY);
         youtube = new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), (HttpRequest request) -> {
@@ -71,11 +74,21 @@ public class YTSearch {
         setupNextKey();
     }
 
-    public boolean hasValidKey() {
+	/**
+	 * Has valid key boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean hasValidKey() {
         return hasValidKey;
     }
 
-    public synchronized void addYoutubeKey(String key) {
+	/**
+	 * Add youtube key.
+	 *
+	 * @param key the key
+	 */
+	public synchronized void addYoutubeKey(String key) {
         keyQueue.add(key);
         hasValidKey = true;
     }
@@ -93,7 +106,13 @@ public class YTSearch {
         return false;
     }
 
-    public SimpleResult getResults(String query) {
+	/**
+	 * Gets results.
+	 *
+	 * @param query the query
+	 * @return the results
+	 */
+	public SimpleResult getResults(String query) {
         String queryName = query.trim().toLowerCase();
         if (cache.containsKey(queryName)) {
             return cache.get(queryName);
@@ -106,7 +125,13 @@ public class YTSearch {
         return null;
     }
 
-    public List<SimpleResult> getPlayListItems(String playlistCode) {
+	/**
+	 * Gets play list items.
+	 *
+	 * @param playlistCode the playlist code
+	 * @return the play list items
+	 */
+	public List<SimpleResult> getPlayListItems(String playlistCode) {
         List<SimpleResult> playlist = new ArrayList<>();
         try {
             YouTube.PlaylistItems.List playlistRequest = youtube.playlistItems().list("id,contentDetails,snippet");
@@ -127,7 +152,14 @@ public class YTSearch {
         return playlist;
     }
 
-    public List<SimpleResult> getResults(String query, int numresults) {
+	/**
+	 * Gets results.
+	 *
+	 * @param query      the query
+	 * @param numresults the numresults
+	 * @return the results
+	 */
+	public List<SimpleResult> getResults(String query, int numresults) {
         List<SimpleResult> urls = new ArrayList<>();
         search.setQ(query);
         search.setMaxResults((long) numresults);
@@ -154,24 +186,46 @@ public class YTSearch {
         return urls;
     }
 
-    public void resetCache() {
+	/**
+	 * Reset cache.
+	 */
+	public void resetCache() {
         cache.clear();
     }
 
-    public class SimpleResult {
+	/**
+	 * The type Simple result.
+	 */
+	public class SimpleResult {
         private final String code;
         private final String title;
 
-        public SimpleResult(String code, String title) {
+		/**
+		 * Instantiates a new Simple result.
+		 *
+		 * @param code  the code
+		 * @param title the title
+		 */
+		public SimpleResult(String code, String title) {
             this.code = code;
             this.title = title;
         }
 
-        public String getTitle() {
+		/**
+		 * Gets title.
+		 *
+		 * @return the title
+		 */
+		public String getTitle() {
             return title;
         }
 
-        public String getCode() {
+		/**
+		 * Gets code.
+		 *
+		 * @return the code
+		 */
+		public String getCode() {
             return code;
         }
     }

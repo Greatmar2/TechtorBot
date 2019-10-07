@@ -20,13 +20,40 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O reply pattern.
+ */
 public class OReplyPattern extends AbstractModel {
-    public int userId = 0;
-    public int id = 0;
-    public int guildId = 0;
-    public String tag = "";
-    public String pattern = "";
-    public String reply = "";
-    public Timestamp createdOn = null;
-    public long cooldown = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Tag.
+	 */
+	public String tag = "";
+	/**
+	 * The Pattern.
+	 */
+	public String pattern = "";
+	/**
+	 * The Reply.
+	 */
+	public String reply = "";
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
+	/**
+	 * The Cooldown.
+	 */
+	public long cooldown = 0;
 }

@@ -29,7 +29,12 @@ import java.util.HashSet;
 public class EnumSettingType implements IGuildSettingType {
     private final HashSet<String> options;
 
-    public EnumSettingType(String... values) {
+	/**
+	 * Instantiates a new Enum setting type.
+	 *
+	 * @param values the values
+	 */
+	public EnumSettingType(String... values) {
         options = new HashSet<>();
         Collections.addAll(options, values);
     }
@@ -54,7 +59,12 @@ public class EnumSettingType implements IGuildSettingType {
         return value;
     }
 
-    public String[] getValidOptions() {
+	/**
+	 * Get valid options string [ ].
+	 *
+	 * @return the string [ ]
+	 */
+	public String[] getValidOptions() {
         return options.toArray(new String[]{});
     }
 }

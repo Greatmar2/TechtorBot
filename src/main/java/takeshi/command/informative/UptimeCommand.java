@@ -24,8 +24,14 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.TimeUtil;
 
+/**
+ * The type Uptime command.
+ */
 public class UptimeCommand extends AbstractCommand {
-    public UptimeCommand() {
+	/**
+	 * Instantiates a new Uptime command.
+	 */
+	public UptimeCommand() {
         super();
     }
 
@@ -50,7 +56,7 @@ public class UptimeCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         return Templates.command.uptime.upfor.formatGuild(channel, TimeUtil.getRelativeTime(bot.startupTimeStamp, false));
     }
 }

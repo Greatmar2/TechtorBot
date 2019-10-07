@@ -32,6 +32,9 @@ import takeshi.exceptions.UnimplementedParameterException;
 import takeshi.main.DiscordBot;
 import takeshi.main.Launcher;
 
+/**
+ * The type My sql adapter.
+ */
 public class MySQLAdapter {
 
 	private String DB_NAME;
@@ -41,6 +44,15 @@ public class MySQLAdapter {
 	private String DB_PASSWORD;
 	private Connection c;
 
+	/**
+	 * Instantiates a new My sql adapter.
+	 *
+	 * @param server           the server
+	 * @param port             the port
+	 * @param databaseUser     the database user
+	 * @param databasePassword the database password
+	 * @param databaseName     the database name
+	 */
 	public MySQLAdapter(String server, int port, String databaseUser, String databasePassword, String databaseName) {
 		DB_ADRES = server;
 		DB_USER = databaseUser;
@@ -72,6 +84,11 @@ public class MySQLAdapter {
 		return null;
 	}
 
+	/**
+	 * Gets connection.
+	 *
+	 * @return the connection
+	 */
 	public Connection getConnection() {
 		if (c == null) {
 			c = createConnection();
@@ -79,6 +96,14 @@ public class MySQLAdapter {
 		return c;
 	}
 
+	/**
+	 * Select result set.
+	 *
+	 * @param sql    the sql
+	 * @param params the params
+	 * @return the result set
+	 * @throws SQLException the sql exception
+	 */
 	public ResultSet select(String sql, Object... params) throws SQLException {
 		PreparedStatement query;
 		query = getConnection().prepareStatement(sql);
@@ -86,6 +111,13 @@ public class MySQLAdapter {
 		return query.executeQuery();
 	}
 
+	/**
+	 * Query int.
+	 *
+	 * @param sql the sql
+	 * @return the int
+	 * @throws SQLException the sql exception
+	 */
 	public int query(String sql) throws SQLException {
 		try (Statement stmt = getConnection().createStatement()) {
 			return stmt.executeUpdate(sql);
@@ -126,6 +158,14 @@ public class MySQLAdapter {
 		}
 	}
 
+	/**
+	 * Query int.
+	 *
+	 * @param sql    the sql
+	 * @param params the params
+	 * @return the int
+	 * @throws SQLException the sql exception
+	 */
 	public int query(String sql, Object... params) throws SQLException {
 		try (PreparedStatement query = getConnection().prepareStatement(sql)) {
 			resolveParameters(query, params);
@@ -133,6 +173,14 @@ public class MySQLAdapter {
 		}
 	}
 
+	/**
+	 * Insert int.
+	 *
+	 * @param sql    the sql
+	 * @param params the params
+	 * @return the int
+	 * @throws SQLException the sql exception
+	 */
 	public int insert(String sql, Object... params) throws SQLException {
 		try (PreparedStatement query = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			resolveParameters(query, params);

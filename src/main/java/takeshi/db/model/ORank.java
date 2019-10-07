@@ -19,9 +19,19 @@ package takeshi.db.model;
 import takeshi.db.AbstractModel;
 
 /**
+ * The type O rank.
  */
 public class ORank extends AbstractModel {
-    public int id = 0;
-    public String codeName = "";
-    public String fullName = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Code name.
+	 */
+	public String codeName = "";
+	/**
+	 * The Full name.
+	 */
+	public String fullName = "";
 }

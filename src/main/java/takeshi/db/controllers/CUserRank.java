@@ -30,11 +30,23 @@ import takeshi.db.model.OUserRank;
  */
 public class CUserRank {
 
-    public static OUserRank findBy(long userDiscordId) {
+	/**
+	 * Find by o user rank.
+	 *
+	 * @param userDiscordId the user discord id
+	 * @return the o user rank
+	 */
+	public static OUserRank findBy(long userDiscordId) {
         return findBy(CUser.getCachedId(userDiscordId));
     }
 
-    public static OUserRank findBy(int userId) {
+	/**
+	 * Find by o user rank.
+	 *
+	 * @param userId the user id
+	 * @return the o user rank
+	 */
+	public static OUserRank findBy(int userId) {
         OUserRank record = new OUserRank();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT user_id, rank_type  " +
@@ -53,7 +65,13 @@ public class CUserRank {
         return record;
     }
 
-    public static List<OUserRank> getUsersWith(int rankId) {
+	/**
+	 * Gets users with.
+	 *
+	 * @param rankId the rank id
+	 * @return the users with
+	 */
+	public static List<OUserRank> getUsersWith(int rankId) {
         List<OUserRank> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT user_id, rank_type  " +
@@ -76,7 +94,12 @@ public class CUserRank {
         return record;
     }
 
-    public static void insertOrUpdate(OUserRank record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OUserRank record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO user_rank(user_id, rank_type) " +

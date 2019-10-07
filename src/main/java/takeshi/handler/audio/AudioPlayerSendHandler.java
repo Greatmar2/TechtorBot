@@ -23,10 +23,18 @@ import com.sedmelluq.discord.lavaplayer.track.playback.AudioFrame;
 
 import net.dv8tion.jda.api.audio.AudioSendHandler;
 
+/**
+ * The type Audio player send handler.
+ */
 public class AudioPlayerSendHandler implements AudioSendHandler {
 	private final AudioPlayer audioPlayer;
 	private AudioFrame lastFrame;
 
+	/**
+	 * Instantiates a new Audio player send handler.
+	 *
+	 * @param audioPlayer the audio player
+	 */
 	public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
 		this.audioPlayer = audioPlayer;
 	}

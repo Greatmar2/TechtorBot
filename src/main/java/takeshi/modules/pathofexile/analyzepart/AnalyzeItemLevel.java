@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 import takeshi.modules.pathofexile.IPoEAnalyzePart;
 import takeshi.modules.pathofexile.obj.PoEItem;
 
+/**
+ * The type Analyze item level.
+ */
 public class AnalyzeItemLevel implements IPoEAnalyzePart {
 
     private static final Pattern itemLevelpattern = Pattern.compile("Item Level: ([0-9]{1,3})");

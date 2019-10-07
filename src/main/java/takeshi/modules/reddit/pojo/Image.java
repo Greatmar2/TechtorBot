@@ -25,9 +25,15 @@ import java.util.List;
  */
 public class Image {
 
-    @Expose
+	/**
+	 * The Source.
+	 */
+	@Expose
     public Source source;
 
-    @Expose
+	/**
+	 * The Resolutions.
+	 */
+	@Expose
     public List<Source> resolutions;
 }

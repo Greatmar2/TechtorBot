@@ -32,7 +32,13 @@ import takeshi.main.Launcher;
  */
 public class CBotEvent {
 
-    public static OBotEvent findBy(String id) {
+	/**
+	 * Find by o bot event.
+	 *
+	 * @param id the id
+	 * @return the o bot event
+	 */
+	public static OBotEvent findBy(String id) {
         OBotEvent s = new OBotEvent();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, created_on, event_group, log_level, sub_group, data " +
@@ -59,7 +65,13 @@ public class CBotEvent {
         return s;
     }
 
-    public static List<OBotEvent> getEventsAfter(int id) {
+	/**
+	 * Gets events after.
+	 *
+	 * @param id the id
+	 * @return the events after
+	 */
+	public static List<OBotEvent> getEventsAfter(int id) {
         List<OBotEvent> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT * FROM bot_events WHERE id > ? ", id)) {
             while (rs.next()) {
@@ -72,11 +84,26 @@ public class CBotEvent {
         return list;
     }
 
-    public static void insert(String group, String subGroup, String data) {
+	/**
+	 * Insert.
+	 *
+	 * @param group    the group
+	 * @param subGroup the sub group
+	 * @param data     the data
+	 */
+	public static void insert(String group, String subGroup, String data) {
         insert(OBotEvent.Level.INFO, group, subGroup, data);
     }
 
-    public static void insert(OBotEvent.Level logLevel, String group, String subGroup, String data) {
+	/**
+	 * Insert.
+	 *
+	 * @param logLevel the log level
+	 * @param group    the group
+	 * @param subGroup the sub group
+	 * @param data     the data
+	 */
+	public static void insert(OBotEvent.Level logLevel, String group, String subGroup, String data) {
         OBotEvent oBotEvent = new OBotEvent();
         oBotEvent.group = group;
         oBotEvent.subGroup = subGroup;
@@ -86,7 +113,12 @@ public class CBotEvent {
     }
 
 
-    public static void insert(OBotEvent record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OBotEvent record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO bot_events(created_on, log_level, event_group, sub_group, data) " +

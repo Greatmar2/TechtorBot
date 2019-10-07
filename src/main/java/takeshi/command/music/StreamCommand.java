@@ -29,7 +29,10 @@ import takeshi.templates.Templates;
  * Stream from url
  */
 public class StreamCommand extends AbstractCommand {
-    public StreamCommand() {
+	/**
+	 * Instantiates a new Stream command.
+	 */
+	public StreamCommand() {
         super();
     }
 
@@ -64,7 +67,7 @@ public class StreamCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         TextChannel tc = (TextChannel) channel;
         if (!tc.getGuild().getAudioManager().isConnected()) {
             return Templates.music.no_users_in_channel.formatGuild(channel);

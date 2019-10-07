@@ -39,8 +39,14 @@ import takeshi.util.Emojibet;
 
 import java.util.List;
 
+/**
+ * The type Changelog command.
+ */
 public class ChangelogCommand extends AbstractCommand {
-    public ChangelogCommand() {
+	/**
+	 * Instantiates a new Changelog command.
+	 */
+	public ChangelogCommand() {
         super();
     }
 
@@ -77,7 +83,7 @@ public class ChangelogCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         MessageEmbed message;
         ProgramVersion version;
         if (args.length == 0) {

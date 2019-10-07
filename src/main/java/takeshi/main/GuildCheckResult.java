@@ -17,10 +17,28 @@
 package takeshi.main;
 
 
+/**
+ * The enum Guild check result.
+ */
 public enum GuildCheckResult {
-    OKE(),
-    SMALL(),
-    TEST_GUILD(),
-    BOT_GUILD(),
-    OWNER_TOO_NEW(),
+	/**
+	 * Oke guild check result.
+	 */
+	OKE(),
+	/**
+	 * Small guild check result.
+	 */
+	SMALL(),
+	/**
+	 * Test guild guild check result.
+	 */
+	TEST_GUILD(),
+	/**
+	 * Bot guild guild check result.
+	 */
+	BOT_GUILD(),
+	/**
+	 * Owner too new guild check result.
+	 */
+	OWNER_TOO_NEW(),
 }

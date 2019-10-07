@@ -20,84 +20,193 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O playlist.
+ */
 public class OPlaylist extends AbstractModel {
-    public int id = 0;
-    public String title = "";
-    public int ownerId = 0;
-    public Timestamp createdOn = null;
-    public int guildId = 0;
-    public String code = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Title.
+	 */
+	public String title = "";
+	/**
+	 * The Owner id.
+	 */
+	public int ownerId = 0;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Code.
+	 */
+	public String code = "";
     private Visibility visibility = Visibility.GUILD;
     private EditType editType = EditType.PUBLIC_AUTO;
     private PlayType playType = PlayType.SHUFFLE;
     private String originalCode = "";
 
-    public boolean hasCodeChanged() {
+	/**
+	 * Has code changed boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean hasCodeChanged() {
         return !originalCode.equals(code);
     }
 
-    public void setCode(String code) {
+	/**
+	 * Sets code.
+	 *
+	 * @param code the code
+	 */
+	public void setCode(String code) {
         if (!code.isEmpty()) {
             originalCode = code;
         }
         this.code = code;
     }
 
-    public boolean isGlobalList() {
+	/**
+	 * Is global list boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isGlobalList() {
         return id > 0 && ownerId == 0 && guildId == 0;
     }
 
-    public boolean isGuildList() {
+	/**
+	 * Is guild list boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isGuildList() {
         return id > 0 && guildId > 0 && ownerId == 0;
     }
 
-    public boolean isPersonal() {
+	/**
+	 * Is personal boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isPersonal() {
         return id > 0 && guildId == 0 && ownerId > 0;
     }
 
-    public Visibility getVisibility() {
+	/**
+	 * Gets visibility.
+	 *
+	 * @return the visibility
+	 */
+	public Visibility getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(int visibilityId) {
+	/**
+	 * Sets visibility.
+	 *
+	 * @param visibilityId the visibility id
+	 */
+	public void setVisibility(int visibilityId) {
         this.visibility = Visibility.fromId(visibilityId);
     }
 
-    public void setVisibility(Visibility visibility) {
+	/**
+	 * Sets visibility.
+	 *
+	 * @param visibility the visibility
+	 */
+	public void setVisibility(Visibility visibility) {
         this.visibility = visibility;
     }
 
-    public EditType getEditType() {
+	/**
+	 * Gets edit type.
+	 *
+	 * @return the edit type
+	 */
+	public EditType getEditType() {
         return editType;
     }
 
-    public void setEditType(int editId) {
+	/**
+	 * Sets edit type.
+	 *
+	 * @param editId the edit id
+	 */
+	public void setEditType(int editId) {
         this.editType = EditType.fromId(editId);
     }
 
-    public void setEditType(EditType editType) {
+	/**
+	 * Sets edit type.
+	 *
+	 * @param editType the edit type
+	 */
+	public void setEditType(EditType editType) {
         this.editType = editType;
     }
 
-    public PlayType getPlayType() {
+	/**
+	 * Gets play type.
+	 *
+	 * @return the play type
+	 */
+	public PlayType getPlayType() {
         return playType;
     }
 
-    public void setPlayType(PlayType playType) {
+	/**
+	 * Sets play type.
+	 *
+	 * @param playType the play type
+	 */
+	public void setPlayType(PlayType playType) {
         this.playType = playType;
     }
 
-    public void setPlayType(int id) {
+	/**
+	 * Sets play type.
+	 *
+	 * @param id the id
+	 */
+	public void setPlayType(int id) {
         setPlayType(PlayType.fromId(id));
     }
 
 
-    public enum Visibility {
-        UNKNOWN(0, "??"),
-        PUBLIC(1, "Anyone can see and use the playlist"),
-        PUBLIC_USE(2, "Anyone can use the playlist"),
-        GUILD(3, "only this guild can see/use the playlist"),
-        PRIVATE(4, "only you/admins can see/use it");
+	/**
+	 * The enum Visibility.
+	 */
+	public enum Visibility {
+		/**
+		 * Unknown visibility.
+		 */
+		UNKNOWN(0, "??"),
+		/**
+		 * The Public.
+		 */
+		PUBLIC(1, "Anyone can see and use the playlist"),
+		/**
+		 * The Public use.
+		 */
+		PUBLIC_USE(2, "Anyone can use the playlist"),
+		/**
+		 * The Guild.
+		 */
+		GUILD(3, "only this guild can see/use the playlist"),
+		/**
+		 * The Private.
+		 */
+		PRIVATE(4, "only you/admins can see/use it");
 
         private final int id;
         private final String description;
@@ -108,7 +217,13 @@ public class OPlaylist extends AbstractModel {
             this.description = description;
         }
 
-        public static Visibility fromId(int id) {
+		/**
+		 * From id visibility.
+		 *
+		 * @param id the id
+		 * @return the visibility
+		 */
+		public static Visibility fromId(int id) {
             for (Visibility vis : values()) {
                 if (id == vis.getId()) {
                     return vis;
@@ -117,22 +232,53 @@ public class OPlaylist extends AbstractModel {
             return UNKNOWN;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
 
-        public String getDescription() {
+		/**
+		 * Gets description.
+		 *
+		 * @return the description
+		 */
+		public String getDescription() {
             return description;
         }
     }
 
-    public enum EditType {
-        UNKNOWN(0, "??"),
-        PUBLIC_AUTO(1, "all music played is automatically added"),
-        PUBLIC_FULL(2, "Anyone can add and remove music from the playlist"),
-        PUBLIC_ADD(3, "Anyone can add music, but not remove it"),
-        PRIVATE_AUTO(4, "Music played by you/admins will be added automatically"),
-        PRIVATE(5, "Only the owner/admin can add/remove music from the playlist manually ");
+	/**
+	 * The enum Edit type.
+	 */
+	public enum EditType {
+		/**
+		 * Unknown edit type.
+		 */
+		UNKNOWN(0, "??"),
+		/**
+		 * The Public auto.
+		 */
+		PUBLIC_AUTO(1, "all music played is automatically added"),
+		/**
+		 * The Public full.
+		 */
+		PUBLIC_FULL(2, "Anyone can add and remove music from the playlist"),
+		/**
+		 * The Public add.
+		 */
+		PUBLIC_ADD(3, "Anyone can add music, but not remove it"),
+		/**
+		 * The Private auto.
+		 */
+		PRIVATE_AUTO(4, "Music played by you/admins will be added automatically"),
+		/**
+		 * The Private.
+		 */
+		PRIVATE(5, "Only the owner/admin can add/remove music from the playlist manually ");
 
         private final int id;
         private final String description;
@@ -143,7 +289,13 @@ public class OPlaylist extends AbstractModel {
             this.description = description;
         }
 
-        public static EditType fromId(int id) {
+		/**
+		 * From id edit type.
+		 *
+		 * @param id the id
+		 * @return the edit type
+		 */
+		public static EditType fromId(int id) {
             for (EditType et : values()) {
                 if (id == et.getId()) {
                     return et;
@@ -152,18 +304,37 @@ public class OPlaylist extends AbstractModel {
             return UNKNOWN;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
 
-        public String getDescription() {
+		/**
+		 * Gets description.
+		 *
+		 * @return the description
+		 */
+		public String getDescription() {
             return description;
         }
     }
 
-    public enum PlayType {
-        SHUFFLE(1, "Randomly selects the next track"),
-        LOOP(2, "Iterates through the playlist");
+	/**
+	 * The enum Play type.
+	 */
+	public enum PlayType {
+		/**
+		 * The Shuffle.
+		 */
+		SHUFFLE(1, "Randomly selects the next track"),
+		/**
+		 * The Loop.
+		 */
+		LOOP(2, "Iterates through the playlist");
         private final int id;
         private final String description;
 
@@ -173,7 +344,13 @@ public class OPlaylist extends AbstractModel {
             this.description = description;
         }
 
-        public static PlayType fromId(int id) {
+		/**
+		 * From id play type.
+		 *
+		 * @param id the id
+		 * @return the play type
+		 */
+		public static PlayType fromId(int id) {
             for (PlayType et : values()) {
                 if (id == et.getId()) {
                     return et;
@@ -182,11 +359,21 @@ public class OPlaylist extends AbstractModel {
             return SHUFFLE;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
 
-        public String getDescription() {
+		/**
+		 * Gets description.
+		 *
+		 * @return the description
+		 */
+		public String getDescription() {
             return description;
         }
     }

@@ -42,8 +42,14 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.Misc;
 
+/**
+ * The type Poll command.
+ */
 public class PollCommand extends AbstractCommand {
 
+	/**
+	 * Instantiates a new Poll command.
+	 */
 	public PollCommand() {
 		super();
 	}
@@ -84,7 +90,7 @@ public class PollCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		boolean debug = GuildSettings.getBoolFor(channel, GSetting.DEBUG);
 		if (!PermissionUtil.checkPermission((TextChannel) channel, guild.getSelfMember(), Permission.MESSAGE_ADD_REACTION)) {

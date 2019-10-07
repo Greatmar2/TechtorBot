@@ -16,5 +16,8 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The type Gif writer.
+ */
 public class GifWriter {
 }

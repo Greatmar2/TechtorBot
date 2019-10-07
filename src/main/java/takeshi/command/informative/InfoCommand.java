@@ -45,6 +45,9 @@ import takeshi.util.TimeUtil;
 public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 	private Trello trello;
 
+	/**
+	 * Instantiates a new Info command.
+	 */
 	public InfoCommand() {
 		super();
 		trello = new TrelloImpl(BotConfig.TRELLO_API_KEY, BotConfig.TRELLO_TOKEN);
@@ -109,7 +112,7 @@ public class InfoCommand extends AbstractCommand implements ICommandCooldown {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (args.length > 0 && BotConfig.TRELLO_ACTIVE) {
 			switch (args[0].toLowerCase()) {
 			case "planned":

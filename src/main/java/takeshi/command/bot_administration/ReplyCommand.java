@@ -16,14 +16,7 @@
 
 package takeshi.command.bot_administration;
 
-import java.io.File;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
-
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
@@ -39,10 +32,19 @@ import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
+import java.io.File;
+import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * !reply
  */
 public class ReplyCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Reply command.
+	 */
 	public ReplyCommand() {
 		super();
 	}
@@ -65,7 +67,8 @@ public class ReplyCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "reply <channel ID> <message>\t//Repeats what you said in the channel specified by an ID before the message" };
+		return new String[] {"reply <message>\t//Repeats you in the channel that most recently had a message forwarded",
+				"reply <channel ID> <message>\t//Repeats what you said in the channel specified by an ID before the message"};
 	}
 
 	@Override
@@ -79,7 +82,7 @@ public class ReplyCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		// boolean atLeastAdmin = bot.security.getSimpleRank(author,
 		// channel).isAtLeast(SimpleRank.BOT_ADMIN);
 		if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.BOT_ADMIN)) {
@@ -87,24 +90,36 @@ public class ReplyCommand extends AbstractCommand {
 			List<Attachment> attachs = inputMessage.getAttachments();
 			String output = " ";
 			// Must have an argument specifying the channel ID
-			if (args.length > 0 || (attachs.size() > 0 && args.length >= 0)) {
+			if (args.length > 0 || attachs.size() > 0) {
 				// Find the channel that the message must be sent to
-				String channelId = DisUtil.extractId(args[0]);
-				if (channelId != null) {
-					targetChannel = bot.getJda().getTextChannelById(channelId);
-					if (targetChannel == null) {
-						targetChannel = bot.getJda().getPrivateChannelById(channelId);
+				// Check if the first argument is a channel ID
+				if (args.length > 0) {
+					String channelId = DisUtil.extractId(args[0]);
+					if (channelId != null) {
+						targetChannel = bot.getJda().getTextChannelById(channelId);
+						if (targetChannel == null) {
+							targetChannel = bot.getJda().getPrivateChannelById(channelId);
+						}
 					}
 				}
-				// Calculate queue delay based on message length
-				long queueDelay = 0L;
-				if (targetChannel != null && DisUtil.hasPermission(targetChannel, bot.getJda().getSelfUser(), Permission.MESSAGE_WRITE)) {
+				if (targetChannel == null) {
+					if (bot.lastForward != null) {
+						targetChannel = bot.lastForward;
+					} else {
+						return Templates.command.reply.to_who.formatGuild(channel);
+					}
+				} else {
 					args = Arrays.copyOfRange(args, 1, args.length);
+				}
+				// Calculate queue delay based on message length
+				if (targetChannel != null && DisUtil.hasPermission(targetChannel, bot.getJda().getSelfUser(), Permission.MESSAGE_WRITE)) {
+					long queueDelay = 0L;
 					output = Joiner.on(" ").join(args);
 
 					targetChannel.sendTyping().queue();
 					queueDelay = Math.min((output.length() * 1000) / 7, 20000); // Cap at 20 seconds
-					for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make sure it doesn't.
+					for (long i = 7500; i <= queueDelay; i += 7500) { // Typing status disappears after 10 seconds, make
+						// sure it doesn't.
 						targetChannel.sendTyping().queueAfter(i, TimeUnit.MILLISECONDS);
 					}
 					MessageBuilder outMessage = new MessageBuilder(output);
@@ -140,9 +155,9 @@ public class ReplyCommand extends AbstractCommand {
 						bot.replyListeners.add(new ReplyListener(targetChannel, OffsetDateTime.now()));
 					}
 
-					return "Message sent to " + targetChannel.getName();
+					return Templates.command.reply.success.formatGuild(channel, targetChannel.getName());
 				} else {
-					return "Channel not found. I will only remember channels that I have received messages from recently.";
+					return Templates.command.reply.channel_not_found.formatGuild(channel);
 					// I expect it will be from the most recent boot, but will need to test
 				}
 			} else {
@@ -154,31 +169,65 @@ public class ReplyCommand extends AbstractCommand {
 		// return Templates.invalid_use.formatGuild(channel);
 	}
 
+	/**
+	 * The type Reply listener.
+	 */
 	public class ReplyListener {
 		private MessageChannel channel;
 		private OffsetDateTime timeCreated;
 
+		/**
+		 * Instantiates a new Reply listener.
+		 *
+		 * @param channel     the channel
+		 * @param timeCreated the time created
+		 */
 		public ReplyListener(MessageChannel channel, OffsetDateTime timeCreated) {
 			this.channel = channel;
 			this.timeCreated = timeCreated;
 		}
 
+		/**
+		 * Gets channel.
+		 *
+		 * @return the channel
+		 */
 		public MessageChannel getChannel() {
 			return channel;
 		}
 
+		/**
+		 * Sets channel.
+		 *
+		 * @param channel the channel
+		 */
 		public void setChannel(MessageChannel channel) {
 			this.channel = channel;
 		}
 
+		/**
+		 * Gets time created.
+		 *
+		 * @return the time created
+		 */
 		public OffsetDateTime getTimeCreated() {
 			return timeCreated;
 		}
 
+		/**
+		 * Sets time created.
+		 *
+		 * @param timeCreated the time created
+		 */
 		public void setTimeCreated(OffsetDateTime timeCreated) {
 			this.timeCreated = timeCreated;
 		}
 
+		/**
+		 * Gets channel id.
+		 *
+		 * @return the channel id
+		 */
 		public long getChannelID() {
 			return channel.getIdLong();
 		}

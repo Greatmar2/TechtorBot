@@ -18,9 +18,24 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O blacklist command.
+ */
 public class OBlacklistCommand extends AbstractModel {
-    public int guildId = 0;
-    public String command = "";
-    public String channelId = "";
-    public boolean blacklisted = false;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Command.
+	 */
+	public String command = "";
+	/**
+	 * The Channel id.
+	 */
+	public String channelId = "";
+	/**
+	 * The Blacklisted.
+	 */
+	public boolean blacklisted = false;
 }

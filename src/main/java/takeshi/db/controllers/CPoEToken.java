@@ -27,7 +27,13 @@ import takeshi.db.model.OPoEToken;
  * data communication with the controllers `poe_token`
  */
 public class CPoEToken {
-    public static OPoEToken findBy(long discordId) {
+	/**
+	 * Find by o po e token.
+	 *
+	 * @param discordId the discord id
+	 * @return the o po e token
+	 */
+	public static OPoEToken findBy(long discordId) {
         OPoEToken token = new OPoEToken();
         int userId = CUser.getCachedId(discordId);
         token.userId = userId;
@@ -52,7 +58,12 @@ public class CPoEToken {
         return token;
     }
 
-    public static void insertOrUpdate(OPoEToken token) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param token the token
+	 */
+	public static void insertOrUpdate(OPoEToken token) {
         try {
             WebDb.get().insert(
                     "INSERT INTO poe_token(user_id, session_id) " +

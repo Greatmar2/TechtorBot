@@ -34,17 +34,31 @@ import takeshi.db.model.OReactionRoleMessage;
 import takeshi.guildsettings.GSetting;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Role reaction handler.
+ */
 public class RoleReactionHandler {
 	// {guild-id, {message-id, {emoji, role-id}}
 	private final Map<Long, Map<Long, Map<String, Long>>> listeners;
 //	private final DiscordBot discordBot;
 //	private boolean lock = false;
 
+	/**
+	 * Instantiates a new Role reaction handler.
+	 *
+	 * @param discordBot the discord bot
+	 */
 	public RoleReactionHandler(DiscordBot discordBot) {
 //		this.discordBot = discordBot;
 		listeners = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * Add message.
+	 *
+	 * @param guildId   the guild id
+	 * @param messageId the message id
+	 */
 	public synchronized void addMessage(long guildId, long messageId) {
 		if (!listeners.containsKey(guildId)) {
 			listeners.put(guildId, new ConcurrentHashMap<>());
@@ -58,11 +72,24 @@ public class RoleReactionHandler {
 		return listeners.containsKey(guildId) && listeners.get(guildId).containsKey(messageId);
 	}
 
+	/**
+	 * Remove message.
+	 *
+	 * @param guildId the guild id
+	 * @param id      the id
+	 */
 	public synchronized void removeMessage(long guildId, long id) {
 		if (listeners.containsKey(guildId))
 			listeners.get(guildId).remove(id);
 	}
 
+	/**
+	 * Init guild boolean.
+	 *
+	 * @param guildId     the guild id
+	 * @param forceReload the force reload
+	 * @return the boolean
+	 */
 	public synchronized boolean initGuild(long guildId, boolean forceReload) {
 		if (!forceReload && listeners.containsKey(guildId)) {
 			return true;
@@ -89,6 +116,11 @@ public class RoleReactionHandler {
 		listeners.get(guildId).get(messageId).put(emoji, roleId);
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public synchronized void removeGuild(long guildId) {
 		if (listeners.containsKey(guildId)) {
 			listeners.remove(guildId);
@@ -99,7 +131,18 @@ public class RoleReactionHandler {
 		return listeners.get(guildId).get(msgId).containsKey(emoji);
 	}
 
-	public synchronized boolean handle(String messageId, TextChannel channel, User invoker, MessageReaction.ReactionEmote emote, boolean isAdding) {
+	/**
+	 * Handle boolean.
+	 *
+	 * @param messageId the message id
+	 * @param channel   the channel
+	 * @param invoker   the invoker
+	 * @param emote     the emote
+	 * @param isAdding  the is adding
+	 * @return the boolean
+	 */
+	public synchronized boolean handle(String messageId, TextChannel channel, User invoker,
+			MessageReaction.ReactionEmote emote, boolean isAdding) {
 		boolean ret = false;
 //		if (!lock) {
 //		MessageReaction.ReactionEmote emote = reaction.getReactionEmote();
@@ -125,12 +168,15 @@ public class RoleReactionHandler {
 				if (isAdding) {
 					channel.getGuild().addRoleToMember(channel.getGuild().getMember(invoker), role).queue();
 					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
-						channel.sendMessage(String.format("[DEBUG] Giving the role '%s' to %s", role.getName(), invoker.getName())).queue();
+						channel.sendMessage(
+								String.format("[DEBUG] Giving the role '%s' to %s", role.getName(), invoker.getName()))
+								.queue();
 					}
 				} else {
 					channel.getGuild().removeRoleFromMember(channel.getGuild().getMember(invoker), role).queue();
 					if (GuildSettings.getBoolFor(channel, GSetting.DEBUG)) {
-						channel.sendMessage(String.format("[DEBUG] Removing the role '%s' to %s", role.getName(), invoker.getName())).queue();
+						channel.sendMessage(String.format("[DEBUG] Removing the role '%s' from %s", role.getName(),
+								invoker.getName())).queue();
 					}
 				}
 			} catch (HierarchyException | InsufficientPermissionException e) {

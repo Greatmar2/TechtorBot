@@ -16,11 +16,17 @@
 
 package takeshi.games.tictactoe;
 
+/**
+ * The type Tic tile.
+ */
 public class TicTile {
     private int player;
     private TileState state;
 
-    public TicTile() {
+	/**
+	 * Instantiates a new Tic tile.
+	 */
+	public TicTile() {
         reset();
     }
 
@@ -29,23 +35,48 @@ public class TicTile {
         player = -1;
     }
 
-    public boolean isFree() {
+	/**
+	 * Is free boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isFree() {
         return state.equals(TileState.FREE);
     }
 
-    public TileState getState() {
+	/**
+	 * Gets state.
+	 *
+	 * @return the state
+	 */
+	public TileState getState() {
         return state;
     }
 
-    public void setState(TileState state) {
+	/**
+	 * Sets state.
+	 *
+	 * @param state the state
+	 */
+	public void setState(TileState state) {
         this.state = state;
     }
 
-    public int getPlayer() {
+	/**
+	 * Gets player.
+	 *
+	 * @return the player
+	 */
+	public int getPlayer() {
         return player;
     }
 
-    public void setPlayer(int player) {
+	/**
+	 * Sets player.
+	 *
+	 * @param player the player
+	 */
+	public void setPlayer(int player) {
         switch (player) {
             case 0:
                 this.player = player;

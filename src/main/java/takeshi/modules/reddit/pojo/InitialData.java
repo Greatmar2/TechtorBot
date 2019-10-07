@@ -23,8 +23,14 @@ import com.google.gson.annotations.Expose;
  */
 public class InitialData {
 
-    @Expose
+	/**
+	 * The Data.
+	 */
+	@Expose
     public Listing data;
-    @Expose
+	/**
+	 * The Kind.
+	 */
+	@Expose
     public String kind;
 }

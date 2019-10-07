@@ -40,17 +40,32 @@ import takeshi.guildsettings.GSetting;
 import takeshi.main.DiscordBot;
 import takeshi.util.Misc;
 
+/**
+ * The type Poll handler.
+ */
 public class PollHandler {
 	// {guild-id, {message-id, end}}
 	private final Map<Long, Map<Long, Timestamp>> listeners;
 	private final DiscordBot bot;
 //	private boolean lock = false;
 
+	/**
+	 * Instantiates a new Poll handler.
+	 *
+	 * @param bot the bot
+	 */
 	public PollHandler(DiscordBot bot) {
 		this.bot = bot;
 		listeners = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * Add message.
+	 *
+	 * @param guildId   the guild id
+	 * @param messageId the message id
+	 * @param time      the time
+	 */
 	public synchronized void addMessage(long guildId, long messageId, Timestamp time) {
 		if (!listeners.containsKey(guildId)) {
 			listeners.put(guildId, new ConcurrentHashMap<>());
@@ -60,6 +75,13 @@ public class PollHandler {
 		}
 	}
 
+	/**
+	 * Init guild boolean.
+	 *
+	 * @param guildId     the guild id
+	 * @param forceReload the force reload
+	 * @return the boolean
+	 */
 	public synchronized boolean initGuild(long guildId, boolean forceReload) {
 		if (!forceReload && listeners.containsKey(guildId)) {
 			return true;
@@ -78,6 +100,9 @@ public class PollHandler {
 		return false;
 	}
 
+	/**
+	 * Init guilds.
+	 */
 	public void initGuilds() {
 		List<Guild> guilds = bot.getJda().getGuilds();
 
@@ -107,12 +132,22 @@ public class PollHandler {
 		}
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public synchronized void removeGuild(long guildId) {
 		if (listeners.containsKey(guildId)) {
 			listeners.remove(guildId);
 		}
 	}
 
+	/**
+	 * Check polls.
+	 *
+	 * @param bot the bot
+	 */
 	public void checkPolls(DiscordBot bot) {
 		List<Guild> guilds = bot.getJda().getGuilds();
 		for (Guild guild : guilds) {
@@ -120,10 +155,21 @@ public class PollHandler {
 		}
 	}
 
+	/**
+	 * Check polls.
+	 *
+	 * @param guild the guild
+	 */
 	public void checkPolls(Guild guild) {
 		checkPolls(guild, -1);
 	}
 
+	/**
+	 * Check polls.
+	 *
+	 * @param guild           the guild
+	 * @param forceCancelChan the force cancel chan
+	 */
 	public void checkPolls(Guild guild, long forceCancelChan) {
 //		System.out.println("[DEBUG] Checking polls for guild " + guild.getName());
 		long guildId = guild.getIdLong();
@@ -142,6 +188,13 @@ public class PollHandler {
 
 	}
 
+	/**
+	 * Check poll.
+	 *
+	 * @param poll            the poll
+	 * @param guild           the guild
+	 * @param forceCancelChan the force cancel chan
+	 */
 	public void checkPoll(OPoll poll, Guild guild, long forceCancelChan) {
 		TextChannel tchan = guild.getTextChannelById(poll.channelId);
 		boolean debug = GuildSettings.getBoolFor(tchan, GSetting.DEBUG);
@@ -225,6 +278,17 @@ public class PollHandler {
 		}
 	}
 
+	/**
+	 * Handle reaction boolean.
+	 *
+	 * @param guild    the guild
+	 * @param message  the message
+	 * @param channel  the channel
+	 * @param user     the user
+	 * @param reaction the reaction
+	 * @param adding   the adding
+	 * @return the boolean
+	 */
 	public boolean handleReaction(Guild guild, long message, TextChannel channel, User user, ReactionEmote reaction, boolean adding) {
 		boolean ret = false;
 		if (adding) {

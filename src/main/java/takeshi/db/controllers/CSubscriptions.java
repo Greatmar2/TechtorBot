@@ -30,7 +30,15 @@ import takeshi.db.model.QActiveSubscriptions;
  * data communication with the controllers `subscriptions`
  */
 public class CSubscriptions {
-    public static OSubscription findBy(int serverId, int channelId, int serviceId) {
+	/**
+	 * Find by o subscription.
+	 *
+	 * @param serverId  the server id
+	 * @param channelId the channel id
+	 * @param serviceId the service id
+	 * @return the o subscription
+	 */
+	public static OSubscription findBy(int serverId, int channelId, int serviceId) {
         OSubscription token = new OSubscription();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -46,7 +54,13 @@ public class CSubscriptions {
         return token;
     }
 
-    public static List<QActiveSubscriptions> getSubscriptionsForChannel(int channelId) {
+	/**
+	 * Gets subscriptions for channel.
+	 *
+	 * @param channelId the channel id
+	 * @return the subscriptions for channel
+	 */
+	public static List<QActiveSubscriptions> getSubscriptionsForChannel(int channelId) {
         ArrayList<QActiveSubscriptions> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("" +
                 "SELECT se.id,se.name, se.display_name, su.server_id " +
@@ -68,7 +82,13 @@ public class CSubscriptions {
         return list;
     }
 
-    public static List<QActiveSubscriptions> getSubscriptionsForService(int serviceId) {
+	/**
+	 * Gets subscriptions for service.
+	 *
+	 * @param serviceId the service id
+	 * @return the subscriptions for service
+	 */
+	public static List<QActiveSubscriptions> getSubscriptionsForService(int serviceId) {
         ArrayList<QActiveSubscriptions> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("" +
                 "SELECT se.id, su.channel_id, se.name,se.display_name, su.server_id  " +
@@ -100,7 +120,12 @@ public class CSubscriptions {
         return record;
     }
 
-    public static void insertOrUpdate(OSubscription record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OSubscription record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO subscriptions(server_id, channel_id, service_id, subscribed) " +

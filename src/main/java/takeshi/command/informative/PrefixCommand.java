@@ -28,8 +28,14 @@ import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
+/**
+ * The type Prefix command.
+ */
 public class PrefixCommand extends AbstractCommand {
-    public PrefixCommand() {
+	/**
+	 * Instantiates a new Prefix command.
+	 */
+	public PrefixCommand() {
         super();
     }
 
@@ -57,7 +63,7 @@ public class PrefixCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author, channel);
         if (args.length > 0 && rank.isAtLeast(SimpleRank.GUILD_ADMIN) && channel instanceof TextChannel) {
             TextChannel text = (TextChannel) channel;

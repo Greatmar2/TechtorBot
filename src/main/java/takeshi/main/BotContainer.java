@@ -58,6 +58,9 @@ import takeshi.util.Misc;
  * Shared information between bots
  */
 public class BotContainer {
+	/**
+	 * The constant LOGGER.
+	 */
 	public static final Logger LOGGER = LogManager.getLogger(DiscordBot.class);
 	private final int numShards;
 	private final DiscordBot[] shards;
@@ -69,6 +72,14 @@ public class BotContainer {
 	private volatile boolean terminationRequested = false;
 	private volatile ExitCode rebootReason = ExitCode.UNKNOWN;
 
+	/**
+	 * Instantiates a new Bot container.
+	 *
+	 * @param numGuilds the num guilds
+	 * @throws LoginException       the login exception
+	 * @throws InterruptedException the interrupted exception
+	 * @throws RateLimitedException the rate limited exception
+	 */
 	public BotContainer(int numGuilds) throws LoginException, InterruptedException, RateLimitedException {
 		scheduler = Executors.newScheduledThreadPool(3);
 		this.numGuilds = new AtomicInteger(numGuilds);
@@ -113,6 +124,7 @@ public class BotContainer {
 	 * @param task        the taks
 	 * @param startDelay  delay before starting the first iteration
 	 * @param repeatDelay delay between consecutive executions
+	 * @return the scheduled future
 	 */
 	public ScheduledFuture<?> scheduleRepeat(Runnable task, long startDelay, long repeatDelay) {
 		return scheduler.scheduleWithFixedDelay(task, startDelay, repeatDelay, TimeUnit.MILLISECONDS);
@@ -122,9 +134,9 @@ public class BotContainer {
 	 * restarts a shard
 	 *
 	 * @param shardId the shard to restart
-	 * @throws InterruptedException
-	 * @throws LoginException
-	 * @throws RateLimitedException
+	 * @throws InterruptedException the interrupted exception
+	 * @throws LoginException       the login exception
+	 * @throws RateLimitedException the rate limited exception
 	 */
 	public synchronized void restartShard(int shardId) throws InterruptedException, LoginException, RateLimitedException {
 		for (Guild guild : shards[shardId].getJda().getGuilds()) {
@@ -178,10 +190,22 @@ public class BotContainer {
 		}, 5L, TimeUnit.SECONDS);
 	}
 
+	/**
+	 * Sets last action.
+	 *
+	 * @param shard     the shard
+	 * @param timestamp the timestamp
+	 */
 	public void setLastAction(int shard, long timestamp) {
 		lastActions.set(shard, timestamp);
 	}
 
+	/**
+	 * Gets last action.
+	 *
+	 * @param shard the shard
+	 * @return the last action
+	 */
 	public long getLastAction(int shard) {
 		return lastActions.get(shard);
 	}
@@ -199,7 +223,9 @@ public class BotContainer {
 	}
 
 	/**
+	 * Firm request exit.
 	 *
+	 * @param reason the reason
 	 */
 	public synchronized void firmRequestExit(ExitCode reason) {
 		Thread thread = new Thread(() -> {
@@ -221,7 +247,6 @@ public class BotContainer {
 	 * @param error   the Exception
 	 * @param details extra details about the error
 	 */
-
 	public void reportError(Throwable error, Object... details) {
 		StringBuilder errorMessage = new StringBuilder("I've encountered a **" + error.getClass().getName() + "**\n");
 		if (error.getMessage() != null) {
@@ -253,6 +278,11 @@ public class BotContainer {
 		reportError(errorMessage.toString());
 	}
 
+	/**
+	 * Report error.
+	 *
+	 * @param message the message
+	 */
 	public void reportError(String message) {
 		DiscordBot shard = getShardFor(BotConfig.BOT_GUILD_ID);
 		Guild guild = shard.getJda().getGuildById(BotConfig.BOT_GUILD_ID);
@@ -268,6 +298,13 @@ public class BotContainer {
 		shard.queue.add(channel.sendMessage(message.length() > BotConfig.MAX_MESSAGE_SIZE ? message.substring(0, BotConfig.MAX_MESSAGE_SIZE - 1) : message));
 	}
 
+	/**
+	 * Report status.
+	 *
+	 * @param shardId   the shard id
+	 * @param oldStatus the old status
+	 * @param status    the status
+	 */
 	public void reportStatus(int shardId, JDA.Status oldStatus, JDA.Status status) {
 		DiscordBot shard = getShardFor(BotConfig.BOT_GUILD_ID);
 		if (shard == null || shard.getJda() == null) {
@@ -339,12 +376,20 @@ public class BotContainer {
 		numGuilds.decrementAndGet();
 	}
 
+	/**
+	 * Get shards discord bot [ ].
+	 *
+	 * @return the discord bot [ ]
+	 */
 	public DiscordBot[] getShards() {
 		return shards;
 	}
 
 	/**
 	 * {@link BotContainer#getShardFor(long)}
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @return the shard for
 	 */
 	public DiscordBot getShardFor(String discordGuildId) {
 		if (numShards == 1) {
@@ -438,10 +483,20 @@ public class BotContainer {
 		return true;
 	}
 
+	/**
+	 * Is termination requested boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isTerminationRequested() {
 		return terminationRequested;
 	}
 
+	/**
+	 * Gets reboot reason.
+	 *
+	 * @return the reboot reason
+	 */
 	public ExitCode getRebootReason() {
 		return rebootReason;
 	}
@@ -450,7 +505,7 @@ public class BotContainer {
 	 * Check if the bot's status is locked If its locked, the bot will not change
 	 * its status
 	 *
-	 * @return locked?
+	 * @return locked ?
 	 */
 	public boolean isStatusLocked() {
 		return statusLocked.get();

@@ -42,8 +42,14 @@ import takeshi.util.Misc;
  * !role manages roles
  */
 public class RoleAdminCommand extends AbstractCommand {
+	/**
+	 * The Success.
+	 */
 	boolean success;
 
+	/**
+	 * Instantiates a new Role admin command.
+	 */
 	public RoleAdminCommand() {
 		super();
 	}
@@ -89,7 +95,7 @@ public class RoleAdminCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		SimpleRank rank = bot.security.getSimpleRank(author, channel);
 		if (!rank.isAtLeast(SimpleRank.GUILD_ADMIN)) {

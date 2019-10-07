@@ -30,7 +30,13 @@ import takeshi.db.model.ORank;
  */
 public class CRank {
 
-    public static ORank findBy(String codeName) {
+	/**
+	 * Find by o rank.
+	 *
+	 * @param codeName the code name
+	 * @return the o rank
+	 */
+	public static ORank findBy(String codeName) {
         ORank s = new ORank();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, code_name, full_name  " +
@@ -46,7 +52,13 @@ public class CRank {
         return s;
     }
 
-    public static ORank findById(int internalId) {
+	/**
+	 * Find by id o rank.
+	 *
+	 * @param internalId the internal id
+	 * @return the o rank
+	 */
+	public static ORank findById(int internalId) {
         ORank s = new ORank();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, code_name, full_name  " +
@@ -70,7 +82,12 @@ public class CRank {
         return s;
     }
 
-    public static List<ORank> getRanks() {
+	/**
+	 * Gets ranks.
+	 *
+	 * @return the ranks
+	 */
+	public static List<ORank> getRanks() {
         List<ORank> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT id, code_name, full_name FROM ranks ")) {
             while (rs.next()) {
@@ -83,7 +100,12 @@ public class CRank {
         return list;
     }
 
-    public static void update(ORank record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(ORank record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -99,7 +121,12 @@ public class CRank {
         }
     }
 
-    public static void insert(ORank record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(ORank record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO ranks(code_name, full_name) " +

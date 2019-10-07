@@ -24,15 +24,36 @@ import takeshi.main.BotConfig;
 public abstract class GameTurn {
     private String commandPrefix = BotConfig.BOT_COMMAND_PREFIX;
 
-    abstract public boolean parseInput(String input);
+	/**
+	 * Parse input boolean.
+	 *
+	 * @param input the input
+	 * @return the boolean
+	 */
+	abstract public boolean parseInput(String input);
 
-    abstract public String getInputErrorMessage();
+	/**
+	 * Gets input error message.
+	 *
+	 * @return the input error message
+	 */
+	abstract public String getInputErrorMessage();
 
-    public String getCommandPrefix() {
+	/**
+	 * Gets command prefix.
+	 *
+	 * @return the command prefix
+	 */
+	public String getCommandPrefix() {
         return commandPrefix;
     }
 
-    public void setCommandPrefix(String commandPrefix) {
+	/**
+	 * Sets command prefix.
+	 *
+	 * @param commandPrefix the command prefix
+	 */
+	public void setCommandPrefix(String commandPrefix) {
         this.commandPrefix = commandPrefix;
     }
 }

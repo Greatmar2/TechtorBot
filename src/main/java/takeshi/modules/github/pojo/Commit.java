@@ -21,6 +21,9 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
+/**
+ * The type Commit.
+ */
 @Generated("org.jsonschema2pojo")
 public class Commit {
 
@@ -43,87 +46,111 @@ public class Commit {
     @Expose
     private Integer commentCount;
 
-    /**
-     * @return The author
-     */
-    public AuthorShort getAuthorShort() {
+	/**
+	 * Gets author short.
+	 *
+	 * @return The author
+	 */
+	public AuthorShort getAuthorShort() {
         return authorShort;
     }
 
-    /**
-     * @param authorShort The author
-     */
-    public void setAuthorShort(AuthorShort authorShort) {
+	/**
+	 * Sets author short.
+	 *
+	 * @param authorShort The author
+	 */
+	public void setAuthorShort(AuthorShort authorShort) {
         this.authorShort = authorShort;
     }
 
-    /**
-     * @return The committer
-     */
-    public CommitterShort getCommitterShort() {
+	/**
+	 * Gets committer short.
+	 *
+	 * @return The committer
+	 */
+	public CommitterShort getCommitterShort() {
         return committerShort;
     }
 
-    /**
-     * @param committerShort The committer
-     */
-    public void setCommitterShort(CommitterShort committerShort) {
+	/**
+	 * Sets committer short.
+	 *
+	 * @param committerShort The committer
+	 */
+	public void setCommitterShort(CommitterShort committerShort) {
         this.committerShort = committerShort;
     }
 
-    /**
-     * @return The message
-     */
-    public String getMessage() {
+	/**
+	 * Gets message.
+	 *
+	 * @return The message
+	 */
+	public String getMessage() {
         return message;
     }
 
-    /**
-     * @param message The message
-     */
-    public void setMessage(String message) {
+	/**
+	 * Sets message.
+	 *
+	 * @param message The message
+	 */
+	public void setMessage(String message) {
         this.message = message;
     }
 
-    /**
-     * @return The tree
-     */
-    public Tree getTree() {
+	/**
+	 * Gets tree.
+	 *
+	 * @return The tree
+	 */
+	public Tree getTree() {
         return tree;
     }
 
-    /**
-     * @param tree The tree
-     */
-    public void setTree(Tree tree) {
+	/**
+	 * Sets tree.
+	 *
+	 * @param tree The tree
+	 */
+	public void setTree(Tree tree) {
         this.tree = tree;
     }
 
-    /**
-     * @return The url
-     */
-    public String getUrl() {
+	/**
+	 * Gets url.
+	 *
+	 * @return The url
+	 */
+	public String getUrl() {
         return url;
     }
 
-    /**
-     * @param url The url
-     */
-    public void setUrl(String url) {
+	/**
+	 * Sets url.
+	 *
+	 * @param url The url
+	 */
+	public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     * @return The commentCount
-     */
-    public Integer getCommentCount() {
+	/**
+	 * Gets comment count.
+	 *
+	 * @return The commentCount
+	 */
+	public Integer getCommentCount() {
         return commentCount;
     }
 
-    /**
-     * @param commentCount The comment_count
-     */
-    public void setCommentCount(Integer commentCount) {
+	/**
+	 * Sets comment count.
+	 *
+	 * @param commentCount The comment_count
+	 */
+	public void setCommentCount(Integer commentCount) {
         this.commentCount = commentCount;
     }
 

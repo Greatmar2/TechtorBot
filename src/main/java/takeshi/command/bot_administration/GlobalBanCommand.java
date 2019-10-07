@@ -33,6 +33,9 @@ import takeshi.util.Misc;
  * ban a user from a guild
  */
 public class GlobalBanCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Global ban command.
+	 */
 	public GlobalBanCommand() {
 		super();
 	}
@@ -58,7 +61,7 @@ public class GlobalBanCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		SimpleRank rank = bot.security.getSimpleRank(author);
 		if (rank.isAtLeast(SimpleRank.BOT_ADMIN) && args.length >= 1) {
 			boolean unban = args.length > 1 && Misc.isFuzzyFalse(args[1]);

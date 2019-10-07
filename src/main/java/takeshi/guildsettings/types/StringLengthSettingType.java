@@ -26,11 +26,13 @@ import takeshi.guildsettings.IGuildSettingType;
 public class StringLengthSettingType implements IGuildSettingType {
     private final int min, max;
 
-    /**
-     * @param min minimum length
-     * @param max maximum length (including)
-     */
-    public StringLengthSettingType(int min, int max) {
+	/**
+	 * Instantiates a new String length setting type.
+	 *
+	 * @param min minimum length
+	 * @param max maximum length (including)
+	 */
+	public StringLengthSettingType(int min, int max) {
         this.min = min;
         this.max = max;
     }

@@ -35,8 +35,12 @@ import takeshi.templates.Templates;
 import takeshi.util.Emojibet;
 
 /**
+ * The type Debug command.
  */
 public class DebugCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Debug command.
+	 */
 	public DebugCommand() {
 		super();
 	}
@@ -67,7 +71,7 @@ public class DebugCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (!bot.security.getSimpleRank(author).isAtLeast(SimpleRank.CREATOR)) {
 			return Templates.no_permission.formatGuild(channel, "command_no_permission");
 		}

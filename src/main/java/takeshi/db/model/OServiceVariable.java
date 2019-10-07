@@ -22,7 +22,16 @@ import takeshi.db.AbstractModel;
  * Created on 5-9-2016
  */
 public class OServiceVariable extends AbstractModel {
-    public int serviceId = 0;
-    public String variable = "";
-    public String value = "";
+	/**
+	 * The Service id.
+	 */
+	public int serviceId = 0;
+	/**
+	 * The Variable.
+	 */
+	public String variable = "";
+	/**
+	 * The Value.
+	 */
+	public String value = "";
 }

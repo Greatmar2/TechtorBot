@@ -28,7 +28,15 @@ import takeshi.db.model.OCommandCooldown;
  */
 public class CCommandCooldown {
 
-    public static OCommandCooldown findBy(String commandName, String targetId, int targetType) {
+	/**
+	 * Find by o command cooldown.
+	 *
+	 * @param commandName the command name
+	 * @param targetId    the target id
+	 * @param targetType  the target type
+	 * @return the o command cooldown
+	 */
+	public static OCommandCooldown findBy(String commandName, String targetId, int targetType) {
         OCommandCooldown record = new OCommandCooldown();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT command, target_id, target_type, last_time  " +
@@ -53,7 +61,12 @@ public class CCommandCooldown {
         return record;
     }
 
-    public static void insertOrUpdate(OCommandCooldown record) {
+	/**
+	 * Insert or update.
+	 *
+	 * @param record the record
+	 */
+	public static void insertOrUpdate(OCommandCooldown record) {
         try {
             WebDb.get().insert(
                     "INSERT INTO command_cooldown(command, target_id, target_type, last_time) " +

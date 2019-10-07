@@ -59,6 +59,9 @@ import takeshi.util.TimeUtil;
 public class NowPlayingCommand extends AbstractCommand {
 	private static final Pattern votePattern = Pattern.compile("^(?>vote|rate)\\s?(\\d+)?$");
 
+	/**
+	 * Instantiates a new Now playing command.
+	 */
 	public NowPlayingCommand() {
 		super();
 	}
@@ -95,7 +98,7 @@ public class NowPlayingCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		SimpleRank userRank = bot.security.getSimpleRank(author, channel);
 		if (!GuildSettings.get(guild).canUseMusicCommands(author, userRank)) {

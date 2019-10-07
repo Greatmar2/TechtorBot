@@ -20,21 +20,63 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O bot event.
+ */
 public class OBotEvent extends AbstractModel {
-    public int id = 0;
-    public Timestamp createdOn = null;
-    public String group = "";
-    public String subGroup = "";
-    public String data = "";
-    public Level logLevel = Level.INFO;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
+	/**
+	 * The Group.
+	 */
+	public String group = "";
+	/**
+	 * The Sub group.
+	 */
+	public String subGroup = "";
+	/**
+	 * The Data.
+	 */
+	public String data = "";
+	/**
+	 * The Log level.
+	 */
+	public Level logLevel = Level.INFO;
 
-    public enum Level {
-        FATAL(1),
-        ERROR(2),
-        WARN(3),
-        INFO(4),
-        DEBUG(5),
-        TRACE(6);
+	/**
+	 * The enum Level.
+	 */
+	public enum Level {
+		/**
+		 * Fatal level.
+		 */
+		FATAL(1),
+		/**
+		 * Error level.
+		 */
+		ERROR(2),
+		/**
+		 * Warn level.
+		 */
+		WARN(3),
+		/**
+		 * Info level.
+		 */
+		INFO(4),
+		/**
+		 * Debug level.
+		 */
+		DEBUG(5),
+		/**
+		 * Trace level.
+		 */
+		TRACE(6);
 
         private final int id;
 
@@ -43,7 +85,13 @@ public class OBotEvent extends AbstractModel {
             this.id = id;
         }
 
-        public static Level fromId(int id) {
+		/**
+		 * From id level.
+		 *
+		 * @param id the id
+		 * @return the level
+		 */
+		public static Level fromId(int id) {
             for (Level et : values()) {
                 if (id == et.getId()) {
                     return et;
@@ -52,7 +100,12 @@ public class OBotEvent extends AbstractModel {
             return INFO;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
     }

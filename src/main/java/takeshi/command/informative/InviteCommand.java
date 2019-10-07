@@ -26,6 +26,9 @@ import takeshi.main.DiscordBot;
  * !invite Instructions on how to invite the bot to a discord server
  */
 public class InviteCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Invite command.
+	 */
 	public InviteCommand() {
 		super();
 	}
@@ -56,7 +59,7 @@ public class InviteCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "You can add me to your guild (server) with the following link:\n" + "https://discordapp.com/oauth2/authorize?client_id="
 				+ channel.getJDA().getSelfUser().getId() + "&scope=bot&permissions=339209287";
 	}

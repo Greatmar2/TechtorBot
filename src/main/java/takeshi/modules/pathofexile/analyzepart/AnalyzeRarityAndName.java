@@ -23,6 +23,9 @@ import takeshi.modules.pathofexile.IPoEAnalyzePart;
 import takeshi.modules.pathofexile.enums.Rarity;
 import takeshi.modules.pathofexile.obj.PoEItem;
 
+/**
+ * The type Analyze rarity and name.
+ */
 public class AnalyzeRarityAndName implements IPoEAnalyzePart {
     private final Pattern rarityPattern = Pattern.compile("Rarity: ([A-Za-z]{2,})");
 

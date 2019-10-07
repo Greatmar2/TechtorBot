@@ -64,6 +64,9 @@ import takeshi.util.TimeUtil;
  */
 public class CommandHandler {
 
+	/**
+	 * The constant ALL_COMMANDS.
+	 */
 	public final static String ALL_COMMANDS = "all-commands";
 	private static final HashMap<String, AbstractCommand> commands = new HashMap<>();
 	private static final HashMap<String, AbstractCommand> commandsAlias = new HashMap<>();
@@ -84,6 +87,11 @@ public class CommandHandler {
 		return msg.startsWith(DisUtil.getCommandPrefix(channel)) || msg.startsWith(mentionMe) || msg.startsWith(mentionMeAlias);
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void removeGuild(int guildId) {
 		if (guildCommands.containsKey(guildId)) {
 			guildCommands.remove(guildId);
@@ -298,6 +306,8 @@ public class CommandHandler {
 	}
 
 	/**
+	 * Gets command.
+	 *
 	 * @param key command with or without the Config.BOT_COMMAND_PREFIX
 	 * @return instance of Command for Key or null
 	 */
@@ -329,6 +339,11 @@ public class CommandHandler {
 		return cmds;
 	}
 
+	/**
+	 * Get command objects abstract command [ ].
+	 *
+	 * @return the abstract command [ ]
+	 */
 	public static AbstractCommand[] getCommandObjects() {
 		return commands.values().toArray(new AbstractCommand[commands.values().size()]);
 	}
@@ -336,8 +351,9 @@ public class CommandHandler {
 	/**
 	 * Add a custom static command
 	 *
-	 * @param input  command
-	 * @param output return
+	 * @param guildId the guild id
+	 * @param input   command
+	 * @param output  return
 	 */
 	public static void addCustomCommand(int guildId, String input, String output) {
 		try {
@@ -375,6 +391,11 @@ public class CommandHandler {
 		}
 	}
 
+	/**
+	 * Load custom commands.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void loadCustomCommands(int guildId) {
 		removeGuild(guildId);
 		try (ResultSet r = WebDb.get().select("SELECT input, output FROM commands WHERE server = ?", guildId)) {
@@ -440,6 +461,12 @@ public class CommandHandler {
 		return commands.keySet().toArray(new String[commands.keySet().size()]);
 	}
 
+	/**
+	 * Command exists boolean.
+	 *
+	 * @param cmd the cmd
+	 * @return the boolean
+	 */
 	public static boolean commandExists(String cmd) {
 		return commands.containsKey(cmd) || commandsAlias.containsKey(cmd);
 	}

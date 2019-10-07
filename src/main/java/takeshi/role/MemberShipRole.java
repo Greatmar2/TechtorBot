@@ -28,33 +28,68 @@ public class MemberShipRole {
     private final long membershipTime;
     private final boolean hoisted;
 
-    public MemberShipRole(String name, Color color, long membershipTime) {
+	/**
+	 * Instantiates a new Member ship role.
+	 *
+	 * @param name           the name
+	 * @param color          the color
+	 * @param membershipTime the membership time
+	 */
+	public MemberShipRole(String name, Color color, long membershipTime) {
         this.name = name;
         this.color = color;
         this.hoisted = false;
         this.membershipTime = membershipTime;
     }
 
-    public MemberShipRole(String name, Color color, long membershipTime, boolean hoisted) {
+	/**
+	 * Instantiates a new Member ship role.
+	 *
+	 * @param name           the name
+	 * @param color          the color
+	 * @param membershipTime the membership time
+	 * @param hoisted        the hoisted
+	 */
+	public MemberShipRole(String name, Color color, long membershipTime, boolean hoisted) {
         this.name = name;
         this.color = color;
         this.hoisted = hoisted;
         this.membershipTime = membershipTime;
     }
 
-    public String getName() {
+	/**
+	 * Gets name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
         return name;
     }
 
-    public Color getColor() {
+	/**
+	 * Gets color.
+	 *
+	 * @return the color
+	 */
+	public Color getColor() {
         return color;
     }
 
-    public long getMembershipTime() {
+	/**
+	 * Gets membership time.
+	 *
+	 * @return the membership time
+	 */
+	public long getMembershipTime() {
         return membershipTime;
     }
 
-    public boolean isHoisted() {
+	/**
+	 * Is hoisted boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isHoisted() {
         return hoisted;
     }
 }

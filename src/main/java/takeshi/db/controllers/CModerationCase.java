@@ -39,6 +39,12 @@ public class CModerationCase {
 
 	private static final SimpleDateFormat banDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+	/**
+	 * Find by id o moderation case.
+	 *
+	 * @param caseId the case id
+	 * @return the o moderation case
+	 */
 	public static OModerationCase findById(int caseId) {
 		OModerationCase record = new OModerationCase();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM moderation_case " + "WHERE id = ? ", caseId)) {
@@ -57,7 +63,7 @@ public class CModerationCase {
 	 *
 	 * @param guildId     internal guild id
 	 * @param moderatorId internal user id
-	 * @return case
+	 * @return case o moderation case
 	 */
 	public static OModerationCase findLastFor(int guildId, int moderatorId) {
 		OModerationCase record = new OModerationCase();
@@ -90,6 +96,16 @@ public class CModerationCase {
 		return record;
 	}
 
+	/**
+	 * Insert int.
+	 *
+	 * @param guild      the guild
+	 * @param targetUser the target user
+	 * @param moderator  the moderator
+	 * @param punishType the punish type
+	 * @param expires    the expires
+	 * @return the int
+	 */
 	public static int insert(Guild guild, User targetUser, User moderator, OModerationCase.PunishType punishType, Timestamp expires) {
 		OModerationCase rec = new OModerationCase();
 		rec.guildId = CGuild.getCachedId(guild.getIdLong());
@@ -105,6 +121,12 @@ public class CModerationCase {
 		return insert(rec);
 	}
 
+	/**
+	 * Insert int.
+	 *
+	 * @param record the record
+	 * @return the int
+	 */
 	public static int insert(OModerationCase record) {
 		try {
 			return WebDb.get().insert(
@@ -118,6 +140,11 @@ public class CModerationCase {
 		return -1;
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OModerationCase record) {
 		try {
 			WebDb.get().insert(
@@ -130,10 +157,24 @@ public class CModerationCase {
 		}
 	}
 
+	/**
+	 * Build case message embed.
+	 *
+	 * @param guild  the guild
+	 * @param caseId the case id
+	 * @return the message embed
+	 */
 	public static MessageEmbed buildCase(Guild guild, int caseId) {
 		return buildCase(guild, findById(caseId));
 	}
 
+	/**
+	 * Build case message embed.
+	 *
+	 * @param guild   the guild
+	 * @param modcase the modcase
+	 * @return the message embed
+	 */
 	public static MessageEmbed buildCase(Guild guild, OModerationCase modcase) {
 		EmbedBuilder b = new EmbedBuilder();
 		b.setTitle(String.format("%s | case #%s", modcase.punishment.getKeyword(), modcase.id), null);
@@ -153,6 +194,13 @@ public class CModerationCase {
 		return b.build();
 	}
 
+	/**
+	 * Find user cases list.
+	 *
+	 * @param guild the guild
+	 * @param user  the user
+	 * @return the list
+	 */
 	public static List<OModerationCase> findUserCases(Guild guild, User user) {
 		List<OModerationCase> records = new ArrayList<>();
 		int cachedUserId = CUser.getCachedId(user.getIdLong());

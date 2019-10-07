@@ -27,15 +27,41 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.ORaffle;
 
+/**
+ * The type C raffle.
+ */
 public class CRaffle {
+	/**
+	 * The constant PRIZE_LENGTH.
+	 */
 	public static final int PRIZE_LENGTH = 100;
+	/**
+	 * The constant DESC_LENGTH.
+	 */
 	public static final int DESC_LENGTH = 500;
+	/**
+	 * The constant IMAGE_LENGTH.
+	 */
 	public static final int IMAGE_LENGTH = 150;
 
+	/**
+	 * Find by o raffle.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param raffleId       the raffle id
+	 * @return the o raffle
+	 */
 	public static ORaffle findBy(long discordGuildId, int raffleId) {
 		return findBy(CGuild.getCachedId(discordGuildId), raffleId);
 	}
 
+	/**
+	 * Find or create o raffle.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param raffleId       the raffle id
+	 * @return the o raffle
+	 */
 	public static ORaffle findOrCreate(long discordGuildId, int raffleId) {
 		ORaffle rec = findBy(discordGuildId, raffleId);
 		if (rec.id == 0) {
@@ -45,6 +71,13 @@ public class CRaffle {
 		return rec;
 	}
 
+	/**
+	 * Find by o raffle.
+	 *
+	 * @param serverId the server id
+	 * @param raffleId the raffle id
+	 * @return the o raffle
+	 */
 	public static ORaffle findBy(int serverId, int raffleId) {
 		ORaffle t = new ORaffle();
 		try (ResultSet rs = WebDb.get().select("SELECT * FROM raffle WHERE guild_id = ? AND id = ?", serverId, raffleId)) {
@@ -58,10 +91,24 @@ public class CRaffle {
 		return t;
 	}
 
+	/**
+	 * Find by message o raffle.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param messageId      the message id
+	 * @return the o raffle
+	 */
 	public static ORaffle findByMessage(long discordGuildId, long messageId) {
 		return findByMessage(CGuild.getCachedId(discordGuildId), messageId);
 	}
 
+	/**
+	 * Find by message o raffle.
+	 *
+	 * @param serverId  the server id
+	 * @param messageId the message id
+	 * @return the o raffle
+	 */
 	public static ORaffle findByMessage(int serverId, long messageId) {
 		ORaffle t = new ORaffle();
 		try (ResultSet rs = WebDb.get().select("SELECT * " + "FROM raffle " + "WHERE guild_id = ? AND message_id = ?", serverId, messageId)) {
@@ -75,10 +122,22 @@ public class CRaffle {
 		return t;
 	}
 
+	/**
+	 * Gets messages for guild.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @return the messages for guild
+	 */
 	public static List<ORaffle> getMessagesForGuild(long guildDiscordId) {
 		return getMessagesForGuild(CGuild.getCachedId(guildDiscordId));
 	}
 
+	/**
+	 * Gets messages for guild.
+	 *
+	 * @param guildId the guild id
+	 * @return the messages for guild
+	 */
 	public static List<ORaffle> getMessagesForGuild(int guildId) {
 		List<ORaffle> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM raffle " + "WHERE guild_id = ?", guildId)) {
@@ -113,6 +172,11 @@ public class CRaffle {
 		return t;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
 	public static void delete(ORaffle record) {
 		try {
 			WebDb.get().query("DELETE FROM raffle WHERE id = ?", record.id);
@@ -121,10 +185,20 @@ public class CRaffle {
 		}
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(long guildId) {
 		deleteGuild(CGuild.getCachedId(guildId));
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(int guildId) {
 		try {
 			WebDb.get().query("DELETE FROM raffle WHERE guild_id = ? ", guildId);
@@ -133,6 +207,11 @@ public class CRaffle {
 		}
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(ORaffle record) {
 		if (record.id == 0) {
 			insert(record);
@@ -149,6 +228,12 @@ public class CRaffle {
 		}
 	}
 
+	/**
+	 * Insert o raffle.
+	 *
+	 * @param record the record
+	 * @return the o raffle
+	 */
 	public static ORaffle insert(ORaffle record) {
 		if (record.id > 0) {
 			update(record);

@@ -34,7 +34,13 @@ import takeshi.db.model.OPlaylist;
 public class CPlaylist {
     private static Random rng = new Random();
 
-    public static ArrayList<OPlaylist> getPlaylistsForUser(int userId) {
+	/**
+	 * Gets playlists for user.
+	 *
+	 * @param userId the user id
+	 * @return the playlists for user
+	 */
+	public static ArrayList<OPlaylist> getPlaylistsForUser(int userId) {
         ArrayList<OPlaylist> s = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id,code, title, owner_id, guild_id, visibility_level, play_type, edit_type, create_date  " +
@@ -50,7 +56,13 @@ public class CPlaylist {
         return s;
     }
 
-    public static ArrayList<OPlaylist> getPlaylistsForGuild(int guildId) {
+	/**
+	 * Gets playlists for guild.
+	 *
+	 * @param guildId the guild id
+	 * @return the playlists for guild
+	 */
+	public static ArrayList<OPlaylist> getPlaylistsForGuild(int guildId) {
         ArrayList<OPlaylist> s = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id,code, title, owner_id, guild_id, visibility_level, play_type, edit_type, create_date  " +
@@ -66,7 +78,12 @@ public class CPlaylist {
         return s;
     }
 
-    public static OPlaylist getGlobalList() {
+	/**
+	 * Gets global list.
+	 *
+	 * @return the global list
+	 */
+	public static OPlaylist getGlobalList() {
         OPlaylist globalList = findBy(0, 0, "default");
         if (globalList.id == 0) {
             globalList.title = "Global";
@@ -76,11 +93,26 @@ public class CPlaylist {
         return globalList;
     }
 
-    public static OPlaylist findBy(int userId, int guildId) {
+	/**
+	 * Find by o playlist.
+	 *
+	 * @param userId  the user id
+	 * @param guildId the guild id
+	 * @return the o playlist
+	 */
+	public static OPlaylist findBy(int userId, int guildId) {
         return findBy(userId, guildId, "default");
     }
 
-    public static OPlaylist findBy(int userId, int guildId, String code) {
+	/**
+	 * Find by o playlist.
+	 *
+	 * @param userId  the user id
+	 * @param guildId the guild id
+	 * @param code    the code
+	 * @return the o playlist
+	 */
+	public static OPlaylist findBy(int userId, int guildId, String code) {
         OPlaylist s = new OPlaylist();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -100,7 +132,13 @@ public class CPlaylist {
         return s;
     }
 
-    public static OPlaylist findById(int internalId) {
+	/**
+	 * Find by id o playlist.
+	 *
+	 * @param internalId the internal id
+	 * @return the o playlist
+	 */
+	public static OPlaylist findById(int internalId) {
         OPlaylist s = new OPlaylist();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -116,7 +154,15 @@ public class CPlaylist {
         return s;
     }
 
-    public static List<OMusic> getMusic(int playlistId, int maxListSize, int offset) {
+	/**
+	 * Gets music.
+	 *
+	 * @param playlistId  the playlist id
+	 * @param maxListSize the max list size
+	 * @param offset      the offset
+	 * @return the music
+	 */
+	public static List<OMusic> getMusic(int playlistId, int maxListSize, int offset) {
         List<OMusic> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("" +
                 "SELECT m.* " +
@@ -137,7 +183,13 @@ public class CPlaylist {
     }
 
 
-    public static int getMusicCount(int playlistId) {
+	/**
+	 * Gets music count.
+	 *
+	 * @param playlistId the playlist id
+	 * @return the music count
+	 */
+	public static int getMusicCount(int playlistId) {
         int amount = 0;
         try (ResultSet rs = WebDb.get().select("SELECT count(*) AS amount FROM playlist_item WHERE playlist_id = ?", playlistId)) {
             while (rs.next()) {
@@ -150,7 +202,14 @@ public class CPlaylist {
         return amount;
     }
 
-    public static String getNextTrack(int playlistId, OPlaylist.PlayType playType) {
+	/**
+	 * Gets next track.
+	 *
+	 * @param playlistId the playlist id
+	 * @param playType   the play type
+	 * @return the next track
+	 */
+	public static String getNextTrack(int playlistId, OPlaylist.PlayType playType) {
         switch (playType) {
             case LOOP:
                 return getNextMusic(playlistId);
@@ -160,13 +219,13 @@ public class CPlaylist {
         }
     }
 
-    /**
-     * Retrieves a somewhat random item from the playlist
-     *
-     * @param playlistId the playlist to look in
-     * @return absolute path to file
-     */
-    public static String getRandomMusic(int playlistId) {
+	/**
+	 * Retrieves a somewhat random item from the playlist
+	 *
+	 * @param playlistId the playlist to look in
+	 * @return absolute path to file
+	 */
+	public static String getRandomMusic(int playlistId) {
         List<String> potentialSongs = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT m.id, m.youtubecode " +
@@ -188,7 +247,13 @@ public class CPlaylist {
         return null;
     }
 
-    public static String getNextMusic(int playlistId) {
+	/**
+	 * Gets next music.
+	 *
+	 * @param playlistId the playlist id
+	 * @return the next music
+	 */
+	public static String getNextMusic(int playlistId) {
         String filename = null;
         try (ResultSet rs = WebDb.get().select(
                 "SELECT m.id, m.youtubecode " +
@@ -207,14 +272,14 @@ public class CPlaylist {
         return filename;
     }
 
-    /**
-     * Add a song to a playlist
-     *
-     * @param playlistId the playlist to add to
-     * @param musicId    the id of the music record
-     * @return success
-     */
-    public static boolean addToPlayList(int playlistId, int musicId) {
+	/**
+	 * Add a song to a playlist
+	 *
+	 * @param playlistId the playlist to add to
+	 * @param musicId    the id of the music record
+	 * @return success boolean
+	 */
+	public static boolean addToPlayList(int playlistId, int musicId) {
         try {
             WebDb.get().query(
                     "INSERT INTO playlist_item(playlist_id, music_id, last_played) " +
@@ -228,14 +293,14 @@ public class CPlaylist {
         return false;
     }
 
-    /**
-     * checks if music is present in a playlist
-     *
-     * @param playlistId the playlist to check
-     * @param musicId    id of the music record
-     * @return found music in list?
-     */
-    public static boolean isInPlaylist(int playlistId, int musicId) {
+	/**
+	 * checks if music is present in a playlist
+	 *
+	 * @param playlistId the playlist to check
+	 * @param musicId    id of the music record
+	 * @return found music in list?
+	 */
+	public static boolean isInPlaylist(int playlistId, int musicId) {
         boolean isInList = false;
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * FROM playlist_item WHERE playlist_id = ? AND music_id = ?",
@@ -250,12 +315,12 @@ public class CPlaylist {
         return isInList;
     }
 
-    /**
-     * empty the whole playlist!
-     *
-     * @param playlistId id of the playlist
-     */
-    public static void resetPlaylist(int playlistId) {
+	/**
+	 * empty the whole playlist!
+	 *
+	 * @param playlistId id of the playlist
+	 */
+	public static void resetPlaylist(int playlistId) {
         try {
             WebDb.get().query(
                     "DELETE FROM playlist_item WHERE playlist_id = ?",
@@ -266,14 +331,14 @@ public class CPlaylist {
         }
     }
 
-    /**
-     * delete a track from the playlist
-     *
-     * @param playlistId internal playlist id
-     * @param musicId    internal music id
-     * @return track removed?
-     */
-    public static boolean removeFromPlayList(int playlistId, int musicId) {
+	/**
+	 * delete a track from the playlist
+	 *
+	 * @param playlistId internal playlist id
+	 * @param musicId    internal music id
+	 * @return track removed?
+	 */
+	public static boolean removeFromPlayList(int playlistId, int musicId) {
         try {
             WebDb.get().query(
                     "DELETE FROM playlist_item WHERE playlist_id = ? AND music_id = ?",
@@ -286,13 +351,13 @@ public class CPlaylist {
         return false;
     }
 
-    /**
-     * updates the last time a song was played in a playlist
-     *
-     * @param playlistId id of the playlist
-     * @param musicId    id of the music recordf
-     */
-    public static void updateLastPlayed(int playlistId, int musicId) {
+	/**
+	 * updates the last time a song was played in a playlist
+	 *
+	 * @param playlistId id of the playlist
+	 * @param musicId    id of the music recordf
+	 */
+	public static void updateLastPlayed(int playlistId, int musicId) {
         try {
             WebDb.get().query("UPDATE playlist_item SET last_played = ? WHERE playlist_id = ? AND music_id = ?",
                     System.currentTimeMillis() / 1000L, playlistId, musicId);
@@ -315,7 +380,12 @@ public class CPlaylist {
         return r;
     }
 
-    public static void update(OPlaylist record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OPlaylist record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -335,7 +405,12 @@ public class CPlaylist {
         }
     }
 
-    public static void insert(OPlaylist record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OPlaylist record) {
         try {
             record.createdOn = new Timestamp(System.currentTimeMillis());
             record.id = WebDb.get().insert(
@@ -348,12 +423,12 @@ public class CPlaylist {
         }
     }
 
-    /**
-     * removes a track from all playlists
-     *
-     * @param musicId internal music id
-     */
-    public static void deleteTrackFromPlaylists(int musicId) {
+	/**
+	 * removes a track from all playlists
+	 *
+	 * @param musicId internal music id
+	 */
+	public static void deleteTrackFromPlaylists(int musicId) {
         try {
             WebDb.get().query(
                     "DELETE FROM playlist_item WHERE music_id = ?",

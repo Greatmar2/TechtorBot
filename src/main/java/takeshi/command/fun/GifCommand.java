@@ -34,7 +34,10 @@ import takeshi.templates.Templates;
  * gives you a random chuck norris joke with chuck norris replaced by <@user>
  */
 public class GifCommand extends AbstractCommand {
-    public GifCommand() {
+	/**
+	 * Instantiates a new Gif command.
+	 */
+	public GifCommand() {
         super();
     }
 
@@ -62,7 +65,7 @@ public class GifCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         try {
             String tags = "";
             if (args.length > 0) {

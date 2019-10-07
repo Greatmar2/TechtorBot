@@ -16,6 +16,24 @@
 
 package takeshi.games.meta;
 
+/**
+ * The enum Game state.
+ */
 public enum GameState {
-    INITIALIZING, READY, IN_PROGRESS, OVER;
+	/**
+	 * Initializing game state.
+	 */
+	INITIALIZING,
+	/**
+	 * Ready game state.
+	 */
+	READY,
+	/**
+	 * In progress game state.
+	 */
+	IN_PROGRESS,
+	/**
+	 * Over game state.
+	 */
+	OVER;
 }

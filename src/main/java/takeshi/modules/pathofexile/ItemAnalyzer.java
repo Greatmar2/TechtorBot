@@ -26,6 +26,9 @@ import org.reflections.Reflections;
 
 import takeshi.modules.pathofexile.obj.PoEItem;
 
+/**
+ * The type Item analyzer.
+ */
 public class ItemAnalyzer {
 	private static final String paragraphSplitter = "--------";
 	private final Pattern levelRequirementPattern = Pattern.compile("\nLevel: ([0-9]+)");
@@ -33,6 +36,9 @@ public class ItemAnalyzer {
 	private List<IPoEAnalyzePart> analyzers = new ArrayList<>();
 	private List<Boolean> hasAnalyzed = new ArrayList<>();
 
+	/**
+	 * Instantiates a new Item analyzer.
+	 */
 	public ItemAnalyzer() {
 		loadAnalyzeParts();
 	}
@@ -53,6 +59,12 @@ public class ItemAnalyzer {
 		}
 	}
 
+	/**
+	 * Attempt to ana lyze po e item.
+	 *
+	 * @param toanalyze the toanalyze
+	 * @return the po e item
+	 */
 	public PoEItem attemptToANALyze(String toanalyze) {
 		item = new PoEItem();
 		String[] paragraphs = breakIntoParts(toanalyze);

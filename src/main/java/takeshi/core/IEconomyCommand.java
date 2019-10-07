@@ -16,6 +16,9 @@
 
 package takeshi.core;
 
+/**
+ * The interface Economy command.
+ */
 public interface IEconomyCommand {
 
 }

@@ -51,6 +51,9 @@ import takeshi.util.QuickEmbedBuilder;
  * !help help function
  */
 public class HelpCommand extends AbstractCommand implements ICommandReactionListener<HelpCommand.ReactionData> {
+	/**
+	 * Instantiates a new Help command.
+	 */
 	public HelpCommand() {
 		super();
 	}
@@ -82,7 +85,7 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "Use full execution";
 	}
 
@@ -252,7 +255,13 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 		return listener;
 	}
 
+	/**
+	 * The type Reaction data.
+	 */
 	public class ReactionData {
+		/**
+		 * The Rank.
+		 */
 		final SimpleRank rank;
 		private CommandCategory activeCategory;
 
@@ -261,14 +270,29 @@ public class HelpCommand extends AbstractCommand implements ICommandReactionList
 			this.activeCategory = activeCategory;
 		}
 
+		/**
+		 * Gets active category.
+		 *
+		 * @return the active category
+		 */
 		public CommandCategory getActiveCategory() {
 			return activeCategory;
 		}
 
+		/**
+		 * Sets active category.
+		 *
+		 * @param activeCategory the active category
+		 */
 		public void setActiveCategory(CommandCategory activeCategory) {
 			this.activeCategory = activeCategory;
 		}
 
+		/**
+		 * Gets rank.
+		 *
+		 * @return the rank
+		 */
 		public SimpleRank getRank() {
 			return rank;
 		}

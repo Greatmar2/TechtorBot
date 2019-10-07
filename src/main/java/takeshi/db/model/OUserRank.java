@@ -19,8 +19,15 @@ package takeshi.db.model;
 import takeshi.db.AbstractModel;
 
 /**
+ * The type O user rank.
  */
 public class OUserRank extends AbstractModel {
-    public int rankId = 0;
-    public int userId = 0;
+	/**
+	 * The Rank id.
+	 */
+	public int rankId = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
 }

@@ -16,10 +16,18 @@
 
 package takeshi.exceptions;
 
+/**
+ * The type Default setting already exists exception.
+ */
 public class DefaultSettingAlreadyExistsException extends Exception {
     private String s;
 
-    public DefaultSettingAlreadyExistsException(String propertyName) {
+	/**
+	 * Instantiates a new Default setting already exists exception.
+	 *
+	 * @param propertyName the property name
+	 */
+	public DefaultSettingAlreadyExistsException(String propertyName) {
         s = "Config property '" + propertyName + "' already exists";
     }
 

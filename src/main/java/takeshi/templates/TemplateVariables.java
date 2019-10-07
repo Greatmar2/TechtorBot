@@ -30,7 +30,13 @@ import net.dv8tion.jda.internal.entities.TextChannelImpl;
 import net.dv8tion.jda.internal.entities.UserImpl;
 import takeshi.main.BotContainer;
 
+/**
+ * The type Template variables.
+ */
 public class TemplateVariables {
+	/**
+	 * The constant EMPTY.
+	 */
 	public static final TemplateVariables EMPTY = new TemplateVariables();
 	private static final HashMap<Class, TemplateVariableParser> mapper = new HashMap<>();
 
@@ -38,11 +44,29 @@ public class TemplateVariables {
 		init();
 	}
 
+	/**
+	 * The User.
+	 */
 	public User user = null;
+	/**
+	 * The Channel.
+	 */
 	public TextChannel channel = null;
+	/**
+	 * The Guild.
+	 */
 	public Guild guild = null;
+	/**
+	 * The Role.
+	 */
 	public Role role = null;
+	/**
+	 * The Args.
+	 */
 	public String args = null;
+	/**
+	 * The Arg.
+	 */
 	public String[] arg = { null, null, null };
 
 	private static void init() {
@@ -69,6 +93,12 @@ public class TemplateVariables {
 		mapper.put(String[].class, (var, object) -> var.args = Joiner.on(" ").join((String[]) object));
 	}
 
+	/**
+	 * Create template variables.
+	 *
+	 * @param vars the vars
+	 * @return the template variables
+	 */
 	public static TemplateVariables create(Object... vars) {
 		if (vars == null || vars.length == 0) {
 			return EMPTY;
@@ -88,6 +118,12 @@ public class TemplateVariables {
 	}
 
 	private interface TemplateVariableParser {
+		/**
+		 * Apply.
+		 *
+		 * @param var the var
+		 * @param o   the o
+		 */
 		void apply(TemplateVariables var, Object o);
 	}
 

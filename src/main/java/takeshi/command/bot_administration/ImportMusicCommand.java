@@ -41,6 +41,9 @@ public class ImportMusicCommand extends AbstractCommand {
         return false;
     }
 
+    /**
+     * Instantiates a new Import music command.
+     */
     public ImportMusicCommand() {
         super();
     }
@@ -73,7 +76,7 @@ public class ImportMusicCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author);
         if (author.getId().equals("97284813643329536") || rank.isAtLeast(SimpleRank.CREATOR)) {
             if (isInProgress.get()) {
@@ -95,6 +98,11 @@ public class ImportMusicCommand extends AbstractCommand {
         return Templates.no_permission.formatGuild(channel);
     }
 
+    /**
+     * Import directory.
+     *
+     * @param file the file
+     */
     public void importDirectory(File file) {
         File[] flist = file.listFiles();
         if (flist == null) {

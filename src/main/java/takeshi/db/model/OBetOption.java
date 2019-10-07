@@ -18,8 +18,20 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O bet option.
+ */
 public class OBetOption extends AbstractModel {
-    public int id = 0;
-    public int betId = 0;
-    public String description = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Bet id.
+	 */
+	public int betId = 0;
+	/**
+	 * The Description.
+	 */
+	public String description = "";
 }

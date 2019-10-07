@@ -22,14 +22,37 @@ import takeshi.db.AbstractModel;
  * Created on 10-8-2016
  */
 public class OGuild extends AbstractModel {
-    public int id = 0;
-    public long discord_id = 0L;
-    public String name = "";
-    public int owner = 0;
-    public int active = 0;
-    public int banned = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Discord id.
+	 */
+	public long discord_id = 0L;
+	/**
+	 * The Name.
+	 */
+	public String name = "";
+	/**
+	 * The Owner.
+	 */
+	public int owner = 0;
+	/**
+	 * The Active.
+	 */
+	public int active = 0;
+	/**
+	 * The Banned.
+	 */
+	public int banned = 0;
 
-    public boolean isBanned() {
+	/**
+	 * Is banned boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isBanned() {
         return banned == 1;
     }
 }

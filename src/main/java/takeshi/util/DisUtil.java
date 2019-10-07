@@ -16,37 +16,13 @@
 
 package takeshi.util;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.imageio.ImageIO;
-
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
-
 import emoji4j.EmojiUtils;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.entities.Message.Attachment;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.PrivateChannel;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.db.controllers.CGuild;
 import takeshi.db.model.OGuild;
@@ -57,6 +33,18 @@ import takeshi.main.BotConfig;
 import takeshi.main.BotContainer;
 import takeshi.main.DiscordBot;
 import takeshi.main.Launcher;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utilities for discord objects
@@ -84,6 +72,12 @@ public class DisUtil {
 		return null;
 	}
 
+	/**
+	 * Extract id string.
+	 *
+	 * @param id the id
+	 * @return the string
+	 */
 	public static String extractId(String id) {
 		Matcher matcher = discordId.matcher(id);
 		if (matcher.find()) {
@@ -102,18 +96,26 @@ public class DisUtil {
 		return anyMention.matcher(search).matches();
 	}
 
+	/**
+	 * Has permission boolean.
+	 *
+	 * @param channel    the channel
+	 * @param user       the user
+	 * @param permission the permission
+	 * @return the boolean
+	 */
 	public static boolean hasPermission(MessageChannel channel, User user, Permission permission) {
 		if (channel == null) {
 			return false;
 		}
 		switch (channel.getType()) {
-		case PRIVATE:
-			return true;
-		case TEXT:
-			TextChannel textChannel = (TextChannel) channel;
-			return PermissionUtil.checkPermission(textChannel, textChannel.getGuild().getMember(user), permission);
-		default:
-			return false;
+			case PRIVATE:
+				return true;
+			case TEXT:
+				TextChannel textChannel = (TextChannel) channel;
+				return PermissionUtil.checkPermission(textChannel, textChannel.getGuild().getMember(user), permission);
+			default:
+				return false;
 		}
 	}
 
@@ -151,9 +153,7 @@ public class DisUtil {
 	/**
 	 * Search for a guild
 	 *
-	 * @param searchArg text to look for with i-prefix searches for internal
-	 *                  guild-id if it consists of at least 10 decimals, it will
-	 *                  assume its a discord-id
+	 * @param searchArg text to look for with i-prefix searches for internal                  guild-id if it consists of at least 10 decimals, it will                  assume its a discord-id
 	 * @param container the container to look in
 	 * @return Guild || null
 	 */
@@ -190,6 +190,12 @@ public class DisUtil {
 		return mentionUserPattern.matcher(input).find();
 	}
 
+	/**
+	 * Is role mention boolean.
+	 *
+	 * @param input the input
+	 * @return the boolean
+	 */
 	public static boolean isRoleMention(String input) {
 		return rolePattern.matcher(input).find();
 	}
@@ -201,29 +207,36 @@ public class DisUtil {
 	 * @return use economy?
 	 */
 	public static boolean useEconomy(GuildChannel channel) {
-		return channel != null && channel instanceof TextChannel && GuildSettings.getBoolFor(((TextChannel) channel), GSetting.MODULE_ECONOMY);
+		return channel instanceof TextChannel
+				&& GuildSettings.getBoolFor(((TextChannel) channel), GSetting.MODULE_ECONOMY);
 	}
 
 	/**
 	 * Replaces tags with a variable
 	 *
-	 * @param input   the message to replace tags in
-	 * @param user    user info for user related tags
-	 * @param channel channel/guild info
+	 * @param input    the message to replace tags in
+	 * @param user     user info for user related tags
+	 * @param channel  channel/guild info
+	 * @param userArgs the user args
 	 * @return formatted string
 	 */
-
 	public static String replaceTags(String input, User user, MessageChannel channel, String[] userArgs) {
 		Guild guild = null;
 		if (channel instanceof TextChannel) {
 			guild = ((TextChannel) channel).getGuild();
 		}
 		String output = input.replace("\\%", "\u0013");
-		output = output.replace("%user%", user.getName()).replace("%user-mention%", user.getAsMention()).replace("%user-id%", user.getId())
-				.replace("%nick%", guild != null && guild.isMember(user) ? guild.getMember(user).getEffectiveName() : user.getName())
-				.replace("%discrim%", user.getDiscriminator()).replace("%guild%", (guild == null) ? "Private" : guild.getName())
-				.replace("%guild-id%", (guild == null) ? "0" : guild.getId()).replace("%guild-users%", (guild == null) ? "0" : guild.getMembers().size() + "")
-				.replace("%channel%", (guild == null) ? "Private" : channel.getName()).replace("%channel-id%", (guild == null) ? "0" : channel.getId())
+		output = output.replace("%user%", user.getName()).replace("%user-mention%", user.getAsMention())
+				.replace("%user-id%", user.getId())
+				.replace("%nick%",
+						guild != null && guild.isMember(user) ? guild.getMember(user).getEffectiveName()
+								: user.getName())
+				.replace("%discrim%", user.getDiscriminator())
+				.replace("%guild%", (guild == null) ? "Private" : guild.getName())
+				.replace("%guild-id%", (guild == null) ? "0" : guild.getId())
+				.replace("%guild-users%", (guild == null) ? "0" : guild.getMembers().size() + "")
+				.replace("%channel%", (guild == null) ? "Private" : channel.getName())
+				.replace("%channel-id%", (guild == null) ? "0" : channel.getId())
 				.replace("%channel-mention%", (guild == null) ? "Private" : ((TextChannel) channel).getAsMention());
 		if (guild == null) {
 			return output.replace("\u0013", "%");
@@ -238,14 +251,18 @@ public class DisUtil {
 		int ind;
 		Random rng = new Random();
 		while ((ind = output.indexOf("%rand-user%")) != -1) {
-			output = output.substring(0, ind) + guild.getMembers().get(rng.nextInt(guild.getMembers().size())).getEffectiveName() + output.substring(ind + 11);
+			output = output.substring(0, ind)
+					+ guild.getMembers().get(rng.nextInt(guild.getMembers().size())).getEffectiveName()
+					+ output.substring(ind + 11);
 		}
 
 		if (output.contains("%rand-user-online%")) {
 			List<Member> onlines = new ArrayList<>();
-			guild.getMembers().stream().filter((u) -> (u.getOnlineStatus().equals(OnlineStatus.ONLINE))).forEach(onlines::add);
+			guild.getMembers().stream().filter((u) -> (u.getOnlineStatus().equals(OnlineStatus.ONLINE)))
+					.forEach(onlines::add);
 			while ((ind = output.indexOf("%rand-user-online%")) != -1)
-				output = output.substring(0, ind) + onlines.get(rng.nextInt(onlines.size())).getEffectiveName() + output.substring(ind + 18);
+				output = output.substring(0, ind) + onlines.get(rng.nextInt(onlines.size())).getEffectiveName()
+						+ output.substring(ind + 18);
 		}
 		return output.replace("\u0013", "%");
 	}
@@ -297,7 +314,7 @@ public class DisUtil {
 
 		try {
 			return channel.getJDA().getUserById(searchText);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException ignored) {
 
 		}
 
@@ -310,6 +327,8 @@ public class DisUtil {
 	}
 
 	/**
+	 * Is channel mention boolean.
+	 *
 	 * @param input string to check for mentions
 	 * @return found a mention
 	 */
@@ -375,10 +394,22 @@ public class DisUtil {
 		return DefaultGuildSettings.getDefault(GSetting.COMMAND_PREFIX);
 	}
 
+	/**
+	 * Gets command prefix.
+	 *
+	 * @param guild the guild
+	 * @return the command prefix
+	 */
 	public static String getCommandPrefix(Guild guild) {
 		return getCommandPrefix(guild.getIdLong());
 	}
 
+	/**
+	 * Gets command prefix.
+	 *
+	 * @param guildId the guild id
+	 * @return the command prefix
+	 */
 	public static String getCommandPrefix(long guildId) {
 		return GuildSettings.get(guildId).getOrDefault(GSetting.COMMAND_PREFIX);
 	}
@@ -427,6 +458,13 @@ public class DisUtil {
 		return containsRole;
 	}
 
+	/**
+	 * Has role role.
+	 *
+	 * @param guild    the guild
+	 * @param roleName the role name
+	 * @return the role
+	 */
 	public static Role hasRole(Guild guild, String roleName) {
 		List<Role> roles = guild.getRoles();
 		Role containsRole = null;
@@ -441,19 +479,35 @@ public class DisUtil {
 		return containsRole;
 	}
 
+	/**
+	 * Gets user avatar.
+	 *
+	 * @param user the user
+	 * @return the user avatar
+	 * @throws IOException the io exception
+	 */
 	public static BufferedImage getUserAvatar(User user) throws IOException {
 
-		URLConnection connection = new URL(user.getAvatarUrl() != null ? user.getAvatarUrl() : user.getDefaultAvatarUrl()).openConnection();
+		URLConnection connection = new URL(
+				user.getAvatarUrl() != null ? user.getAvatarUrl() : user.getDefaultAvatarUrl()).openConnection();
 		connection.setRequestProperty("User-Agent", "bot techtor-bot");
 		BufferedImage profileImg;
 		try {
 			profileImg = ImageIO.read(connection.getInputStream());
 		} catch (Exception ignored) {
-			profileImg = ImageIO.read(Objects.requireNonNull(Launcher.class.getClassLoader().getResource("default_profile.jpg")));
+			profileImg = ImageIO
+					.read(Objects.requireNonNull(Launcher.class.getClassLoader().getResource("default_profile.jpg")));
 		}
 		return profileImg;
 	}
 
+	/**
+	 * Is emote boolean.
+	 *
+	 * @param bot   the bot
+	 * @param emote the emote
+	 * @return the boolean
+	 */
 	public static boolean isEmote(DiscordBot bot, String emote) {
 		if (EmojiUtils.isEmoji(emote) || Misc.isGuildEmote(emote)) {
 			return true;
@@ -464,8 +518,17 @@ public class DisUtil {
 		return false;
 	}
 
+	/**
+	 * Emote to display string.
+	 *
+	 * @param bot   the bot
+	 * @param emote the emote
+	 * @return the string
+	 * @throws NullPointerException the null pointer exception
+	 */
 	public static String emoteToDisplay(DiscordBot bot, String emote) throws NullPointerException {
-		if (EmojiUtils.isEmoji(emote) || emote.matches("([\\u20a0-\\u32ff\\ud83c\\udc00-\\ud83d\\udeff\\udbb9\\udce5-\\udbb9\\udcee])")) {
+		if (EmojiUtils.isEmoji(emote)
+				|| emote.matches("([\\u20a0-\\u32ff\\ud83c\\udc00-\\ud83d\\udeff\\udbb9\\udce5-\\udbb9\\udcee])")) {
 			return emote;
 		} else if (Misc.isGuildEmote(emote)) {
 			return bot.getJda().getEmoteById(Misc.getGuildEmoteId(emote)).getAsMention();
@@ -477,10 +540,10 @@ public class DisUtil {
 
 	/**
 	 * Send a message in the home guild's error log channel about the guild event
-	 * 
-	 * @param discordBot
-	 * @param guild
-	 * @param message
+	 *
+	 * @param discordBot the discord bot
+	 * @param guild      the guild
+	 * @param message    the message
 	 */
 	public static void notifyOfEvent(DiscordBot discordBot, Guild guild, String message) {
 		TextChannel homeGuildErrorChannel = discordBot.getJda().getTextChannelById(BotConfig.BOT_ERROR_CHANNEL_ID);
@@ -492,6 +555,12 @@ public class DisUtil {
 		discordBot.out.sendAsyncMessage(homeGuildErrorChannel, messageBuild);
 	}
 
+	/**
+	 * Gets guild list.
+	 *
+	 * @param discordBot the discord bot
+	 * @return the guild list
+	 */
 	public static MessageBuilder getGuildList(DiscordBot discordBot) {
 		List<Guild> guilds = discordBot.getJda().getGuilds();
 		MessageBuilder messageBuild = new MessageBuilder();
@@ -504,9 +573,9 @@ public class DisUtil {
 
 	/**
 	 * Returns a string with the server name, ID, owner, and number of members
-	 * 
-	 * @param guild
-	 * @return
+	 *
+	 * @param guild the guild
+	 * @return server info
 	 */
 	public static String getServerInfo(Guild guild) {
 		Member owner = guild.getOwner();
@@ -528,19 +597,28 @@ public class DisUtil {
 
 	/**
 	 * Will forward the message to the bot's forwarding channel
-	 * 
-	 * @param message
+	 *
+	 * @param bot     the bot
+	 * @param message the message
 	 */
 	public static void forwardMessage(DiscordBot bot, Message message) {
 		TextChannel forwardChannel = bot.getJda().getTextChannelById(BotConfig.BOT_FORWARD_CHANNEL_ID);
 		if (forwardChannel != null) {
 			MessageBuilder builder = new MessageBuilder("[Message Forward] ");
-			if (message.getChannelType() == ChannelType.TEXT && forwardChannel.getGuild().getIdLong() != message.getGuild().getIdLong()) {
+			if (message.getChannelType() == ChannelType.TEXT
+					&& forwardChannel.getGuild().getIdLong() != message.getGuild().getIdLong()) {
 				// Handle message from a guild
 				TextChannel fromChannel = (TextChannel) message.getChannel();
-				builder.append("*From guild ");
+				User fromUser = message.getAuthor();
+				builder.append("*From ");
+				builder.append(fromUser.getName());
+				builder.append("#");
+				builder.append(fromUser.getDiscriminator());
+				builder.append(" (");
+				builder.append(fromUser.getAsMention());
+				builder.append(") on **");
 				builder.append(fromChannel.getGuild().getName());
-				builder.append(", on channel #");
+				builder.append("**, in channel #");
 				builder.append(fromChannel.getName());
 				builder.append(" (");
 				builder.append(fromChannel.getId());
@@ -548,8 +626,8 @@ public class DisUtil {
 			} else if (message.getChannelType() == ChannelType.PRIVATE) {
 				// Handle a private message
 				PrivateChannel fromChannel = (PrivateChannel) message.getChannel();
-				User fromUser = fromChannel.getUser();
-				builder.append("*From user ");
+				User fromUser = message.getAuthor();
+				builder.append("*From ");
 				builder.append(fromUser.getName());
 				builder.append("#");
 				builder.append(fromUser.getDiscriminator());
@@ -563,30 +641,31 @@ public class DisUtil {
 			}
 			// Add the message itself
 			builder.append(message.getContentRaw());
-			List<Attachment> attatchments = message.getAttachments();
-			if (attatchments.size() > 0) {
-				builder.append("\n*Attatchments:*\n");
-				for (Attachment attachment : attatchments) {
+			List<Attachment> attachments = message.getAttachments();
+			if (attachments.size() > 0) {
+				builder.append("\n*Attachments:*\n");
+				for (Attachment attachment : attachments) {
 					builder.append(attachment.getUrl());
 					builder.append("\n");
 				}
 			}
 			// Forward the message
-			bot.queue.add(forwardChannel.sendMessage(builder.build()));
+			bot.sendLongMessageToChannel(forwardChannel, builder);
+			bot.lastForward = message.getChannel();
 		}
 	}
 
 	/**
 	 * Checks if the bot has permission to delete a message in specified channel,
 	 * then deletes it if possible
-	 * 
-	 * @param channel
-	 * @param inputMessage
+	 *
+	 * @param messageToDelete the message to delete
 	 */
 	public static void tryDeleteMessage(Message messageToDelete) {
 		if (messageToDelete.getChannelType() == ChannelType.TEXT) {
 			GuildChannel channel = (GuildChannel) messageToDelete.getChannel();
-			if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(), Permission.MESSAGE_MANAGE)) {
+			if (PermissionUtil.checkPermission(channel, channel.getGuild().getSelfMember(),
+					Permission.MESSAGE_MANAGE)) {
 				messageToDelete.delete().queue();
 			}
 		}

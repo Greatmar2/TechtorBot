@@ -57,6 +57,9 @@ import takeshi.util.QuickEmbedBuilder;
 public class ConfigCommand extends AbstractCommand implements ICommandReactionListener<PaginationInfo> {
 	private static final int CFG_PER_PAGE = 15;
 
+	/**
+	 * Instantiates a new Config command.
+	 */
 	public ConfigCommand() {
 		super();
 	}
@@ -115,7 +118,7 @@ public class ConfigCommand extends AbstractCommand implements ICommandReactionLi
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild;
 		SimpleRank rank = bot.security.getSimpleRank(author, channel);
 		if (rank.isAtLeast(SimpleRank.BOT_ADMIN) && args.length >= 1 && DisUtil.matchesGuildSearch(args[0])) {

@@ -93,12 +93,6 @@ public final class Templates {
 		return list.subList(offset, Math.min(list.size(), itemsPerPage + offset));
 	}
 
-	/**
-	 * returns a list of templates matching the filter
-	 *
-	 * @param contains keyphrase contains this string
-	 * @return list of filtered keyphrases
-	 */
 	public static List<String> getAllKeyphrases(String contains) {
 		List<String> matching = dictionary.keySet().stream().filter(s -> s.contains(contains.toLowerCase())).collect(Collectors.toList());
 		if (matching.size() > 25) {
@@ -187,6 +181,7 @@ public final class Templates {
 		public static final Template catfact_not_today = new Template();
 		public static final Template pm_cant_find_user = new Template();
 		public static final Template pm_success = new Template();
+		public static final Template cant_pm_self = new Template();
 		public static final Template SAY_CONTAINS_MENTION = new Template();
 		public static final Template SAY_WHATEXACTLY = new Template();
 		public static final Template case_not_found = new Template(TemplateArgument.ARG);
@@ -353,6 +348,12 @@ public final class Templates {
 			public static final Template delete_success = new Template();
 			public static final Template delete_failed = new Template();
 			public static final Template not_found = new Template(TemplateArgument.ARG);
+		}
+
+		final public static class reply {
+			public static final Template success = new Template(TemplateArgument.ARG);
+			public static final Template channel_not_found = new Template();
+			public static final Template to_who = new Template();
 		}
 	}
 

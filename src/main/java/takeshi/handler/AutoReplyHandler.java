@@ -40,19 +40,35 @@ public class AutoReplyHandler {
     private DiscordBot bot;
     private volatile AutoReply[] replies;
 
-    public AutoReplyHandler(DiscordBot bot) {
+	/**
+	 * Instantiates a new Auto reply handler.
+	 *
+	 * @param bot the bot
+	 */
+	public AutoReplyHandler(DiscordBot bot) {
         this.bot = bot;
         cooldowns = new ConcurrentHashMap<>();
         reload();
     }
 
-    public void removeGuild(long discordGuildId) {
+	/**
+	 * Remove guild.
+	 *
+	 * @param discordGuildId the discord guild id
+	 */
+	public void removeGuild(long discordGuildId) {
         if (cooldowns.containsKey(discordGuildId)) {
             cooldowns.remove(discordGuildId);
         }
     }
 
-    public boolean autoReplied(Message message) {
+	/**
+	 * Auto replied boolean.
+	 *
+	 * @param message the message
+	 * @return the boolean
+	 */
+	public boolean autoReplied(Message message) {
         if (message.getChannel() instanceof PrivateChannel) {
             return false;
         }
@@ -99,7 +115,10 @@ public class AutoReplyHandler {
         cooldowns.get(guildId)[index] = value;
     }
 
-    public void reload() {
+	/**
+	 * Reload.
+	 */
+	public void reload() {
         List<OReplyPattern> all = CReplyPattern.getAll();
         List<AutoReply> list = new ArrayList<>();
         int index = 0;
@@ -120,10 +139,25 @@ public class AutoReplyHandler {
 
     private class AutoReply {
 
-        public Pattern pattern;
-        public String tag;
-        public long cooldown;
-        public String reply;
-        public int guildId;
+	    /**
+	     * The Pattern.
+	     */
+	    public Pattern pattern;
+	    /**
+	     * The Tag.
+	     */
+	    public String tag;
+	    /**
+	     * The Cooldown.
+	     */
+	    public long cooldown;
+	    /**
+	     * The Reply.
+	     */
+	    public String reply;
+	    /**
+	     * The Guild id.
+	     */
+	    public int guildId;
     }
 }

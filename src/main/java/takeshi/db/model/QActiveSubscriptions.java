@@ -16,10 +16,28 @@
 
 package takeshi.db.model;
 
+/**
+ * The type Q active subscriptions.
+ */
 public class QActiveSubscriptions {
-    public int serviceId = 0;
-    public String code = "";
-    public int channelId = 0;
-    public String displayName = "";
-    public int guildId = 0;
+	/**
+	 * The Service id.
+	 */
+	public int serviceId = 0;
+	/**
+	 * The Code.
+	 */
+	public String code = "";
+	/**
+	 * The Channel id.
+	 */
+	public int channelId = 0;
+	/**
+	 * The Display name.
+	 */
+	public String displayName = "";
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
 }

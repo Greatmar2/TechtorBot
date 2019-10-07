@@ -25,6 +25,9 @@ import java.util.List;
  */
 public class ImagePreview {
 
-    @Expose
+	/**
+	 * The Images.
+	 */
+	@Expose
     public List<Image> images;
 }

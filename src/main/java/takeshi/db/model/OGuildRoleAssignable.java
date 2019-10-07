@@ -18,9 +18,24 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O guild role assignable.
+ */
 public class OGuildRoleAssignable extends AbstractModel {
-    public int guildId = 0;
-    public String discordRoleId = "";
-    public String description = "";
-    public String roleName = "";
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Discord role id.
+	 */
+	public String discordRoleId = "";
+	/**
+	 * The Description.
+	 */
+	public String description = "";
+	/**
+	 * The Role name.
+	 */
+	public String roleName = "";
 }

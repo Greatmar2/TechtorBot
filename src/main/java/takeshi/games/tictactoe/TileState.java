@@ -16,10 +16,22 @@
 
 package takeshi.games.tictactoe;
 
+/**
+ * The enum Tile state.
+ */
 public enum TileState {
-    X("\u274C"),
-    O("\u2B55"),
-    FREE("\u2754");
+	/**
+	 * X tile state.
+	 */
+	X("\u274C"),
+	/**
+	 * O tile state.
+	 */
+	O("\u2B55"),
+	/**
+	 * Free tile state.
+	 */
+	FREE("\u2754");
 
     private final String emoticon;
 
@@ -28,7 +40,12 @@ public enum TileState {
         this.emoticon = emoticon;
     }
 
-    public String getEmoticon() {
+	/**
+	 * Gets emoticon.
+	 *
+	 * @return the emoticon
+	 */
+	public String getEmoticon() {
         return emoticon;
     }
 }

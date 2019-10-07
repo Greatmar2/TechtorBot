@@ -26,11 +26,26 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OBet;
 
+/**
+ * The type C bet.
+ */
 public class CBet {
-    public static final int MAX_BET_AMOUNT = 1_000_000;
-    public static final int MIN_BET_OPTIONS = 2;
+	/**
+	 * The constant MAX_BET_AMOUNT.
+	 */
+	public static final int MAX_BET_AMOUNT = 1_000_000;
+	/**
+	 * The constant MIN_BET_OPTIONS.
+	 */
+	public static final int MIN_BET_OPTIONS = 2;
 
-    public static List<OBet> getActiveBetsForGuild(int id) {
+	/**
+	 * Gets active bets for guild.
+	 *
+	 * @param id the id
+	 * @return the active bets for guild
+	 */
+	public static List<OBet> getActiveBetsForGuild(int id) {
         List<OBet> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -46,7 +61,13 @@ public class CBet {
         return ret;
     }
 
-    public static OBet findById(int id) {
+	/**
+	 * Find by id o bet.
+	 *
+	 * @param id the id
+	 * @return the o bet
+	 */
+	public static OBet findById(int id) {
         OBet t = new OBet();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -62,7 +83,14 @@ public class CBet {
         return t;
     }
 
-    public static OBet getActiveBet(int guildId, int userId) {
+	/**
+	 * Gets active bet.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 * @return the active bet
+	 */
+	public static OBet getActiveBet(int guildId, int userId) {
         OBet t = new OBet();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -92,7 +120,12 @@ public class CBet {
         return b;
     }
 
-    public static void delete(OBet record) {
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
+	public static void delete(OBet record) {
         try {
             WebDb.get().query(
                     "DELETE FROM bets WHERE id = ? ",
@@ -103,7 +136,12 @@ public class CBet {
         }
     }
 
-    public static void update(OBet record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OBet record) {
         try {
             record.id = WebDb.get().query(
                     "UPDATE bets SET title = ?, started_on = ?, ends_at = ?, price = ? WHERE id = ?",
@@ -113,7 +151,12 @@ public class CBet {
         }
     }
 
-    public static void insert(OBet record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OBet record) {
         if (record.id > 0) {
             update(record);
             return;
@@ -131,7 +174,15 @@ public class CBet {
         }
     }
 
-    public static void createBet(String title, int price, int guildId, int userId) {
+	/**
+	 * Create bet.
+	 *
+	 * @param title   the title
+	 * @param price   the price
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 */
+	public static void createBet(String title, int price, int guildId, int userId) {
         OBet b = new OBet();
         b.title = title;
         b.price = price;

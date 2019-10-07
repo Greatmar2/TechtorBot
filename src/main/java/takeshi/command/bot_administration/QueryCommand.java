@@ -37,8 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The type Query command.
  */
 public class QueryCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Query command.
+     */
     public QueryCommand() {
         super();
     }
@@ -69,7 +73,7 @@ public class QueryCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (!bot.security.getSimpleRank(author).isAtLeast(SimpleRank.BOT_ADMIN)) {
             return Templates.no_permission.formatGuild(channel);
         }

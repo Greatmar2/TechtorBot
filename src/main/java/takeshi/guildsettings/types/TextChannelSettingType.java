@@ -30,12 +30,12 @@ public class TextChannelSettingType implements IGuildSettingType {
 
     private final boolean allowNull;
 
-    /**
-     * Allow a null/false value?
-     *
-     * @param allowNull true if it can be null
-     */
-    public TextChannelSettingType(boolean allowNull) {
+	/**
+	 * Allow a null/false value?
+	 *
+	 * @param allowNull true if it can be null
+	 */
+	public TextChannelSettingType(boolean allowNull) {
 
         this.allowNull = allowNull;
     }

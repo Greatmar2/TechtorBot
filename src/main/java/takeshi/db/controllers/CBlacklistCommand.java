@@ -39,15 +39,15 @@ public class CBlacklistCommand {
         return record;
     }
 
-    /**
-     * checks if a command is blacklisted, returns null if its not blacklisted
-     *
-     * @param guildId   the guild to check it for
-     * @param command   the command to check
-     * @param channelId the command to check
-     * @return OBlacklistCommand || null
-     */
-    public static OBlacklistCommand find(int guildId, String command, String channelId) {
+	/**
+	 * checks if a command is blacklisted, returns null if its not blacklisted
+	 *
+	 * @param guildId   the guild to check it for
+	 * @param command   the command to check
+	 * @param channelId the command to check
+	 * @return OBlacklistCommand || null
+	 */
+	public static OBlacklistCommand find(int guildId, String command, String channelId) {
         OBlacklistCommand ret = null;
         try (ResultSet rs = WebDb.get().select("SELECT * FROM blacklist_commands WHERE guild_id = ? AND command = ? AND channel_id = ? ORDER BY command,channel_id", guildId, command, channelId)) {
             while (rs.next()) {
@@ -59,7 +59,14 @@ public class CBlacklistCommand {
         return ret;
     }
 
-    public static OBlacklistCommand find(int guildId, String command) {
+	/**
+	 * Find o blacklist command.
+	 *
+	 * @param guildId the guild id
+	 * @param command the command
+	 * @return the o blacklist command
+	 */
+	public static OBlacklistCommand find(int guildId, String command) {
         OBlacklistCommand ret = null;
         try (ResultSet rs = WebDb.get().select("SELECT * FROM blacklist_commands WHERE guild_id = ? AND command = ? ORDER BY command,channel_id", guildId, command)) {
             while (rs.next()) {
@@ -71,12 +78,12 @@ public class CBlacklistCommand {
         return ret;
     }
 
-    /**
-     * retrieves a list of ALL blacklisted items
-     *
-     * @return list
-     */
-    public static List<OBlacklistCommand> getAllBlacklisted() {
+	/**
+	 * retrieves a list of ALL blacklisted items
+	 *
+	 * @return list all blacklisted
+	 */
+	public static List<OBlacklistCommand> getAllBlacklisted() {
         List<OBlacklistCommand> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT * FROM blacklist_commands")) {
             while (rs.next()) {
@@ -88,13 +95,13 @@ public class CBlacklistCommand {
         return ret;
     }
 
-    /**
-     * Retrieves a list of blacklisted commands for a guild
-     *
-     * @param guildId internal guild id
-     * @return list
-     */
-    public static List<OBlacklistCommand> getBlacklistedFor(int guildId) {
+	/**
+	 * Retrieves a list of blacklisted commands for a guild
+	 *
+	 * @param guildId internal guild id
+	 * @return list blacklisted for
+	 */
+	public static List<OBlacklistCommand> getBlacklistedFor(int guildId) {
         List<OBlacklistCommand> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT * FROM blacklist_commands WHERE guild_id = ?", guildId)) {
             while (rs.next()) {
@@ -106,13 +113,13 @@ public class CBlacklistCommand {
         return ret;
     }
 
-    /**
-     * Delete all items for a guild/command combination
-     *
-     * @param guildId internal guild id
-     * @param command command name
-     */
-    public static void deleteCommandOverrides(int guildId, String command) {
+	/**
+	 * Delete all items for a guild/command combination
+	 *
+	 * @param guildId internal guild id
+	 * @param command command name
+	 */
+	public static void deleteCommandOverrides(int guildId, String command) {
         try {
             WebDb.get().query("DELETE FROM blacklist_commands WHERE guild_id = ? AND command = ?", guildId, command);
         } catch (SQLException e) {
@@ -120,7 +127,13 @@ public class CBlacklistCommand {
         }
     }
 
-    public static void deleteOverridesInChannel(int guildId, String channelId) {
+	/**
+	 * Delete overrides in channel.
+	 *
+	 * @param guildId   the guild id
+	 * @param channelId the channel id
+	 */
+	public static void deleteOverridesInChannel(int guildId, String channelId) {
         try {
             WebDb.get().query("DELETE FROM blacklist_commands WHERE guild_id = ? AND channel_id = ?", guildId, channelId);
         } catch (SQLException e) {
@@ -128,7 +141,12 @@ public class CBlacklistCommand {
         }
     }
 
-    public static void deleteAllOverrides(int guildId) {
+	/**
+	 * Delete all overrides.
+	 *
+	 * @param guildId the guild id
+	 */
+	public static void deleteAllOverrides(int guildId) {
         try {
             WebDb.get().query("DELETE FROM blacklist_commands WHERE guild_id = ? AND channel_id NOT LIKE '0'", guildId);
         } catch (SQLException e) {
@@ -136,7 +154,12 @@ public class CBlacklistCommand {
         }
     }
 
-    public static void deleteGuild(int guildId) {
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
+	public static void deleteGuild(int guildId) {
         try {
             WebDb.get().query("DELETE FROM blacklist_commands WHERE guild_id = ? ", guildId);
         } catch (SQLException e) {
@@ -144,14 +167,14 @@ public class CBlacklistCommand {
         }
     }
 
-    /**
-     * Delete a blacklist item for a channel
-     *
-     * @param guildId internal guild id
-     * @param command command name
-     * @param channel discord channel id
-     */
-    public static void delete(int guildId, String command, String channel) {
+	/**
+	 * Delete a blacklist item for a channel
+	 *
+	 * @param guildId internal guild id
+	 * @param command command name
+	 * @param channel discord channel id
+	 */
+	public static void delete(int guildId, String command, String channel) {
         try {
             WebDb.get().query("DELETE FROM blacklist_commands WHERE guild_id = ? AND command = ? AND channel_id = ?", guildId, command, channel);
         } catch (SQLException e) {
@@ -160,35 +183,36 @@ public class CBlacklistCommand {
     }
 
 
-    /**
-     * Insert/updates a guild-wide command blacklist
-     *
-     * @param discordGuildId discord guild id
-     * @param command        command name
-     */
-    public static void insertOrUpdate(long discordGuildId, String command) {
+	/**
+	 * Insert/updates a guild-wide command blacklist
+	 *
+	 * @param discordGuildId discord guild id
+	 * @param command        command name
+	 */
+	public static void insertOrUpdate(long discordGuildId, String command) {
         insertOrUpdate(CGuild.getCachedId(discordGuildId), command, "0", true);
     }
 
-    /**
-     * Insert/updates a channel command blacklist override
-     *
-     * @param discordGuildId discord guild id
-     * @param command        command name
-     * @param channel        discord channel id
-     */
-    public static void insertOrUpdate(long discordGuildId, String command, String channel) {
+	/**
+	 * Insert/updates a channel command blacklist override
+	 *
+	 * @param discordGuildId discord guild id
+	 * @param command        command name
+	 * @param channel        discord channel id
+	 */
+	public static void insertOrUpdate(long discordGuildId, String command, String channel) {
         insertOrUpdate(CGuild.getCachedId(discordGuildId), command, channel, true);
     }
 
-    /**
-     * Insert/updates a channel command blacklist override
-     *
-     * @param guildId discord guild id
-     * @param command command name
-     * @param channel discord channel id
-     */
-    public static void insertOrUpdate(int guildId, String command, String channel, boolean blacklisted) {
+	/**
+	 * Insert/updates a channel command blacklist override
+	 *
+	 * @param guildId     discord guild id
+	 * @param command     command name
+	 * @param channel     discord channel id
+	 * @param blacklisted the blacklisted
+	 */
+	public static void insertOrUpdate(int guildId, String command, String channel, boolean blacklisted) {
         try {
             WebDb.get().insert(
                     "INSERT INTO blacklist_commands(guild_id, command, channel_id,enabled) " +

@@ -20,27 +20,80 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O bet.
+ */
 public class OBet extends AbstractModel {
-    public int id = 0;
-    public int guildId = 0;
-    public String title = "";
-    public int ownerId = 0;
-    public Timestamp createdOn = null;
-    public Timestamp startedOn = null;
-    public Timestamp endsAt = null;
-    public int price = 0;
-    public Status status = Status.PREPARING;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Title.
+	 */
+	public String title = "";
+	/**
+	 * The Owner id.
+	 */
+	public int ownerId = 0;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
+	/**
+	 * The Started on.
+	 */
+	public Timestamp startedOn = null;
+	/**
+	 * The Ends at.
+	 */
+	public Timestamp endsAt = null;
+	/**
+	 * The Price.
+	 */
+	public int price = 0;
+	/**
+	 * The Status.
+	 */
+	public Status status = Status.PREPARING;
 
-    public void setStatus(int id) {
+	/**
+	 * Sets status.
+	 *
+	 * @param id the id
+	 */
+	public void setStatus(int id) {
         status = Status.fromId(id);
     }
 
-    public enum Status {
-        PREPARING(1),
-        PENDING(2),
-        ACTIVE(3),
-        CLOSED(4),
-        CANCELED(5);
+	/**
+	 * The enum Status.
+	 */
+	public enum Status {
+		/**
+		 * Preparing status.
+		 */
+		PREPARING(1),
+		/**
+		 * Pending status.
+		 */
+		PENDING(2),
+		/**
+		 * Active status.
+		 */
+		ACTIVE(3),
+		/**
+		 * Closed status.
+		 */
+		CLOSED(4),
+		/**
+		 * Canceled status.
+		 */
+		CANCELED(5);
 
         private int id;
 
@@ -49,7 +102,13 @@ public class OBet extends AbstractModel {
             this.id = id;
         }
 
-        public static Status fromId(int id) {
+		/**
+		 * From id status.
+		 *
+		 * @param id the id
+		 * @return the status
+		 */
+		public static Status fromId(int id) {
             for (Status s : values()) {
                 if (id == s.getId()) {
                     return s;
@@ -58,11 +117,21 @@ public class OBet extends AbstractModel {
             return PREPARING;
         }
 
-        public int getId() {
+		/**
+		 * Gets id.
+		 *
+		 * @return the id
+		 */
+		public int getId() {
             return id;
         }
 
-        public void setId(int id) {
+		/**
+		 * Sets id.
+		 *
+		 * @param id the id
+		 */
+		public void setId(int id) {
             this.id = id;
         }
     }

@@ -23,6 +23,11 @@ import java.util.function.Consumer;
 
 import net.dv8tion.jda.api.entities.Message;
 
+/**
+ * The type Command reaction listener.
+ *
+ * @param <T> the type parameter
+ */
 public class CommandReactionListener<T> {
 
 	private final LinkedHashMap<String, Consumer<Message>> reactions;
@@ -31,6 +36,12 @@ public class CommandReactionListener<T> {
 	private Long expiresIn, lastAction;
 	private boolean active;
 
+	/**
+	 * Instantiates a new Command reaction listener.
+	 *
+	 * @param userId the user id
+	 * @param data   the data
+	 */
 	public CommandReactionListener(long userId, T data) {
 		this.data = data;
 		this.userId = userId;
@@ -40,14 +51,27 @@ public class CommandReactionListener<T> {
 		expiresIn = TimeUnit.MINUTES.toMillis(5);
 	}
 
+	/**
+	 * Is active boolean.
+	 *
+	 * @return the boolean
+	 */
 	public boolean isActive() {
 		return active;
 	}
 
+	/**
+	 * Sets active.
+	 *
+	 * @param active the active
+	 */
 	public void setActive(boolean active) {
 		this.active = active;
 	}
 
+	/**
+	 * Disable.
+	 */
 	public void disable() {
 		this.active = false;
 	}
@@ -89,10 +113,20 @@ public class CommandReactionListener<T> {
 //		}
 	}
 
+	/**
+	 * Gets data.
+	 *
+	 * @return the data
+	 */
 	public T getData() {
 		return data;
 	}
 
+	/**
+	 * Sets data.
+	 *
+	 * @param data the data
+	 */
 	public void setData(T data) {
 		this.data = data;
 	}
@@ -109,6 +143,8 @@ public class CommandReactionListener<T> {
 	}
 
 	/**
+	 * Gets emotes.
+	 *
 	 * @return list of all emotes used in this reaction listener
 	 */
 	public Set<String> getEmotes() {
@@ -131,6 +167,11 @@ public class CommandReactionListener<T> {
 		return lastAction + expiresIn;
 	}
 
+	/**
+	 * Gets user id.
+	 *
+	 * @return the user id
+	 */
 	public long getUserId() {
 		return userId;
 	}

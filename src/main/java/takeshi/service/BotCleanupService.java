@@ -31,7 +31,12 @@ import takeshi.main.DiscordBot;
 public class BotCleanupService extends AbstractService {
     private int runCount = 0;
 
-    public BotCleanupService(BotContainer b) {
+	/**
+	 * Instantiates a new Bot cleanup service.
+	 *
+	 * @param b the b
+	 */
+	public BotCleanupService(BotContainer b) {
         super(b);
     }
 

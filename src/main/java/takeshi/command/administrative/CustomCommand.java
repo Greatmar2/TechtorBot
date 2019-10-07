@@ -39,6 +39,9 @@ import java.util.Arrays;
 public class CustomCommand extends AbstractCommand {
     private String[] valid_actions = {"add", "delete"};
 
+    /**
+     * Instantiates a new Custom command.
+     */
     public CustomCommand() {
         super();
     }
@@ -94,7 +97,7 @@ public class CustomCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author, channel);
         if (!rank.isAtLeast(SimpleRank.GUILD_ADMIN)) {
             return Templates.no_permission.formatGuild(channel);

@@ -43,21 +43,45 @@ import takeshi.db.model.ORaffleBlacklist;
 import takeshi.guildsettings.GSetting;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Raffle handler.
+ */
 public class RaffleHandler {
 	// {guild-id, {message-id, end}}
 	private final Map<Long, Map<Long, Timestamp>> listeners;
 	private final DiscordBot bot;
 	private final List<Long> runningRepeater = new ArrayList<>();
+	/**
+	 * The constant ENTRY_EMOJI.
+	 */
 	public static final String ENTRY_EMOJI = EmojiUtils.emojify(":inbox_tray:");
+	/**
+	 * The constant MAX_ENTRIES.
+	 */
 	public static final int MAX_ENTRIES = 99;
+	/**
+	 * The constant TIMESTAMP_FORMATTER.
+	 */
 	public static final SimpleDateFormat TIMESTAMP_FORMATTER = new SimpleDateFormat("HH:mm dd/MMM/yyyy");
 //	private boolean lock = false;
 
+	/**
+	 * Instantiates a new Raffle handler.
+	 *
+	 * @param bot the bot
+	 */
 	public RaffleHandler(DiscordBot bot) {
 		this.bot = bot;
 		listeners = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * Add raffle.
+	 *
+	 * @param guildId   the guild id
+	 * @param messageId the message id
+	 * @param time      the time
+	 */
 	public synchronized void addRaffle(long guildId, long messageId, Timestamp time) {
 		if (!listeners.containsKey(guildId)) {
 			listeners.put(guildId, new ConcurrentHashMap<>());
@@ -69,6 +93,13 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * Init guild boolean.
+	 *
+	 * @param guildId     the guild id
+	 * @param forceReload the force reload
+	 * @return the boolean
+	 */
 	public synchronized boolean initGuild(long guildId, boolean forceReload) {
 		if (!forceReload && listeners.containsKey(guildId)) {
 			return true;
@@ -87,6 +118,9 @@ public class RaffleHandler {
 		return false;
 	}
 
+	/**
+	 * Init guilds.
+	 */
 	public void initGuilds() {
 		List<Guild> guilds = bot.getJda().getGuilds();
 
@@ -125,12 +159,22 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public synchronized void removeGuild(long guildId) {
 		if (listeners.containsKey(guildId)) {
 			listeners.remove(guildId);
 		}
 	}
 
+	/**
+	 * Check raffles.
+	 *
+	 * @param bot the bot
+	 */
 	public void checkRaffles(DiscordBot bot) {
 		List<Guild> guilds = bot.getJda().getGuilds();
 		for (Guild guild : guilds) {
@@ -138,6 +182,12 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * Check raffles boolean.
+	 *
+	 * @param guild the guild
+	 * @return the boolean
+	 */
 	public boolean checkRaffles(Guild guild) {
 		boolean allCleared = false;
 //		System.out.println("[DEBUG] Checking raffles for guild " + guild.getName());
@@ -164,6 +214,13 @@ public class RaffleHandler {
 		return allCleared;
 	}
 
+	/**
+	 * Check raffle boolean.
+	 *
+	 * @param raffle the raffle
+	 * @param guild  the guild
+	 * @return the boolean
+	 */
 	public boolean checkRaffle(ORaffle raffle, Guild guild) {
 		boolean ended = false;
 		// If the message has expired or the max entrants have been reached
@@ -186,6 +243,13 @@ public class RaffleHandler {
 		return ended;
 	}
 
+	/**
+	 * Check raffle.
+	 *
+	 * @param raffle   the raffle
+	 * @param guild    the guild
+	 * @param reaction the reaction
+	 */
 	public void checkRaffle(ORaffle raffle, Guild guild, MessageReaction reaction) {
 		// If the message has expired or the max entrants have been reached
 		if ((raffle.raffleEnd != null && raffle.raffleEnd.getTime() != 0 && raffle.raffleEnd.before(new Date()))
@@ -194,6 +258,12 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * End raffle.
+	 *
+	 * @param raffle the raffle
+	 * @param guild  the guild
+	 */
 	public void endRaffle(ORaffle raffle, Guild guild) {
 		TextChannel tchan = guild.getTextChannelById(raffle.channelId);
 		boolean debug = GuildSettings.getBoolFor(tchan, GSetting.DEBUG);
@@ -269,6 +339,12 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * Cancel raffle.
+	 *
+	 * @param raffle the raffle
+	 * @param guild  the guild
+	 */
 	public void cancelRaffle(ORaffle raffle, Guild guild) {
 		// Commenting this out because I want an error to be thrown if this happens
 //		if(raffle.channelId == 0L || raffle.messageId == 0L) {
@@ -284,6 +360,17 @@ public class RaffleHandler {
 		CRaffle.update(raffle);
 	}
 
+	/**
+	 * Handle reaction boolean.
+	 *
+	 * @param guild    the guild
+	 * @param message  the message
+	 * @param channel  the channel
+	 * @param user     the user
+	 * @param reaction the reaction
+	 * @param adding   the adding
+	 * @return the boolean
+	 */
 	public boolean handleReaction(Guild guild, long message, TextChannel channel, User user, ReactionEmote reaction, boolean adding) {
 		boolean ret = false;
 		if (adding && reaction.getName().equals(ENTRY_EMOJI)) {
@@ -314,6 +401,12 @@ public class RaffleHandler {
 		return ret;
 	}
 
+	/**
+	 * Start raffle.
+	 *
+	 * @param raffle the raffle
+	 * @param guild  the guild
+	 */
 	public void startRaffle(ORaffle raffle, Guild guild) {
 		// Check for any raffles for this guild (unnecessary, the guilds are initialized
 		// when the bot loads)
@@ -344,6 +437,13 @@ public class RaffleHandler {
 		}
 	}
 
+	/**
+	 * Display raffle o raffle.
+	 *
+	 * @param raffle the raffle
+	 * @param guild  the guild
+	 * @return the o raffle
+	 */
 	public ORaffle displayRaffle(ORaffle raffle, Guild guild) {
 		// Make sure the raffle is for the correct guild
 		if (raffle.guildId != guild.getIdLong() || raffle.channelId == 0L) {
@@ -395,6 +495,15 @@ public class RaffleHandler {
 		return raffle;
 	}
 
+	/**
+	 * Update raffle.
+	 *
+	 * @param raffle      the raffle
+	 * @param guild       the guild
+	 * @param message     the message
+	 * @param numEntrants the num entrants
+	 * @param winners     the winners
+	 */
 	public void updateRaffle(ORaffle raffle, Guild guild, Message message, int numEntrants, List<Member> winners) {
 		if (message.getEmbeds().size() == 0) { // Check that there is an embed in the message
 			return;

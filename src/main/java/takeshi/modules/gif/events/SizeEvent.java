@@ -22,8 +22,14 @@ import java.util.regex.Pattern;
 import takeshi.modules.gif.OverlayActor;
 import takeshi.modules.gif.OverlayEvent;
 
+/**
+ * The type Size event.
+ */
 public class SizeEvent implements OverlayEvent {
-    public static final Pattern inputPattern = Pattern.compile("size:? ?(\\d+) (\\d+)", Pattern.CASE_INSENSITIVE);
+	/**
+	 * The constant inputPattern.
+	 */
+	public static final Pattern inputPattern = Pattern.compile("size:? ?(\\d+) (\\d+)", Pattern.CASE_INSENSITIVE);
     private final int height;
     private final int width;
 

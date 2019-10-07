@@ -32,6 +32,9 @@ import takeshi.util.DisUtil;
  * leaves the guild
  */
 public class LeaveGuildCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Leave guild command.
+	 */
 	public LeaveGuildCommand() {
 		super();
 	}
@@ -57,7 +60,7 @@ public class LeaveGuildCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		boolean shouldLeave = false;
 		Guild guild = ((TextChannel) channel).getGuild();
 		SimpleRank rank = bot.security.getSimpleRank(author, channel);

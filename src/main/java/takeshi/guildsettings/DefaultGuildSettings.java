@@ -21,6 +21,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.TreeSet;
 
+/**
+ * The type Default guild settings.
+ */
 public class DefaultGuildSettings {
     private static final TreeSet<String> tags = new TreeSet<>();
     private static boolean initialized = false;
@@ -29,26 +32,53 @@ public class DefaultGuildSettings {
         initSettings();
     }
 
-    public static TreeSet<String> getAllTags() {
+	/**
+	 * Gets all tags.
+	 *
+	 * @return the all tags
+	 */
+	public static TreeSet<String> getAllTags() {
         return new TreeSet<>(tags);
     }
 
-    public static String getDefault(String key) {
+	/**
+	 * Gets default.
+	 *
+	 * @param key the key
+	 * @return the default
+	 */
+	public static String getDefault(String key) {
         return GSetting.valueOf(key).getDefaultValue();
     }
 
-    public static int countSettings() {
+	/**
+	 * Count settings int.
+	 *
+	 * @return the int
+	 */
+	public static int countSettings() {
         return countSettings(true);
     }
 
-    public static int countSettings(boolean includeReadOnly) {
+	/**
+	 * Count settings int.
+	 *
+	 * @param includeReadOnly the include read only
+	 * @return the int
+	 */
+	public static int countSettings(boolean includeReadOnly) {
         if (includeReadOnly) {
             return GSetting.values().length;
         }
         return (int) Arrays.stream(GSetting.values()).filter(gSetting -> !gSetting.isInternal()).count();
     }
 
-    public static List<String> getWritableKeys() {
+	/**
+	 * Gets writable keys.
+	 *
+	 * @return the writable keys
+	 */
+	public static List<String> getWritableKeys() {
         ArrayList<String> set = new ArrayList<>();
         for (GSetting setting : GSetting.values()) {
             if (setting.isInternal()) {
@@ -59,7 +89,12 @@ public class DefaultGuildSettings {
         return set;
     }
 
-    public static List<String> getAllKeys() {
+	/**
+	 * Gets all keys.
+	 *
+	 * @return the all keys
+	 */
+	public static List<String> getAllKeys() {
         ArrayList<String> set = new ArrayList<>();
         for (GSetting setting : GSetting.values()) {
             set.add(setting.name());
@@ -67,15 +102,33 @@ public class DefaultGuildSettings {
         return set;
     }
 
-    public static GSetting get(String key) {
+	/**
+	 * Get g setting.
+	 *
+	 * @param key the key
+	 * @return the g setting
+	 */
+	public static GSetting get(String key) {
         return GSetting.valueOf(key.toUpperCase());
     }
 
-    public static String getDefault(GSetting setting) {
+	/**
+	 * Gets default.
+	 *
+	 * @param setting the setting
+	 * @return the default
+	 */
+	public static String getDefault(GSetting setting) {
         return setting.getDefaultValue();
     }
 
-    public static boolean isValidKey(String key) {
+	/**
+	 * Is valid key boolean.
+	 *
+	 * @param key the key
+	 * @return the boolean
+	 */
+	public static boolean isValidKey(String key) {
         try {
             GSetting.valueOf(key.toUpperCase());
             return true;

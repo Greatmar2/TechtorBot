@@ -18,48 +18,106 @@ package takeshi.core;
 
 import java.util.Arrays;
 
+/**
+ * The type Logger.
+ */
 public class Logger {
     private final static boolean LOG_PRINT_STACK_SOURCE = false;
     private final static LogLevel minLogLevel = LogLevel.DEBUG;
 
-    public static void debug(Object... message) {
+	/**
+	 * Debug.
+	 *
+	 * @param message the message
+	 */
+	public static void debug(Object... message) {
         print(LogLevel.DEBUG, message);
     }
 
-    public static void debugf(String msg, Object... params) {
+	/**
+	 * Debugf.
+	 *
+	 * @param msg    the msg
+	 * @param params the params
+	 */
+	public static void debugf(String msg, Object... params) {
         print(LogLevel.DEBUG, String.format(msg, params));
     }
 
-    public static void info(Object... message) {
+	/**
+	 * Info.
+	 *
+	 * @param message the message
+	 */
+	public static void info(Object... message) {
         print(LogLevel.INFO, message);
     }
 
-    public static void infof(String msg, Object... params) {
+	/**
+	 * Infof.
+	 *
+	 * @param msg    the msg
+	 * @param params the params
+	 */
+	public static void infof(String msg, Object... params) {
         print(LogLevel.INFO, String.format(msg, params));
     }
 
-    public static void warn(Object... message) {
+	/**
+	 * Warn.
+	 *
+	 * @param message the message
+	 */
+	public static void warn(Object... message) {
         print(LogLevel.WARN, message);
     }
 
-    public static void warnf(String msg, Object... params) {
+	/**
+	 * Warnf.
+	 *
+	 * @param msg    the msg
+	 * @param params the params
+	 */
+	public static void warnf(String msg, Object... params) {
         print(LogLevel.WARN, String.format(msg, params));
     }
 
-    public static void fatal(Object... message) {
+	/**
+	 * Fatal.
+	 *
+	 * @param message the message
+	 */
+	public static void fatal(Object... message) {
         print(LogLevel.FATAL, message);
     }
 
-    public static void fatalf(String msg, Object... params) {
+	/**
+	 * Fatalf.
+	 *
+	 * @param msg    the msg
+	 * @param params the params
+	 */
+	public static void fatalf(String msg, Object... params) {
         print(LogLevel.FATAL, String.format(msg, params));
     }
 
-    public static void fatal(Throwable e) {
+	/**
+	 * Fatal.
+	 *
+	 * @param e the e
+	 */
+	public static void fatal(Throwable e) {
         System.out.println(e.getMessage());
         e.printStackTrace();
     }
 
-    public static void fatal(Throwable e, Object... message) {
+	/**
+	 * Fatal.
+	 *
+	 * @param e       the e
+	 * @param message the message
+	 */
+	public static void fatal(Throwable e, Object... message) {
         print(LogLevel.FATAL, message);
     }
 

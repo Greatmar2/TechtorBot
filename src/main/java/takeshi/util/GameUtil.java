@@ -16,15 +16,38 @@
 
 package takeshi.util;
 
+/**
+ * The type Game util.
+ */
 public class GameUtil {
-    public static final int MULTIPLICATION = 2;
-    public static final int BASE = 3;
+	/**
+	 * The constant MULTIPLICATION.
+	 */
+	public static final int MULTIPLICATION = 2;
+	/**
+	 * The constant BASE.
+	 */
+	public static final int BASE = 3;
 
-    public static long getXpFor(int level) {
+	/**
+	 * Gets xp for.
+	 *
+	 * @param level the level
+	 * @return the xp for
+	 */
+	public static long getXpFor(int level) {
         return getXpFor(level, MULTIPLICATION, BASE);
     }
 
-    public static long getXpFor(int level, int multiIncremental, int multiBase) {
+	/**
+	 * Gets xp for.
+	 *
+	 * @param level            the level
+	 * @param multiIncremental the multi incremental
+	 * @param multiBase        the multi base
+	 * @return the xp for
+	 */
+	public static long getXpFor(int level, int multiIncremental, int multiBase) {
         return (multiIncremental * level * level) + multiBase * level;
     }
 }

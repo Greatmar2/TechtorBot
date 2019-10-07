@@ -20,16 +20,42 @@ import java.sql.Timestamp;
 
 import takeshi.main.ProgramVersion;
 
+/**
+ * The type O bot version.
+ */
 public class OBotVersion {
 
-    public int id = 0;
-    public int major = 1;
-    public int minor = 0;
-    public int patch = 0;
-    public Timestamp createdOn = null;
-    public int published = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Major.
+	 */
+	public int major = 1;
+	/**
+	 * The Minor.
+	 */
+	public int minor = 0;
+	/**
+	 * The Patch.
+	 */
+	public int patch = 0;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
+	/**
+	 * The Published.
+	 */
+	public int published = 0;
 
-    public ProgramVersion getVersion() {
+	/**
+	 * Gets version.
+	 *
+	 * @return the version
+	 */
+	public ProgramVersion getVersion() {
         return new ProgramVersion(major, minor, patch);
     }
 }

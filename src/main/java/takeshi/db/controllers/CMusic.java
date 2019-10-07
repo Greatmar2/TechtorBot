@@ -29,7 +29,13 @@ import takeshi.db.model.OMusic;
  * data communication with the controllers `playlist`
  */
 public class CMusic {
-    public static OMusic findByYoutubeId(String youtubeCode) {
+	/**
+	 * Find by youtube id o music.
+	 *
+	 * @param youtubeCode the youtube code
+	 * @return the o music
+	 */
+	public static OMusic findByYoutubeId(String youtubeCode) {
         OMusic music = new OMusic();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -45,7 +51,13 @@ public class CMusic {
         return music;
     }
 
-    public static OMusic findById(int id) {
+	/**
+	 * Find by id o music.
+	 *
+	 * @param id the id
+	 * @return the o music
+	 */
+	public static OMusic findById(int id) {
         OMusic music = new OMusic();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -61,7 +73,13 @@ public class CMusic {
         return music;
     }
 
-    public static OMusic findByFileName(String filename) {
+	/**
+	 * Find by file name o music.
+	 *
+	 * @param filename the filename
+	 * @return the o music
+	 */
+	public static OMusic findByFileName(String filename) {
         OMusic music = new OMusic();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -78,7 +96,14 @@ public class CMusic {
     }
 
 
-    public static OMusic fillRecord(ResultSet resultset) throws SQLException {
+	/**
+	 * Fill record o music.
+	 *
+	 * @param resultset the resultset
+	 * @return the o music
+	 * @throws SQLException the sql exception
+	 */
+	public static OMusic fillRecord(ResultSet resultset) throws SQLException {
         OMusic music = new OMusic();
         music.id = resultset.getInt("id");
         music.youtubecode = resultset.getString("youtubecode");
@@ -95,7 +120,12 @@ public class CMusic {
         return music;
     }
 
-    public static void update(OMusic record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OMusic record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -115,7 +145,12 @@ public class CMusic {
         }
     }
 
-    public static void insert(OMusic record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OMusic record) {
         if (record.id > 0) {
             update(record);
             return;
@@ -132,7 +167,12 @@ public class CMusic {
         }
     }
 
-    public static void registerPlayRequest(int musicId) {
+	/**
+	 * Register play request.
+	 *
+	 * @param musicId the music id
+	 */
+	public static void registerPlayRequest(int musicId) {
         try {
             WebDb.get().query(
                     "UPDATE music SET  last_manual_playdate = ?, play_count = play_count + 1 " +
@@ -144,7 +184,13 @@ public class CMusic {
         }
     }
 
-    public static List<OMusic> getRecentlyPlayed(int limit) {
+	/**
+	 * Gets recently played.
+	 *
+	 * @param limit the limit
+	 * @return the recently played
+	 */
+	public static List<OMusic> getRecentlyPlayed(int limit) {
         List<OMusic> history = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT * FROM music ORDER BY lastplaydate DESC LIMIT ?", limit)) {
             while (rs.next()) {

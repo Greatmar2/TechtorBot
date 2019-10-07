@@ -22,21 +22,69 @@ import java.util.concurrent.TimeUnit;
 import takeshi.db.AbstractModel;
 import takeshi.handler.RaffleHandler;
 
+/**
+ * The type O raffle.
+ */
 public class ORaffle extends AbstractModel {
+	/**
+	 * The Id.
+	 */
 	public int id = 0;
+	/**
+	 * The Guild id.
+	 */
 	public long guildId = 0L;
+	/**
+	 * The Owner id.
+	 */
 	public long ownerId = 0L;
+	/**
+	 * The Prize.
+	 */
 	public String prize = "Mystery Prize";
+	/**
+	 * The Description.
+	 */
 	public String description = "";
+	/**
+	 * The Duration.
+	 */
 	public int duration = 0;
+	/**
+	 * The Duration unit.
+	 */
 	public TimeUnit durationUnit = TimeUnit.DAYS;
+	/**
+	 * The Entrants.
+	 */
 	public int entrants = RaffleHandler.MAX_ENTRIES;
+	/**
+	 * The Winners.
+	 */
 	public int winners = 1;
+	/**
+	 * The Thumb.
+	 */
 	public String thumb = "";
+	/**
+	 * The Image.
+	 */
 	public String image = "";
-	// These are only used when a raffle has started
+	/**
+	 * The Channel id.
+	 */
+// These are only used when a raffle has started
 	public long channelId = 0L;
+	/**
+	 * The Message id.
+	 */
 	public long messageId = 0L;
+	/**
+	 * The Raffle end.
+	 */
 	public Timestamp raffleEnd = null;
+	/**
+	 * The Delete on end.
+	 */
 	public boolean deleteOnEnd = false;
 }

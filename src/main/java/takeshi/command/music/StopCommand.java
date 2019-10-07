@@ -35,7 +35,10 @@ import takeshi.templates.Templates;
  * make the bot stop playing music
  */
 public class StopCommand extends AbstractCommand {
-    public StopCommand() {
+	/**
+	 * Instantiates a new Stop command.
+	 */
+	public StopCommand() {
         super();
     }
 
@@ -71,7 +74,7 @@ public class StopCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         SimpleRank userRank = bot.security.getSimpleRank(author, channel);
         if (!GuildSettings.get(guild).canUseMusicCommands(author, userRank)) {

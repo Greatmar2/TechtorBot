@@ -28,6 +28,9 @@ import takeshi.guildsettings.GSetting;
 import takeshi.handler.GuildSettings;
 import takeshi.handler.MusicPlayerHandler;
 
+/**
+ * The type Music util.
+ */
 public class MusicUtil {
 	private final static String BLOCK_INACTIVE = "\u25AC";
 	private final static String BLOCK_ACTIVE = "\uD83D\uDD18";
@@ -97,15 +100,24 @@ public class MusicUtil {
 		return embed.build();
 	}
 
+	/**
+	 * Now playing message no embed string.
+	 *
+	 * @param player the player
+	 * @param record the record
+	 * @return the string
+	 */
 	public static String nowPlayingMessageNoEmbed(MusicPlayerHandler player, OMusic record) {
 		return "[`" + DisUtil.getCommandPrefix(player.getGuild()) + "pl` " + player.getPlaylist().title + "] \uD83C\uDFB6 " + record.youtubeTitle;
 	}
 
 	/**
-	 * @param startTime timestamp (in seconds) of the moment the song started
-	 *                  playing
+	 * Gets mediaplayer progressbar.
+	 *
+	 * @param startTime timestamp (in seconds) of the moment the song started                  playing
 	 * @param duration  current song length in seconds
 	 * @param volume    volume of the player
+	 * @param isPaused  the is paused
 	 * @return a formatted mediaplayer
 	 */
 	public static String getMediaplayerProgressbar(long startTime, long duration, float volume, boolean isPaused) {

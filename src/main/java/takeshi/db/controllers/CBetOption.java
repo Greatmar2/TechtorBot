@@ -25,8 +25,17 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OBetOption;
 
+/**
+ * The type C bet option.
+ */
 public class CBetOption {
-    public static List<OBetOption> getOptionsForBet(int id) {
+	/**
+	 * Gets options for bet.
+	 *
+	 * @param id the id
+	 * @return the options for bet
+	 */
+	public static List<OBetOption> getOptionsForBet(int id) {
         List<OBetOption> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -42,7 +51,14 @@ public class CBetOption {
         return ret;
     }
 
-    public static OBetOption findById(int betId, int id) {
+	/**
+	 * Find by id o bet option.
+	 *
+	 * @param betId the bet id
+	 * @param id    the id
+	 * @return the o bet option
+	 */
+	public static OBetOption findById(int betId, int id) {
         OBetOption b = new OBetOption();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -58,7 +74,13 @@ public class CBetOption {
         return b;
     }
 
-    public static OBetOption findById(int id) {
+	/**
+	 * Find by id o bet option.
+	 *
+	 * @param id the id
+	 * @return the o bet option
+	 */
+	public static OBetOption findById(int id) {
         OBetOption b = new OBetOption();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -82,7 +104,12 @@ public class CBetOption {
         return b;
     }
 
-    public static void delete(OBetOption record) {
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
+	public static void delete(OBetOption record) {
         try {
             WebDb.get().query(
                     "DELETE FROM bet_options WHERE id = ? ",
@@ -93,7 +120,12 @@ public class CBetOption {
         }
     }
 
-    public static void deleteOptionsFor(int betId) {
+	/**
+	 * Delete options for.
+	 *
+	 * @param betId the bet id
+	 */
+	public static void deleteOptionsFor(int betId) {
         try {
             WebDb.get().query(
                     "DELETE FROM bet_options WHERE bet_id = ? ",
@@ -105,7 +137,12 @@ public class CBetOption {
     }
 
 
-    public static void update(OBetOption record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OBetOption record) {
         try {
             record.id = WebDb.get().query(
                     "UPDATE bet_options SET description = ? WHERE id = ?",
@@ -115,7 +152,12 @@ public class CBetOption {
         }
     }
 
-    public static void insert(OBetOption record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OBetOption record) {
         if (record.id > 0) {
             update(record);
             return;
@@ -130,7 +172,13 @@ public class CBetOption {
         }
     }
 
-    public static void addOption(int betId, String description) {
+	/**
+	 * Add option.
+	 *
+	 * @param betId       the bet id
+	 * @param description the description
+	 */
+	public static void addOption(int betId, String description) {
         OBetOption b = new OBetOption();
         b.betId = betId;
         b.description = description;

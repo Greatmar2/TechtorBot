@@ -29,7 +29,12 @@ import takeshi.util.Emojibet;
 public class VoiceChannelSettingType implements IGuildSettingType {
     private final boolean allowNull;
 
-    public VoiceChannelSettingType(boolean allowNull) {
+	/**
+	 * Instantiates a new Voice channel setting type.
+	 *
+	 * @param allowNull the allow null
+	 */
+	public VoiceChannelSettingType(boolean allowNull) {
 
         this.allowNull = allowNull;
     }

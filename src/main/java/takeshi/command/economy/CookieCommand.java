@@ -29,6 +29,9 @@ import takeshi.main.DiscordBot;
 import takeshi.main.Launcher;
 import takeshi.util.TimeUtil;
 
+/**
+ * The type Cookie command.
+ */
 public class CookieCommand extends AbstractCommand {
 
     @Override
@@ -61,7 +64,7 @@ public class CookieCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         OUser user = CUser.findBy(author.getIdLong());
         if (user.id == 0) {
             user.discord_id = author.getId();

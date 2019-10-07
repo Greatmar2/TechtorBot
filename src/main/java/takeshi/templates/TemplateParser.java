@@ -16,6 +16,15 @@
 
 package takeshi.templates;
 
+/**
+ * The interface Template parser.
+ */
 public interface TemplateParser {
-    String apply(TemplateVariables env);
+	/**
+	 * Apply string.
+	 *
+	 * @param env the env
+	 * @return the string
+	 */
+	String apply(TemplateVariables env);
 }

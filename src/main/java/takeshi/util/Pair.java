@@ -19,6 +19,12 @@ package takeshi.util;
 
 import java.io.Serializable;
 
+/**
+ * The type Pair.
+ *
+ * @param <K> the type parameter
+ * @param <V> the type parameter
+ */
 public class Pair<K, V> implements Serializable {
 
 
@@ -26,16 +32,32 @@ public class Pair<K, V> implements Serializable {
     private V value;
 
 
-    public Pair(K key, V value) {
+	/**
+	 * Instantiates a new Pair.
+	 *
+	 * @param key   the key
+	 * @param value the value
+	 */
+	public Pair(K key, V value) {
         this.key = key;
         this.value = value;
     }
 
-    public K getKey() {
+	/**
+	 * Gets key.
+	 *
+	 * @return the key
+	 */
+	public K getKey() {
         return key;
     }
 
-    public V getValue() {
+	/**
+	 * Gets value.
+	 *
+	 * @return the value
+	 */
+	public V getValue() {
         return value;
     }
 

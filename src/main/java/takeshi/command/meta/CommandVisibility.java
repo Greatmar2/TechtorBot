@@ -20,13 +20,34 @@ package takeshi.command.meta;
  * Visibility of a command
  */
 public enum CommandVisibility {
-    PRIVATE(), PUBLIC(), BOTH();
+	/**
+	 * Private command visibility.
+	 */
+	PRIVATE(),
+	/**
+	 * Public command visibility.
+	 */
+	PUBLIC(),
+	/**
+	 * Both command visibility.
+	 */
+	BOTH();
 
-    public boolean isForPrivate() {
+	/**
+	 * Is for private boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isForPrivate() {
         return this.equals(PRIVATE) || this.equals(BOTH);
     }
 
-    public boolean isForPublic() {
+	/**
+	 * Is for public boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isForPublic() {
         return this.equals(PUBLIC) || this.equals(BOTH);
     }
 }

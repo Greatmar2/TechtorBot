@@ -16,13 +16,34 @@
 
 package takeshi.games.slotmachine;
 
+/**
+ * The enum Slot.
+ */
 public enum Slot {
-    SEVEN("Seven", ":seven:", 30, 4, 1),
-    CROWN("Crown", ":crown:", 10),
-    BELL("Bell", ":bell:", 10),
-    BAR("Bar", ":chocolate_bar:", 10),
-    CHERRY("Cherry", ":cherries:", 10),
-    MELON("Melon", ":melon:", 10);
+	/**
+	 * Seven slot.
+	 */
+	SEVEN("Seven", ":seven:", 30, 4, 1),
+	/**
+	 * Crown slot.
+	 */
+	CROWN("Crown", ":crown:", 10),
+	/**
+	 * Bell slot.
+	 */
+	BELL("Bell", ":bell:", 10),
+	/**
+	 * Bar slot.
+	 */
+	BAR("Bar", ":chocolate_bar:", 10),
+	/**
+	 * Cherry slot.
+	 */
+	CHERRY("Cherry", ":cherries:", 10),
+	/**
+	 * Melon slot.
+	 */
+	MELON("Melon", ":melon:", 10);
 
     private final String name;
     private final String emote;
@@ -47,15 +68,30 @@ public enum Slot {
         this.singlePayout = singlePayout;
     }
 
-    public int getTriplePayout() {
+	/**
+	 * Gets triple payout.
+	 *
+	 * @return the triple payout
+	 */
+	public int getTriplePayout() {
         return triplePayout;
     }
 
-    public String getEmote() {
+	/**
+	 * Gets emote.
+	 *
+	 * @return the emote
+	 */
+	public String getEmote() {
         return emote;
     }
 
-    public String getName() {
+	/**
+	 * Gets name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
         return name;
     }
 
@@ -64,11 +100,21 @@ public enum Slot {
         return emote;
     }
 
-    public int getDoublePayout() {
+	/**
+	 * Gets double payout.
+	 *
+	 * @return the double payout
+	 */
+	public int getDoublePayout() {
         return doublePayout;
     }
 
-    public int getSinglePayout() {
+	/**
+	 * Gets single payout.
+	 *
+	 * @return the single payout
+	 */
+	public int getSinglePayout() {
         return singlePayout;
     }
 }

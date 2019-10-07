@@ -19,13 +19,25 @@ package takeshi.db.model;
 import takeshi.db.AbstractModel;
 
 /**
- * 
- * @author Aaron
+ * The type O auto role.
  *
+ * @author Aaron
  */
 public class OAutoRole extends AbstractModel {
+	/**
+	 * The Id.
+	 */
 	public int id = 0;
+	/**
+	 * The Role name.
+	 */
 	public String roleName = "";
+	/**
+	 * The Guild id.
+	 */
 	public long guildId = 0L;
+	/**
+	 * The Role id.
+	 */
 	public long roleId = 0L;
 }

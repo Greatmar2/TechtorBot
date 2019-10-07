@@ -52,9 +52,15 @@ public class SecurityHandler {
 	private final static HashSet<Long> botAdmins = new HashSet<>();
 	private final static HashSet<Long> systemAdmins = new HashSet<>();
 
+	/**
+	 * Instantiates a new Security handler.
+	 */
 	public SecurityHandler() {
 	}
 
+	/**
+	 * Initialize.
+	 */
 	public static synchronized void initialize() {
 		bannedGuilds.clear();
 		bannedUsers.clear();
@@ -76,34 +82,75 @@ public class SecurityHandler {
 		systemAdmins.addAll(system_admin.stream().map(oUserRank -> CUser.getCachedDiscordId(oUserRank.userId)).collect(Collectors.toList()));
 	}
 
+	/**
+	 * Is interaction bot boolean.
+	 *
+	 * @param userId the user id
+	 * @return the boolean
+	 */
 	public boolean isInteractionBot(long userId) {
 		return interactionBots.contains(userId);
 	}
 
+	/**
+	 * Is banned boolean.
+	 *
+	 * @param user the user
+	 * @return the boolean
+	 */
 	public boolean isBanned(User user) {
 		return bannedUsers.contains(user.getIdLong());
 	}
 
+	/**
+	 * Add user ban.
+	 *
+	 * @param discordId the discord id
+	 */
 	public synchronized void addUserBan(long discordId) {
 		if (!bannedUsers.contains(discordId)) {
 			bannedUsers.add(discordId);
 		}
 	}
 
+	/**
+	 * Remove user ban.
+	 *
+	 * @param discordId the discord id
+	 */
 	public synchronized void removeUserBan(long discordId) {
 		if (bannedUsers.contains(discordId)) {
 			bannedUsers.remove(discordId);
 		}
 	}
 
+	/**
+	 * Is banned boolean.
+	 *
+	 * @param guild the guild
+	 * @return the boolean
+	 */
 	public boolean isBanned(Guild guild) {
 		return bannedGuilds.contains(guild.getIdLong());
 	}
 
+	/**
+	 * Gets simple rank.
+	 *
+	 * @param user the user
+	 * @return the simple rank
+	 */
 	public SimpleRank getSimpleRank(User user) {
 		return getSimpleRankForGuild(user, null);
 	}
 
+	/**
+	 * Gets simple rank.
+	 *
+	 * @param user    the user
+	 * @param channel the channel
+	 * @return the simple rank
+	 */
 	public SimpleRank getSimpleRank(User user, MessageChannel channel) {
 		if (channel instanceof TextChannel) {
 			return getSimpleRankForGuild(user, ((TextChannel) channel).getGuild());
@@ -139,6 +186,13 @@ public class SecurityHandler {
 		return GuildCheckResult.OKE;
 	}
 
+	/**
+	 * Gets simple rank for guild.
+	 *
+	 * @param user  the user
+	 * @param guild the guild
+	 * @return the simple rank for guild
+	 */
 	public SimpleRank getSimpleRankForGuild(User user, Guild guild) {
 		long userId = user.getIdLong();
 		if (user.getIdLong() == BotConfig.CREATOR_ID) {
@@ -177,6 +231,12 @@ public class SecurityHandler {
 		return SimpleRank.USER;
 	}
 
+	/**
+	 * Is bot admin boolean.
+	 *
+	 * @param discordUserId the discord user id
+	 * @return the boolean
+	 */
 	public boolean isBotAdmin(long discordUserId) {
 		return botAdmins.contains(discordUserId);
 	}

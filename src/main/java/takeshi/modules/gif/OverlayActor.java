@@ -16,12 +16,33 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The type Overlay actor.
+ */
 public class OverlayActor {
-    public boolean visibility;
-    public int x, y;
-    public int height, width;
+	/**
+	 * The Visibility.
+	 */
+	public boolean visibility;
+	/**
+	 * The X.
+	 */
+	public int x, /**
+	 * The Y.
+	 */
+	y;
+	/**
+	 * The Height.
+	 */
+	public int height, /**
+	 * The Width.
+	 */
+	width;
 
-    public OverlayActor() {
+	/**
+	 * Instantiates a new Overlay actor.
+	 */
+	public OverlayActor() {
         visibility = true;
         x = 0;
         y = 0;
@@ -29,7 +50,12 @@ public class OverlayActor {
         height = 25;
     }
 
-    public void apply(OverlayEvent event) {
+	/**
+	 * Apply.
+	 *
+	 * @param event the event
+	 */
+	public void apply(OverlayEvent event) {
         event.apply(this);
     }
 }

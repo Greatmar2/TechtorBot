@@ -39,8 +39,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Raffle command.
+ */
 public class RaffleCommand extends AbstractCommand {
 
+	/**
+	 * Instantiates a new Raffle command.
+	 */
 	public RaffleCommand() {
 		super();
 	}
@@ -71,8 +77,8 @@ public class RaffleCommand extends AbstractCommand {
 				"raf duration <id> [<m/h/d> <time>]    //Example: h 3 Default: No limit",
 				"raf entrants <id> [entrants]    //Max entrants before the raffle auto-ends. Default: " + RaffleHandler.MAX_ENTRIES + " (current cap)",
 				"raf winners <id> [winners]    //Number of winners selected. Default: 1",
-				"raf thumb <id>    //Attatched image displays in the top right. Default: None",
-				"raf image <id>    //Attatched image displays at the bottom. Default: None", "raf blacklist [<user> [id] [y/n]]"};
+				"raf thumb <id>    //Attached image displays in the top right. Default: None",
+				"raf image <id>    //Attached image displays at the bottom. Default: None", "raf blacklist [<user> [id] [y/n]]"};
 	}
 
 	@Override
@@ -86,7 +92,7 @@ public class RaffleCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel chan = (TextChannel) channel;
 		Guild guild = (chan).getGuild();
 //		boolean debug = GuildSettings.getBoolFor(chan, GSetting.DEBUG);

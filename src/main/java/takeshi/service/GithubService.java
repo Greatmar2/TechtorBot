@@ -42,7 +42,12 @@ public class GithubService extends AbstractService {
     private final static String gitRepo = "discordbot";
     private final static String commitUrl = "https://github.com/%s/%s/commit/%s";
 
-    public GithubService(BotContainer b) {
+	/**
+	 * Instantiates a new Github service.
+	 *
+	 * @param b the b
+	 */
+	public GithubService(BotContainer b) {
         super(b);
     }
 

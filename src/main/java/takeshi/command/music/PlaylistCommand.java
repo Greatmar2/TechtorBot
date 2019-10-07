@@ -58,6 +58,9 @@ import takeshi.util.YTUtil;
 public class PlaylistCommand extends AbstractCommand implements ICommandReactionListener<PaginationInfo<OPlaylist>> {
 	private final static int ITEMS_PER_PAGE = 20;
 
+	/**
+	 * Instantiates a new Playlist command.
+	 */
 	public PlaylistCommand() {
 		super();
 	}
@@ -105,7 +108,7 @@ public class PlaylistCommand extends AbstractCommand implements ICommandReaction
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		MusicPlayerHandler player = MusicPlayerHandler.getFor(guild, bot);
 		SimpleRank userRank = bot.security.getSimpleRank(author, channel);

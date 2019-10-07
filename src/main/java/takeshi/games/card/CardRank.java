@@ -16,20 +16,62 @@
 
 package takeshi.games.card;
 
+/**
+ * The enum Card rank.
+ */
 public enum CardRank {
-    DEUCE("two", " 2", 2),
-    THREE("tree", " 3", 3),
-    FOUR("four", " 4", 4),
-    FIVE("five", " 5", 5),
-    SIX("six", " 6", 6),
-    SEVEN("seven", " 7", 7),
-    EIGHT("eight", " 8", 8),
-    NINE("nine", " 9", 9),
-    TEN("ten", "10", 10),
-    JACK("jack", " J", 10),
-    QUEEN("queen", " Q", 10),
-    KING("king", " K", 10),
-    ACE("ace", " A", 11);
+	/**
+	 * Deuce card rank.
+	 */
+	DEUCE("two", " 2", 2),
+	/**
+	 * Three card rank.
+	 */
+	THREE("tree", " 3", 3),
+	/**
+	 * Four card rank.
+	 */
+	FOUR("four", " 4", 4),
+	/**
+	 * Five card rank.
+	 */
+	FIVE("five", " 5", 5),
+	/**
+	 * Six card rank.
+	 */
+	SIX("six", " 6", 6),
+	/**
+	 * Seven card rank.
+	 */
+	SEVEN("seven", " 7", 7),
+	/**
+	 * Eight card rank.
+	 */
+	EIGHT("eight", " 8", 8),
+	/**
+	 * Nine card rank.
+	 */
+	NINE("nine", " 9", 9),
+	/**
+	 * Ten card rank.
+	 */
+	TEN("ten", "10", 10),
+	/**
+	 * Jack card rank.
+	 */
+	JACK("jack", " J", 10),
+	/**
+	 * Queen card rank.
+	 */
+	QUEEN("queen", " Q", 10),
+	/**
+	 * King card rank.
+	 */
+	KING("king", " K", 10),
+	/**
+	 * Ace card rank.
+	 */
+	ACE("ace", " A", 11);
 
     private String cardName;
     private String emoticon;
@@ -42,15 +84,30 @@ public enum CardRank {
         this.value = value;
     }
 
-    public String getEmoticon() {
+	/**
+	 * Gets emoticon.
+	 *
+	 * @return the emoticon
+	 */
+	public String getEmoticon() {
         return emoticon;
     }
 
-    public String getDisplayName() {
+	/**
+	 * Gets display name.
+	 *
+	 * @return the display name
+	 */
+	public String getDisplayName() {
         return cardName;
     }
 
-    public int getValue() {
+	/**
+	 * Gets value.
+	 *
+	 * @return the value
+	 */
+	public int getValue() {
         return value;
     }
 }

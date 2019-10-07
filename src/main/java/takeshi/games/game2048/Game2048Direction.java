@@ -16,14 +16,38 @@
 
 package takeshi.games.game2048;
 
+/**
+ * The enum Game 2048 direction.
+ */
 public enum Game2048Direction {
-    UP(),
-    RIGHT(),
-    LEFT(),
-    DOWN(),
-    UNKNOWN();
+	/**
+	 * Up game 2048 direction.
+	 */
+	UP(),
+	/**
+	 * Right game 2048 direction.
+	 */
+	RIGHT(),
+	/**
+	 * Left game 2048 direction.
+	 */
+	LEFT(),
+	/**
+	 * Down game 2048 direction.
+	 */
+	DOWN(),
+	/**
+	 * Unknown game 2048 direction.
+	 */
+	UNKNOWN();
 
-    public static Game2048Direction fromString(String direction) {
+	/**
+	 * From string game 2048 direction.
+	 *
+	 * @param direction the direction
+	 * @return the game 2048 direction
+	 */
+	public static Game2048Direction fromString(String direction) {
         if (direction == null) {
             return UNKNOWN;
         }

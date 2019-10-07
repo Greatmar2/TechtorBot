@@ -29,14 +29,27 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.internal.utils.PermissionUtil;
 import takeshi.command.meta.CommandReactionListener;
 
+/**
+ * The type Command reaction handler.
+ */
 public class CommandReactionHandler {
 	private final ConcurrentHashMap<Long, ConcurrentHashMap<Long, CommandReactionListener<?>>> reactions;
 //	private boolean lock = false;
 
+	/**
+	 * Instantiates a new Command reaction handler.
+	 */
 	public CommandReactionHandler() {
 		reactions = new ConcurrentHashMap<>();
 	}
 
+	/**
+	 * Add reaction listener.
+	 *
+	 * @param guildId the guild id
+	 * @param message the message
+	 * @param handler the handler
+	 */
 	public void addReactionListener(long guildId, Message message, CommandReactionListener<?> handler) {
 		if (handler == null) {
 			return;
@@ -65,7 +78,7 @@ public class CommandReactionHandler {
 	 * @param messageId id of the message
 	 * @param userId    id of the user reacting
 	 * @param reaction  the reaction
-	 * @param adding
+	 * @param adding    the adding
 	 */
 	public void handle(TextChannel channel, long messageId, long userId, MessageReaction reaction, boolean adding) {
 		// long botId = channel.getJDA().getSelfUser().getIdLong();
@@ -114,6 +127,11 @@ public class CommandReactionHandler {
 		return reactions.containsKey(guildId) && reactions.get(guildId).containsKey(messageId);
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public synchronized void removeGuild(long guildId) {
 		reactions.remove(guildId);
 	}

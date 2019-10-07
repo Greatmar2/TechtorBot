@@ -25,7 +25,13 @@ import takeshi.main.DiscordBot;
 import takeshi.permission.SimpleRank;
 import takeshi.templates.Templates;
 
+/**
+ * The type Mod case command.
+ */
 public class ModCaseCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Mod case command.
+     */
     public ModCaseCommand() {
         super();
     }
@@ -60,7 +66,7 @@ public class ModCaseCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author);
         return Templates.not_implemented_yet.formatGuild(channel);
     }

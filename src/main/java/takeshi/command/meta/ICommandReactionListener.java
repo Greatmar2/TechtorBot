@@ -16,7 +16,19 @@
 
 package takeshi.command.meta;
 
+/**
+ * The interface Command reaction listener.
+ *
+ * @param <T> the type parameter
+ */
 public interface ICommandReactionListener<T> {
 
-    CommandReactionListener<T> getReactionListener(long userId, T initialData);
+	/**
+	 * Gets reaction listener.
+	 *
+	 * @param userId      the user id
+	 * @param initialData the initial data
+	 * @return the reaction listener
+	 */
+	CommandReactionListener<T> getReactionListener(long userId, T initialData);
 }

@@ -24,28 +24,55 @@ import com.google.gson.annotations.Expose;
  */
 public class CommentData {
 
-    @Expose
+	/**
+	 * The Author.
+	 */
+	@Expose
     public String author;
 
-    @Expose
+	/**
+	 * The Body.
+	 */
+	@Expose
     public String body;
 
-    @Expose
+	/**
+	 * The Created.
+	 */
+	@Expose
     public Long created;
 
-    @Expose
+	/**
+	 * The Created utc.
+	 */
+	@Expose
     public Long created_utc;
 
-    @Expose
+	/**
+	 * The Subreddit.
+	 */
+	@Expose
     public String subreddit;
 
-    @Expose
+	/**
+	 * The Score.
+	 */
+	@Expose
     public Integer score;
 
-    @Expose
+	/**
+	 * The Id.
+	 */
+	@Expose
     public String id;
 
-    @Expose
+	/**
+	 * The Replies.
+	 */
+	@Expose
     public InitialDataComment replies;
-    public boolean isOp;
+	/**
+	 * The Is op.
+	 */
+	public boolean isOp;
 }

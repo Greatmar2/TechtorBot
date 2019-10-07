@@ -18,14 +18,25 @@ package takeshi.games.game2048;
 
 import takeshi.games.meta.GameTurn;
 
+/**
+ * The type Game 2048 turn.
+ */
 public class Game2048Turn extends GameTurn {
     private Game2048Direction direction = Game2048Direction.UNKNOWN;
 
-    public Game2048Turn() {
+	/**
+	 * Instantiates a new Game 2048 turn.
+	 */
+	public Game2048Turn() {
 
     }
 
-    public Game2048Direction getDirection() {
+	/**
+	 * Gets direction.
+	 *
+	 * @return the direction
+	 */
+	public Game2048Direction getDirection() {
         return direction;
     }
 

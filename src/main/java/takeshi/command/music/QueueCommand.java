@@ -39,6 +39,9 @@ import takeshi.util.Misc;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Queue command.
+ */
 public class QueueCommand extends AbstractCommand implements ICommandReactionListener<PaginationInfo> {
     private final static int ITEMS_PER_PAGE = 10;
 
@@ -70,7 +73,7 @@ public class QueueCommand extends AbstractCommand implements ICommandReactionLis
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         final Guild guild = ((TextChannel) channel).getGuild();
         MusicPlayerHandler player = MusicPlayerHandler.getFor(guild, bot);
         if (args.length == 0) {

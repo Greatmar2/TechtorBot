@@ -18,10 +18,28 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O reaction role message.
+ */
 public class OReactionRoleMessage extends AbstractModel {
-    public int id = 0;
-    public int reactionRoleKey = 0;
-    public String emoji = "";
-    public boolean isNormalEmote = true;
-    public long roleId = 0L;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Reaction role key.
+	 */
+	public int reactionRoleKey = 0;
+	/**
+	 * The Emoji.
+	 */
+	public String emoji = "";
+	/**
+	 * The Is normal emote.
+	 */
+	public boolean isNormalEmote = true;
+	/**
+	 * The Role id.
+	 */
+	public long roleId = 0L;
 }

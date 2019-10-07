@@ -18,21 +18,40 @@ package takeshi.handler.audio;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 
+/**
+ * The type Queued audio track.
+ */
 public class QueuedAudioTrack {
 
     final private String userId;
     final private AudioTrack track;
 
-    public QueuedAudioTrack(String userId, AudioTrack track) {
+	/**
+	 * Instantiates a new Queued audio track.
+	 *
+	 * @param userId the user id
+	 * @param track  the track
+	 */
+	public QueuedAudioTrack(String userId, AudioTrack track) {
         this.userId = userId;
         this.track = track;
     }
 
-    public String getUserId() {
+	/**
+	 * Gets user id.
+	 *
+	 * @return the user id
+	 */
+	public String getUserId() {
         return userId;
     }
 
-    public AudioTrack getTrack() {
+	/**
+	 * Gets track.
+	 *
+	 * @return the track
+	 */
+	public AudioTrack getTrack() {
         return track;
     }
 }

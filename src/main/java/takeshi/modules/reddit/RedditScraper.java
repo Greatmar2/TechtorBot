@@ -25,10 +25,20 @@ import takeshi.util.HttpHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Reddit scraper.
+ */
 public class RedditScraper {
 	private final static Gson gson = new GsonBuilder().registerTypeAdapter(CommentData.class, new CommentDataDeserializer())
 			.excludeFieldsWithoutExposeAnnotation().create();
 
+	/**
+	 * Search list.
+	 *
+	 * @param subreddit the subreddit
+	 * @param arguments the arguments
+	 * @return the list
+	 */
 	public static List<Post> search(String subreddit, String arguments) {
 
 		String response = HttpHelper.doRequest(RedditConstants.URL + RedditConstants.SUBREDDIT_INDICATOR + subreddit + RedditConstants.SEARCH_PAGE + arguments);
@@ -39,6 +49,12 @@ public class RedditScraper {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * Gets weekly top.
+	 *
+	 * @param subreddit the subreddit
+	 * @return the weekly top
+	 */
 	public static List<Post> getWeeklyTop(String subreddit) {
 		String response = HttpHelper.doRequest(RedditConstants.URL + RedditConstants.SUBREDDIT_INDICATOR + subreddit + "/top.json?sort=top&t=week&limit=50");
 		InitialData listing = gson.fromJson(response, InitialData.class);
@@ -48,6 +64,12 @@ public class RedditScraper {
 		return new ArrayList<>();
 	}
 
+	/**
+	 * Gets comments.
+	 *
+	 * @param id the id
+	 * @return the comments
+	 */
 	public static List<Comment> getComments(String id) {
 		String response = HttpHelper.doRequest(RedditConstants.URL + "comments/" + id + ".json");
 		List<InitialDataComment> initialData = gson.fromJson(response, new TypeToken<ArrayList<InitialDataComment>>() {

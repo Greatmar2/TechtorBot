@@ -41,7 +41,10 @@ import java.util.concurrent.TimeUnit;
  * urban dictionary
  */
 public class UrbanDictionaryCommand extends AbstractCommand {
-    public UrbanDictionaryCommand() {
+	/**
+	 * Instantiates a new Urban dictionary command.
+	 */
+	public UrbanDictionaryCommand() {
         super();
     }
 
@@ -71,7 +74,7 @@ public class UrbanDictionaryCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (args.length == 0) {
             return Templates.invalid_use.formatGuild(channel);
         }

@@ -22,6 +22,12 @@ import takeshi.db.AbstractModel;
  * Created on 5-9-2016
  */
 public class OBotPlayingOn extends AbstractModel {
-    public String guildId = "";
-    public String channelId = "";
+	/**
+	 * The Guild id.
+	 */
+	public String guildId = "";
+	/**
+	 * The Channel id.
+	 */
+	public String channelId = "";
 }

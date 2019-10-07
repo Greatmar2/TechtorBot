@@ -16,11 +16,26 @@
 
 package takeshi.games.card;
 
+/**
+ * The enum Card suit.
+ */
 public enum CardSuit {
-    CLUBS("clubs", ":clubs:"),
-    DIAMONDS("diamonds", ":diamonds:"),
-    HEARTS("hearts", ":hearts:"),
-    SPADES("spades", ":spades:");
+	/**
+	 * Clubs card suit.
+	 */
+	CLUBS("clubs", ":clubs:"),
+	/**
+	 * Diamonds card suit.
+	 */
+	DIAMONDS("diamonds", ":diamonds:"),
+	/**
+	 * Hearts card suit.
+	 */
+	HEARTS("hearts", ":hearts:"),
+	/**
+	 * Spades card suit.
+	 */
+	SPADES("spades", ":spades:");
     private final String displayName;
     private final String emoticon;
 
@@ -30,11 +45,21 @@ public enum CardSuit {
         this.emoticon = emoticon;
     }
 
-    public String getDisplayName() {
+	/**
+	 * Gets display name.
+	 *
+	 * @return the display name
+	 */
+	public String getDisplayName() {
         return displayName;
     }
 
-    public String getEmoticon() {
+	/**
+	 * Gets emoticon.
+	 *
+	 * @return the emoticon
+	 */
+	public String getEmoticon() {
         return emoticon;
     }
 }

@@ -29,9 +29,13 @@ import takeshi.templates.Templates;
 import java.io.File;
 
 /**
+ * The type Send file command.
  */
 public class SendFileCommand extends AbstractCommand {
-    public SendFileCommand() {
+	/**
+	 * Instantiates a new Send file command.
+	 */
+	public SendFileCommand() {
         super();
     }
 
@@ -61,7 +65,7 @@ public class SendFileCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank rank = bot.security.getSimpleRank(author);
         if (!rank.isAtLeast(SimpleRank.SYSTEM_ADMIN)) {
             return Templates.no_permission.formatGuild(channel);

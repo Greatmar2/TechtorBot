@@ -43,6 +43,9 @@ import java.util.List;
  * subscripe to certain events
  */
 public class Subscribe extends AbstractCommand {
+    /**
+     * Instantiates a new Subscribe.
+     */
     public Subscribe() {
         super();
     }
@@ -81,7 +84,7 @@ public class Subscribe extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         TextChannel txt = (TextChannel) channel;
         List<String> headers = new ArrayList<>();
         List<List<String>> tbl = new ArrayList<>();

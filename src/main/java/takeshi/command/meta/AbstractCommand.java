@@ -22,10 +22,16 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.User;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Abstract command.
+ */
 public abstract class AbstractCommand {
 
 	private CommandCategory commandCategory = CommandCategory.UNKNOWN;
 
+	/**
+	 * Instantiates a new Abstract command.
+	 */
 	public AbstractCommand() {
 
 	}
@@ -33,14 +39,14 @@ public abstract class AbstractCommand {
 	/**
 	 * A short discription of the method
 	 *
-	 * @return description
+	 * @return description description
 	 */
 	public abstract String getDescription();
 
 	/**
 	 * What should be typed to trigger this command (Without prefix)
 	 *
-	 * @return command
+	 * @return command command
 	 */
 	public abstract String getCommand();
 
@@ -58,6 +64,11 @@ public abstract class AbstractCommand {
 	 */
 	public abstract String[] getAliases();
 
+	/**
+	 * Gets command category.
+	 *
+	 * @return the command category
+	 */
 	public final CommandCategory getCommandCategory() {
 		return commandCategory;
 	}
@@ -112,19 +123,21 @@ public abstract class AbstractCommand {
 	/**
 	 * By default will call simpleExecute which returns a string. Must override to
 	 * return a MessageBuilder.
-	 * 
-	 * @param bot
-	 * @param args
-	 * @param channel
-	 * @param author
-	 * @param inputMessage
-	 * @return
+	 *
+	 * @param bot          the bot
+	 * @param args         the args
+	 * @param channel      the channel
+	 * @param author       the author
+	 * @param inputMessage the input message
+	 * @return message builder
 	 */
 	public MessageBuilder execute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-		return new MessageBuilder(simpleExecute(bot, args, channel, author, inputMessage));
+		return new MessageBuilder(stringExecute(bot, args, channel, author, inputMessage));
 	}
 
 	/**
+	 * String execute string.
+	 *
 	 * @param bot          the shard where its executing on
 	 * @param args         arguments for the command
 	 * @param channel      channel where the command is executed
@@ -132,7 +145,7 @@ public abstract class AbstractCommand {
 	 * @param inputMessage the incoming message object
 	 * @return the message to output or an empty string for nothing
 	 */
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "SimpleExecute " + this.getClass();
 	};
 }

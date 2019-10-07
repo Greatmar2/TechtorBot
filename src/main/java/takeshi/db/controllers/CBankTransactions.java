@@ -44,7 +44,13 @@ public class CBankTransactions {
         return bank;
     }
 
-    public static List<OBankTransaction> getHistoryFor(int bankId) {
+	/**
+	 * Gets history for.
+	 *
+	 * @param bankId the bank id
+	 * @return the history for
+	 */
+	public static List<OBankTransaction> getHistoryFor(int bankId) {
         List<OBankTransaction> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT t.*, uf.name AS user_from, ut.name AS user_to " +
@@ -64,7 +70,15 @@ public class CBankTransactions {
         return ret;
     }
 
-    public static void insert(int bankFrom, int bankTo, int amount, String description) {
+	/**
+	 * Insert.
+	 *
+	 * @param bankFrom    the bank from
+	 * @param bankTo      the bank to
+	 * @param amount      the amount
+	 * @param description the description
+	 */
+	public static void insert(int bankFrom, int bankTo, int amount, String description) {
         OBankTransaction rec = new OBankTransaction();
         rec.bankFrom = bankFrom;
         rec.bankTo = bankTo;
@@ -73,7 +87,12 @@ public class CBankTransactions {
         insert(rec);
     }
 
-    public static void insert(OBankTransaction rec) {
+	/**
+	 * Insert.
+	 *
+	 * @param rec the rec
+	 */
+	public static void insert(OBankTransaction rec) {
         try {
             if (rec.date == null) {
                 rec.date = new Timestamp(System.currentTimeMillis());

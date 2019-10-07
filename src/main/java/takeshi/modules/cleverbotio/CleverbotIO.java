@@ -21,19 +21,32 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.body.RequestBodyEntity;
 import org.json.JSONObject;
 
+/**
+ * The type Cleverbot io.
+ */
 public class CleverbotIO {
     private String user;
     private String key;
     private String session;
 
-    public CleverbotIO(String user, String key, String nick) {
+	/**
+	 * Instantiates a new Cleverbot io.
+	 *
+	 * @param user the user
+	 * @param key  the key
+	 * @param nick the nick
+	 */
+	public CleverbotIO(String user, String key, String nick) {
         this.user = user;
         this.key = key;
         this.session = nick;
         create();
     }
 
-    public void create() {
+	/**
+	 * Create.
+	 */
+	public void create() {
         JSONObject jsonOut = new JSONObject();
         jsonOut.put("user", user)
                 .put("key", key)
@@ -44,7 +57,14 @@ public class CleverbotIO {
 
     }
 
-    public String ask(String query) throws UnirestException {
+	/**
+	 * Ask string.
+	 *
+	 * @param query the query
+	 * @return the string
+	 * @throws UnirestException the unirest exception
+	 */
+	public String ask(String query) throws UnirestException {
         JSONObject jsonOut = new JSONObject();
         jsonOut.put("user", user)
                 .put("key", key)

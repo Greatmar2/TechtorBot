@@ -20,11 +20,32 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O tag.
+ */
 public class OTag extends AbstractModel {
-    public int id = 0;
-    public int guildId = 0;
-    public String tagname = "";
-    public String response = "";
-    public int userId = 0;
-    public Timestamp created = null;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The Tagname.
+	 */
+	public String tagname = "";
+	/**
+	 * The Response.
+	 */
+	public String response = "";
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Created.
+	 */
+	public Timestamp created = null;
 }

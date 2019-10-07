@@ -34,7 +34,13 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 
+/**
+ * The type Abstract mod action command.
+ */
 abstract public class AbstractModActionCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Abstract mod action command.
+	 */
 	public AbstractModActionCommand() {
 		super();
 	}
@@ -44,8 +50,18 @@ abstract public class AbstractModActionCommand extends AbstractCommand {
 		return new String[] { String.format("%s <user>     //%s user from guild", getCommand(), getPunishType().getDescription()), };
 	}
 
+	/**
+	 * Gets punish type.
+	 *
+	 * @return the punish type
+	 */
 	protected abstract OModerationCase.PunishType getPunishType();
 
+	/**
+	 * Gets required permission.
+	 *
+	 * @return the required permission
+	 */
 	protected abstract Permission getRequiredPermission();
 
 	@Override
@@ -53,10 +69,18 @@ abstract public class AbstractModActionCommand extends AbstractCommand {
 		return CommandVisibility.PUBLIC;
 	}
 
+	/**
+	 * Punish boolean.
+	 *
+	 * @param bot    the bot
+	 * @param guild  the guild
+	 * @param member the member
+	 * @return the boolean
+	 */
 	protected abstract boolean punish(DiscordBot bot, Guild guild, Member member);
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel chan = (TextChannel) channel;
 		Guild guild = chan.getGuild();
 		if (getRequiredPermission() != null) {

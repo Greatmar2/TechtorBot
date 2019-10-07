@@ -38,11 +38,19 @@ import java.net.URLConnection;
  * gives you a random cat fact
  */
 public class CatFactCommand extends AbstractCommand {
-    public CatFactCommand() {
+	/**
+	 * Instantiates a new Cat fact command.
+	 */
+	public CatFactCommand() {
         super();
     }
 
-    public static String getCatFact() {
+	/**
+	 * Gets cat fact.
+	 *
+	 * @return the cat fact
+	 */
+	public static String getCatFact() {
         try {
             URL loginurl = new URL("https://catfact.ninja/fact");
             URLConnection yc = loginurl.openConnection();
@@ -81,7 +89,7 @@ public class CatFactCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         String catFact = getCatFact();
         if (catFact != null) {
             return StringEscapeUtils.unescapeHtml4(catFact);

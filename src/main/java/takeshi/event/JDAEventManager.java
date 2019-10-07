@@ -31,12 +31,20 @@ import net.dv8tion.jda.api.hooks.IEventManager;
 import takeshi.core.Logger;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Jda event manager.
+ */
 public class JDAEventManager implements IEventManager {
 
 	private final DiscordBot bot;
 	private final ThreadPoolExecutor threadExecutor;
 	private List<Object> listeners = new LinkedList<>();
 
+	/**
+	 * Instantiates a new Jda event manager.
+	 *
+	 * @param bot the bot
+	 */
 	public JDAEventManager(DiscordBot bot) {
 		ThreadFactoryBuilder threadBuilder = new ThreadFactoryBuilder();
 		threadBuilder.setNameFormat(String.format("shard-%02d-command-%%d", bot.getShardId()));

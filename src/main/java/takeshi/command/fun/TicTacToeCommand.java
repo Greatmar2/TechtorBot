@@ -24,8 +24,14 @@ import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
 import takeshi.util.DisUtil;
 
+/**
+ * The type Tic tac toe command.
+ */
 public class TicTacToeCommand extends AbstractCommand {
-    public TicTacToeCommand() {
+	/**
+	 * Instantiates a new Tic tac toe command.
+	 */
+	public TicTacToeCommand() {
         super();
     }
 
@@ -61,7 +67,7 @@ public class TicTacToeCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         return "The games have been moved to the `" + DisUtil.getCommandPrefix(channel) + "game` command";
     }
 }

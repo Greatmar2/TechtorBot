@@ -24,7 +24,12 @@ public class C4Column {
     private int spaceAvailable;
     private int[] column;
 
-    C4Column(int size) {
+	/**
+	 * Instantiates a new C 4 column.
+	 *
+	 * @param size the size
+	 */
+	C4Column(int size) {
         this.spaceAvailable = size;
         column = new int[size];
         for (int i = 0; i < column.length; i++) {
@@ -32,7 +37,13 @@ public class C4Column {
         }
     }
 
-    public boolean place(int player) {
+	/**
+	 * Place boolean.
+	 *
+	 * @param player the player
+	 * @return the boolean
+	 */
+	public boolean place(int player) {
         if (hasSpace()) {
             column[spaceAvailable - 1] = player;
             spaceAvailable--;
@@ -40,11 +51,22 @@ public class C4Column {
         return false;
     }
 
-    public boolean hasSpace() {
+	/**
+	 * Has space boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean hasSpace() {
         return spaceAvailable > 0;
     }
 
-    public int getCol(int colindex) {
+	/**
+	 * Gets col.
+	 *
+	 * @param colindex the colindex
+	 * @return the col
+	 */
+	public int getCol(int colindex) {
         return column[colindex];
     }
 }

@@ -23,6 +23,9 @@ import takeshi.command.administrative.modactions.AbstractModActionCommand;
 import takeshi.db.model.OModerationCase;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Warn command.
+ */
 public class WarnCommand extends AbstractModActionCommand {
 	@Override
 	public String getDescription() {

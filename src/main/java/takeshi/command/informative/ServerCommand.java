@@ -40,7 +40,13 @@ import takeshi.util.DisUtil;
 import takeshi.util.Emojibet;
 import takeshi.util.GfxUtil;
 
+/**
+ * The type Server command.
+ */
 public class ServerCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Server command.
+	 */
 	public ServerCommand() {
 		super();
 	}
@@ -71,7 +77,7 @@ public class ServerCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		Guild guild = ((TextChannel) channel).getGuild();
 		if (!PermissionUtil.checkPermission((TextChannel) channel, guild.getSelfMember(), Permission.MESSAGE_EMBED_LINKS)) {
 			return Templates.permission_missing.formatGuild(channel, Permission.MESSAGE_EMBED_LINKS.toString());

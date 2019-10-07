@@ -35,6 +35,9 @@ import takeshi.util.UpdateUtil;
  * restarts the bot
  */
 public class RebootCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Reboot command.
+     */
     public RebootCommand() {
         super();
     }
@@ -67,7 +70,7 @@ public class RebootCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (bot.security.getSimpleRank(author).isAtLeast(SimpleRank.BOT_ADMIN)) {
             if (args.length == 0) {
                 return Templates.invalid_use.formatGuild(channel);

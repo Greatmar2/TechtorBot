@@ -38,7 +38,12 @@ public class GrayLogThread extends Thread {
     private GelfTransport transport;
     private GelfMessageBuilder builder;
 
-    public GrayLogThread() throws InterruptedException {
+	/**
+	 * Instantiates a new Gray log thread.
+	 *
+	 * @throws InterruptedException the interrupted exception
+	 */
+	public GrayLogThread() throws InterruptedException {
         super("graylog-writer");
         connect();
     }
@@ -70,13 +75,15 @@ public class GrayLogThread extends Thread {
         }
     }
 
-    /**
-     * @param message the log message
-     * @param type    the category of the log message
-     * @param subtype the subcategory of a logmessage
-     * @param args    optional extra arguments
-     */
-    public void log(String message, String type, String subtype, Object... args) {
+	/**
+	 * Log.
+	 *
+	 * @param message the log message
+	 * @param type    the category of the log message
+	 * @param subtype the subcategory of a logmessage
+	 * @param args    optional extra arguments
+	 */
+	public void log(String message, String type, String subtype, Object... args) {
         if (loggerTerminated) return;
         try {
             GelfMessage msg = builder.message(message).build();

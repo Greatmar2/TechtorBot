@@ -25,9 +25,18 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OTodoItem;
 
+/**
+ * The type C todo items.
+ */
 public class CTodoItems {
 
-    public static OTodoItem findBy(int id) {
+	/**
+	 * Find by o todo item.
+	 *
+	 * @param id the id
+	 * @return the o todo item
+	 */
+	public static OTodoItem findBy(int id) {
         OTodoItem t = new OTodoItem();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -43,7 +52,13 @@ public class CTodoItems {
         return t;
     }
 
-    public static List<OTodoItem> getListFor(int listId) {
+	/**
+	 * Gets list for.
+	 *
+	 * @param listId the list id
+	 * @return the list for
+	 */
+	public static List<OTodoItem> getListFor(int listId) {
         ArrayList<OTodoItem> ret = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -70,7 +85,12 @@ public class CTodoItems {
         return t;
     }
 
-    public static void delete(OTodoItem record) {
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
+	public static void delete(OTodoItem record) {
         try {
             WebDb.get().query(
                     "DELETE FROM todo_item WHERE id = ? ",
@@ -81,7 +101,12 @@ public class CTodoItems {
         }
     }
 
-    public static void deleteChecked(int listId) {
+	/**
+	 * Delete checked.
+	 *
+	 * @param listId the list id
+	 */
+	public static void deleteChecked(int listId) {
         try {
             WebDb.get().query(
                     "DELETE FROM todo_item WHERE list_id = ? AND checked = 1",
@@ -92,7 +117,12 @@ public class CTodoItems {
         }
     }
 
-    public static void update(OTodoItem record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OTodoItem record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -106,7 +136,12 @@ public class CTodoItems {
         }
     }
 
-    public static void insert(OTodoItem record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OTodoItem record) {
         if (record.id > 0) {
             update(record);
             return;

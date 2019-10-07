@@ -26,11 +26,13 @@ import takeshi.main.BotConfig;
  */
 public class HttpHelper {
 
-    /**
-     * @param url the url to request to
-     * @return a string containing the response
-     */
-    public static String doRequest(String url) {
+	/**
+	 * Do request string.
+	 *
+	 * @param url the url to request to
+	 * @return a string containing the response
+	 */
+	public static String doRequest(String url) {
         try {
             return Unirest.get(url).header("User-Agent", BotConfig.USER_AGENT).asString().getBody();
         } catch (UnirestException e) {

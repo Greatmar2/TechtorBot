@@ -33,7 +33,12 @@ import java.util.concurrent.TimeUnit;
  */
 public class UserRankingSystemService extends AbstractService {
 
-    public UserRankingSystemService(BotContainer b) {
+	/**
+	 * Instantiates a new User ranking system service.
+	 *
+	 * @param b the b
+	 */
+	public UserRankingSystemService(BotContainer b) {
         super(b);
     }
 

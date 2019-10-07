@@ -16,28 +16,38 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The interface Overlay event.
+ */
 public interface OverlayEvent {
 
-    /**
-     * Whats the trigger for this event?
-     *
-     * @return name of trigger
-     */
-    String getTrigger();
+	/**
+	 * Whats the trigger for this event?
+	 *
+	 * @return name of trigger
+	 */
+	String getTrigger();
 
-    /**
-     * checks if the input is a valid one
-     *
-     * @return valid?
-     */
-    boolean isValid(String input);
+	/**
+	 * checks if the input is a valid one
+	 *
+	 * @param input the input
+	 * @return valid ?
+	 */
+	boolean isValid(String input);
 
-    OverlayEvent parse(String input);
+	/**
+	 * Parse overlay event.
+	 *
+	 * @param input the input
+	 * @return the overlay event
+	 */
+	OverlayEvent parse(String input);
 
-    /**
-     * Apply the event to an actor
-     *
-     * @param overlayActor the actor
-     */
-    void apply(OverlayActor overlayActor);
+	/**
+	 * Apply the event to an actor
+	 *
+	 * @param overlayActor the actor
+	 */
+	void apply(OverlayActor overlayActor);
 }

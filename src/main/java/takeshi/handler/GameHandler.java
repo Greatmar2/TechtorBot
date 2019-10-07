@@ -16,26 +16,9 @@
 
 package takeshi.handler;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-
-import org.reflections.Reflections;
-
 import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.MessageReaction;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
+import org.reflections.Reflections;
 import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 import takeshi.games.meta.GameTurn;
@@ -47,6 +30,14 @@ import takeshi.util.DisUtil;
 import takeshi.util.Emojibet;
 import takeshi.util.Misc;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * The type Game handler.
+ */
 public class GameHandler {
 	// amount of invalid input attempts before auto-leaving playmode
 	private static final int GAMEMODE_LEAVE_AFTER = 2;
@@ -61,10 +52,18 @@ public class GameHandler {
 	private Map<Long, PlayData> usersInPlayMode = new ConcurrentHashMap<>();
 	private boolean removingReactions = false;
 
+	/**
+	 * Instantiates a new Game handler.
+	 *
+	 * @param bot the bot
+	 */
 	public GameHandler(DiscordBot bot) {
 		this.bot = bot;
 	}
 
+	/**
+	 * Initialize.
+	 */
 	public synchronized static void initialize() {
 		if (initialized) {
 			return;
@@ -86,6 +85,9 @@ public class GameHandler {
 		}
 	}
 
+	/**
+	 * Clean cache.
+	 */
 	public void cleanCache() {
 
 		long maxAge = System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(30);
@@ -107,6 +109,15 @@ public class GameHandler {
 		}
 	}
 
+	/**
+	 * Execute reaction boolean.
+	 *
+	 * @param player    the player
+	 * @param channel   the channel
+	 * @param reaction  the reaction
+	 * @param messageId the message id
+	 * @return the boolean
+	 */
 	public final boolean executeReaction(User player, MessageChannel channel, MessageReaction reaction, String messageId) {
 		if (removingReactions)
 			return false;
@@ -144,6 +155,14 @@ public class GameHandler {
 		return false;
 	}
 
+	/**
+	 * Is game input boolean.
+	 *
+	 * @param channel the channel
+	 * @param player  the player
+	 * @param message the message
+	 * @return the boolean
+	 */
 	public boolean isGameInput(TextChannel channel, User player, String message) {
 		if (GuildSettings.getBoolFor(channel, GSetting.MODULE_GAMES)) {
 			return isInPlayMode(player, channel) || message.startsWith(DisUtil.getCommandPrefix(channel) + COMMAND_NAME);
@@ -151,27 +170,35 @@ public class GameHandler {
 		return false;
 	}
 
+	/**
+	 * Execute.
+	 *
+	 * @param player        the player
+	 * @param channel       the channel
+	 * @param rawMessage    the raw message
+	 * @param targetMessage the target message
+	 */
 	public final void execute(User player, TextChannel channel, String rawMessage, Message targetMessage) {
 		String message = rawMessage.toLowerCase().trim();
 		if (!isInPlayMode(player, channel)) {
 			message = message.replace(DisUtil.getCommandPrefix(channel) + COMMAND_NAME, "").trim();
 		}
 		switch (message) {
-		case "playmode":
-		case "enter":
-		case "play":
-			enterPlayMode(channel, player);
-			bot.out.sendAsyncMessage(channel, Templates.playmode_entering_mode.formatGuild(channel));
-			return;
-		case "exit":
-		case "leave":
-		case "stop":
-			if (leavePlayMode(player)) {
-				bot.out.sendAsyncMessage(channel, Templates.playmode_leaving_mode.formatGuild(channel));
-			}
-			return;
-		default:
-			break;
+			case "playmode":
+			case "enter":
+			case "play":
+				enterPlayMode(channel, player);
+				bot.out.sendAsyncMessage(channel, Templates.playmode_entering_mode.formatGuild(channel));
+				return;
+			case "exit":
+			case "leave":
+			case "stop":
+				if (leavePlayMode(player)) {
+					bot.out.sendAsyncMessage(channel, Templates.playmode_leaving_mode.formatGuild(channel));
+				}
+				return;
+			default:
+				break;
 		}
 		String[] args = message.split(" ");
 		String gameMessage = executeGameMove(args, player, channel);
@@ -274,6 +301,11 @@ public class GameHandler {
 		return Misc.makeAsciiTable(Arrays.asList("code", "gamename"), table, null);
 	}
 
+	/**
+	 * Gets game list.
+	 *
+	 * @return the game list
+	 */
 	public List<AbstractGame> getGameList() {
 		return new ArrayList<>(gameInfoMap.values());
 	}
@@ -317,7 +349,7 @@ public class GameHandler {
 	}
 
 	private String createGameFromUserMention(TextChannel channel, User player, String theMention, String gamecode) {
-		return createGameFromUserMention(channel, player, new String[] { theMention }, gamecode);
+		return createGameFromUserMention(channel, player, new String[] {theMention}, gamecode);
 	}
 
 	private String createGameFromUserMention(TextChannel channel, User player, String[] theMentions, String gamecode) {
@@ -386,6 +418,14 @@ public class GameHandler {
 				+ prefix + COMMAND_NAME + " enter` \n" + "This makes it so that you don't have to prefix your messages with `" + prefix + COMMAND_NAME + "`";
 	}
 
+	/**
+	 * Execute game move string.
+	 *
+	 * @param args    the args
+	 * @param player  the player
+	 * @param channel the channel
+	 * @return the string
+	 */
 	public String executeGameMove(String[] args, User player, TextChannel channel) {
 		if (args.length > 0) {
 			if (args[0].equalsIgnoreCase("cancel") || args[0].equalsIgnoreCase("stop")) {
@@ -501,19 +541,41 @@ public class GameHandler {
 	}
 
 	private class PlayData {
+		/**
+		 * The User id.
+		 */
 		String userId;
+		/**
+		 * The Failed attempts.
+		 */
 		int failedAttempts = 0;
 		private String channelId;
 
+		/**
+		 * Instantiates a new Play data.
+		 *
+		 * @param userId    the user id
+		 * @param channelId the channel id
+		 */
 		PlayData(String userId, String channelId) {
 			this.userId = userId;
 			this.setChannelId(channelId);
 		}
 
+		/**
+		 * Gets channel id.
+		 *
+		 * @return the channel id
+		 */
 		public String getChannelId() {
 			return channelId;
 		}
 
+		/**
+		 * Sets channel id.
+		 *
+		 * @param channelId the channel id
+		 */
 		public void setChannelId(String channelId) {
 			this.channelId = channelId;
 		}

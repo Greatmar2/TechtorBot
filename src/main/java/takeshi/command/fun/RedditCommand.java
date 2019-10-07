@@ -54,6 +54,9 @@ public class RedditCommand extends AbstractCommand {
 	private static final Set<String> whitelistedDomains = new HashSet<>(
 			Arrays.asList("imgur.com", "i.imgur.com", "i.redd.it", "pbs.twimg.com", "gfycat.com", "file1.answcdn.com", "i.reddituploads.com", "youtube.com"));
 
+	/**
+	 * Instantiates a new Reddit command.
+	 */
 	public RedditCommand() {
 		super();
 	}
@@ -79,7 +82,7 @@ public class RedditCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		String subReddit = "funny";
 		if (args.length > 0) {
 			subReddit = args[0];

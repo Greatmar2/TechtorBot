@@ -16,5 +16,8 @@
 
 package takeshi.modules.gif;
 
+/**
+ * The type Gif list.
+ */
 public class GifList {
 }

@@ -27,11 +27,19 @@ import takeshi.db.controllers.CAutoRole;
 import takeshi.db.model.OAutoRole;
 import takeshi.main.DiscordBot;
 
+/**
+ * The type Auto role handler.
+ */
 public class AutoRoleHandler {
 	// {guild-id, role-id}}
 	private final Map<Long, OAutoRole> listeners;
 //	private final DiscordBot discordBot;
 
+	/**
+	 * Instantiates a new Auto role handler.
+	 *
+	 * @param discordBot the discord bot
+	 */
 	public AutoRoleHandler(DiscordBot discordBot) {
 //		this.discordBot = discordBot;
 		listeners = new ConcurrentHashMap<>();
@@ -41,6 +49,13 @@ public class AutoRoleHandler {
 		return listeners.containsKey(guildId) && listeners.get(guildId).roleId != 0L;
 	}
 
+	/**
+	 * Init guild boolean.
+	 *
+	 * @param guildId     the guild id
+	 * @param forceReload the force reload
+	 * @return the boolean
+	 */
 	public synchronized boolean initGuild(long guildId, boolean forceReload) {
 		if (!forceReload && listeners.containsKey(guildId)) {
 			return true;
@@ -56,12 +71,24 @@ public class AutoRoleHandler {
 		return false;
 	}
 
+	/**
+	 * Remove guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public synchronized void removeGuild(long guildId) {
 		if (listeners.containsKey(guildId)) {
 			listeners.remove(guildId);
 		}
 	}
 
+	/**
+	 * Handle boolean.
+	 *
+	 * @param guild  the guild
+	 * @param member the member
+	 * @return the boolean
+	 */
 	public synchronized boolean handle(Guild guild, Member member) {
 		long guildId = guild.getIdLong();
 		initGuild(guildId, false);

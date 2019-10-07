@@ -31,6 +31,9 @@ import takeshi.util.Misc;
  * !botstatus changes the bot status (the playing game, or streaming)
  */
 public class BotStatusCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Bot status command.
+	 */
 	public BotStatusCommand() {
 		super();
 	}
@@ -60,7 +63,7 @@ public class BotStatusCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		SimpleRank rank = bot.security.getSimpleRank(author);
 		if (!rank.isAtLeast(SimpleRank.BOT_ADMIN)) {
 			return Templates.no_permission.formatGuild(channel);

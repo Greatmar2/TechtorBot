@@ -25,8 +25,14 @@ import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 
+/**
+ * The type Report command.
+ */
 public class ReportCommand extends AbstractCommand {
-    public ReportCommand() {
+	/**
+	 * Instantiates a new Report command.
+	 */
+	public ReportCommand() {
         super();
     }
 
@@ -57,7 +63,7 @@ public class ReportCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         if (args.length <= 3) {
             return "Usage: " + getUsage()[0];
         }

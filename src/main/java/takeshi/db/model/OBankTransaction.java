@@ -20,13 +20,40 @@ import java.sql.Timestamp;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O bank transaction.
+ */
 public class OBankTransaction extends AbstractModel {
-    public int id = 0;
-    public int bankFrom = 0;
-    public int bankTo = 0;
-    public Timestamp date = null;
-    public String description = "";
-    public int amount = 0;
-    public String userTo = "";
-    public String userFrom = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Bank from.
+	 */
+	public int bankFrom = 0;
+	/**
+	 * The Bank to.
+	 */
+	public int bankTo = 0;
+	/**
+	 * The Date.
+	 */
+	public Timestamp date = null;
+	/**
+	 * The Description.
+	 */
+	public String description = "";
+	/**
+	 * The Amount.
+	 */
+	public int amount = 0;
+	/**
+	 * The User to.
+	 */
+	public String userTo = "";
+	/**
+	 * The User from.
+	 */
+	public String userFrom = "";
 }

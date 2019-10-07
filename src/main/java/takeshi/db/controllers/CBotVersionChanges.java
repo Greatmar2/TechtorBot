@@ -30,7 +30,13 @@ import takeshi.db.model.OBotVersionChange;
  */
 public class CBotVersionChanges {
 
-    public static OBotVersionChange findById(int id) {
+	/**
+	 * Find by id o bot version change.
+	 *
+	 * @param id the id
+	 * @return the o bot version change
+	 */
+	public static OBotVersionChange findById(int id) {
         OBotVersionChange s = new OBotVersionChange();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * " +
@@ -46,13 +52,13 @@ public class CBotVersionChanges {
         return s;
     }
 
-    /**
-     * retrieve all changes for specified version
-     *
-     * @param versionId internal version id to look up
-     * @return list of changes
-     */
-    public static List<OBotVersionChange> getChangesFor(int versionId) {
+	/**
+	 * retrieve all changes for specified version
+	 *
+	 * @param versionId internal version id to look up
+	 * @return list of changes
+	 */
+	public static List<OBotVersionChange> getChangesFor(int versionId) {
         List<OBotVersionChange> s = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * " +
@@ -78,7 +84,15 @@ public class CBotVersionChanges {
         return s;
     }
 
-    public static int insert(int versionId, OBotVersionChange.ChangeType changeType, String description) {
+	/**
+	 * Insert int.
+	 *
+	 * @param versionId   the version id
+	 * @param changeType  the change type
+	 * @param description the description
+	 * @return the int
+	 */
+	public static int insert(int versionId, OBotVersionChange.ChangeType changeType, String description) {
         OBotVersionChange r = new OBotVersionChange();
         r.version = versionId;
         r.changeType = changeType;
@@ -86,7 +100,13 @@ public class CBotVersionChanges {
         return insert(r);
     }
 
-    public static int insert(OBotVersionChange record) {
+	/**
+	 * Insert int.
+	 *
+	 * @param record the record
+	 * @return the int
+	 */
+	public static int insert(OBotVersionChange record) {
         try {
             return WebDb.get().insert(
                     "INSERT INTO bot_version_changes(version, change_type, description, author) " +

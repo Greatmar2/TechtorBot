@@ -36,6 +36,9 @@ import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
 import takeshi.util.Emojibet;
 
+/**
+ * The type Two zero four zero command.
+ */
 public class TwoZeroFourZeroCommand extends AbstractCommand implements ICommandReactionListener<Game2048>, ICommandCooldown {
 
 	@Override
@@ -64,7 +67,7 @@ public class TwoZeroFourZeroCommand extends AbstractCommand implements ICommandR
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		if (!DisUtil.hasPermission(channel, channel.getJDA().getSelfUser(), Permission.MESSAGE_ADD_REACTION)) {
 			return Templates.permission_missing.formatGuild(channel, Permission.MESSAGE_ADD_REACTION.toString());
 		}

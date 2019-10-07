@@ -16,12 +16,21 @@
 
 package takeshi.games.connect4;
 
+/**
+ * The type C 4 board.
+ */
 public class C4Board {
 
     private C4Column[] cols;
     private int columnSize;
 
-    public C4Board(int columns, int rows) {
+	/**
+	 * Instantiates a new C 4 board.
+	 *
+	 * @param columns the columns
+	 * @param rows    the rows
+	 */
+	public C4Board(int columns, int rows) {
         cols = new C4Column[columns];
         for (int i = 0; i < cols.length; i++) {
             cols[i] = new C4Column(rows);
@@ -29,28 +38,45 @@ public class C4Board {
         this.columnSize = rows;
     }
 
-    public int getValue(int column, int row) {
+	/**
+	 * Gets value.
+	 *
+	 * @param column the column
+	 * @param row    the row
+	 * @return the value
+	 */
+	public int getValue(int column, int row) {
         return cols[column].getCol(row);
     }
 
-    /**
-     * @param index the column to place it in
-     * @return can the player place it?
-     */
-    public boolean canPlaceInColumn(int index) {
+	/**
+	 * Can place in column boolean.
+	 *
+	 * @param index the column to place it in
+	 * @return can the player place it?
+	 */
+	public boolean canPlaceInColumn(int index) {
         return cols[index] != null && cols[index].hasSpace();
     }
 
-    /**
-     * @param index  the column
-     * @param player playerindex
-     * @return success
-     */
-    public boolean placeInColumn(int index, int player) {
+	/**
+	 * Place in column boolean.
+	 *
+	 * @param index  the column
+	 * @param player playerindex
+	 * @return success boolean
+	 */
+	public boolean placeInColumn(int index, int player) {
         return cols[index].place(player);
     }
 
-    public String intToPlayer(int playerIndex) {
+	/**
+	 * Int to player string.
+	 *
+	 * @param playerIndex the player index
+	 * @return the string
+	 */
+	public String intToPlayer(int playerIndex) {
         switch (playerIndex) {
             case 0:
                 return "\uD83D\uDD34";

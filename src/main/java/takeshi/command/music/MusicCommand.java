@@ -38,7 +38,10 @@ import java.util.List;
  * !music [vol]
  */
 public class MusicCommand extends AbstractCommand {
-    public MusicCommand() {
+	/**
+	 * Instantiates a new Music command.
+	 */
+	public MusicCommand() {
         super();
     }
 
@@ -73,7 +76,7 @@ public class MusicCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         MusicPlayerHandler player = MusicPlayerHandler.getFor(guild, bot);
         SimpleRank rank = bot.security.getSimpleRank(author, channel);

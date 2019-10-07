@@ -43,7 +43,10 @@ public class FMLCommand extends AbstractCommand {
     private static final int MIN_QUEUE_ITEMS = 40;
     private final BlockingQueue<String> items;
 
-    public FMLCommand() {
+	/**
+	 * Instantiates a new Fml command.
+	 */
+	public FMLCommand() {
         super();
         items = new LinkedBlockingQueue<>();
     }
@@ -69,7 +72,7 @@ public class FMLCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 
         if (items.size() < MIN_QUEUE_ITEMS) {
             bot.queue.add(channel.sendTyping());

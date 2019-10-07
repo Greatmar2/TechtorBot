@@ -20,11 +20,26 @@ package takeshi.modules.pathofexile.enums;
  * Created on 2-9-2016
  */
 public enum Rarity {
-    COMMON("Common"),
-    UNCOMMON("Uncommon"),
-    RARE("Rare"),
-    UNIQUE("Unique"),
-    UNKNOWN("Unknown");
+	/**
+	 * Common rarity.
+	 */
+	COMMON("Common"),
+	/**
+	 * Uncommon rarity.
+	 */
+	UNCOMMON("Uncommon"),
+	/**
+	 * Rare rarity.
+	 */
+	RARE("Rare"),
+	/**
+	 * Unique rarity.
+	 */
+	UNIQUE("Unique"),
+	/**
+	 * Unknown rarity.
+	 */
+	UNKNOWN("Unknown");
 
     private final String displayName;
 
@@ -33,7 +48,13 @@ public enum Rarity {
         this.displayName = displayName;
     }
 
-    public static Rarity fromString(String rarityName) {
+	/**
+	 * From string rarity.
+	 *
+	 * @param rarityName the rarity name
+	 * @return the rarity
+	 */
+	public static Rarity fromString(String rarityName) {
         if (rarityName != null) {
             for (Rarity rarity : values()) {
                 if (rarityName.equalsIgnoreCase(rarity.displayName)) {

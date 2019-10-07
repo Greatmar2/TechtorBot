@@ -35,12 +35,21 @@ import java.util.regex.Pattern;
 
 import takeshi.core.Logger;
 
+/**
+ * The type Db update.
+ */
 public class DbUpdate {
 	private final MySQLAdapter adapter;
 	private final Pattern filepattern = Pattern.compile("(\\d+)_(\\d+).*\\.sql");
 	private int highestVersion = 0;
 	private Map<Integer, DbVersion> versionMap;
 
+	/**
+	 * Instantiates a new Db update.
+	 *
+	 * @param adapter the adapter
+	 * @throws IOException the io exception
+	 */
 	public DbUpdate(MySQLAdapter adapter) throws IOException {
 		this.adapter = adapter;
 		versionMap = new HashMap<>();
@@ -94,6 +103,12 @@ public class DbUpdate {
 		highestVersion = Math.max(highestVersion, toVersion);
 	}
 
+	/**
+	 * Update to current boolean.
+	 *
+	 * @return the boolean
+	 * @throws SQLException the sql exception
+	 */
 	public boolean updateToCurrent() throws SQLException {
 		int currentVersion = 0;
 		try {
@@ -187,7 +202,13 @@ public class DbUpdate {
 	}
 
 	private class DbVersion {
+		/**
+		 * The To version.
+		 */
 		final int toVersion;
+		/**
+		 * The File.
+		 */
 		final String file;
 
 		private DbVersion(int toVersion, String filePath) {

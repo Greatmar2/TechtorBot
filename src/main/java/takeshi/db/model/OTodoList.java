@@ -18,10 +18,28 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O todo list.
+ */
 public class OTodoList extends AbstractModel {
-    public int id = 0;
-    public int userId = 0;
-    public int guildId = 0;
-    public String listName = "";
-    public int visibility = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The List name.
+	 */
+	public String listName = "";
+	/**
+	 * The Visibility.
+	 */
+	public int visibility = 0;
 }

@@ -50,7 +50,10 @@ import java.util.List;
 public class UserCommand extends AbstractCommand {
     private final SimpleDateFormat joindateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-    public UserCommand() {
+	/**
+	 * Instantiates a new User command.
+	 */
+	public UserCommand() {
         super();
     }
 
@@ -83,7 +86,7 @@ public class UserCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         User infoUser = null;
         if (args.length == 0) {
             infoUser = author;

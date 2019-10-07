@@ -20,17 +20,41 @@ import java.util.EnumSet;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O user.
+ */
 public class OUser extends AbstractModel {
-    public int id;
-    public String discord_id;
-    public String name;
-    public int commandsUsed;
-    public int banned;
-    public int lastCurrencyRetrieval = 0;
+	/**
+	 * The Id.
+	 */
+	public int id;
+	/**
+	 * The Discord id.
+	 */
+	public String discord_id;
+	/**
+	 * The Name.
+	 */
+	public String name;
+	/**
+	 * The Commands used.
+	 */
+	public int commandsUsed;
+	/**
+	 * The Banned.
+	 */
+	public int banned;
+	/**
+	 * The Last currency retrieval.
+	 */
+	public int lastCurrencyRetrieval = 0;
     private int permissionTotal;
     private EnumSet<PermissionNode> nodes;
 
-    public OUser() {
+	/**
+	 * Instantiates a new O user.
+	 */
+	public OUser() {
         discord_id = "";
         id = 0;
         name = "";
@@ -40,24 +64,51 @@ public class OUser extends AbstractModel {
         permissionTotal = 0;
     }
 
-    public boolean hasPermission(PermissionNode node) {
+	/**
+	 * Has permission boolean.
+	 *
+	 * @param node the node
+	 * @return the boolean
+	 */
+	public boolean hasPermission(PermissionNode node) {
         return nodes.contains(node);
     }
 
-    public int getEncodedPermissions() {
+	/**
+	 * Gets encoded permissions.
+	 *
+	 * @return the encoded permissions
+	 */
+	public int getEncodedPermissions() {
         return permissionTotal;
     }
 
-    public EnumSet<PermissionNode> getPermission() {
+	/**
+	 * Gets permission.
+	 *
+	 * @return the permission
+	 */
+	public EnumSet<PermissionNode> getPermission() {
         return nodes;
     }
 
-    public void setPermission(int total) {
+	/**
+	 * Sets permission.
+	 *
+	 * @param total the total
+	 */
+	public void setPermission(int total) {
         nodes = decode(total);
         permissionTotal = total;
     }
 
-    public boolean addPermission(PermissionNode node) {
+	/**
+	 * Add permission boolean.
+	 *
+	 * @param node the node
+	 * @return the boolean
+	 */
+	public boolean addPermission(PermissionNode node) {
         if (nodes.contains(node)) {
             return false;
         }
@@ -66,7 +117,13 @@ public class OUser extends AbstractModel {
         return true;
     }
 
-    public boolean removePermission(PermissionNode node) {
+	/**
+	 * Remove permission boolean.
+	 *
+	 * @param node the node
+	 * @return the boolean
+	 */
+	public boolean removePermission(PermissionNode node) {
         if (!nodes.contains(node)) {
             return false;
         }
@@ -94,9 +151,18 @@ public class OUser extends AbstractModel {
         return ret;
     }
 
-    public enum PermissionNode {
-        IMPORT_PLAYLIST("use youtube playlists"),
-        BAN_TRACKS("ban tracks from the global playlist");
+	/**
+	 * The enum Permission node.
+	 */
+	public enum PermissionNode {
+		/**
+		 * The Import playlist.
+		 */
+		IMPORT_PLAYLIST("use youtube playlists"),
+		/**
+		 * The Ban tracks.
+		 */
+		BAN_TRACKS("ban tracks from the global playlist");
         private final String description;
 
         PermissionNode(String description) {
@@ -104,7 +170,12 @@ public class OUser extends AbstractModel {
             this.description = description;
         }
 
-        public String getDescription() {
+		/**
+		 * Gets description.
+		 *
+		 * @return the description
+		 */
+		public String getDescription() {
             return description;
         }
     }

@@ -20,14 +20,17 @@ import takeshi.games.card.Card;
 import takeshi.games.card.CardHand;
 import takeshi.games.card.CardRank;
 
+/**
+ * The type Black jack hand.
+ */
 public class BlackJackHand extends CardHand {
 
-    /**
-     * calculates the value of the hand
-     *
-     * @return points
-     */
-    public int getValue() {
+	/**
+	 * calculates the value of the hand
+	 *
+	 * @return points value
+	 */
+	public int getValue() {
         int value = 0;
         int aces = 0;
         for (Card card : cardsInHand) {
@@ -43,7 +46,12 @@ public class BlackJackHand extends CardHand {
         return value;
     }
 
-    public String printHand() {
+	/**
+	 * Print hand string.
+	 *
+	 * @return the string
+	 */
+	public String printHand() {
         StringBuilder hand = new StringBuilder();
         for (Card card : cardsInHand) {
             hand.append(card.toEmote()).append(" ");

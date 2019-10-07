@@ -62,53 +62,72 @@ public class GuildSettings {
         loadSettings();
     }
 
-    /**
-     * Simplified method to get the setting for a channel instead of guild
-     *
-     * @param channel the channel to check
-     * @param setting the Setting
-     * @return the setting
-     */
-    public static String getFor(MessageChannel channel, GSetting setting) {
+	/**
+	 * Simplified method to get the setting for a channel instead of guild
+	 *
+	 * @param channel the channel to check
+	 * @param setting the Setting
+	 * @return the setting
+	 */
+	public static String getFor(MessageChannel channel, GSetting setting) {
         if (channel != null && channel instanceof TextChannel) {
             return GuildSettings.get(((TextChannel) channel).getGuild()).getOrDefault(setting);
         }
         return DefaultGuildSettings.getDefault(setting);
     }
 
-    /**
-     * Similar to {@link #getFor(MessageChannel, GSetting)} but more specifically only for boolean type settings
-     *
-     * @param channel the channel to check
-     * @param setting the setting
-     * @return boolean value of the setting
-     */
-    public static boolean getBoolFor(MessageChannel channel, GSetting setting) {
+	/**
+	 * Similar to {@link #getFor(MessageChannel, GSetting)} but more specifically only for boolean type settings
+	 *
+	 * @param channel the channel to check
+	 * @param setting the setting
+	 * @return boolean value of the setting
+	 */
+	public static boolean getBoolFor(MessageChannel channel, GSetting setting) {
         return setting.getSettingType() instanceof BooleanSettingType && "true".equals(getFor(channel, setting));
     }
 
-    public static void remove(long guildId) {
+	/**
+	 * Remove.
+	 *
+	 * @param guildId the guild id
+	 */
+	public static void remove(long guildId) {
         if (settingInstance.containsKey(guildId)) {
             settingInstance.remove(guildId);
         }
     }
 
-    /**
-     * @param channel the channel to look up the guild settings
-     * @return Setting object for guild If its a TextChannel otherwise null
-     */
-    public static GuildSettings get(MessageChannel channel) {
+	/**
+	 * Get guild settings.
+	 *
+	 * @param channel the channel to look up the guild settings
+	 * @return Setting object for guild If its a TextChannel otherwise null
+	 */
+	public static GuildSettings get(MessageChannel channel) {
         if (channel != null && channel instanceof TextChannel) {
             return GuildSettings.get(((TextChannel) channel).getGuild());
         }
         return null;
     }
 
-    public static GuildSettings get(Guild guild) {
+	/**
+	 * Get guild settings.
+	 *
+	 * @param guild the guild
+	 * @return the guild settings
+	 */
+	public static GuildSettings get(Guild guild) {
         return get(guild.getIdLong());
     }
 
-    public static GuildSettings get(long guild) {
+	/**
+	 * Get guild settings.
+	 *
+	 * @param guild the guild
+	 * @return the guild settings
+	 */
+	public static GuildSettings get(long guild) {
         if (settingInstance.containsKey(guild)) {
             return settingInstance.get(guild);
         } else {
@@ -116,32 +135,34 @@ public class GuildSettings {
         }
     }
 
-    /**
-     * @param setting the setting
-     * @return the setting or default value
-     */
-    public String getOrDefault(GSetting setting) {
+	/**
+	 * Gets or default.
+	 *
+	 * @param setting the setting
+	 * @return the setting or default value
+	 */
+	public String getOrDefault(GSetting setting) {
         return settings[setting.ordinal()] == null ? setting.getDefaultValue() : settings[setting.ordinal()];
     }
 
-    /**
-     * helper method to simplify getting boolean type settings
-     *
-     * @param setting the setting
-     * @return false if its not a boolean setting otherwise the setting
-     */
-    public boolean getBoolValue(GSetting setting) {
+	/**
+	 * helper method to simplify getting boolean type settings
+	 *
+	 * @param setting the setting
+	 * @return false if its not a boolean setting otherwise the setting
+	 */
+	public boolean getBoolValue(GSetting setting) {
         return setting.getSettingType() instanceof BooleanSettingType && "true".equals(getOrDefault(setting));
     }
 
-    /**
-     * helper method to simplify getting Role type settings
-     *
-     * @param setting the Role setting
-     * @param guild   the guild object
-     * @return the role or null
-     */
-    public Role getRoleValue(GSetting setting, Guild guild) {
+	/**
+	 * helper method to simplify getting Role type settings
+	 *
+	 * @param setting the Role setting
+	 * @param guild   the guild object
+	 * @return the role or null
+	 */
+	public Role getRoleValue(GSetting setting, Guild guild) {
         if (!(setting.getSettingType() instanceof RoleSettingType) || guild == null) {
             return null;
         }
@@ -152,7 +173,13 @@ public class GuildSettings {
         return guild.getRoleById(roleName);
     }
 
-    public String getOrDefault(String key) {
+	/**
+	 * Gets or default.
+	 *
+	 * @param key the key
+	 * @return the or default
+	 */
+	public String getOrDefault(String key) {
         return getOrDefault(GSetting.valueOf(key.toUpperCase()));
     }
 
@@ -185,26 +212,61 @@ public class GuildSettings {
     }
 
 
-    public String getDescription(String key) {
+	/**
+	 * Gets description.
+	 *
+	 * @param key the key
+	 * @return the description
+	 */
+	public String getDescription(String key) {
         if (DefaultGuildSettings.isValidKey(key)) {
             return DefaultGuildSettings.get(key).getDescription();
         }
         return "";
     }
 
-    public IGuildSettingType getSettingsType(String key) {
+	/**
+	 * Gets settings type.
+	 *
+	 * @param key the key
+	 * @return the settings type
+	 */
+	public IGuildSettingType getSettingsType(String key) {
         return DefaultGuildSettings.get(key).getSettingType();
     }
 
-    public String getDisplayValue(Guild guild, String key) {
+	/**
+	 * Gets display value.
+	 *
+	 * @param guild the guild
+	 * @param key   the key
+	 * @return the display value
+	 */
+	public String getDisplayValue(Guild guild, String key) {
         return DefaultGuildSettings.get(key.toUpperCase()).toDisplay(guild, getOrDefault(key));
     }
 
-    public boolean set(Guild guild, String setting, String value) {
+	/**
+	 * Set boolean.
+	 *
+	 * @param guild   the guild
+	 * @param setting the setting
+	 * @param value   the value
+	 * @return the boolean
+	 */
+	public boolean set(Guild guild, String setting, String value) {
         return DefaultGuildSettings.isValidKey(setting) && set(guild, GSetting.valueOf(setting.toUpperCase()), value);
     }
 
-    public boolean set(Guild guild, GSetting setting, String value) {
+	/**
+	 * Set boolean.
+	 *
+	 * @param guild   the guild
+	 * @param setting the setting
+	 * @param value   the value
+	 * @return the boolean
+	 */
+	public boolean set(Guild guild, GSetting setting, String value) {
         if (setting.isValidValue(guild, value)) {
             try {
                 String dbValue = setting.getValue(guild, value);
@@ -219,18 +281,32 @@ public class GuildSettings {
         return false;
     }
 
-    public String[] getSettings() {
+	/**
+	 * Get settings string [ ].
+	 *
+	 * @return the string [ ]
+	 */
+	public String[] getSettings() {
         return settings;
     }
 
-    public String getDefaultValue(String key) {
+	/**
+	 * Gets default value.
+	 *
+	 * @param key the key
+	 * @return the default value
+	 */
+	public String getDefaultValue(String key) {
         if (DefaultGuildSettings.isValidKey(key)) {
             return DefaultGuildSettings.get(key).getDefaultValue();
         }
         return "";
     }
 
-    public synchronized void reset() {
+	/**
+	 * Reset.
+	 */
+	public synchronized void reset() {
         try {
             WebDb.get().query("DELETE FROM guild_settings WHERE guild = ? ", id);
             initialized = false;
@@ -240,7 +316,14 @@ public class GuildSettings {
         }
     }
 
-    public boolean canUseMusicCommands(User user, SimpleRank userRank) {
+	/**
+	 * Can use music commands boolean.
+	 *
+	 * @param user     the user
+	 * @param userRank the user rank
+	 * @return the boolean
+	 */
+	public boolean canUseMusicCommands(User user, SimpleRank userRank) {
         Role requiredRole = getRoleValue(GSetting.MUSIC_ROLE_REQUIREMENT, user.getJDA().getGuildById(guildId));
         if (requiredRole == null || userRank.isAtLeast(SimpleRank.GUILD_BOT_ADMIN)) {
             return true;

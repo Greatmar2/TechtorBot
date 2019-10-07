@@ -16,6 +16,20 @@
 
 package takeshi.games.meta;
 
+/**
+ * The enum Game player.
+ */
 public enum GamePlayer {
-    FREE, PLAYER1, PLAYER2;
+	/**
+	 * Free game player.
+	 */
+	FREE,
+	/**
+	 * Player 1 game player.
+	 */
+	PLAYER1,
+	/**
+	 * Player 2 game player.
+	 */
+	PLAYER2;
 }

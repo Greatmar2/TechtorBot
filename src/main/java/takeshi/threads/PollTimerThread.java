@@ -20,6 +20,9 @@ import net.dv8tion.jda.api.entities.Guild;
 import takeshi.core.Logger;
 import takeshi.handler.PollHandler;
 
+/**
+ * The type Poll timer thread.
+ */
 public class PollTimerThread extends Thread {
 	private final Guild GUILD;
 	private final PollHandler HANDLER;
@@ -28,10 +31,10 @@ public class PollTimerThread extends Thread {
 	/**
 	 * Will wait for specified number of milliseconds, then tell the handler to
 	 * check its polls
-	 * 
-	 * @param handler
-	 * @param guild
-	 * @param timeToWaitMilli
+	 *
+	 * @param handler         the handler
+	 * @param guild           the guild
+	 * @param timeToWaitMilli the time to wait milli
 	 */
 	public PollTimerThread(PollHandler handler, Guild guild, long timeToWaitMilli) {
 		this.GUILD = guild;

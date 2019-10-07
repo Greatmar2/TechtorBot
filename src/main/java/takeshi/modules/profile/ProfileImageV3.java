@@ -33,12 +33,26 @@ import takeshi.db.model.OUser;
 import takeshi.main.Launcher;
 import takeshi.util.GfxUtil;
 
+/**
+ * The type Profile image v 3.
+ */
 public class ProfileImageV3 extends ProfileImage {
 
+	/**
+	 * Instantiates a new Profile image v 3.
+	 *
+	 * @param user the user
+	 */
 	public ProfileImageV3(User user) {
 		super(user);
 	}
 
+	/**
+	 * Gets profile image.
+	 *
+	 * @return the profile image
+	 * @throws IOException the io exception
+	 */
 	public File getProfileImage() throws IOException {
 		Random rng = new Random(getUser().getIdLong());
 		int fontSize;

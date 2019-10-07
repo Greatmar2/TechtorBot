@@ -18,6 +18,11 @@ package takeshi.command.meta;
 
 import net.dv8tion.jda.api.entities.Guild;
 
+/**
+ * The type Pagination info.
+ *
+ * @param <E> the type parameter
+ */
 public class PaginationInfo<E> {
 
     private final int maxPage;
@@ -25,11 +30,26 @@ public class PaginationInfo<E> {
     private int currentPage = 0;
     private E extraData;
 
-    public PaginationInfo(int currentPage, int maxPage, Guild guild) {
+	/**
+	 * Instantiates a new Pagination info.
+	 *
+	 * @param currentPage the current page
+	 * @param maxPage     the max page
+	 * @param guild       the guild
+	 */
+	public PaginationInfo(int currentPage, int maxPage, Guild guild) {
         this(currentPage, maxPage, guild, null);
     }
 
-    public PaginationInfo(int currentPage, int maxPage, Guild guild, E extra) {
+	/**
+	 * Instantiates a new Pagination info.
+	 *
+	 * @param currentPage the current page
+	 * @param maxPage     the max page
+	 * @param guild       the guild
+	 * @param extra       the extra
+	 */
+	public PaginationInfo(int currentPage, int maxPage, Guild guild, E extra) {
 
         this.currentPage = currentPage;
         this.maxPage = maxPage;
@@ -37,15 +57,30 @@ public class PaginationInfo<E> {
         this.extraData = extra;
     }
 
-    public void setExtraData(E data) {
+	/**
+	 * Sets extra data.
+	 *
+	 * @param data the data
+	 */
+	public void setExtraData(E data) {
         extraData = data;
     }
 
-    public E getExtra() {
+	/**
+	 * Gets extra.
+	 *
+	 * @return the extra
+	 */
+	public E getExtra() {
         return extraData;
     }
 
-    public boolean previousPage() {
+	/**
+	 * Previous page boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean previousPage() {
         if (currentPage > 1) {
             currentPage--;
             return true;
@@ -53,7 +88,12 @@ public class PaginationInfo<E> {
         return false;
     }
 
-    public boolean nextPage() {
+	/**
+	 * Next page boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean nextPage() {
         if (currentPage < maxPage) {
             currentPage++;
             return true;
@@ -61,19 +101,39 @@ public class PaginationInfo<E> {
         return false;
     }
 
-    public int getMaxPage() {
+	/**
+	 * Gets max page.
+	 *
+	 * @return the max page
+	 */
+	public int getMaxPage() {
         return maxPage;
     }
 
-    public int getCurrentPage() {
+	/**
+	 * Gets current page.
+	 *
+	 * @return the current page
+	 */
+	public int getCurrentPage() {
         return currentPage;
     }
 
-    public void setCurrentPage(int currentPage) {
+	/**
+	 * Sets current page.
+	 *
+	 * @param currentPage the current page
+	 */
+	public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 
-    public Guild getGuild() {
+	/**
+	 * Gets guild.
+	 *
+	 * @return the guild
+	 */
+	public Guild getGuild() {
         return guild;
     }
 }

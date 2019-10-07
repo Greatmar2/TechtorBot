@@ -33,7 +33,10 @@ public class PingCommand extends AbstractCommand {
             ":ping_pong::black_small_square::white_small_square::black_small_square::ping_pong:",
     };
 
-    public PingCommand() {
+	/**
+	 * Instantiates a new Ping command.
+	 */
+	public PingCommand() {
         super();
     }
 
@@ -61,7 +64,7 @@ public class PingCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 
         if (args.length > 0 && args[0].matches("fancy")) {
             bot.queue.add(channel.sendMessage("Checking ping..."), message -> {

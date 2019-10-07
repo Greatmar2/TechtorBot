@@ -24,9 +24,15 @@ import takeshi.command.meta.CommandVisibility;
 import takeshi.main.DiscordBot;
 import takeshi.util.DisUtil;
 
+/**
+ * The type Connect four command.
+ */
 public class ConnectFourCommand extends AbstractCommand {
 
-    public ConnectFourCommand() {
+	/**
+	 * Instantiates a new Connect four command.
+	 */
+	public ConnectFourCommand() {
         super();
     }
 
@@ -62,7 +68,7 @@ public class ConnectFourCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         return "The games have been moved to the `" + DisUtil.getCommandPrefix(channel) + "game` command";
     }
 }

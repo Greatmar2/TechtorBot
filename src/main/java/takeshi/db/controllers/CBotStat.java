@@ -39,7 +39,14 @@ public class CBotStat {
         return s;
     }
 
-    public static void insert(long guildCount, long userCount, long musicCount) {
+	/**
+	 * Insert.
+	 *
+	 * @param guildCount the guild count
+	 * @param userCount  the user count
+	 * @param musicCount the music count
+	 */
+	public static void insert(long guildCount, long userCount, long musicCount) {
         OBotStats stats = new OBotStats();
         stats.createdOn = new Timestamp(System.currentTimeMillis());
         stats.guildCount = guildCount;
@@ -49,7 +56,12 @@ public class CBotStat {
     }
 
 
-    public static void insert(OBotStats record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OBotStats record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO bot_stats(created_on,guild_count, user_count, music_count) " +

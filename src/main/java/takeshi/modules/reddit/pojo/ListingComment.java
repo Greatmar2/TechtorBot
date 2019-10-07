@@ -27,16 +27,31 @@ import java.util.List;
  */
 public class ListingComment {
 
-    @Expose
+	/**
+	 * The Children.
+	 */
+	@Expose
     public List<Comment> children;
-    @Expose
+	/**
+	 * The Modhash.
+	 */
+	@Expose
     public String modhash;
-    @Expose
+	/**
+	 * The Before.
+	 */
+	@Expose
     public String before;
-    @Expose
+	/**
+	 * The After.
+	 */
+	@Expose
     public String after;
 
-    public ListingComment() {
+	/**
+	 * Instantiates a new Listing comment.
+	 */
+	public ListingComment() {
         this.children = new ArrayList<>();
     }
 }

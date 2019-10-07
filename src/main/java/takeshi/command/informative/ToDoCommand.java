@@ -35,6 +35,9 @@ import takeshi.util.Misc;
 
 import java.util.List;
 
+/**
+ * The type To do command.
+ */
 public class ToDoCommand extends AbstractCommand {
 
     @Override
@@ -69,7 +72,7 @@ public class ToDoCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         OTodoList rec = CTodoLists.findBy(CUser.getCachedId(author.getIdLong()));
         if (args.length == 0) {
             if (rec.id == 0) {

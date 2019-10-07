@@ -22,14 +22,38 @@ import takeshi.modules.pathofexile.enums.Rarity;
  * Created on 2-9-2016
  */
 public class PoEItem {
-    public Rarity rarity = Rarity.UNKNOWN;
-    public int itemLevel = 0;
-    public String base = "";
-    public String name = "";
-    public int requirementLevel = 0;
-    public int requirementDex = 0;
-    public int requirementStr = 0;
-    public int requirementInt = 0;
+	/**
+	 * The Rarity.
+	 */
+	public Rarity rarity = Rarity.UNKNOWN;
+	/**
+	 * The Item level.
+	 */
+	public int itemLevel = 0;
+	/**
+	 * The Base.
+	 */
+	public String base = "";
+	/**
+	 * The Name.
+	 */
+	public String name = "";
+	/**
+	 * The Requirement level.
+	 */
+	public int requirementLevel = 0;
+	/**
+	 * The Requirement dex.
+	 */
+	public int requirementDex = 0;
+	/**
+	 * The Requirement str.
+	 */
+	public int requirementStr = 0;
+	/**
+	 * The Requirement int.
+	 */
+	public int requirementInt = 0;
 
     @Override
     public String toString() {

@@ -18,11 +18,32 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O reaction role key.
+ */
 public class OReactionRoleKey extends AbstractModel {
-    public int id = 0;
-    public String messageKey = "";
-    public long channelId = 0L;
-    public long messageId = 0L;
-    public String message = "";
-    public int guildId = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Message key.
+	 */
+	public String messageKey = "";
+	/**
+	 * The Channel id.
+	 */
+	public long channelId = 0L;
+	/**
+	 * The Message id.
+	 */
+	public long messageId = 0L;
+	/**
+	 * The Message.
+	 */
+	public String message = "";
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
 }

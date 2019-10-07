@@ -33,7 +33,13 @@ import takeshi.db.model.OService;
 public class CServices {
     private static Map<String, Integer> serviceCache = new ConcurrentHashMap<>();
 
-    public static int getCachedId(String serviceName) {
+	/**
+	 * Gets cached id.
+	 *
+	 * @param serviceName the service name
+	 * @return the cached id
+	 */
+	public static int getCachedId(String serviceName) {
         if (!serviceCache.containsKey(serviceName)) {
             OService service = findBy(serviceName);
             if (service.id == 0) {
@@ -45,7 +51,12 @@ public class CServices {
         return serviceCache.get(serviceName);
     }
 
-    public static List<OService> getAllActive() {
+	/**
+	 * Gets all active.
+	 *
+	 * @return the all active
+	 */
+	public static List<OService> getAllActive() {
         ArrayList<OService> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select("SELECT * FROM services WHERE activated = 1")) {
             while (rs.next()) {
@@ -58,7 +69,13 @@ public class CServices {
         return list;
     }
 
-    public static OService findBy(String name) {
+	/**
+	 * Find by o service.
+	 *
+	 * @param name the name
+	 * @return the o service
+	 */
+	public static OService findBy(String name) {
         OService token = new OService();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, name, display_name, description, activated  " +
@@ -84,7 +101,12 @@ public class CServices {
         return service;
     }
 
-    public static void update(OService record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OService record) {
         if (record.id == 0) {
             insert(record);
             return;
@@ -100,7 +122,12 @@ public class CServices {
         }
     }
 
-    public static void insert(OService record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OService record) {
         try {
             record.id = WebDb.get().insert(
                     "INSERT INTO services(name, display_name, description, activated) " +

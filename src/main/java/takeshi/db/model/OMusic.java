@@ -18,18 +18,60 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O music.
+ */
 public class OMusic extends AbstractModel {
-    public int id = 0;
-    public String youtubecode = "";
-    public String filename = "";
-    public String youtubeTitle = "";
-    public String artist = "";
-    public long lastplaydate = 0;
-    public int banned = 0;
-    public String title = "";
-    public int playCount = 0;
-    public long lastManualPlaydate = 0L;
-    public int fileExists = 1;
-    public int duration = 0;
-    public String requestedBy = "";
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Youtubecode.
+	 */
+	public String youtubecode = "";
+	/**
+	 * The Filename.
+	 */
+	public String filename = "";
+	/**
+	 * The Youtube title.
+	 */
+	public String youtubeTitle = "";
+	/**
+	 * The Artist.
+	 */
+	public String artist = "";
+	/**
+	 * The Lastplaydate.
+	 */
+	public long lastplaydate = 0;
+	/**
+	 * The Banned.
+	 */
+	public int banned = 0;
+	/**
+	 * The Title.
+	 */
+	public String title = "";
+	/**
+	 * The Play count.
+	 */
+	public int playCount = 0;
+	/**
+	 * The Last manual playdate.
+	 */
+	public long lastManualPlaydate = 0L;
+	/**
+	 * The File exists.
+	 */
+	public int fileExists = 1;
+	/**
+	 * The Duration.
+	 */
+	public int duration = 0;
+	/**
+	 * The Requested by.
+	 */
+	public String requestedBy = "";
 }

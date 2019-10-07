@@ -41,6 +41,9 @@ import takeshi.util.DisUtil;
  * !say make the bot say something
  */
 public class SayCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Say command.
+	 */
 	public SayCommand() {
 		super();
 	}
@@ -77,7 +80,7 @@ public class SayCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		// boolean atLeastAdmin = bot.security.getSimpleRank(author,
 		// channel).isAtLeast(SimpleRank.BOT_ADMIN);
 		if (bot.security.getSimpleRank(author, channel).isAtLeast(SimpleRank.GUILD_BOT_ADMIN)) {

@@ -30,6 +30,9 @@ import takeshi.util.DisUtil;
  * !botstatus changes the bot status (the playing game, or streaming)
  */
 public class ListGuildsCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new List guilds command.
+	 */
 	public ListGuildsCommand() {
 		super();
 	}

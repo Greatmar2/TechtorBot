@@ -21,19 +21,35 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The type Grid.
+ */
 public class Grid {
 
     private final int size;
     private final Random rng;
-    public volatile Integer[][] board;
+	/**
+	 * The Board.
+	 */
+	public volatile Integer[][] board;
 
-    public Grid(int boardSize) {
+	/**
+	 * Instantiates a new Grid.
+	 *
+	 * @param boardSize the board size
+	 */
+	public Grid(int boardSize) {
         size = boardSize;
         rng = new Random();
         board = getEmptyBoard();
     }
 
-    public int getScore() {
+	/**
+	 * Gets score.
+	 *
+	 * @return the score
+	 */
+	public int getScore() {
         int sum = 0;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -43,7 +59,12 @@ public class Grid {
         return sum;
     }
 
-    public boolean isBoardFull() {
+	/**
+	 * Is board full boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean isBoardFull() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (board[i][j] == 0) {
@@ -66,21 +87,40 @@ public class Grid {
         return list;
     }
 
-    public void addRandomTwo() {
+	/**
+	 * Add random two.
+	 */
+	public void addRandomTwo() {
         Pair<Integer, Integer> pos = getRandomFreePosition();
         board[pos.getKey()][pos.getValue()] = 2;
     }
 
-    public boolean canMoveHorizontal() {
+	/**
+	 * Can move horizontal boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean canMoveHorizontal() {
         return canMove(true);
     }
 
-    public boolean canMoveVertical() {
+	/**
+	 * Can move vertical boolean.
+	 *
+	 * @return the boolean
+	 */
+	public boolean canMoveVertical() {
         return canMove(false);
 
     }
 
-    public boolean canMove(boolean horizontal) {
+	/**
+	 * Can move boolean.
+	 *
+	 * @param horizontal the horizontal
+	 * @return the boolean
+	 */
+	public boolean canMove(boolean horizontal) {
         for (int i = 0; i < size; i++) {
             int lastVal = -1;
             for (int j = 0; j < size; j++) {
@@ -95,7 +135,10 @@ public class Grid {
         return false;
     }
 
-    public void moveRight() {
+	/**
+	 * Move right.
+	 */
+	public void moveRight() {
         Integer[][] tmp = getEmptyBoard();
         for (int i = 0; i < size; i++) {
             int index = size;
@@ -115,7 +158,10 @@ public class Grid {
         board = tmp;
     }
 
-    public void moveLeft() {
+	/**
+	 * Move left.
+	 */
+	public void moveLeft() {
         Integer[][] tmp = getEmptyBoard();
         for (int i = 0; i < size; i++) {
             int index = -1;
@@ -134,7 +180,10 @@ public class Grid {
         board = tmp;
     }
 
-    public void moveUp() {
+	/**
+	 * Move up.
+	 */
+	public void moveUp() {
         Integer[][] tmp = getEmptyBoard();
         for (int i = 0; i < size; i++) {
             int index = -1;
@@ -154,7 +203,10 @@ public class Grid {
         board = tmp;
     }
 
-    public void moveDown() {
+	/**
+	 * Move down.
+	 */
+	public void moveDown() {
         Integer[][] tmp = getEmptyBoard();
         for (int i = 0; i < size; i++) {
             int index = size;
@@ -185,7 +237,12 @@ public class Grid {
     }
 
 
-    public Pair<Integer, Integer> getRandomFreePosition() {
+	/**
+	 * Gets random free position.
+	 *
+	 * @return the random free position
+	 */
+	public Pair<Integer, Integer> getRandomFreePosition() {
         if (isBoardFull()) {
             return null;
         }

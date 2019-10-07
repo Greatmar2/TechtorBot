@@ -25,12 +25,29 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OPoll;
 
+/**
+ * The type C poll.
+ */
 public class CPoll {
 
+	/**
+	 * Find by o poll.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param messageId      the message id
+	 * @return the o poll
+	 */
 	public static OPoll findBy(long discordGuildId, long messageId) {
 		return findBy(CGuild.getCachedId(discordGuildId), messageId);
 	}
 
+	/**
+	 * Find or create o poll.
+	 *
+	 * @param discordGuildid the discord guildid
+	 * @param messageId      the message id
+	 * @return the o poll
+	 */
 	public static OPoll findOrCreate(long discordGuildid, long messageId) {
 		OPoll rec = findBy(CGuild.getCachedId(discordGuildid), messageId);
 		if (rec.id == 0) {
@@ -40,6 +57,13 @@ public class CPoll {
 		return rec;
 	}
 
+	/**
+	 * Find by o poll.
+	 *
+	 * @param serverId  the server id
+	 * @param messageId the message id
+	 * @return the o poll
+	 */
 	public static OPoll findBy(int serverId, long messageId) {
 		OPoll t = new OPoll();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM poll " + "WHERE guild_id = ? AND message_id = ?", serverId, messageId)) {
@@ -53,10 +77,22 @@ public class CPoll {
 		return t;
 	}
 
+	/**
+	 * Gets messages for guild.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @return the messages for guild
+	 */
 	public static List<OPoll> getMessagesForGuild(long guildDiscordId) {
 		return getMessagesForGuild(CGuild.getCachedId(guildDiscordId));
 	}
 
+	/**
+	 * Gets messages for guild.
+	 *
+	 * @param guildId the guild id
+	 * @return the messages for guild
+	 */
 	public static List<OPoll> getMessagesForGuild(int guildId) {
 		List<OPoll> result = new ArrayList<>();
 		try (ResultSet rs = WebDb.get().select("SELECT *  " + "FROM poll " + "WHERE guild_id = ?", guildId)) {
@@ -83,6 +119,11 @@ public class CPoll {
 		return t;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
 	public static void delete(OPoll record) {
 		try {
 			WebDb.get().query("DELETE FROM poll WHERE message_id = ? AND guild_id = ? ", record.messageId, record.guildId);
@@ -91,10 +132,20 @@ public class CPoll {
 		}
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(long guildId) {
 		deleteGuild(CGuild.getCachedId(guildId));
 	}
 
+	/**
+	 * Delete guild.
+	 *
+	 * @param guildId the guild id
+	 */
 	public static void deleteGuild(int guildId) {
 		try {
 			WebDb.get().query("DELETE FROM poll WHERE guild_id = ? ", guildId);
@@ -103,6 +154,11 @@ public class CPoll {
 		}
 	}
 
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
 	public static void update(OPoll record) {
 		try {
 			WebDb.get().query("UPDATE poll SET channel_id = ?, message = ?, message_id = ?, single = ? WHERE id = ?", record.channelId, record.message, record.messageId, record.single, record.id);
@@ -111,6 +167,11 @@ public class CPoll {
 		}
 	}
 
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
 	public static void insert(OPoll record) {
 		if (record.id > 0) {
 			update(record);

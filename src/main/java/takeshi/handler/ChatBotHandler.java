@@ -31,11 +31,19 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Chat bot handler.
+ */
 public class ChatBotHandler {
     private final Map<Long, ChatBotInstance> sessions;
     private final DiscordBot bot;
 
-    public ChatBotHandler(DiscordBot bot) {
+	/**
+	 * Instantiates a new Chat bot handler.
+	 *
+	 * @param bot the bot
+	 */
+	public ChatBotHandler(DiscordBot bot) {
         this.bot = bot;
         sessions = new ConcurrentHashMap<>();
     }
@@ -44,7 +52,10 @@ public class ChatBotHandler {
         return new WitClient(BotConfig.WIT_AI_TOKEN);
     }
 
-    public void cleanCache() {
+	/**
+	 * Clean cache.
+	 */
+	public void cleanCache() {
         long deleteBefore = System.currentTimeMillis() - TimeUnit.MINUTES.toMillis(30);
         Iterator<Map.Entry<Long, ChatBotInstance>> iterator = sessions.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -55,7 +66,15 @@ public class ChatBotHandler {
         }
     }
 
-    public String chat(long guildId, String input, MessageChannel channel) {
+	/**
+	 * Chat string.
+	 *
+	 * @param guildId the guild id
+	 * @param input   the input
+	 * @param channel the channel
+	 * @return the string
+	 */
+	public String chat(long guildId, String input, MessageChannel channel) {
         if (!sessions.containsKey(guildId)) {
             sessions.put(guildId, new ChatBotInstance(createSession()));
         }
@@ -67,15 +86,32 @@ public class ChatBotHandler {
         private int failedAttempts = 0;
         private WitClient botsession;
 
-        ChatBotInstance(WitClient session) {
+	    /**
+	     * Instantiates a new Chat bot instance.
+	     *
+	     * @param session the session
+	     */
+	    ChatBotInstance(WitClient session) {
             botsession = session;
         }
 
-        public long getLastInteraction() {
+	    /**
+	     * Gets last interaction.
+	     *
+	     * @return the last interaction
+	     */
+	    public long getLastInteraction() {
             return lastInteraction;
         }
 
-        public String chat(String input, MessageChannel channel) {
+	    /**
+	     * Chat string.
+	     *
+	     * @param input   the input
+	     * @param channel the channel
+	     * @return the string
+	     */
+	    public String chat(String input, MessageChannel channel) {
             if (failedAttempts > 25) {
                 return "";
             }
@@ -96,13 +132,13 @@ public class ChatBotHandler {
                 switch (category){
                     case COMMANDHELP:
                         if(CommandHandler.commandExists(search)){
-                            return CommandHandler.getCommand("help").simpleExecute(bot, new String[]{search}, channel, null, null);
+                            return CommandHandler.getCommand("help").stringExecute(bot, new String[]{search}, channel, null, null);
                         }
                         return "No info for `"+search+"`";
                     case COMMANDEXECUTE:
                         search = search.replace(" ","");
                         if(CommandHandler.commandExists(search)){
-                            return CommandHandler.getCommand(search).simpleExecute(bot, new String[]{}, channel, bot.getJda().getSelfUser(), null);
+                            return CommandHandler.getCommand(search).stringExecute(bot, new String[]{}, channel, bot.getJda().getSelfUser(), null);
                         }
                         return "Cant find a command for `"+search+"`";
                 }
@@ -113,10 +149,23 @@ public class ChatBotHandler {
             return "";
         }
     }
-    enum ResponseCategory{
-        COMMANDHELP("command-help"),
-        COMMANDEXECUTE("command-execute"),
-        UNKNOWN("?");
+
+	/**
+	 * The enum Response category.
+	 */
+	enum ResponseCategory{
+		/**
+		 * Commandhelp response category.
+		 */
+		COMMANDHELP("command-help"),
+		/**
+		 * Commandexecute response category.
+		 */
+		COMMANDEXECUTE("command-execute"),
+		/**
+		 * Unknown response category.
+		 */
+		UNKNOWN("?");
 
         private final String categoryname;
 
@@ -124,10 +173,22 @@ public class ChatBotHandler {
             this.categoryname = categoryname;
         }
 
-        public String getCategoryname() {
+		/**
+		 * Gets categoryname.
+		 *
+		 * @return the categoryname
+		 */
+		public String getCategoryname() {
             return categoryname;
         }
-        public static ResponseCategory get(String text){
+
+		/**
+		 * Get response category.
+		 *
+		 * @param text the text
+		 * @return the response category
+		 */
+		public static ResponseCategory get(String text){
             for (ResponseCategory responseCategory : values()) {
                 if(responseCategory.getCategoryname().equals(text)){
                     return responseCategory;

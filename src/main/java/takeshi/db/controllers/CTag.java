@@ -25,13 +25,30 @@ import takeshi.core.Logger;
 import takeshi.db.WebDb;
 import takeshi.db.model.OTag;
 
+/**
+ * The type C tag.
+ */
 public class CTag {
 
-    public static OTag findBy(long discordGuildId, String tagname) {
+	/**
+	 * Find by o tag.
+	 *
+	 * @param discordGuildId the discord guild id
+	 * @param tagname        the tagname
+	 * @return the o tag
+	 */
+	public static OTag findBy(long discordGuildId, String tagname) {
         return findBy(CGuild.getCachedId(discordGuildId), tagname);
     }
 
-    public static OTag findBy(int serverId, String tagName) {
+	/**
+	 * Find by o tag.
+	 *
+	 * @param serverId the server id
+	 * @param tagName  the tag name
+	 * @return the o tag
+	 */
+	public static OTag findBy(int serverId, String tagName) {
         OTag t = new OTag();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -47,7 +64,13 @@ public class CTag {
         return t;
     }
 
-    public static int countTagsOn(int guildId) {
+	/**
+	 * Count tags on int.
+	 *
+	 * @param guildId the guild id
+	 * @return the int
+	 */
+	public static int countTagsOn(int guildId) {
         int tagCount = 0;
         try (ResultSet rs = WebDb.get().select(
                 "SELECT count(*) AS sum  " +
@@ -64,11 +87,25 @@ public class CTag {
     }
 
 
-    public static List<OTag> getTagsFor(long guildDiscordId, long userDiscordId) {
+	/**
+	 * Gets tags for.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @param userDiscordId  the user discord id
+	 * @return the tags for
+	 */
+	public static List<OTag> getTagsFor(long guildDiscordId, long userDiscordId) {
         return getTagsFor(CGuild.getCachedId(guildDiscordId), CUser.getCachedId(userDiscordId));
     }
 
-    public static List<OTag> getTagsFor(int guildId, int userId) {
+	/**
+	 * Gets tags for.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 * @return the tags for
+	 */
+	public static List<OTag> getTagsFor(int guildId, int userId) {
         List<OTag> result = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -85,15 +122,37 @@ public class CTag {
 
     }
 
-    public static List<OTag> getTagsFor(long guildDiscordId) {
+	/**
+	 * Gets tags for.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @return the tags for
+	 */
+	public static List<OTag> getTagsFor(long guildDiscordId) {
         return getTagsFor(guildDiscordId, 0, 25);
     }
 
-    public static List<OTag> getTagsFor(long guildDiscordId, int offset, int limit) {
+	/**
+	 * Gets tags for.
+	 *
+	 * @param guildDiscordId the guild discord id
+	 * @param offset         the offset
+	 * @param limit          the limit
+	 * @return the tags for
+	 */
+	public static List<OTag> getTagsFor(long guildDiscordId, int offset, int limit) {
         return getTagsFor(CGuild.getCachedId(guildDiscordId), offset, limit);
     }
 
-    public static List<OTag> getTagsFor(int guildId, int offset, int limit) {
+	/**
+	 * Gets tags for.
+	 *
+	 * @param guildId the guild id
+	 * @param offset  the offset
+	 * @param limit   the limit
+	 * @return the tags for
+	 */
+	public static List<OTag> getTagsFor(int guildId, int offset, int limit) {
         List<OTag> result = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +
@@ -121,7 +180,12 @@ public class CTag {
         return t;
     }
 
-    public static void delete(OTag record) {
+	/**
+	 * Delete.
+	 *
+	 * @param record the record
+	 */
+	public static void delete(OTag record) {
         try {
             WebDb.get().query(
                     "DELETE FROM tags WHERE tag_name = ? AND guild_id = ? ",
@@ -132,7 +196,12 @@ public class CTag {
         }
     }
 
-    public static void update(OTag record) {
+	/**
+	 * Update.
+	 *
+	 * @param record the record
+	 */
+	public static void update(OTag record) {
         try {
             record.id = WebDb.get().query(
                     "UPDATE tags SET response = ? WHERE id = ?",
@@ -142,7 +211,12 @@ public class CTag {
         }
     }
 
-    public static void insert(OTag record) {
+	/**
+	 * Insert.
+	 *
+	 * @param record the record
+	 */
+	public static void insert(OTag record) {
         if (record.id > 0) {
             update(record);
             return;
@@ -157,7 +231,13 @@ public class CTag {
         }
     }
 
-    public static void deleteTagsBy(int guildId, int userId) {
+	/**
+	 * Delete tags by.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 */
+	public static void deleteTagsBy(int guildId, int userId) {
         try {
             WebDb.get().query(
                     "DELETE FROM tags WHERE guild_id = ? AND user_id= ? ",
@@ -168,7 +248,14 @@ public class CTag {
         }
     }
 
-    public static List<OTag> findByUser(int guildId, int userId) {
+	/**
+	 * Find by user list.
+	 *
+	 * @param guildId the guild id
+	 * @param userId  the user id
+	 * @return the list
+	 */
+	public static List<OTag> findByUser(int guildId, int userId) {
         List<OTag> result = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT *  " +

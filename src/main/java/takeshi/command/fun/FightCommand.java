@@ -59,11 +59,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * The type Fight command.
+ */
 public class FightCommand extends AbstractCommand implements ICommandCooldown {
     final private ImageFrame[] frames;
     final private GifPosition[] positions;
 
-    public FightCommand() throws IOException {
+	/**
+	 * Instantiates a new Fight command.
+	 *
+	 * @throws IOException the io exception
+	 */
+	public FightCommand() throws IOException {
         InputStream resource = Launcher.class.getClassLoader().getResourceAsStream("fight/stickman001.gif");
         frames = readGif(resource);
         positions = new GifPosition[frames.length];
@@ -246,7 +254,7 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         TextChannel txt = (TextChannel) channel;
         if (!PermissionUtil.checkPermission(txt, txt.getGuild().getSelfMember(), Permission.MESSAGE_ATTACH_FILES)) {
             return Templates.permission_missing.formatGuild(channel, "MESSAGE_ATTACH_FILES");
@@ -442,13 +450,36 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
         return frames.toArray(new ImageFrame[frames.size()]);
     }
 
-    public class GifPosition {
-        final int x;
-        final int y;
-        final int height;
-        final int width;
+	/**
+	 * The type Gif position.
+	 */
+	public class GifPosition {
+		/**
+		 * The X.
+		 */
+		final int x;
+		/**
+		 * The Y.
+		 */
+		final int y;
+		/**
+		 * The Height.
+		 */
+		final int height;
+		/**
+		 * The Width.
+		 */
+		final int width;
 
-        GifPosition(int x, int y, int height, int width) {
+		/**
+		 * Instantiates a new Gif position.
+		 *
+		 * @param x      the x
+		 * @param y      the y
+		 * @param height the height
+		 * @param width  the width
+		 */
+		GifPosition(int x, int y, int height, int width) {
 
             this.x = x;
             this.y = y;
@@ -457,13 +488,25 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
         }
     }
 
-    public class ImageFrame {
+	/**
+	 * The type Image frame.
+	 */
+	public class ImageFrame {
         private final int delay;
         private final BufferedImage image;
         private final String disposal;
         private final int width, height;
 
-        public ImageFrame(BufferedImage image, int delay, String disposal, int width, int height) {
+		/**
+		 * Instantiates a new Image frame.
+		 *
+		 * @param image    the image
+		 * @param delay    the delay
+		 * @param disposal the disposal
+		 * @param width    the width
+		 * @param height   the height
+		 */
+		public ImageFrame(BufferedImage image, int delay, String disposal, int width, int height) {
             this.image = image;
             this.delay = delay;
             this.disposal = disposal;
@@ -471,7 +514,12 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
             this.height = height;
         }
 
-        public ImageFrame(BufferedImage image) {
+		/**
+		 * Instantiates a new Image frame.
+		 *
+		 * @param image the image
+		 */
+		public ImageFrame(BufferedImage image) {
             this.image = image;
             this.delay = -1;
             this.disposal = null;
@@ -479,33 +527,80 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
             this.height = -1;
         }
 
-        public BufferedImage getImage() {
+		/**
+		 * Gets image.
+		 *
+		 * @return the image
+		 */
+		public BufferedImage getImage() {
             return image;
         }
 
-        public int getDelay() {
+		/**
+		 * Gets delay.
+		 *
+		 * @return the delay
+		 */
+		public int getDelay() {
             return delay;
         }
 
-        public String getDisposal() {
+		/**
+		 * Gets disposal.
+		 *
+		 * @return the disposal
+		 */
+		public String getDisposal() {
             return disposal;
         }
 
-        public int getWidth() {
+		/**
+		 * Gets width.
+		 *
+		 * @return the width
+		 */
+		public int getWidth() {
             return width;
         }
 
-        public int getHeight() {
+		/**
+		 * Gets height.
+		 *
+		 * @return the height
+		 */
+		public int getHeight() {
             return height;
         }
     }
 
-    public class GifSequenceWriter {
-        protected ImageWriter gifWriter;
-        protected ImageWriteParam imageWriteParam;
-        protected IIOMetadata imageMetaData;
+	/**
+	 * The type Gif sequence writer.
+	 */
+	public class GifSequenceWriter {
+		/**
+		 * The Gif writer.
+		 */
+		protected ImageWriter gifWriter;
+		/**
+		 * The Image write param.
+		 */
+		protected ImageWriteParam imageWriteParam;
+		/**
+		 * The Image meta data.
+		 */
+		protected IIOMetadata imageMetaData;
 
-        public GifSequenceWriter(
+		/**
+		 * Instantiates a new Gif sequence writer.
+		 *
+		 * @param outputStream        the output stream
+		 * @param imageType           the image type
+		 * @param timeBetweenFramesMS the time between frames ms
+		 * @param loopContinuously    the loop continuously
+		 * @throws IIOException the iio exception
+		 * @throws IOException  the io exception
+		 */
+		public GifSequenceWriter(
                 ImageOutputStream outputStream,
                 int imageType,
                 int timeBetweenFramesMS,
@@ -566,7 +661,13 @@ public class FightCommand extends AbstractCommand implements ICommandCooldown {
             gifWriter.prepareWriteSequence(null);
         }
 
-        public void writeToSequence(RenderedImage img) throws IOException {
+		/**
+		 * Write to sequence.
+		 *
+		 * @param img the img
+		 * @throws IOException the io exception
+		 */
+		public void writeToSequence(RenderedImage img) throws IOException {
             gifWriter.writeToSequence(
                     new IIOImage(
                             img,

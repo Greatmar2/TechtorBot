@@ -43,7 +43,10 @@ import java.util.List;
  */
 public class GetroleCommand extends AbstractCommand {
 
-    public GetroleCommand() {
+	/**
+	 * Instantiates a new Getrole command.
+	 */
+	public GetroleCommand() {
         super();
     }
 
@@ -77,7 +80,7 @@ public class GetroleCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         Guild guild = ((TextChannel) channel).getGuild();
         if (!PermissionUtil.checkPermission(guild.getSelfMember(), Permission.MANAGE_ROLES)) {
             return Templates.permission_missing.formatGuild(channel, Permission.MANAGE_ROLES.toString());

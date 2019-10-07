@@ -18,19 +18,35 @@ package takeshi.games.tictactoe;
 
 import takeshi.games.meta.GameTurn;
 
+/**
+ * The type Tic game turn.
+ */
 public class TicGameTurn extends GameTurn {
     private int boardIndex = 0;
 
-    public TicGameTurn() {
+	/**
+	 * Instantiates a new Tic game turn.
+	 */
+	public TicGameTurn() {
 
     }
 
-    public TicGameTurn(int boardIndex) {
+	/**
+	 * Instantiates a new Tic game turn.
+	 *
+	 * @param boardIndex the board index
+	 */
+	public TicGameTurn(int boardIndex) {
 
         this.boardIndex = boardIndex;
     }
 
-    public int getBoardIndex() {
+	/**
+	 * Gets board index.
+	 *
+	 * @return the board index
+	 */
+	public int getBoardIndex() {
         return boardIndex;
     }
 

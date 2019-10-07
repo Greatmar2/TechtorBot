@@ -21,11 +21,17 @@ import takeshi.games.meta.AbstractGame;
 import takeshi.games.meta.GameState;
 import takeshi.util.Misc;
 
+/**
+ * The type Tic tac toe game.
+ */
 public class TicTacToeGame extends AbstractGame<TicGameTurn> {
 	private static final int TILES_ON_BOARD = 9;
 	private final int[][] winCombos = { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 } };
 	private TicTile[] board = new TicTile[TILES_ON_BOARD];
 
+	/**
+	 * Instantiates a new Tic tac toe game.
+	 */
 	public TicTacToeGame() {
 		reset();
 	}

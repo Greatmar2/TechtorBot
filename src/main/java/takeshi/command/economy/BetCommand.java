@@ -38,6 +38,9 @@ import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.Misc;
 
+/**
+ * The type Bet command.
+ */
 public class BetCommand extends AbstractCommand {
 	@Override
 	public String getDescription() {
@@ -82,7 +85,7 @@ public class BetCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author,
 			Message inputMessage) {
 		TextChannel tc = (TextChannel) channel;
 		Guild guild = tc.getGuild();

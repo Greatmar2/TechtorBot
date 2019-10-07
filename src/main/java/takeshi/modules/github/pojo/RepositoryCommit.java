@@ -23,6 +23,9 @@ import javax.annotation.Generated;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Repository commit.
+ */
 @Generated("org.jsonschema2pojo")
 public class RepositoryCommit {
 
@@ -51,115 +54,147 @@ public class RepositoryCommit {
     @Expose
     private List<Parent> parents = new ArrayList<Parent>();
 
-    /**
-     * @return The sha
-     */
-    public String getSha() {
+	/**
+	 * Gets sha.
+	 *
+	 * @return The sha
+	 */
+	public String getSha() {
         return sha;
     }
 
-    /**
-     * @param sha The sha
-     */
-    public void setSha(String sha) {
+	/**
+	 * Sets sha.
+	 *
+	 * @param sha The sha
+	 */
+	public void setSha(String sha) {
         this.sha = sha;
     }
 
-    /**
-     * @return The commit
-     */
-    public Commit getCommit() {
+	/**
+	 * Gets commit.
+	 *
+	 * @return The commit
+	 */
+	public Commit getCommit() {
         return commit;
     }
 
-    /**
-     * @param commit The commit
-     */
-    public void setCommit(Commit commit) {
+	/**
+	 * Sets commit.
+	 *
+	 * @param commit The commit
+	 */
+	public void setCommit(Commit commit) {
         this.commit = commit;
     }
 
-    /**
-     * @return The url
-     */
-    public String getUrl() {
+	/**
+	 * Gets url.
+	 *
+	 * @return The url
+	 */
+	public String getUrl() {
         return url;
     }
 
-    /**
-     * @param url The url
-     */
-    public void setUrl(String url) {
+	/**
+	 * Sets url.
+	 *
+	 * @param url The url
+	 */
+	public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     * @return The htmlUrl
-     */
-    public String getHtmlUrl() {
+	/**
+	 * Gets html url.
+	 *
+	 * @return The htmlUrl
+	 */
+	public String getHtmlUrl() {
         return htmlUrl;
     }
 
-    /**
-     * @param htmlUrl The html_url
-     */
-    public void setHtmlUrl(String htmlUrl) {
+	/**
+	 * Sets html url.
+	 *
+	 * @param htmlUrl The html_url
+	 */
+	public void setHtmlUrl(String htmlUrl) {
         this.htmlUrl = htmlUrl;
     }
 
-    /**
-     * @return The commentsUrl
-     */
-    public String getCommentsUrl() {
+	/**
+	 * Gets comments url.
+	 *
+	 * @return The commentsUrl
+	 */
+	public String getCommentsUrl() {
         return commentsUrl;
     }
 
-    /**
-     * @param commentsUrl The comments_url
-     */
-    public void setCommentsUrl(String commentsUrl) {
+	/**
+	 * Sets comments url.
+	 *
+	 * @param commentsUrl The comments_url
+	 */
+	public void setCommentsUrl(String commentsUrl) {
         this.commentsUrl = commentsUrl;
     }
 
-    /**
-     * @return The author
-     */
-    public Author getAuthor() {
+	/**
+	 * Gets author.
+	 *
+	 * @return The author
+	 */
+	public Author getAuthor() {
         return author;
     }
 
-    /**
-     * @param author The author
-     */
-    public void setAuthor(Author author) {
+	/**
+	 * Sets author.
+	 *
+	 * @param author The author
+	 */
+	public void setAuthor(Author author) {
         this.author = author;
     }
 
-    /**
-     * @return The committer
-     */
-    public Committer getCommitter() {
+	/**
+	 * Gets committer.
+	 *
+	 * @return The committer
+	 */
+	public Committer getCommitter() {
         return committer;
     }
 
-    /**
-     * @param committer The committer
-     */
-    public void setCommitter(Committer committer) {
+	/**
+	 * Sets committer.
+	 *
+	 * @param committer The committer
+	 */
+	public void setCommitter(Committer committer) {
         this.committer = committer;
     }
 
-    /**
-     * @return The parents
-     */
-    public List<Parent> getParents() {
+	/**
+	 * Gets parents.
+	 *
+	 * @return The parents
+	 */
+	public List<Parent> getParents() {
         return parents;
     }
 
-    /**
-     * @param parents The parents
-     */
-    public void setParents(List<Parent> parents) {
+	/**
+	 * Sets parents.
+	 *
+	 * @param parents The parents
+	 */
+	public void setParents(List<Parent> parents) {
         this.parents = parents;
     }
 

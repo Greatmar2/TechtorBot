@@ -24,7 +24,16 @@ import takeshi.db.AbstractModel;
  * Created on 5-9-2016
  */
 public class OGuildMember extends AbstractModel {
-    public int guildId = 0;
-    public int userId = 0;
-    public Timestamp joinDate = null;
+	/**
+	 * The Guild id.
+	 */
+	public int guildId = 0;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Join date.
+	 */
+	public Timestamp joinDate = null;
 }

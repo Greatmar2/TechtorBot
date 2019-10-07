@@ -16,10 +16,18 @@
 
 package takeshi.exceptions;
 
+/**
+ * The type Template not set exception.
+ */
 public class TemplateNotSetException extends Exception {
     private String s;
 
-    public TemplateNotSetException(String keyphrase) {
+	/**
+	 * Instantiates a new Template not set exception.
+	 *
+	 * @param keyphrase the keyphrase
+	 */
+	public TemplateNotSetException(String keyphrase) {
         s = "keyphrase '" + keyphrase + "' is not set to anything";
     }
 

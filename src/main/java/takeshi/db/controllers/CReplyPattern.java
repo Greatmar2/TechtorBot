@@ -30,7 +30,13 @@ import takeshi.db.model.OReplyPattern;
  * data communication with the controllers `reply_pattern`
  */
 public class CReplyPattern {
-    public static OReplyPattern findBy(String tag) {
+	/**
+	 * Find by o reply pattern.
+	 *
+	 * @param tag the tag
+	 * @return the o reply pattern
+	 */
+	public static OReplyPattern findBy(String tag) {
         OReplyPattern record = new OReplyPattern();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, guild_id, user_id, tag, pattern, reply, created_on, cooldown  " +
@@ -59,12 +65,12 @@ public class CReplyPattern {
         return record;
     }
 
-    /**
-     * Retrieve all the auto-replies
-     *
-     * @return list of replies
-     */
-    public static List<OReplyPattern> getAll() {
+	/**
+	 * Retrieve all the auto-replies
+	 *
+	 * @return list of replies
+	 */
+	public static List<OReplyPattern> getAll() {
         List<OReplyPattern> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, guild_id, user_id, tag, pattern, reply, created_on, cooldown  " +
@@ -79,13 +85,13 @@ public class CReplyPattern {
         return list;
     }
 
-    /**
-     * Only retrieve the auto-replies that are global or for a specific guild
-     *
-     * @param internalGuildId the internal guild id
-     * @return a list of replies
-     */
-    public static List<OReplyPattern> getAll(int internalGuildId) {
+	/**
+	 * Only retrieve the auto-replies that are global or for a specific guild
+	 *
+	 * @param internalGuildId the internal guild id
+	 * @return a list of replies
+	 */
+	public static List<OReplyPattern> getAll(int internalGuildId) {
         List<OReplyPattern> list = new ArrayList<>();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT id, guild_id, user_id, tag, pattern, reply, created_on, cooldown  " +
@@ -100,7 +106,12 @@ public class CReplyPattern {
         return list;
     }
 
-    public static void insert(OReplyPattern r) {
+	/**
+	 * Insert.
+	 *
+	 * @param r the r
+	 */
+	public static void insert(OReplyPattern r) {
         try {
             r.id = WebDb.get().insert(
                     "INSERT INTO reply_pattern(guild_id, user_id, tag, pattern, reply, created_on, cooldown) " +
@@ -111,7 +122,12 @@ public class CReplyPattern {
         }
     }
 
-    public static void update(OReplyPattern r) {
+	/**
+	 * Update.
+	 *
+	 * @param r the r
+	 */
+	public static void update(OReplyPattern r) {
         try {
             r.id = WebDb.get().insert(
                     "UPDATE reply_pattern SET tag = ?, pattern = ?, reply = ?, cooldown = ? " +
@@ -122,7 +138,12 @@ public class CReplyPattern {
         }
     }
 
-    public static void delete(OReplyPattern r) {
+	/**
+	 * Delete.
+	 *
+	 * @param r the r
+	 */
+	public static void delete(OReplyPattern r) {
         try {
             WebDb.get().query(
                     "DELETE FROM reply_pattern WHERE id = ? ", r.id);

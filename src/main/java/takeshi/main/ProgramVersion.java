@@ -26,6 +26,13 @@ public class ProgramVersion {
 	private int minorVersion;
 	private int patchVersion;
 
+	/**
+	 * Instantiates a new Program version.
+	 *
+	 * @param majorVersion the major version
+	 * @param minorVersion the minor version
+	 * @param patchVersion the patch version
+	 */
 	public ProgramVersion(int majorVersion, int minorVersion, int patchVersion) {
 		this.majorVersion = majorVersion;
 		this.minorVersion = minorVersion;
@@ -38,12 +45,23 @@ public class ProgramVersion {
 		this.patchVersion = 0;
 	}
 
+	/**
+	 * Instantiates a new Program version.
+	 *
+	 * @param majorVersion the major version
+	 */
 	ProgramVersion(int majorVersion) {
 		this.majorVersion = majorVersion;
 		this.minorVersion = 0;
 		this.patchVersion = 0;
 	}
 
+	/**
+	 * From string program version.
+	 *
+	 * @param version the version
+	 * @return the program version
+	 */
 	public static ProgramVersion fromString(String version) {
 		String[] parts = version.split("\\.");
 		if (parts.length == 3) {
@@ -77,14 +95,29 @@ public class ProgramVersion {
 		return false;
 	}
 
+	/**
+	 * Gets patch version.
+	 *
+	 * @return the patch version
+	 */
 	public int getPatchVersion() {
 		return patchVersion;
 	}
 
+	/**
+	 * Gets minor version.
+	 *
+	 * @return the minor version
+	 */
 	public int getMinorVersion() {
 		return minorVersion;
 	}
 
+	/**
+	 * Gets major version.
+	 *
+	 * @return the major version
+	 */
 	public int getMajorVersion() {
 		return majorVersion;
 	}

@@ -18,9 +18,24 @@ package takeshi.db.model;
 
 import takeshi.db.AbstractModel;
 
+/**
+ * The type O subscription.
+ */
 public class OSubscription extends AbstractModel {
-    public int serverId = 0;
-    public int channelId = 0;
-    public int serviceId = 0;
-    public int subscribed = 0;
+	/**
+	 * The Server id.
+	 */
+	public int serverId = 0;
+	/**
+	 * The Channel id.
+	 */
+	public int channelId = 0;
+	/**
+	 * The Service id.
+	 */
+	public int serviceId = 0;
+	/**
+	 * The Subscribed.
+	 */
+	public int subscribed = 0;
 }

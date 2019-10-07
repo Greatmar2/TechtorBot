@@ -29,6 +29,9 @@ import takeshi.main.DiscordBot;
  */
 public class GameCommandCommand extends AbstractCommand {
 
+	/**
+	 * Instantiates a new Game command command.
+	 */
 	public GameCommandCommand() {
 		super();
 	}
@@ -69,7 +72,7 @@ public class GameCommandCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "";//for the implementation see GameHandler
 	}
 }

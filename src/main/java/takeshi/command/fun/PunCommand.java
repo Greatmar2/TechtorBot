@@ -30,6 +30,9 @@ import takeshi.templates.Templates;
  * !joke gives you a random pun <@user>
  */
 public class PunCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Pun command.
+	 */
 	public PunCommand() {
 		super();
 	}
@@ -55,10 +58,10 @@ public class PunCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		bot.out.sendAsyncMessage(channel, Templates.command.joke_wait.formatGuild(channel), message -> {
 			String puntxt = "";
-			puntxt = CommandHandler.getCommand("reddit").simpleExecute(bot, new String[] { "puns" }, channel, author, null);
+			puntxt = CommandHandler.getCommand("reddit").stringExecute(bot, new String[] { "puns" }, channel, author, null);
 			if (puntxt != null && !puntxt.isEmpty()) {
 				bot.out.editAsync(message, StringEscapeUtils.unescapeHtml4(puntxt.replace(author.getName(), "<@" + author.getId() + ">")));
 			} else {

@@ -60,11 +60,26 @@ import takeshi.util.YTUtil;
 public class PlayCommand extends AbstractCommand implements ICommandCleanup {
 	private YTSearch ytSearch;
 
+	/**
+	 * Instantiates a new Play command.
+	 */
 	public PlayCommand() {
 		super();
 		ytSearch = new YTSearch();
 	}
 
+	/**
+	 * Process track string.
+	 *
+	 * @param player       the player
+	 * @param bot          the bot
+	 * @param channel      the channel
+	 * @param invoker      the invoker
+	 * @param videoCode    the video code
+	 * @param videoTitle   the video title
+	 * @param useTemplates the use templates
+	 * @return the string
+	 */
 	public static String processTrack(MusicPlayerHandler player, DiscordBot bot, TextChannel channel, User invoker, String videoCode, String videoTitle,
 			boolean useTemplates) {
 		OMusic record = CMusic.findByYoutubeId(videoCode);
@@ -131,7 +146,7 @@ public class PlayCommand extends AbstractCommand implements ICommandCleanup {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		TextChannel txt = (TextChannel) channel;
 		Guild guild = txt.getGuild();
 		SimpleRank userRank = bot.security.getSimpleRank(author, channel);
@@ -217,7 +232,7 @@ public class PlayCommand extends AbstractCommand implements ICommandCleanup {
 								message.editMessage(message.getContentRaw() + "\n\nYou picked " + reaction.getKey()).queue();
 								AbstractCommand play = CommandHandler.getCommand("play");
 								if (play != null) {
-									play.simpleExecute(bot, new String[] { reaction.getValue() }, channel, author, null);
+									play.stringExecute(bot, new String[] { reaction.getValue() }, channel, author, null);
 								}
 							});
 						}

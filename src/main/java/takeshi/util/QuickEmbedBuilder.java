@@ -21,21 +21,55 @@ import java.awt.Color;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 
+/**
+ * The type Quick embed builder.
+ */
 public class QuickEmbedBuilder {
-	// Default values
+	/**
+	 * The constant DEFAULT_COL.
+	 */
+// Default values
 	public static final Color DEFAULT_COL = new Color(0, 255, 0);
+	/**
+	 * The constant ERROR_COL.
+	 */
 	public static final Color ERROR_COL = Color.RED;
+	/**
+	 * The constant WARN_COL.
+	 */
 	public static final Color WARN_COL = Color.YELLOW;
+	/**
+	 * The constant PERM_COL.
+	 */
 	public static final Color PERM_COL = Color.BLUE;
+	/**
+	 * The constant ELEK_COL.
+	 */
 	public static final Color ELEK_COL = new Color(46, 204, 113);
+	/**
+	 * The constant MAR_COL.
+	 */
 	public static final Color MAR_COL = new Color(0, 37, 173);
 
-	// Converts a plain string into an embed
+	/**
+	 * Embed string message builder.
+	 *
+	 * @param message the message
+	 * @return the message builder
+	 */
+// Converts a plain string into an embed
 	public static MessageBuilder embedString(String message) {
 		return embedStringColor(message, DEFAULT_COL);
 	}
 
-	// Converts a plain string into an embed, with a specific color
+	/**
+	 * Embed string color message builder.
+	 *
+	 * @param message the message
+	 * @param col     the col
+	 * @return the message builder
+	 */
+// Converts a plain string into an embed, with a specific color
 	public static MessageBuilder embedStringColor(String message, Color col) {
 		EmbedBuilder embBuild = new EmbedBuilder();
 		embBuild.setDescription(message);

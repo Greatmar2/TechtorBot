@@ -34,7 +34,13 @@ public class UnoHand {
 	 * The Page. Used for when there are more than 10 cards in the hand.
 	 */
 	public int page;
+	/**
+	 * The Player.
+	 */
 	User player;
+	/**
+	 * The Message.
+	 */
 	Message message;
 	private List<UnoCard> hand;
 
@@ -115,6 +121,12 @@ public class UnoHand {
 		return getCardAbs(index + (page * 10));
 	}
 
+	/**
+	 * Gets card abs.
+	 *
+	 * @param index the index
+	 * @return the card abs
+	 */
 	UnoCard getCardAbs(int index) {
 //		return hand.get(index);
 		if (index < hand.size())
@@ -184,6 +196,7 @@ public class UnoHand {
 	 * Add card.
 	 *
 	 * @param card the card
+	 * @param sort the sort
 	 */
 	void addCard(UnoCard card, boolean sort) {
 		hand.add(card);

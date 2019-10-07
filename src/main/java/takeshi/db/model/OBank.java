@@ -26,12 +26,32 @@ import takeshi.db.controllers.CBanks;
  * Created on 5-9-2016
  */
 public class OBank extends AbstractModel {
-    public int userId = 0;
-    public int id = 0;
-    public long currentBalance = 0L;
-    public Timestamp createdOn = null;
+	/**
+	 * The User id.
+	 */
+	public int userId = 0;
+	/**
+	 * The Id.
+	 */
+	public int id = 0;
+	/**
+	 * The Current balance.
+	 */
+	public long currentBalance = 0L;
+	/**
+	 * The Created on.
+	 */
+	public Timestamp createdOn = null;
 
-    public boolean transferTo(OBank target, int amount, String description) {
+	/**
+	 * Transfer to boolean.
+	 *
+	 * @param target      the target
+	 * @param amount      the amount
+	 * @param description the description
+	 * @return the boolean
+	 */
+	public boolean transferTo(OBank target, int amount, String description) {
         if (id == 0) {
             return false;
         }

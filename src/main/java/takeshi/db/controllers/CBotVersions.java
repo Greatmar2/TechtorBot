@@ -30,7 +30,13 @@ import takeshi.main.ProgramVersion;
  */
 public class CBotVersions {
 
-    public static OBotVersion findBy(ProgramVersion version) {
+	/**
+	 * Find by o bot version.
+	 *
+	 * @param version the version
+	 * @return the o bot version
+	 */
+	public static OBotVersion findBy(ProgramVersion version) {
         OBotVersion s = new OBotVersion();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * " +
@@ -46,13 +52,13 @@ public class CBotVersions {
         return s;
     }
 
-    /**
-     * Retrieves the version after after specified one
-     *
-     * @param version bot version
-     * @return version || null
-     */
-    public static OBotVersion versionBefore(ProgramVersion version) {
+	/**
+	 * Retrieves the version after after specified one
+	 *
+	 * @param version bot version
+	 * @return version || null
+	 */
+	public static OBotVersion versionBefore(ProgramVersion version) {
         OBotVersion s = new OBotVersion();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * " +
@@ -75,13 +81,13 @@ public class CBotVersions {
         return s;
     }
 
-    /**
-     * Retrieves the version before specified one
-     *
-     * @param version bot version
-     * @return version || null
-     */
-    public static OBotVersion versionAfter(ProgramVersion version) {
+	/**
+	 * Retrieves the version before specified one
+	 *
+	 * @param version bot version
+	 * @return version || null
+	 */
+	public static OBotVersion versionAfter(ProgramVersion version) {
         OBotVersion s = new OBotVersion();
         try (ResultSet rs = WebDb.get().select(
                 "SELECT * FROM bot_versions " +
@@ -114,7 +120,13 @@ public class CBotVersions {
         return s;
     }
 
-    public static void publish(ProgramVersion version, boolean publish) {
+	/**
+	 * Publish.
+	 *
+	 * @param version the version
+	 * @param publish the publish
+	 */
+	public static void publish(ProgramVersion version, boolean publish) {
         try {
             WebDb.get().insert(
                     "UPDATE bot_versions SET published = ? " +
@@ -126,7 +138,14 @@ public class CBotVersions {
 
     }
 
-    public static int insert(ProgramVersion version, Timestamp date) {
+	/**
+	 * Insert int.
+	 *
+	 * @param version the version
+	 * @param date    the date
+	 * @return the int
+	 */
+	public static int insert(ProgramVersion version, Timestamp date) {
         try {
             if (date == null) {
                 date = new Timestamp(System.currentTimeMillis());

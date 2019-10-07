@@ -45,7 +45,13 @@ import takeshi.util.DisUtil;
 import takeshi.util.Misc;
 import takeshi.util.QuickEmbedBuilder;
 
+/**
+ * The type Case command.
+ */
 public class CaseCommand extends AbstractCommand {
+	/**
+	 * Instantiates a new Case command.
+	 */
 	public CaseCommand() {
 		super();
 	}
@@ -80,7 +86,7 @@ public class CaseCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel mChannel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel mChannel, User author, Message inputMessage) {
 		TextChannel channel = (TextChannel) mChannel;
 		SimpleRank rank = bot.security.getSimpleRank(author, channel);
 		Guild guild = channel.getGuild();

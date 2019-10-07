@@ -40,7 +40,12 @@ public class BotSelfUpdateService extends AbstractService {
 
     private boolean usersHaveBeenWarned = false;
 
-    public BotSelfUpdateService(BotContainer b) {
+	/**
+	 * Instantiates a new Bot self update service.
+	 *
+	 * @param b the b
+	 */
+	public BotSelfUpdateService(BotContainer b) {
         super(b);
     }
 

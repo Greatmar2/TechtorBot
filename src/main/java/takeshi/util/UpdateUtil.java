@@ -28,6 +28,11 @@ import takeshi.main.ProgramVersion;
 public class UpdateUtil {
 	private static final Pattern versionPattern = Pattern.compile("<version>([0-9]+\\.[0-9]+\\.[0-9]+)");
 
+	/**
+	 * Gets latest version.
+	 *
+	 * @return the latest version
+	 */
 	public static ProgramVersion getLatestVersion() {
 		String request = HttpHelper.doRequest("https://raw.githubusercontent.com/Greatmar2/TechtorBot/TechtorBot/pom.xml");
 		Matcher matcher = versionPattern.matcher(request);

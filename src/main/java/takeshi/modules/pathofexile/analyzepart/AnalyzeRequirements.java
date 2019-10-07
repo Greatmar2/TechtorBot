@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 import takeshi.modules.pathofexile.IPoEAnalyzePart;
 import takeshi.modules.pathofexile.obj.PoEItem;
 
+/**
+ * The type Analyze requirements.
+ */
 public class AnalyzeRequirements implements IPoEAnalyzePart {
 
     private static final Pattern requirementPattern = Pattern.compile("([A-Z][a-z]{2,4}): ([0-9]{1,3})");

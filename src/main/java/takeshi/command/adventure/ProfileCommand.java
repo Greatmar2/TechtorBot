@@ -36,7 +36,10 @@ import java.io.File;
  * Profile command
  */
 public class ProfileCommand extends AbstractCommand {
-    public ProfileCommand() {
+	/**
+	 * Instantiates a new Profile command.
+	 */
+	public ProfileCommand() {
         super();
     }
 
@@ -66,7 +69,7 @@ public class ProfileCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         User user = author;
         if (args.length > 0) {
             if (DisUtil.isUserMention(args[0])) {

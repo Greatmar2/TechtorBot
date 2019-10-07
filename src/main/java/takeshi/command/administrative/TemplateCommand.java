@@ -44,6 +44,9 @@ import java.util.List;
  * manages the templates
  */
 public class TemplateCommand extends AbstractCommand {
+    /**
+     * Instantiates a new Template command.
+     */
     public TemplateCommand() {
         super();
     }
@@ -87,7 +90,7 @@ public class TemplateCommand extends AbstractCommand {
     }
 
     @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+    public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
         SimpleRank userRank = bot.security.getSimpleRank(author, channel);
         int guildId = CGuild.getCachedId(channel);
         if(guildId == 0){

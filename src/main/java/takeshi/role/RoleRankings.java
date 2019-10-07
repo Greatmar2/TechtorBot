@@ -50,6 +50,9 @@ public class RoleRankings {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RoleRankings.class);
 	private volatile static boolean initialized = false;
 
+	/**
+	 * Init.
+	 */
 	public static void init() {
 		if (initialized) {
 			return;
@@ -79,7 +82,7 @@ public class RoleRankings {
 	/**
 	 * retrieves a list of all membership roles
 	 *
-	 * @return list
+	 * @return list all roles
 	 */
 	public static List<MemberShipRole> getAllRoles() {
 		return roles;
@@ -88,16 +91,20 @@ public class RoleRankings {
 	/**
 	 * Prefixes the role name based on the guild's setting
 	 *
-	 * @param guild
-	 *                  the guild
-	 * @param role
-	 *                  the role
+	 * @param guild the guild
+	 * @param role  the role
 	 * @return full name
 	 */
 	public static String getFullName(Guild guild, MemberShipRole role) {
 		return getPrefix(guild) + " " + role.getName();
 	}
 
+	/**
+	 * Gets highest role.
+	 *
+	 * @param memberLengthInMilis the member length in milis
+	 * @return the highest role
+	 */
 	public static MemberShipRole getHighestRole(Long memberLengthInMilis) {
 		for (int i = roles.size() - 1; i >= 0; i--) {
 			if (roles.get(i).getMembershipTime() <= memberLengthInMilis) {
@@ -110,8 +117,7 @@ public class RoleRankings {
 	/**
 	 * Attempts to fix create the membership roles for a guild
 	 *
-	 * @param guild
-	 *                  the guild to create/modify the roles for
+	 * @param guild the guild to create/modify the roles for
 	 */
 	public static void fixForServer(Guild guild) {
 		for (int i = roles.size() - 1; i >= 0; i--) {
@@ -119,6 +125,12 @@ public class RoleRankings {
 		}
 	}
 
+	/**
+	 * Gets prefix.
+	 *
+	 * @param guild the guild
+	 * @return the prefix
+	 */
 	public static String getPrefix(Guild guild) {
 		return GuildSettings.get(guild).getOrDefault(GSetting.USER_TIME_RANKS_PREFIX);
 	}
@@ -171,10 +183,8 @@ public class RoleRankings {
 	/**
 	 * checks if a user has the manage roles permission
 	 *
-	 * @param guild
-	 *                    the guild to check
-	 * @param ourUser
-	 *                    the user to check for
+	 * @param guild   the guild to check
+	 * @param ourUser the user to check for
 	 * @return has the manage roles premission?
 	 */
 	public static boolean canModifyRoles(Guild guild, User ourUser) {
@@ -184,10 +194,8 @@ public class RoleRankings {
 	/**
 	 * deletes the created roles
 	 *
-	 * @param guild
-	 *                    the guild to clean up
-	 * @param ourUser
-	 *                    the bot user
+	 * @param guild   the guild to clean up
+	 * @param ourUser the bot user
 	 */
 	public static void cleanUpRoles(Guild guild, User ourUser) {
 		if (!canModifyRoles(guild, ourUser)) {
@@ -205,8 +213,7 @@ public class RoleRankings {
 	/**
 	 * Attempts to fix create the membership roles for all guilds
 	 *
-	 * @param guilds
-	 *                   the guilds to fix the roles for
+	 * @param guilds the guilds to fix the roles for
 	 */
 	public static void fixRoles(List<Guild> guilds) {
 		for (Guild guild : guilds) {
@@ -228,10 +235,9 @@ public class RoleRankings {
 	/**
 	 * Asigns the right role to a user based on the Roleranking
 	 *
-	 * @param guild
-	 *                  the guild
-	 * @param user
-	 *                  the user
+	 * @param bot   the bot
+	 * @param guild the guild
+	 * @param user  the user
 	 */
 	public static void assignUserRole(DiscordBot bot, Guild guild, User user) {
 		List<Role> roles = guild.getMember(user).getRoles();

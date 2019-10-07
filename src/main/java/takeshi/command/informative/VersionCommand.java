@@ -27,6 +27,9 @@ import takeshi.main.DiscordBot;
  */
 public class VersionCommand extends AbstractCommand {
 
+	/**
+	 * Instantiates a new Version command.
+	 */
 	public VersionCommand() {
 		super();
 	}
@@ -52,7 +55,7 @@ public class VersionCommand extends AbstractCommand {
 	}
 
 	@Override
-	public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
 		return "Nosey one, ain't ya?\nI'm always the latest and the greatest.";
 		/*
 		 * return "Info about the versions:\n" + "Current version: `" +

@@ -20,13 +20,19 @@ import net.dv8tion.jda.api.entities.User;
 import takeshi.games.meta.AbstractGame;
 
 /**
- *
+ * The type Game 2048.
  */
 public class Game2048 extends AbstractGame<Game2048Turn> {
 
+	/**
+	 * The Grid size.
+	 */
 	public final int GRID_SIZE = 4;
 	private Grid grid;
 
+	/**
+	 * Instantiates a new Game 2048.
+	 */
 	public Game2048() {
 		reset();
 	}

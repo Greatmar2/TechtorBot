@@ -35,6 +35,11 @@ public class BotStatusService extends AbstractService {
 	private final static String[] streamingStatusList = {};
 	// private final Random rng;
 
+	/**
+	 * Instantiates a new Bot status service.
+	 *
+	 * @param b the b
+	 */
 	public BotStatusService(BotContainer b) {
 		super(b);
 		// rng = new Random();

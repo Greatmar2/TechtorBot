@@ -31,50 +31,63 @@ import takeshi.util.DisUtil;
  * make the bot pm someone
  */
 public class PMCommand extends AbstractCommand {
-    public PMCommand() {
-        super();
-    }
+	/**
+	 * Instantiates a new Pm command.
+	 */
+	public PMCommand() {
+		super();
+	}
 
-    @Override
-    public String getDescription() {
-        return "Send a message to user";
-    }
+	@Override
+	public String getDescription() {
+		return "Send a message to user";
+	}
 
-    @Override
-    public String getCommand() {
-        return "pm";
-    }
+	@Override
+	public String getCommand() {
+		return "pm";
+	}
 
-    @Override
-    public String[] getUsage() {
-        return new String[]{"pm <@user> <message..>"};
-    }
+	@Override
+	public String[] getUsage() {
+		return new String[] {"pm <@user> <message..>"};
+	}
 
-    @Override
-    public String[] getAliases() {
-        return new String[]{};
-    }
+	@Override
+	public String[] getAliases() {
+		return new String[] {};
+	}
 
-    @Override
-    public String simpleExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
-        SimpleRank rank = bot.security.getSimpleRank(author, channel);
-        if (!rank.isAtLeast(SimpleRank.USER)) {
-            return Templates.no_permission.formatGuild(channel);
-        }
-        if (args.length > 1) {
-            User targetUser = DisUtil.findUser((TextChannel) channel, args[0]);
+	@Override
+	public String stringExecute(DiscordBot bot, String[] args, MessageChannel channel, User author, Message inputMessage) {
+		SimpleRank rank = bot.security.getSimpleRank(author, channel);
+		if (!rank.isAtLeast(SimpleRank.USER)) {
+			return Templates.no_permission.formatGuild(channel);
+		}
+		if (args.length > 1) {
+			User targetUser = null;
+			int startIndex = 1;
+			if (args[0].toLowerCase().matches("anon") && rank.isAtLeast(SimpleRank.BOT_ADMIN)) {
+				targetUser = DisUtil.findUser((TextChannel) channel, args[1]);
+				startIndex = 2;
+			} else {
+				targetUser = DisUtil.findUser((TextChannel) channel, args[0]);
+			}
 
-            if (targetUser != null && !targetUser.getId().equals(channel.getJDA().getSelfUser().getId())) {
-                String message = "";
-                for (int i = 1; i < args.length; i++) {
-                    message += " " + args[i];
-                }
-                bot.out.sendPrivateMessage(targetUser, "You got a message from " + author.getAsMention() + ": " + message);
-                return Templates.command.pm_success.formatGuild(channel);
-            } else {
-                return Templates.command.pm_cant_find_user.formatGuild(channel);
-            }
-        }
-        return Templates.invalid_use.formatGuild(channel);
-    }
+			if (targetUser != null && !targetUser.getId().equals(channel.getJDA().getSelfUser().getId())) {
+				String message = "";
+				for (int i = startIndex; i < args.length; i++) {
+					message += " " + args[i];
+				}
+				if (startIndex == 1) {
+					message = "You got a message from " + author.getAsMention() + ": " + message;
+				}
+				bot.out.sendPrivateMessage(targetUser, message);
+				return Templates.command.pm_success.formatGuild(channel);
+			} else {
+				return Templates.command.pm_cant_find_user.formatGuild(channel);
+			}
+		}
+		return Templates.invalid_use.formatGuild(channel);
+	}
 }

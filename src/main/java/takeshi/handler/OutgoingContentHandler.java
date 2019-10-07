@@ -39,15 +39,29 @@ import takeshi.main.BotConfig;
 import takeshi.main.DiscordBot;
 import takeshi.main.Launcher;
 
+/**
+ * The type Outgoing content handler.
+ */
 public class OutgoingContentHandler {
 	private final DiscordBot botInstance;
 	private final RoleModifier roleThread;
 
+	/**
+	 * Instantiates a new Outgoing content handler.
+	 *
+	 * @param b the b
+	 */
 	public OutgoingContentHandler(DiscordBot b) {
 		botInstance = b;
 		roleThread = new RoleModifier();
 	}
 
+	/**
+	 * Edit blocking.
+	 *
+	 * @param msg        the msg
+	 * @param newContent the new content
+	 */
 	public void editBlocking(Message msg, String newContent) {
 		if (!msg.getChannelType().equals(ChannelType.TEXT)) {
 			return;
@@ -60,6 +74,8 @@ public class OutgoingContentHandler {
 	}
 
 	/**
+	 * Send async message.
+	 *
 	 * @param channel  channel to send to
 	 * @param content  the message
 	 * @param callback callback to execute after the message is sent
@@ -68,14 +84,33 @@ public class OutgoingContentHandler {
 		sendAsyncMessage(channel, new MessageBuilder(content), callback);
 	}
 
+	/**
+	 * Send async message.
+	 *
+	 * @param channel the channel
+	 * @param content the content
+	 */
 	public void sendAsyncMessage(MessageChannel channel, String content) {
 		sendAsyncMessage(channel, content, null);
 	}
 
+	/**
+	 * Send async message.
+	 *
+	 * @param channel the channel
+	 * @param builder the builder
+	 */
 	public void sendAsyncMessage(MessageChannel channel, MessageBuilder builder) {
 		sendAsyncMessage(channel, builder, null);
 	}
 
+	/**
+	 * Send async message.
+	 *
+	 * @param channel  the channel
+	 * @param builder  the builder
+	 * @param callback the callback
+	 */
 	public void sendAsyncMessage(MessageChannel channel, MessageBuilder builder, Consumer<Message> callback) {
 		if (channel == null || builder.isEmpty()) {
 			return;
@@ -97,10 +132,22 @@ public class OutgoingContentHandler {
 		}
 	}
 
+	/**
+	 * Edit async.
+	 *
+	 * @param message the message
+	 * @param content the content
+	 */
 	public void editAsync(Message message, String content) {
 		editAsync(message, new MessageBuilder(content));
 	}
 
+	/**
+	 * Edit async.
+	 *
+	 * @param message the message
+	 * @param builder the builder
+	 */
 	public void editAsync(Message message, MessageBuilder builder) {
 		botInstance.queue.add(message.editMessage(builder.build()));
 	}
@@ -150,6 +197,13 @@ public class OutgoingContentHandler {
 		sendPrivateMessage(target, message, null);
 	}
 
+	/**
+	 * Send private message.
+	 *
+	 * @param target    the target
+	 * @param message   the message
+	 * @param onSuccess the on success
+	 */
 	public void sendPrivateMessage(User target, String message, final Consumer<Message> onSuccess) {
 		if (target != null && !target.isFake() && message != null && !message.isEmpty()) {
 			botInstance.queue.add(target.openPrivateChannel(), privateChannel -> botInstance.queue.add(privateChannel.sendMessage(message), onSuccess));
@@ -174,6 +228,9 @@ public class OutgoingContentHandler {
 		private LinkedBlockingQueue<RoleModifyTask> itemsToDelete = new LinkedBlockingQueue<>();
 		private volatile boolean processTerminated = false;
 
+		/**
+		 * Instantiates a new Role modifier.
+		 */
 		RoleModifier() {
 			start();
 		}
@@ -205,6 +262,11 @@ public class OutgoingContentHandler {
 			}
 		}
 
+		/**
+		 * Offer.
+		 *
+		 * @param lm the lm
+		 */
 		public void offer(RoleModifyTask lm) {
 			if (processTerminated)
 				return;

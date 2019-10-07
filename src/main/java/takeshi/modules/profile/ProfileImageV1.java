@@ -35,10 +35,21 @@ import takeshi.util.GfxUtil;
  */
 public class ProfileImageV1 extends ProfileImage {
 
+	/**
+	 * Instantiates a new Profile image v 1.
+	 *
+	 * @param user the user
+	 */
 	public ProfileImageV1(User user) {
 		super(user);
 	}
 
+	/**
+	 * Gets profile image.
+	 *
+	 * @return the profile image
+	 * @throws IOException the io exception
+	 */
 	public File getProfileImage() throws IOException {
 		Font defaultFont = new Font("Helvetica", Font.BOLD & Font.ITALIC, 36);
 		Font creditFont = new Font("comissans", Font.ITALIC, 20);
