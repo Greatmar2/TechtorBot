@@ -16,9 +16,6 @@
 
 package takeshi.handler;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -27,13 +24,17 @@ import takeshi.db.controllers.CAutoRole;
 import takeshi.db.model.OAutoRole;
 import takeshi.main.DiscordBot;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * The type Auto role handler.
  */
 public class AutoRoleHandler {
 	// {guild-id, role-id}}
 	private final Map<Long, OAutoRole> listeners;
-//	private final DiscordBot discordBot;
+	//	private final DiscordBot discordBot;
+	public boolean forceReload = false;
 
 	/**
 	 * Instantiates a new Auto role handler.
@@ -61,7 +62,9 @@ public class AutoRoleHandler {
 			return true;
 		}
 		if (forceReload) {
-			removeGuild(guildId);
+//			removeGuild(guildId);
+			listeners.clear();
+			forceReload = false;
 		}
 		OAutoRole role = CAutoRole.findBy(guildId);
 		if (role.roleId > 0L) {
@@ -91,7 +94,7 @@ public class AutoRoleHandler {
 	 */
 	public synchronized boolean handle(Guild guild, Member member) {
 		long guildId = guild.getIdLong();
-		initGuild(guildId, false);
+		initGuild(guildId, forceReload);
 		if (!isListening(guildId)) {
 			return false;
 		}

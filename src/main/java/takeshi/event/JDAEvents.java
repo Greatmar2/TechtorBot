@@ -84,7 +84,7 @@ public class JDAEvents extends ListenerAdapter {
 
 	@Override
 	public void onStatusChange(StatusChangeEvent event) {
-		discordBot.getContainer().reportStatus(event.getJDA().getShardInfo() != null ? event.getJDA().getShardInfo().getShardId() : 0, event.getOldStatus(),
+		discordBot.getContainer().reportStatus(event.getJDA().getShardInfo().getShardId(), event.getOldStatus(),
 				event.getNewStatus());
 //		discordBot.pollHandler.checkPolls(discordBot);
 	}
@@ -293,8 +293,8 @@ public class JDAEvents extends ListenerAdapter {
 					null);
 		}
 		// Log the event in the guild log channel
-		discordBot.logGuildEvent(guild, "\uD83D\uDC64",
-				"**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator() + "** joined the guild");
+		discordBot.logGuildEvent(guild, "\uD83D\uDC64", "**" + event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator()
+				+ "** (" + event.getMember().getAsMention() + ") joined the guild");
 		// Add auto role if one is set
 		discordBot.autoRoleHandler.handle(guild, event.getMember());
 		// Welcome new users if enabled
@@ -352,7 +352,8 @@ public class JDAEvents extends ListenerAdapter {
 		OGuildMember guildMember = CGuildMember.findBy(guild.getIdLong(), user.getIdLong());
 		guildMember.joinDate = new Timestamp(System.currentTimeMillis());
 		CGuildMember.insertOrUpdate(guildMember);
-		discordBot.logGuildEvent(guild, "\uD83C\uDFC3", "**" + user.getName() + "#" + user.getDiscriminator() + "** left the guild");
+		discordBot.logGuildEvent(guild, "\uD83C\uDFC3",
+				"**" + user.getName() + "#" + user.getDiscriminator() + "** (" + event.getMember().getAsMention() + ") left the guild");
 	}
 
 	@Override

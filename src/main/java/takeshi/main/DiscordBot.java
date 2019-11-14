@@ -520,16 +520,15 @@ public class DiscordBot {
 		GuildSettings settings = GuildSettings.get(guild.getIdLong());
 //		pollHandler.checkPolls(guild);
 		// Check if bot is listening for replies on any specific channel
-		if (replyListeners.size() > 0) {
-			for (ReplyCommand.ReplyListener replyListener : replyListeners) {
-				if (replyListener.getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION)
-						.isAfter(OffsetDateTime.now())) {
-					if (channel.getIdLong() == replyListener.getChannelID()) {
-						DisUtil.forwardMessage(this, message);
-					}
-				} else {
-					replyListeners.remove(replyListener);
+		for (int i = 0; i < replyListeners.size(); i++) {
+			if (replyListeners.get(i).getTimeCreated().plusMinutes(BotConfig.CHANNEL_WATCH_DURATION)
+					.isAfter(OffsetDateTime.now())) {
+				if (channel.getIdLong() == replyListeners.get(i).getChannelID()) {
+					DisUtil.forwardMessage(this, message);
 				}
+			} else {
+				replyListeners.remove(replyListeners.get(i));
+				i--;
 			}
 		}
 		// Handle users in game mode

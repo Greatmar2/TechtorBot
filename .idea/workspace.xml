@@ -4,18 +4,17 @@
     <option name="FILTER_RESOLVED_ITEMS" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0560e972-0718-417e-9b25-465dc5347a06" name="Default Changelist" comment="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0560e972-0718-417e-9b25-465dc5347a06" name="Default Changelist" comment="Version 1.5.3&#10;Autorole should now force reload from databas&#10;Minor bugfixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoReplyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReplyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/bot_administration/ReplyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReplyPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/controllers/CReplyPattern.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReplyPattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/db/model/OReplyPattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dependency-reduced-pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dependency-reduced-pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoRoleCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/command/administrative/AutoRoleCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/event/JDAEvents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoReplyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoReplyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoRoleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/handler/AutoRoleHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/BotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/BotConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/main/DiscordBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/Templates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/util/Misc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/takeshi/templates/TemplateArgument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,11 +64,15 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectId" id="1RsQN4g51wZSHUH9osUkbshWzfP" />
+  <component name="ProjectId" id="1Ry4RLAQzWXfXBY1urvVrwQeD5H" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -82,7 +85,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -98,7 +101,7 @@
   </component>
   <component name="RunManager" selected="Maven.TechtorBot [package]">
     <configuration name="Run TechtorBot" type="Application" factoryName="Application">
-      <option name="ALTERNATIVE_JRE_PATH" value="9" />
+      <option name="ALTERNATIVE_JRE_PATH" value="C:\Program Files\Java\jdk1.8.0_221\jre" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="takeshi.main.Launcher" />
       <module name="TechtorBot" />
@@ -208,12 +211,17 @@
       <workItem from="1570438002344" duration="382000" />
       <workItem from="1570438410992" duration="126000" />
       <workItem from="1570438744635" duration="39000" />
-      <workItem from="1570453285830" duration="653000" />
-      <workItem from="1570454261522" duration="3675000" />
-      <workItem from="1570459875433" duration="316000" />
-      <workItem from="1570461678859" duration="1972000" />
-      <workItem from="1570467614896" duration="152000" />
-      <workItem from="1570468241369" duration="5100000" />
+      <workItem from="1570513910878" duration="408000" />
+      <workItem from="1570514395837" duration="402000" />
+      <workItem from="1570514824593" duration="454000" />
+      <workItem from="1570521677992" duration="1211000" />
+      <workItem from="1570626011296" duration="1011000" />
+      <workItem from="1570736355344" duration="836000" />
+      <workItem from="1570778357183" duration="100000" />
+      <workItem from="1570809977794" duration="552000" />
+      <workItem from="1572414984988" duration="956000" />
+      <workItem from="1573707742909" duration="194000" />
+      <workItem from="1573708078530" duration="760000" />
     </task>
     <task id="LOCAL-00001" summary="Version 1.4.0&#10;Added Uno Game, still needs more thorough bugtesting">
       <created>1555160427182</created>
@@ -243,15 +251,17 @@
       <option name="project" value="LOCAL" />
       <updated>1555263119503</updated>
     </task>
-    <task id="LOCAL-00005" summary="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything.">
-      <created>1570460151621</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1570460151621</updated>
-    </task>
-    <option name="localTasksCounter" value="6" />
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -268,13 +278,26 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Version 1.4.0&#10;Added Uno Game, still needs more thorough bugtesting" />
     <MESSAGE value="Version 1.4.1&#10;Fixed some Uno bugs" />
     <MESSAGE value="Version 1.4.1&#10;Fixed more Uno bugs&#10;Fixed raffle bugs" />
     <MESSAGE value="Version 1.4.1&#10;Fixed Uno bugs&#10;Fixed raffle bugs" />
-    <MESSAGE value="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything." />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.5.1&#10;&#10;Improved reply and pm commands.&#10;Auto-generated javadocs for everything." />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.4.1&#10;Fixed Uno bugs&#10;Fixed raffle bugs" />
   </component>
 </project>

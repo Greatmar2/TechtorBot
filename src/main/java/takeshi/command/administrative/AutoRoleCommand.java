@@ -1,13 +1,6 @@
 package takeshi.command.administrative;
 
-import java.util.List;
-
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageChannel;
-import net.dv8tion.jda.api.entities.Role;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import takeshi.command.meta.AbstractCommand;
 import takeshi.command.meta.CommandVisibility;
 import takeshi.db.controllers.CAutoRole;
@@ -15,6 +8,8 @@ import takeshi.db.model.OAutoRole;
 import takeshi.main.DiscordBot;
 import takeshi.templates.Templates;
 import takeshi.util.DisUtil;
+
+import java.util.List;
 
 /**
  * The type Auto role command.
@@ -39,9 +34,9 @@ public class AutoRoleCommand extends AbstractCommand {
 
 	@Override
 	public String[] getUsage() {
-		return new String[] { "autorole //Displays the current auto-assign role",
+		return new String[] {"autorole //Displays the current auto-assign role",
 				"autorole <role> //Automatically assigns this role to users when they join the guild",
-				"autorole remove     //Disable auto-assigning of roles" };
+				"autorole remove     //Disable auto-assigning of roles"};
 	}
 
 	@Override
@@ -51,7 +46,7 @@ public class AutoRoleCommand extends AbstractCommand {
 
 	@Override
 	public String[] getAliases() {
-		return new String[] { "autor", "arole", "arl" };
+		return new String[] {"autor", "arole", "arl"};
 	}
 
 	@Override
@@ -75,36 +70,39 @@ public class AutoRoleCommand extends AbstractCommand {
 			return "Users will be assigned the role named `" + role.getName() + "` when they join the guild.";
 		} else if (args.length >= 1) {
 			switch (args[0].toLowerCase()) {
-			case "remove":
-				OAutoRole guildRole = CAutoRole.findBy(guild.getIdLong());
-				if (guildRole.id == 0 || guildRole.roleId == 0) {
-					return "No auto role set.";
-				}
-				guildRole.roleId = 0L;
-				CAutoRole.update(guildRole);
-				return "Auto role removed.";
-			default:
-				List<Role> mentionedRoles = inputMessage.getMentionedRoles();
-				Role role;
-				// Try to find the role for the command
-				if (mentionedRoles.isEmpty()) {
-					String roleName = "";
-					for (int i = 0; i < args.length; i++) {
-						roleName += " " + args[i];
+				case "remove":
+					OAutoRole guildRole = CAutoRole.findBy(guild.getIdLong());
+					if (guildRole.id == 0 || guildRole.roleId == 0) {
+						return "No auto role set.";
 					}
-					role = DisUtil.findRole(guild, roleName);
-				} else {
-					role = mentionedRoles.get(0);
-				}
-				if (role == null) {
-					return "Role not found. Make sure the role name contains the words you're using, or that you're @mentioning the role.";
-				}
-				OAutoRole roleToStore = CAutoRole.findBy(guild.getIdLong());
-				roleToStore.roleId = role.getIdLong();
-				roleToStore.roleName = role.getName();
-				roleToStore.guildId = guild.getIdLong();
-				CAutoRole.insert(roleToStore);
-				return "Auto role set to " + roleToStore.roleName + ".";
+					guildRole.roleId = 0L;
+					guildRole.roleName = "";
+					CAutoRole.update(guildRole);
+					bot.autoRoleHandler.forceReload = true;
+					return "Auto role removed.";
+				default:
+					List<Role> mentionedRoles = inputMessage.getMentionedRoles();
+					Role role;
+					// Try to find the role for the command
+					if (mentionedRoles.isEmpty()) {
+						String roleName = "";
+						for (int i = 0; i < args.length; i++) {
+							roleName += " " + args[i];
+						}
+						role = DisUtil.findRole(guild, roleName);
+					} else {
+						role = mentionedRoles.get(0);
+					}
+					if (role == null) {
+						return "Role not found. Make sure the role name contains the words you're using, or that you're @mentioning the role.";
+					}
+					OAutoRole roleToStore = CAutoRole.findBy(guild.getIdLong());
+					roleToStore.roleId = role.getIdLong();
+					roleToStore.roleName = role.getName();
+					roleToStore.guildId = guild.getIdLong();
+					CAutoRole.insert(roleToStore);
+					bot.autoRoleHandler.forceReload = true;
+					return "Auto role set to " + roleToStore.roleName + ".";
 			}
 		}
 
